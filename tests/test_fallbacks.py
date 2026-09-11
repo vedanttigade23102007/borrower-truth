@@ -47,6 +47,15 @@ def test_bad_file_without_last_good_degrades_not_crashes(book):
     assert len(cases) == 30  # the run still completes
 
 
+def test_command_line_runs_end_to_end(book, capsys):
+    """The CLI (what demo.sh and Airflow call) must complete and print its summary."""
+    from bt.pipeline.run import main as cli
+    cli(["--data", str(book), "--out", str(book / "run")])
+    out = capsys.readouterr().out
+    assert "as_of month 23" in out and "data      ok" in out
+    assert (book / "run" / "cases.json").exists()
+
+
 def test_dq_flags_negative_payments(book):
     t = pq.read_table(book / "payments.parquet")
     amounts = t.column("amount").to_pylist()

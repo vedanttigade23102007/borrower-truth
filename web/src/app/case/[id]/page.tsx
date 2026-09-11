@@ -67,8 +67,15 @@ export default function CasePage({ params }: { params: Promise<{ id: string }> }
 
       {data.unavailableSystems.length > 0 && (
         <div role="status" className="rounded-lg border border-amber-300 bg-amber-50 px-4 py-3 text-sm text-amber-900">
-          Reduced coverage: {data.unavailableSystems.map((s) => `${s} ${SYSTEM[s] ?? ""}`).join(", ")} didn&apos;t run
-          this time. The findings below are based on the other checks only.
+          <span className="font-medium">Reduced coverage.</span>{" "}
+          {data.unavailableSystems
+            .map((s) => {
+              const [key, ...rest] = s.split(": ");
+              const reason = rest.join(": ");
+              return `${key}${SYSTEM[key] ? ` (${SYSTEM[key]})` : ""}${reason ? `: ${reason}` : " didn't run"}`;
+            })
+            .join(" · ")}
+          . The findings below are based on the checks that did run.
         </div>
       )}
 

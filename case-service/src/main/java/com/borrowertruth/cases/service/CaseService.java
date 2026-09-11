@@ -115,7 +115,8 @@ public class CaseService {
         CaseIn c = cases.get(borrowerId);
         if (c == null) return Optional.empty();
         List<String> down = c.coverage() == null ? List.of() : c.coverage().entrySet().stream()
-                .filter(e -> !"ok".equals(e.getValue())).map(Map.Entry::getKey).sorted().toList();
+                .filter(e -> e.getValue() == null || !e.getValue().startsWith("ok"))  // "ok (495 documents read)" is ok
+                .map(e -> e.getKey() + ": " + e.getValue()).sorted().toList();
         return Optional.of(new CaseDetail(c, steps(borrowerId), audit(borrowerId), caseStatus(borrowerId), down,
                 List.copyOf(live.getOrDefault(borrowerId, new ArrayDeque<>()))));
     }

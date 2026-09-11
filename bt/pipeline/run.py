@@ -118,9 +118,12 @@ def main(argv=None):
         counts[c["verdict"]] = counts.get(c["verdict"], 0) + 1
     print(f"as_of month {a.as_of}: {len(signals)} signals, {len(cases)} cases {counts}")
     for k, v in metrics.items():
-        if isinstance(v, dict):
+        if isinstance(v, dict) and "status" in v:
             print(f"  {k:9} {v['status']:12} {v['seconds']:>7.3f}s  {v.get('signals', v.get('cases', ''))}"
                   + (f"  ({v['error']})" if "error" in v else ""))
+    q = metrics["data_quality"]["quarantined"]
+    print("  data      " + ("ok" if not q else "QUARANTINED " + ", ".join(f"{t}: {v['issues'][0]} -> {v['using']}"
+                                                                   for t, v in q.items())))
     print(f"  total {metrics['total_seconds']:.2f}s")
 
 
