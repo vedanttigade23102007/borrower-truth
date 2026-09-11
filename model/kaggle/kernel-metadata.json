@@ -1,5 +1,5 @@
 {
-  "id": "REPLACE_WITH_KAGGLE_USERNAME/borrower-truth-invoice-reader",
+  "id": "vedanttigade5/borrower-truth-invoice-reader",
   "title": "borrower-truth-invoice-reader",
   "code_file": "train_invoice_reader.py",
   "language": "python",
@@ -7,7 +7,7 @@
   "is_private": true,
   "enable_gpu": true,
   "enable_internet": true,
-  "dataset_sources": ["REPLACE_WITH_KAGGLE_USERNAME/borrower-truth-invoices"],
+  "dataset_sources": ["vedanttigade5/borrower-truth-invoices"],
   "competition_sources": [],
   "kernel_sources": []
 }

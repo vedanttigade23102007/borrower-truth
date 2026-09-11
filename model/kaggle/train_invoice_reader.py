@@ -26,15 +26,24 @@ import time
 
 import torch
 from PIL import Image
-from transformers import DonutProcessor, VisionEncoderDecoderModel
+from transformers import DonutProcessor, VisionEncoderDecoderConfig, VisionEncoderDecoderModel
 
 BASE = "naver-clova-ix/donut-base"
-DATA = "/kaggle/input/borrower-truth-invoices"
+def _find_data_root(base="/kaggle/input"):
+    # Kaggle's mount layout has changed over time; find the folder holding train/metadata.jsonl
+    for root, _dirs, files in os.walk(base):
+        if "metadata.jsonl" in files and os.path.basename(root) == "train":
+            return os.path.dirname(root)
+    raise FileNotFoundError(f"no train/metadata.jsonl under {base}")
+
+
+DATA = _find_data_root()
+print("data root:", DATA)
 OUT = "/kaggle/working"
 FIELDS = ["invoice_number", "po_number", "bill_to", "invoice_date", "total"]
 TASK = "<s_invoice>"
 IMG_SIZE = (1280, 960)  # (height, width): smaller than Donut's default so a 16 GB T4/P100 fits
-EPOCHS, LR, MAX_LEN = 8, 3e-5, 128
+EPOCHS, LR, MAX_LEN = 5, 3e-5, 128
 device = "cuda" if torch.cuda.is_available() else "cpu"
 random.seed(0)
 torch.manual_seed(0)
@@ -68,10 +77,12 @@ processor.tokenizer.add_special_tokens({"additional_special_tokens": new_tokens}
 
 
 def make_model():
-    m = VisionEncoderDecoderModel.from_pretrained(BASE)
+    # image size must be in the config BEFORE loading (Donut's documented fine-tuning setup)
+    cfg = VisionEncoderDecoderConfig.from_pretrained(BASE)
+    cfg.encoder.image_size = list(IMG_SIZE)
+    cfg.decoder.max_length = MAX_LEN
+    m = VisionEncoderDecoderModel.from_pretrained(BASE, config=cfg)
     m.decoder.resize_token_embeddings(len(processor.tokenizer))
-    m.config.encoder.image_size = list(IMG_SIZE)
-    m.config.decoder.max_length = MAX_LEN
     m.config.pad_token_id = processor.tokenizer.pad_token_id
     m.config.decoder_start_token_id = processor.tokenizer.convert_tokens_to_ids(TASK)
     return m.to(device)
@@ -127,7 +138,7 @@ torch.cuda.empty_cache()
 model = make_model()
 model.gradient_checkpointing_enable()
 opt = torch.optim.AdamW(model.parameters(), lr=LR)
-scaler = torch.cuda.amp.GradScaler(enabled=device == "cuda")
+scaler = torch.amp.GradScaler("cuda", enabled=device == "cuda")
 for epoch in range(EPOCHS):
     model.train()
     random.shuffle(train)
