@@ -322,10 +322,25 @@ The switch-off test shows every system contributes.
 - **PledgeCheck covers more than first assumed**, including collections matching. The design now ingests its result and targets the borrower around the pool.
 - **Lien matching uses names plus addresses.** Registers have no IDs, and name-only matching produced false alarms.
 
+**Document model** (`proof/model/MODEL.md`): Donut fine-tuned on a Kaggle T4, tested on 342 held-out invoices.
+- Field accuracy: total 96.5%; all five fields 84.8%.
+- Tamper check: 11 of 11 tampered invoices flagged; false flags on 3.3% of clean ones.
+- Speed: 120 docs/min.
+
+**Live full stack** (`proof/STACK-DEMO.md`, Codespaces):
+- 59,551 payments streamed.
+- Payment → signal: p50 24 ms, p95 29 ms.
+- 0 dead letters.
+- Batch run: 1.34 s.
+
+**Deployed privately:**
+- The console on Vercel, as a preview behind Vercel login.
+- Grafana and the case service on private Codespaces ports.
+
 **Still to do:**
-- Fine-tune the document model on Kaggle. It needs Vedant's Kaggle and Hugging Face tokens.
-- Run the full stack in Codespaces.
-- Deploy the console to Vercel, after Vedant approves the public link.
+- Line-item cross-check to cut false tamper flags.
+- Compare the document model against a zero-shot general VLM.
+- Test on real documents, which needs bank data.
 
 ## 11. Interview story, in 30 seconds
 "Your biggest loan book is lending to lenders. The frauds hitting that market use seven different tricks, and each one hides in a different place. You backed a tool that protects the collateral pool. I designed seven connected checks that watch the borrower around the pool. The system doesn't just flag a borrower: it tells the officer what's wrong, shows the proof, suggests the fix and drafts the paperwork, all for one-click approval. The document reading runs on a small model I fine-tuned, so borrower data never leaves the bank. It's built on your stack: Kafka, Airflow, Spring Boot."

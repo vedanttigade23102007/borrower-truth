@@ -1,0 +1,32 @@
+{
+ "base": {
+  "model": "donut-base (not fine-tuned)",
+  "field_accuracy": {
+   "invoice_number": 0.0,
+   "po_number": 0.0,
+   "bill_to": 0.0,
+   "invoice_date": 0.0,
+   "total": 0.0
+  },
+  "all_fields_correct": 0.0,
+  "tamper_precision": 0.03,
+  "tamper_recall": 1.0,
+  "docs_per_minute": 194.4,
+  "n": 100
+ },
+ "fine_tuned": {
+  "model": "donut fine-tuned (test, unseen borrowers)",
+  "field_accuracy": {
+   "invoice_number": 0.9502923976608187,
+   "po_number": 0.9707602339181286,
+   "bill_to": 1.0,
+   "invoice_date": 0.956140350877193,
+   "total": 0.9649122807017544
+  },
+  "all_fields_correct": 0.847953216374269,
+  "tamper_precision": 0.5,
+  "tamper_recall": 1.0,
+  "docs_per_minute": 120.0,
+  "n": 342
+ }
+}

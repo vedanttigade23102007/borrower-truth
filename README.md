@@ -75,6 +75,12 @@ Every system loses detections when it is switched off, so each one earns its pla
 - **Drafting fallbacks:** drafts fall back from the model to templates.
 - **Delivery fallbacks:** if the case service is down, the pipeline parks the run and replays it later.
 
+**Document model** (`proof/model/MODEL.md`): Donut fine-tuned on a free Kaggle T4, tested on 342 invoices from borrowers it never saw.
+- It reads the **total correctly 96.5%** of the time, and all five fields 84.8%.
+- It **caught all 11 tampered invoices**, with false flags on 3.3% of clean ones; every flag goes to a person to confirm.
+- It reads 120 invoices per minute.
+- The untrained base model scores 0%. That's a weak comparison (it can't produce the format without training), and is labelled as such.
+
 **Full stack, live in Codespaces** (`proof/STACK-DEMO.md`):
 - 59,551 payments streamed through Kafka.
 - A suspicious payer is flagged **24 ms after the payment arrives** (p50; p95 29 ms).

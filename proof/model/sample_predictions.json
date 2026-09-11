@@ -1,0 +1,902 @@
+[
+ {
+  "file": "INV00005062.png",
+  "truth": {
+   "invoice_number": "B0013-11928",
+   "po_number": "PO400081",
+   "bill_to": "Granite Credit LLC",
+   "invoice_date": "2026-04-24",
+   "total": "24541.77"
+  },
+  "pred": {
+   "invoice_number": "B0013-11928",
+   "po_number": "PO400081",
+   "bill_to": "Granite Credit LLC",
+   "invoice_date": "2026-04-24",
+   "total": "24541.77"
+  },
+  "tampered": false
+ },
+ {
+  "file": "INV00012594.png",
+  "truth": {
+   "invoice_number": "B0024-12774",
+   "po_number": "PO502737",
+   "bill_to": "Crescent Partners Inc",
+   "invoice_date": "2026-08-04",
+   "total": "30365.67"
+  },
+  "pred": {
+   "invoice_number": "B0024-12774",
+   "po_number": "PO502737",
+   "bill_to": "Crescent Partners Inc",
+   "invoice_date": "2026-08-04",
+   "total": "30365.67"
+  },
+  "tampered": false
+ },
+ {
+  "file": "INV00053840.png",
+  "truth": {
+   "invoice_number": "B0081-11673",
+   "po_number": "PO867250",
+   "bill_to": "Crescent Lending Corp",
+   "invoice_date": "2026-06-08",
+   "total": "35459.80"
+  },
+  "pred": {
+   "invoice_number": "B0081-11673",
+   "po_number": "PO867250",
+   "bill_to": "Crescent Lending Corp",
+   "invoice_date": "2026-06-08",
+   "total": "35459.80"
+  },
+  "tampered": false
+ },
+ {
+  "file": "INV00028202.png",
+  "truth": {
+   "invoice_number": "B0044-11234",
+   "po_number": "PO875250",
+   "bill_to": "Bluebonnet Distribution LP",
+   "invoice_date": "2026-01-13",
+   "total": "35761.51"
+  },
+  "pred": {
+   "invoice_number": "B0044-11234",
+   "po_number": "PO875250",
+   "bill_to": "Bluebonnet Distribution LP",
+   "invoice_date": "2026-01-13",
+   "total": "35761.51"
+  },
+  "tampered": false
+ },
+ {
+  "file": "INV00063079.png",
+  "truth": {
+   "invoice_number": "B0092-11637",
+   "po_number": "PO580373",
+   "bill_to": "Pioneer Lending LLC",
+   "invoice_date": "2026-06-20",
+   "total": "76066.54"
+  },
+  "pred": {
+   "invoice_number": "B0092-11637",
+   "po_number": "PO580373",
+   "bill_to": "Pioneer Lending LLC",
+   "invoice_date": "2026-06-20",
+   "total": "76066.54"
+  },
+  "tampered": false
+ },
+ {
+  "file": "INV00005265.png",
+  "truth": {
+   "invoice_number": "B0013-12121",
+   "po_number": "PO116770",
+   "bill_to": "Northstar Industries Inc",
+   "invoice_date": "2026-06-11",
+   "total": "7959.79"
+  },
+  "pred": {
+   "invoice_number": "B0013-121",
+   "po_number": "PO116770",
+   "bill_to": "Northstar Industries Inc",
+   "invoice_date": "2026-06-11",
+   "total": "7959.79"
+  },
+  "tampered": false
+ },
+ {
+  "file": "INV00067191.png",
+  "truth": {
+   "invoice_number": "B0118-10383",
+   "po_number": "PO622398",
+   "bill_to": "Silverline Lending Corp",
+   "invoice_date": "2024-12-25",
+   "total": "57776.66"
+  },
+  "pred": {
+   "invoice_number": "B0118-10383",
+   "po_number": "PO622398",
+   "bill_to": "Silverline Lending Corp",
+   "invoice_date": "2024-12-25",
+   "total": "57776.66"
+  },
+  "tampered": false
+ },
+ {
+  "file": "INV00039847.png",
+  "truth": {
+   "invoice_number": "B0062-11440",
+   "po_number": "PO198108",
+   "bill_to": "Lakeshore Industries LP",
+   "invoice_date": "2026-03-24",
+   "total": "38007.93"
+  },
+  "pred": {
+   "invoice_number": "B006211440",
+   "po_number": "PO198108",
+   "bill_to": "Lakeshore Industries LP",
+   "invoice_date": "2026-03-24",
+   "total": "38007.93"
+  },
+  "tampered": false
+ },
+ {
+  "file": "INV00067147.png",
+  "truth": {
+   "invoice_number": "B0118-10339",
+   "po_number": "PO885230",
+   "bill_to": "Meridian Realty Corp",
+   "invoice_date": "2024-12-01",
+   "total": "132928.94"
+  },
+  "pred": {
+   "invoice_number": "B0118-10339",
+   "po_number": "PO885230",
+   "bill_to": "Meridian Realty Corp",
+   "invoice_date": "2024-12-01",
+   "total": "132928.94"
+  },
+  "tampered": false
+ },
+ {
+  "file": "INV00010177.png",
+  "truth": {
+   "invoice_number": "B0024-10357",
+   "po_number": "PO210722",
+   "bill_to": "Pioneer Distribution LP",
+   "invoice_date": "2024-12-07",
+   "total": "7209.37"
+  },
+  "pred": {
+   "invoice_number": "B0024-10357",
+   "po_number": "PO210722",
+   "bill_to": "Pioneer Distribution LP",
+   "invoice_date": "2024-12-07",
+   "total": "7209.37"
+  },
+  "tampered": false
+ },
+ {
+  "file": "INV00039153.png",
+  "truth": {
+   "invoice_number": "B0062-10746",
+   "po_number": "PO392989",
+   "bill_to": "Granite Partners Group LLC",
+   "invoice_date": "2025-07-03",
+   "total": "33053.65"
+  },
+  "pred": {
+   "invoice_number": "B0062-10746",
+   "po_number": "PO392989",
+   "bill_to": "Granite Partners Group LLC",
+   "invoice_date": "2025-07-03",
+   "total": "33053.65"
+  },
+  "tampered": false
+ },
+ {
+  "file": "INV00052470.png",
+  "truth": {
+   "invoice_number": "B0081-10303",
+   "po_number": "PO101570",
+   "bill_to": "Cobalt Trade Group LLC",
+   "invoice_date": "2025-01-09",
+   "total": "22020.96"
+  },
+  "pred": {
+   "invoice_number": "B0081-10303",
+   "po_number": "PO101570",
+   "bill_to": "Cobalt Trade Group LLC",
+   "invoice_date": "2025-01-09",
+   "total": "22020.96"
+  },
+  "tampered": false
+ },
+ {
+  "file": "INV00068963.png",
+  "truth": {
+   "invoice_number": "B0118-12155",
+   "po_number": "PO860292",
+   "bill_to": "Granite Finance Inc",
+   "invoice_date": "2026-02-18",
+   "total": "56104.25"
+  },
+  "pred": {
+   "invoice_number": "B0118-12155",
+   "po_number": "PO860292",
+   "bill_to": "Granite Finance Inc",
+   "invoice_date": "2026-02-18",
+   "total": "56104.25"
+  },
+  "tampered": false
+ },
+ {
+  "file": "INV00053431.png",
+  "truth": {
+   "invoice_number": "B0081-11264",
+   "po_number": "PO750260",
+   "bill_to": "Northstar Distribution Group LLC",
+   "invoice_date": "2026-01-15",
+   "total": "116215.68"
+  },
+  "pred": {
+   "invoice_number": "B0081-11264",
+   "po_number": "PO750260",
+   "bill_to": "Northstar Distribution Group LLC",
+   "invoice_date": "2026-01-15",
+   "total": "116215.68"
+  },
+  "tampered": false
+ },
+ {
+  "file": "INV00067967.png",
+  "truth": {
+   "invoice_number": "B0118-11159",
+   "po_number": "PO593002",
+   "bill_to": "Crescent Funding Group LLC",
+   "invoice_date": "2025-06-06",
+   "total": "57658.88"
+  },
+  "pred": {
+   "invoice_number": "B0118-11159",
+   "po_number": "PO593002",
+   "bill_to": "Crescent Funding Group LLC",
+   "invoice_date": "2025-06-06",
+   "total": "57658.88"
+  },
+  "tampered": false
+ },
+ {
+  "file": "INV00038972.png",
+  "truth": {
+   "invoice_number": "B0062-10565",
+   "po_number": "PO336880",
+   "bill_to": "Redwood Parts LLC",
+   "invoice_date": "2025-04-12",
+   "total": "6759.99"
+  },
+  "pred": {
+   "invoice_number": "B0062-10565",
+   "po_number": "PO336880",
+   "bill_to": "Redwood Parts LLC",
+   "invoice_date": "2025-04-12",
+   "total": "6759.99"
+  },
+  "tampered": false
+ },
+ {
+  "file": "INV00011975.png",
+  "truth": {
+   "invoice_number": "B0024-12155",
+   "po_number": "PO155726",
+   "bill_to": "Magnolia Parts Inc",
+   "invoice_date": "2026-03-18",
+   "total": "6434.45"
+  },
+  "pred": {
+   "invoice_number": "B0024-1215",
+   "po_number": "PO155726",
+   "bill_to": "Magnolia Parts Inc",
+   "invoice_date": "2026-03-18",
+   "total": "6434.45"
+  },
+  "tampered": false
+ },
+ {
+  "file": "INV00028687.png",
+  "truth": {
+   "invoice_number": "B0044-11719",
+   "po_number": "PO438286",
+   "bill_to": "Crescent Lending Corp",
+   "invoice_date": "2026-07-21",
+   "total": "63314.83"
+  },
+  "pred": {
+   "invoice_number": "B0044-11719",
+   "po_number": "PO438286",
+   "bill_to": "Crescent Lending Corp",
+   "invoice_date": "2026-07-21",
+   "total": "63314.83"
+  },
+  "tampered": false
+ },
+ {
+  "file": "INV00039770.png",
+  "truth": {
+   "invoice_number": "B0062-11363",
+   "po_number": "PO423023",
+   "bill_to": "Keystone Partners Corp",
+   "invoice_date": "2026-02-13",
+   "total": "69190.59"
+  },
+  "pred": {
+   "invoice_number": "B0062-11363",
+   "po_number": "PO423023",
+   "bill_to": "Keystone Partners Corp",
+   "invoice_date": "2026-02-13",
+   "total": "69190.59"
+  },
+  "tampered": false
+ },
+ {
+  "file": "INV00012044.png",
+  "truth": {
+   "invoice_number": "B0024-12224",
+   "po_number": "PO346540",
+   "bill_to": "Pioneer Distribution LP",
+   "invoice_date": "2026-03-12",
+   "total": "12493.46"
+  },
+  "pred": {
+   "invoice_number": "B0024-12224",
+   "po_number": "PO346540",
+   "bill_to": "Pioneer Distribution LP",
+   "invoice_date": "2026-03-12",
+   "total": "12493.46"
+  },
+  "tampered": false
+ },
+ {
+  "file": "INV00039503.png",
+  "truth": {
+   "invoice_number": "B0062-11096",
+   "po_number": "PO770475",
+   "bill_to": "Northstar Motor LP",
+   "invoice_date": "2025-12-02",
+   "total": "7602.44"
+  },
+  "pred": {
+   "invoice_number": "B0062-11096",
+   "po_number": "PO770475",
+   "bill_to": "Northstar Motor LP",
+   "invoice_date": "2025-12-02",
+   "total": "7602.44"
+  },
+  "tampered": false
+ },
+ {
+  "file": "INV00038422.png",
+  "truth": {
+   "invoice_number": "B0062-10015",
+   "po_number": "PO546753",
+   "bill_to": "Lakeshore Holdings Inc",
+   "invoice_date": "2024-10-04",
+   "total": "61454.28"
+  },
+  "pred": {
+   "invoice_number": "B0062-10015",
+   "po_number": "PO546753",
+   "bill_to": "Lakeshore Holdings Inc",
+   "invoice_date": "2024-10-04",
+   "total": "61454.28"
+  },
+  "tampered": false
+ },
+ {
+  "file": "INV00003391.png",
+  "truth": {
+   "invoice_number": "B0013-10325",
+   "po_number": "PO930547",
+   "bill_to": "Bluebonnet Credit LLC",
+   "invoice_date": "2025-01-26",
+   "total": "21161.02"
+  },
+  "pred": {
+   "invoice_number": "B0013-10325",
+   "po_number": "PO930547",
+   "bill_to": "Bluebonnet Credit LLC",
+   "invoice_date": "2025-01-26",
+   "total": "21161.02"
+  },
+  "tampered": false
+ },
+ {
+  "file": "INV00068567.png",
+  "truth": {
+   "invoice_number": "B0118-11759",
+   "po_number": "PO544410",
+   "bill_to": "Crescent Auto Inc",
+   "invoice_date": "2025-11-04",
+   "total": "40892.99"
+  },
+  "pred": {
+   "invoice_number": "B0118-11759",
+   "po_number": "PO544410",
+   "bill_to": "Crescent Auto Inc",
+   "invoice_date": "2025-11-04",
+   "total": "40892.99"
+  },
+  "tampered": false
+ },
+ {
+  "file": "INV00039099.png",
+  "truth": {
+   "invoice_number": "B0062-10692",
+   "po_number": "PO822534",
+   "bill_to": "Canyon Finance LLC",
+   "invoice_date": "2025-06-18",
+   "total": "81600.26"
+  },
+  "pred": {
+   "invoice_number": "B0062-10692",
+   "po_number": "PO82534",
+   "bill_to": "Canyon Finance LLC",
+   "invoice_date": "2025-06-18",
+   "total": "81600.26"
+  },
+  "tampered": false
+ },
+ {
+  "file": "INV00039599.png",
+  "truth": {
+   "invoice_number": "B0062-11192",
+   "po_number": "PO930324",
+   "bill_to": "Canyon Partners Inc",
+   "invoice_date": "2026-01-12",
+   "total": "46633.79"
+  },
+  "pred": {
+   "invoice_number": "B0062-11192",
+   "po_number": "PO930324",
+   "bill_to": "Canyon Partners Inc",
+   "invoice_date": "2026-01-12",
+   "total": "46633.79"
+  },
+  "tampered": false
+ },
+ {
+  "file": "INV00011254.png",
+  "truth": {
+   "invoice_number": "B0024-11434",
+   "po_number": "PO593645",
+   "bill_to": "Magnolia Supply Corp",
+   "invoice_date": "2025-09-27",
+   "total": "28012.44"
+  },
+  "pred": {
+   "invoice_number": "B0024-11434",
+   "po_number": "PO593645",
+   "bill_to": "Magnolia Supply Corp",
+   "invoice_date": "2025-09-27",
+   "total": "28012.44"
+  },
+  "tampered": false
+ },
+ {
+  "file": "INV00052522.png",
+  "truth": {
+   "invoice_number": "B0081-10355",
+   "po_number": "PO453726",
+   "bill_to": "Magnolia Finance Group LLC",
+   "invoice_date": "2025-02-06",
+   "total": "26451.38"
+  },
+  "pred": {
+   "invoice_number": "B0081-10355",
+   "po_number": "PO453726",
+   "bill_to": "Magnolia Finance Group LLC",
+   "invoice_date": "2025-02-06",
+   "total": "26451.38"
+  },
+  "tampered": false
+ },
+ {
+  "file": "INV00012506.png",
+  "truth": {
+   "invoice_number": "B0024-12686",
+   "po_number": "PO434990",
+   "bill_to": "Redwood Distribution Corp",
+   "invoice_date": "2026-07-27",
+   "total": "36775.80"
+  },
+  "pred": {
+   "invoice_number": "B0024-12686",
+   "po_number": "PO434990",
+   "bill_to": "Redwood Distribution Corp",
+   "invoice_date": "2026-07-27",
+   "total": "36775.80"
+  },
+  "tampered": false
+ },
+ {
+  "file": "INV00027644.png",
+  "truth": {
+   "invoice_number": "B0044-10676",
+   "po_number": "PO644573",
+   "bill_to": "Magnolia Holdings Corp",
+   "invoice_date": "2025-05-20",
+   "total": "19495.63"
+  },
+  "pred": {
+   "invoice_number": "B0044-10676",
+   "po_number": "PO644573",
+   "bill_to": "Magnolia Holdings Corp",
+   "invoice_date": "2025-05-20",
+   "total": "19495.63"
+  },
+  "tampered": false
+ },
+ {
+  "file": "INV00028181.png",
+  "truth": {
+   "invoice_number": "B0044-11213",
+   "po_number": "PO128810",
+   "bill_to": "Tidewater Parts Group LLC",
+   "invoice_date": "2026-01-07",
+   "total": "69331.83"
+  },
+  "pred": {
+   "invoice_number": "B0044-11213",
+   "po_number": "PO128810",
+   "bill_to": "Tidewater Parts Group LLC",
+   "invoice_date": "2026-01-07",
+   "total": "69311.83"
+  },
+  "tampered": false
+ },
+ {
+  "file": "INV00068617.png",
+  "truth": {
+   "invoice_number": "B0118-11809",
+   "po_number": "PO916033",
+   "bill_to": "Harbor Trade LP",
+   "invoice_date": "2025-11-02",
+   "total": "174820.08"
+  },
+  "pred": {
+   "invoice_number": "B0118-11809",
+   "po_number": "PO916033",
+   "bill_to": "Harbor Trade LP",
+   "invoice_date": "2025-11-02",
+   "total": "174820.08"
+  },
+  "tampered": false
+ },
+ {
+  "file": "INV00062583.png",
+  "truth": {
+   "invoice_number": "B0092-11141",
+   "po_number": "PO287895",
+   "bill_to": "Pioneer Partners Group LLC",
+   "invoice_date": "2025-12-22",
+   "total": "89459.23"
+  },
+  "pred": {
+   "invoice_number": "B0092-11141",
+   "po_number": "PO287895",
+   "bill_to": "Pioneer Partners Group LLC",
+   "invoice_date": "2025-12-22",
+   "total": "89459.23"
+  },
+  "tampered": false
+ },
+ {
+  "file": "INV00027391.png",
+  "truth": {
+   "invoice_number": "B0044-10423",
+   "po_number": "PO632520",
+   "bill_to": "Summit Parts LP",
+   "invoice_date": "2025-02-01",
+   "total": "86348.93"
+  },
+  "pred": {
+   "invoice_number": "B0044-10423",
+   "po_number": "PO632520",
+   "bill_to": "Summit Parts LP",
+   "invoice_date": "2025-02-01",
+   "total": "86348.93"
+  },
+  "tampered": false
+ },
+ {
+  "file": "INV00062527.png",
+  "truth": {
+   "invoice_number": "B0092-11085",
+   "po_number": "PO919738",
+   "bill_to": "Granite Motor LLC",
+   "invoice_date": "2025-11-14",
+   "total": "95378.22"
+  },
+  "pred": {
+   "invoice_number": "B0092-11085",
+   "po_number": "PO919738",
+   "bill_to": "Granite Motor LLC",
+   "invoice_date": "2025-11-14",
+   "total": "95378.22"
+  },
+  "tampered": false
+ },
+ {
+  "file": "INV00027639.png",
+  "truth": {
+   "invoice_number": "B0044-10671",
+   "po_number": "PO890117",
+   "bill_to": "Silverline Industries Inc",
+   "invoice_date": "2025-05-13",
+   "total": "3779.55"
+  },
+  "pred": {
+   "invoice_number": "B0044-10671",
+   "po_number": "PO890117",
+   "bill_to": "Silverline Industries Inc",
+   "invoice_date": "2025-05-13",
+   "total": "3779.55"
+  },
+  "tampered": false
+ },
+ {
+  "file": "INV00010491.png",
+  "truth": {
+   "invoice_number": "B0024-10671",
+   "po_number": "PO147817",
+   "bill_to": "Granite Lending Inc",
+   "invoice_date": "2025-03-18",
+   "total": "95230.15"
+  },
+  "pred": {
+   "invoice_number": "B0024-10671",
+   "po_number": "PO147817",
+   "bill_to": "Granite Lending Inc",
+   "invoice_date": "2025-03-18",
+   "total": "95230.15"
+  },
+  "tampered": false
+ },
+ {
+  "file": "INV00012513.png",
+  "truth": {
+   "invoice_number": "B0024-12693",
+   "po_number": "PO478071",
+   "bill_to": "Tidewater Supply LLC",
+   "invoice_date": "2026-07-21",
+   "total": "11852.48"
+  },
+  "pred": {
+   "invoice_number": "B0024-12693",
+   "po_number": "PO478071",
+   "bill_to": "Tidewater Supply LLC",
+   "invoice_date": "2026-07-21",
+   "total": "11852.48"
+  },
+  "tampered": false
+ },
+ {
+  "file": "INV00011707.png",
+  "truth": {
+   "invoice_number": "B0024-11887",
+   "po_number": "PO571904",
+   "bill_to": "Magnolia Finance Inc",
+   "invoice_date": "2026-01-18",
+   "total": "218429.20"
+  },
+  "pred": {
+   "invoice_number": "B0024-11887",
+   "po_number": "PO571904",
+   "bill_to": "Magnolia Finance Inc",
+   "invoice_date": "2026-01-18",
+   "total": "218429.20"
+  },
+  "tampered": false
+ },
+ {
+  "file": "INV00068628.png",
+  "truth": {
+   "invoice_number": "B0118-11820",
+   "po_number": "PO876042",
+   "bill_to": "Sterling Supply LLC",
+   "invoice_date": "2025-11-15",
+   "total": "344856.71"
+  },
+  "pred": {
+   "invoice_number": "B0118-11820",
+   "po_number": "PO876042",
+   "bill_to": "Sterling Supply LLC",
+   "invoice_date": "2025-11-15",
+   "total": "344856.71"
+  },
+  "tampered": false
+ },
+ {
+  "file": "INV00039442.png",
+  "truth": {
+   "invoice_number": "B0062-11035",
+   "po_number": "PO701677",
+   "bill_to": "Canyon Finance LLC",
+   "invoice_date": "2025-11-02",
+   "total": "88009.29"
+  },
+  "pred": {
+   "invoice_number": "B0062-11035",
+   "po_number": "PO701677",
+   "bill_to": "Canyon Finance LLC",
+   "invoice_date": "2025-11-02",
+   "total": "88009.29"
+  },
+  "tampered": false
+ },
+ {
+  "file": "INV00004802.png",
+  "truth": {
+   "invoice_number": "B0013-11681",
+   "po_number": "PO147295",
+   "bill_to": "Northstar Industries Inc",
+   "invoice_date": "2026-02-09",
+   "total": "7472.62"
+  },
+  "pred": {
+   "invoice_number": "B0013-11681",
+   "po_number": "PO147295",
+   "bill_to": "Northstar Industries Inc",
+   "invoice_date": "2026-02-09",
+   "total": "7472.62"
+  },
+  "tampered": false
+ },
+ {
+  "file": "INV00004022.png",
+  "truth": {
+   "invoice_number": "B0013-10940",
+   "po_number": "PO488474",
+   "bill_to": "Lakeshore Realty Group LLC",
+   "invoice_date": "2025-07-08",
+   "total": "34739.98"
+  },
+  "pred": {
+   "invoice_number": "B0013-10940",
+   "po_number": "PO488474",
+   "bill_to": "Lakeshore Realty Group LLC",
+   "invoice_date": "2025-07-08",
+   "total": "34739.98"
+  },
+  "tampered": false
+ },
+ {
+  "file": "INV00027444.png",
+  "truth": {
+   "invoice_number": "B0044-10476",
+   "po_number": "PO344333",
+   "bill_to": "Summit Distribution Group LLC",
+   "invoice_date": "2025-03-18",
+   "total": "12949.65"
+  },
+  "pred": {
+   "invoice_number": "B0044-10476",
+   "po_number": "PO344333",
+   "bill_to": "Summit Distribution Group LLC",
+   "invoice_date": "2025-03-18",
+   "total": "12949.65"
+  },
+  "tampered": false
+ },
+ {
+  "file": "INV00011815.png",
+  "truth": {
+   "invoice_number": "B0024-11995",
+   "po_number": "PO509161",
+   "bill_to": "Pioneer Industries Inc",
+   "invoice_date": "2026-02-09",
+   "total": "51351.71"
+  },
+  "pred": {
+   "invoice_number": "B0024-11995",
+   "po_number": "PO509161",
+   "bill_to": "Pioneer Industries Inc",
+   "invoice_date": "2026-02-09",
+   "total": "51351.71"
+  },
+  "tampered": false
+ },
+ {
+  "file": "INV00052596.png",
+  "truth": {
+   "invoice_number": "B0081-10429",
+   "po_number": "PO876955",
+   "bill_to": "Prairie Partners LP",
+   "invoice_date": "2025-03-04",
+   "total": "58845.77"
+  },
+  "pred": {
+   "invoice_number": "B0081-10429",
+   "po_number": "PO876955",
+   "bill_to": "Prairie Partners LP",
+   "invoice_date": "2025-03-04",
+   "total": "58845.77"
+  },
+  "tampered": false
+ },
+ {
+  "file": "INV00069723.png",
+  "truth": {
+   "invoice_number": "B0118-12915",
+   "po_number": "PO390037",
+   "bill_to": "Meridian Capital LP",
+   "invoice_date": "2026-07-23",
+   "total": "76264.85"
+  },
+  "pred": {
+   "invoice_number": "B0118-12915",
+   "po_number": "PO390037",
+   "bill_to": "Meridian Capital LP",
+   "invoice_date": "2026-07-23",
+   "total": "76264.85"
+  },
+  "tampered": false
+ },
+ {
+  "file": "INV00067138.png",
+  "truth": {
+   "invoice_number": "B0118-10330",
+   "po_number": "PO497820",
+   "bill_to": "Prairie Lending Inc",
+   "invoice_date": "2024-12-22",
+   "total": "3677.43"
+  },
+  "pred": {
+   "invoice_number": "B0118-10330",
+   "po_number": "PO497820",
+   "bill_to": "Prairie Lending Inc",
+   "invoice_date": "2024-12-22",
+   "total": "3677.43"
+  },
+  "tampered": false
+ },
+ {
+  "file": "INV00038635.png",
+  "truth": {
+   "invoice_number": "B0062-10228",
+   "po_number": "PO429109",
+   "bill_to": "Lakeshore Industries LP",
+   "invoice_date": "2024-12-17",
+   "total": "13636.30"
+  },
+  "pred": {
+   "invoice_number": "B0062-10228",
+   "po_number": "PO429109",
+   "bill_to": "Lakeshore Industries LP",
+   "invoice_date": "2024-12-17",
+   "total": "13636.30"
+  },
+  "tampered": false
+ },
+ {
+  "file": "INV00070104.png",
+  "truth": {
+   "invoice_number": "B0118-13296",
+   "po_number": "PO906236",
+   "bill_to": "Granite Credit LLC",
+   "invoice_date": "2026-09-14",
+   "total": "18996.42"
+  },
+  "pred": {
+   "invoice_number": "B0118-13296",
+   "po_number": "PO906236",
+   "bill_to": "Granite Credit LLC",
+   "invoice_date": "2026-09-14",
+   "total": "18996.42"
+  },
+  "tampered": false
+ }
+]
