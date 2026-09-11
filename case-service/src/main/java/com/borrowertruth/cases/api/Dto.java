@@ -35,10 +35,16 @@ public final class Dto {
                            String note) {}
 
     public record CaseSummary(String borrowerId, String verdict, String headline, double priority,
-                              List<String> mechanisms, long openSteps, String caseStatus) {}
+                              List<String> mechanisms, long openSteps, String caseStatus, int liveAlerts) {}
 
     public record CaseDetail(CaseIn caseData, List<StepView> steps, List<AuditView> audit, String caseStatus,
-                             List<String> unavailableSystems) {}
+                             List<String> unavailableSystems, List<LiveAlertView> liveAlerts) {}
+
+    /** A real-time S3 signal from the streaming worker, forwarded by the signal bridge. */
+    public record LiveAlertIn(@NotBlank String borrowerId, @NotBlank String type, String txnId, String payerName,
+                              double amount, String entityId, double detectedAt) {}
+
+    public record LiveAlertView(String type, String txnId, String payerName, double amount, Instant detectedAt) {}
 
     public record AuditView(long id, Instant at, String actor, String borrowerId, String action, String detail) {}
 

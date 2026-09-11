@@ -13,7 +13,7 @@ import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/api")
-@CrossOrigin(origins = {"http://localhost:3000"})
+@CrossOrigin(origins = {"http://localhost:3000", "http://localhost:3001"})
 public class CaseController {
     private final CaseService service;
 
@@ -25,6 +25,12 @@ public class CaseController {
     @PostMapping("/runs")
     public RunAck ingest(@Valid @RequestBody RunIn run) {
         return service.ingest(run);
+    }
+
+    /** Adapter boundary for streaming: the signal bridge posts batches of real-time S3 alerts here. */
+    @PostMapping("/live-alerts")
+    public Map<String, Integer> liveAlerts(@RequestBody List<LiveAlertIn> alerts) {
+        return Map.of("accepted", service.addLive(alerts));
     }
 
     @GetMapping("/runs/latest")

@@ -62,7 +62,16 @@ export type AuditEvent = {
   detail: string;
 };
 
+export type LiveAlert = {
+  type: string;
+  txnId: string | null;
+  payerName: string | null;
+  amount: number;
+  detectedAt: string;
+};
+
 export type CaseDetail = {
+  liveAlerts?: LiveAlert[];
   caseData: CaseData;
   steps: Step[];
   audit: AuditEvent[];
@@ -71,6 +80,7 @@ export type CaseDetail = {
 };
 
 export type CaseSummary = {
+  liveAlerts?: number;
   borrowerId: string;
   verdict: Verdict;
   headline: string;

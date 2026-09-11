@@ -72,6 +72,26 @@ export default function CasePage({ params }: { params: Promise<{ id: string }> }
         </div>
       )}
 
+      {(data.liveAlerts?.length ?? 0) > 0 && (
+        <Card className="overflow-hidden">
+          <h2 className="border-b border-zinc-200 px-4 py-3 text-sm font-medium text-zinc-900">
+            Live payment alerts <span className="text-zinc-500">{data.liveAlerts!.length}</span>
+            <span className="ml-2 text-xs font-normal text-zinc-500">from the streaming cash check (S3), newest first</span>
+          </h2>
+          <ul className="divide-y divide-zinc-100 text-sm">
+            {data.liveAlerts!.slice(0, 8).map((a, i) => (
+              <li key={`${a.txnId}-${i}`} className="flex flex-wrap gap-x-3 px-4 py-2">
+                <Badge tone="red">{signalLabel(a.type)}</Badge>
+                <span className="text-zinc-900">{a.payerName ?? "unknown payer"}</span>
+                <span className="tabular-nums text-zinc-700">${a.amount.toLocaleString(undefined, { maximumFractionDigits: 0 })}</span>
+                <span className="font-mono text-xs text-zinc-500">{a.txnId}</span>
+                <span className="text-zinc-500">{fmtDate(a.detectedAt)}</span>
+              </li>
+            ))}
+          </ul>
+        </Card>
+      )}
+
       {actionable.length > 0 && (
         <section className="space-y-3">
           <h2 className="text-sm font-medium text-zinc-500">What we found</h2>

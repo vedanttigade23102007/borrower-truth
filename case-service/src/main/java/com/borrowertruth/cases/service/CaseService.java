@@ -15,6 +15,7 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentLinkedDeque;
 import java.util.stream.Collectors;
 
 /**
@@ -30,6 +31,8 @@ public class CaseService {
     private final MeterRegistry meters;
     private final Clock clock;
     private final Map<String, CaseIn> cases = new ConcurrentHashMap<>();
+    private final Map<String, Deque<LiveAlertView>> live = new ConcurrentHashMap<>();
+    private static final int LIVE_KEEP = 50;
     private volatile RunIn lastRun;
     private volatile Instant lastRunAt;
 
@@ -88,8 +91,24 @@ public class CaseService {
                 .map(c -> new CaseSummary(c.borrowerId(), c.verdict(), c.headline(), c.priority(),
                         c.findings() == null ? List.of() : c.findings().stream()
                                 .filter(f -> ACTIONABLE.contains(f.confidence())).map(FindingIn::mechanism).toList(),
-                        open.getOrDefault(c.borrowerId(), 0L), caseStatus(c.borrowerId())))
+                        open.getOrDefault(c.borrowerId(), 0L), caseStatus(c.borrowerId()),
+                        live.getOrDefault(c.borrowerId(), new ArrayDeque<>()).size()))
                 .toList();
+    }
+
+    /** Real-time alerts from the streaming worker. Kept in memory (the newest 50 per borrower); each batch is audited. */
+    public int addLive(List<LiveAlertIn> alerts) {
+        Map<String, Integer> perBorrower = new TreeMap<>();
+        for (LiveAlertIn a : alerts) {
+            Deque<LiveAlertView> q = live.computeIfAbsent(a.borrowerId(), k -> new ConcurrentLinkedDeque<>());
+            q.addFirst(new LiveAlertView(a.type(), a.txnId(), a.payerName(), a.amount(),
+                    Instant.ofEpochMilli((long) (a.detectedAt() * 1000))));
+            while (q.size() > LIVE_KEEP) q.pollLast();
+            perBorrower.merge(a.borrowerId(), 1, Integer::sum);
+        }
+        perBorrower.forEach((b, n) -> audit("stream", b, "LIVE_ALERT", n + " real-time payment alert(s) from S3"));
+        meters.counter("bt.live_alerts").increment(alerts.size());
+        return alerts.size();
     }
 
     public Optional<CaseDetail> detail(String borrowerId) {
@@ -97,7 +116,8 @@ public class CaseService {
         if (c == null) return Optional.empty();
         List<String> down = c.coverage() == null ? List.of() : c.coverage().entrySet().stream()
                 .filter(e -> !"ok".equals(e.getValue())).map(Map.Entry::getKey).sorted().toList();
-        return Optional.of(new CaseDetail(c, steps(borrowerId), audit(borrowerId), caseStatus(borrowerId), down));
+        return Optional.of(new CaseDetail(c, steps(borrowerId), audit(borrowerId), caseStatus(borrowerId), down,
+                List.copyOf(live.getOrDefault(borrowerId, new ArrayDeque<>()))));
     }
 
     /** One-click decisions. DONE is only allowed after APPROVE: nothing is carried out unapproved. */

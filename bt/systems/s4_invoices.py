@@ -45,8 +45,41 @@ GROUP BY 1
 """
 
 
+DOC_READS = "doc_reads.parquet"
+
+
+def document_check(ctx: Ctx) -> list:
+    """Document vs data: the fine-tuned reader's total (after its second look) vs the
+    borrower's invoice record. Reads come from the document batch job
+    (model/kaggle_score); if they are missing, S4 runs on rules alone and every case
+    says so (fallback, design §12)."""
+    import os
+    path = os.path.join(ctx.data_dir, DOC_READS)
+    if not os.path.exists(path):
+        ctx.shared["documents"] = "unavailable (rule checks only)"
+        return []
+    rows = ctx.rows(f"""
+        SELECT d.borrower_id, count(*) AS n, count(*) FILTER (WHERE d.doc_mismatch) AS bad,
+               count(*) FILTER (WHERE d.doc_mismatch AND d.reads_agree) AS bad_agree,
+               list(d.invoice_id) FILTER (WHERE d.doc_mismatch)[1:3] AS ex, min(i.pledged_month) AS first_m
+        FROM read_parquet('{path}') d JOIN invoices i USING (invoice_id)
+        GROUP BY 1""")
+    ctx.shared["documents"] = f"ok ({sum(r['n'] for r in rows)} documents read)"
+    out = []
+    for r in rows:
+        if r["bad"] == 0:
+            continue
+        # two independent reads agreeing on a different total is stronger than one read
+        conf = 0.85 if r["bad_agree"] == r["bad"] else 0.6
+        out.append(sig("S4", r["borrower_id"], "DOC_DATA_MISMATCH", 0.8, conf,
+                       [f"document:{x}" for x in r["ex"]] + [f"mismatched:{r['bad']}/{r['n']}"],
+                       f"{r['bad']} of {r['n']} invoice documents show a different total from the borrower's data "
+                       f"(read twice by the document model)", r["first_m"] or ctx.as_of))
+    return out
+
+
 def run(ctx: Ctx):
-    out, a = [], ctx.as_of
+    out, a = document_check(ctx), ctx.as_of
     for r in ctx.rows(ALTERED):
         out.append(sig("S4", r["borrower_id"], "ALTERED_INVOICE", 0.9, 0.95,
                        [f"invoice:{x}" for x in r["ex"]] + [f"count:{r['n']}"],

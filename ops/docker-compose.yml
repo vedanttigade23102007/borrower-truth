@@ -41,6 +41,16 @@ services:
     depends_on: {topics: {condition: service_completed_successfully}}
     restart: unless-stopped
 
+  signal-bridge:       # real-time S3 alerts -> case service (live alerts on the case page)
+    build: {context: .., dockerfile: ops/worker.Dockerfile}
+    command: ["python", "-m", "bt.stream.signal_bridge", "--bootstrap", "redpanda:9093", "--api", "http://case-service:8081"]
+    environment: {PUSHGATEWAY_URL: "http://pushgateway:9091"}
+    volumes: ["../data:/app/data"]
+    depends_on:
+      topics: {condition: service_completed_successfully}
+      case-service: {condition: service_healthy}
+    restart: unless-stopped
+
   pushgateway:
     image: prom/pushgateway:v1.9.0
     ports: ["9091:9091"]
@@ -61,11 +71,17 @@ services:
 
   airflow:
     profiles: ["batch"]
-    image: apache/airflow:2.10.2-python3.12
+    build: {context: ., dockerfile: airflow.Dockerfile}
     command: standalone
+    user: "1000:0"     # same uid as the workspace owner, so the nightly job can write its outputs
     environment:
       AIRFLOW__CORE__LOAD_EXAMPLES: "false"
       AIRFLOW_VAR_BT_REPO: /workspaces/borrower-truth
+      AIRFLOW_VAR_BT_DATA: data/out/demo
+      CASE_SERVICE_URL: http://case-service:8081
+      PUSHGATEWAY_URL: http://pushgateway:9091
+      UV_PROJECT_ENVIRONMENT: /tmp/bt-venv
+      UV_CACHE_DIR: /tmp/uv-cache
     volumes: ["../airflow/dags:/opt/airflow/dags:ro", "..:/workspaces/borrower-truth"]
     ports: ["8080:8080"]
 

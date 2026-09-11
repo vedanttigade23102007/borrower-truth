@@ -105,11 +105,16 @@ def main(argv=None):
     ap.add_argument("--n", type=int, default=1500)
     ap.add_argument("--tamper-rate", type=float, default=0.3, help="share of fake/duplicate invoices rendered tampered")
     ap.add_argument("--seed", type=int, default=5)
+    ap.add_argument("--mode", choices=["train", "score"], default="train",
+                    help="train: random sample split by borrower; score: documents on file for S4 to read")
+    ap.add_argument("--per-borrower", type=int, default=15, help="score mode: documents per receivables borrower")
     a = ap.parse_args(argv)
     rng = random.Random(a.seed)
     con = duckdb.connect()
     p = lambda t: f"read_parquet('{os.path.join(a.data, t)}.parquet')"
     labels = json.load(open(os.path.join(a.data, "labels.json")))
+    if a.mode == "score":
+        return score_mode(a, con, p, labels, rng)
     rows = con.execute(f"""
         SELECT i.*, e.name AS seller FROM {p('invoices')} i
         JOIN {p('borrowers')} b USING (borrower_id) JOIN {p('entities')} e ON e.entity_id = b.entity_id
@@ -142,6 +147,39 @@ def main(argv=None):
         f.close()
     json.dump(dict(counts, SYNTHETIC="All documents are synthetic."), open(os.path.join(a.out, "manifest.json"), "w"), indent=1)
     print(counts)
+
+
+def score_mode(a, con, p, labels, rng):
+    """Documents on file for S4: a sample per receivables borrower, plus the same
+    tampering rule as training (fake-invoice borrowers only). The read results are
+    what S4 consumes; tamper labels go to a separate file that only bt.eval reads."""
+    rows = con.execute(f"""
+        WITH ranked AS (
+            SELECT i.*, e.name AS seller,
+                   row_number() OVER (PARTITION BY i.borrower_id ORDER BY hash(i.invoice_id || '{a.seed}')) AS k
+            FROM {p('invoices')} i JOIN {p('borrowers')} b USING (borrower_id)
+            JOIN {p('entities')} e ON e.entity_id = b.entity_id)
+        SELECT * EXCLUDE (k) FROM ranked WHERE k <= {a.per_borrower} ORDER BY borrower_id, invoice_id""").fetchall()
+    cols = [c[0] for c in con.description]
+    fake_b = {b for b, v in labels.items() if "FAKE_INVOICES" in v["mechanisms"]}
+    os.makedirs(a.out, exist_ok=True)
+    n = t = 0
+    with open(os.path.join(a.out, "metadata.jsonl"), "w") as meta, open(os.path.join(a.out, "doc_labels.jsonl"), "w") as lab:
+        for r in rows:
+            row = dict(zip(cols, r))
+            tampered = row["borrower_id"] in fake_b and rng.random() < a.tamper_rate
+            printed = round(row["amount"] * (rng.uniform(1.3, 4.0) if tampered else 1.0), 2)
+            fname = f"{row['invoice_id']}.png"
+            render(row, row["seller"], printed, rng.randint(0, 2), rng).save(os.path.join(a.out, fname), optimize=True)
+            meta.write(json.dumps({"file_name": fname, "invoice_id": row["invoice_id"], "borrower_id": row["borrower_id"],
+                                   "record_amount": round(row["amount"], 2)}) + "\n")
+            lab.write(json.dumps({"invoice_id": row["invoice_id"], "borrower_id": row["borrower_id"],
+                                  "tampered": tampered, "printed_total": printed}) + "\n")
+            n += 1
+            t += tampered
+    json.dump({"documents": n, "tampered": t, "SYNTHETIC": "All documents are synthetic."},
+              open(os.path.join(a.out, "manifest.json"), "w"), indent=1)
+    print({"documents": n, "tampered": t, "out": a.out})
 
 
 if __name__ == "__main__":

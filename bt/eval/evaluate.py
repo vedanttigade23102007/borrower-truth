@@ -130,6 +130,15 @@ def evaluate_book(data):
                      if m in mech_hits(final[b]) and m not in mech_hits(fc[b]))
         ablation[s] = dict(borrowers_lost=len(lost_b), mechanism_detections_lost=lost_m)
 
+    # top-decile precision: of the highest-priority 10% of the queue, how many are real frauds?
+    ranked = sorted(final.values(), key=lambda c: -c["priority"])
+    k = max(1, len(ranked) // 10)
+    top_decile_fraud = sum(1 for c in ranked[:k] if c["borrower_id"] in fraud)
+    # fix quality: does the suggested playbook address a mechanism that was actually planted?
+    right_fix = sum(1 for b in caught if mech_hits(final[b]) & set(labels[b]["mechanisms"]))
+    fix_total = sum(len(mech_hits(final[b])) for b in caught)
+    fix_on_target = sum(len(mech_hits(final[b]) & set(labels[b]["mechanisms"])) for b in caught)
+
     base = baseline_audit(data)
     pc = pledgecheck_only(data)
     lead = []
@@ -140,6 +149,7 @@ def evaluate_book(data):
         borrowers=len(labels), fraud=len(fraud), honest=len(honest),
         honest_needing_review=sum(1 for b in honest if final[b]["verdict"] == "NEEDS_MORE_EVIDENCE"),
         fraud_needing_review=sum(1 for b in fraud if final[b]["verdict"] == "NEEDS_MORE_EVIDENCE"),
+        top_decile=[top_decile_fraud, k], right_fix=right_fix, fix_on_target=[fix_on_target, fix_total],
         caught=len(caught), false_alarms_end=sum(1 for b in honest if flagged(final[b])),
         false_alarms_ever=len(ever_flagged & honest),
         per_mechanism={m: [per_mech_hit[m], per_mech[m]] for m in FRAUD_MECHS},
@@ -169,7 +179,12 @@ def summarize(results: dict) -> dict:
     after = [d for r in results.values() for d in r["detect_after_start_days"]]
     timing = Counter("before the effects start" if d < 0 else "same month" if d == 0 else
                      "1-3 months later" if d <= 90 else "over 3 months later" for d in after)
+    td = [sum(r["top_decile"][0] for r in results.values()), sum(r["top_decile"][1] for r in results.values())]
+    fo = [sum(r["fix_on_target"][0] for r in results.values()), sum(r["fix_on_target"][1] for r in results.values())]
     return dict(
+        top_decile_precision=round(td[0] / max(td[1], 1), 3), top_decile=td,
+        right_fix_rate=round(tot("right_fix") / max(tot("caught"), 1), 3),
+        fix_on_target=fo, fix_on_target_rate=round(fo[0] / max(fo[1], 1), 3),
         honest_needing_review_per_100=round(100 * tot("honest_needing_review") / honest, 1),
         fraud_left_at_review=tot("fraud_needing_review"),
         detection_timing=dict(timing),
@@ -203,6 +218,9 @@ def report_md(s: dict) -> str:
         f"| False alarms per 100 honest borrowers (ever, any month) | {s['false_alarms_per_100_ever']} | |",
         f"| Median days earlier than the audit (frauds both caught, n={s['n_lead']}) | {s['median_days_earlier_than_audit']} | – |",
         f"| Frauds the audit never caught but we did | {s['caught_never_by_baseline']} | – |",
+        f"| Top-decile precision (highest-priority 10% of the queue that are real frauds) | {pct(*s['top_decile'])} | |",
+        f"| Caught frauds whose suggested fix targets a planted mechanism | {s['right_fix_rate']:.0%} | |",
+        f"| Suggested fixes that target a planted mechanism (all fixes on caught frauds) | {pct(*s['fix_on_target'])} | |",
         f"| Honest borrowers routed to 'needs more evidence' (review load) per 100 | {s['honest_needing_review_per_100']} | |",
         f"| Planted frauds left at 'needs more evidence' (not missed, not flagged) | {s['fraud_left_at_review']} | |",
         f"| Frauds caught that PledgeCheck's four checks never flagged | {s['beyond_pledgecheck']} (PledgeCheck flagged {s['pledgecheck_caught']}) | |",

@@ -29,6 +29,7 @@ export const SOURCE: Record<string, string> = {
   tape_history: "tape history",
   servicer_system: "servicer system",
   invoices: "invoices",
+  documents: "invoice documents (model)",
   ucc: "lien filings",
   courts: "court records",
   registry: "company registry",

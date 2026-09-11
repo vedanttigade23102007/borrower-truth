@@ -52,9 +52,11 @@ NORM_MACRO = ("CREATE OR REPLACE MACRO norm(s) AS "
 
 class Ctx:
     def __init__(self, data_dir: str, as_of: int = 23, con: duckdb.DuckDBPyConnection | None = None,
-                 materialize: bool = False):
+                 materialize: bool = False, overrides: dict[str, str] | None = None):
         self.data_dir = os.path.abspath(data_dir)
         self.as_of = int(as_of)
+        # data-quality gate: file name -> replacement path ("" = quarantined, no fallback -> empty table)
+        self.overrides = overrides or {}
         self.con = con or duckdb.connect()
         self.shared: dict = {}
         self.explanations: dict[str, list[str]] = {}
@@ -66,8 +68,8 @@ class Ctx:
             self.con.execute(f"CREATE OR REPLACE {kind} {view} AS {sql}")
 
     def _source(self, fname: str) -> str:
-        p = os.path.join(self.data_dir, f"{fname}.parquet")
-        if os.path.exists(p) and len(pq.read_schema(p)) > 0:
+        p = self.overrides.get(fname, os.path.join(self.data_dir, f"{fname}.parquet"))
+        if p and os.path.exists(p) and len(pq.read_schema(p)) > 0:
             return f"SELECT * FROM read_parquet('{p}')"
         if fname in EMPTY_SCHEMAS:
             cols = ", ".join(f"CAST(NULL AS {c.split()[1]}) AS {c.split()[0]}" for c in EMPTY_SCHEMAS[fname].split(", "))

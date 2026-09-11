@@ -158,7 +158,14 @@ export default function QueuePage() {
                         ))}
                       </div>
                     </td>
-                    <td className="px-4 py-3 tabular-nums text-zinc-700">{c.openSteps || "—"}</td>
+                    <td className="px-4 py-3 tabular-nums text-zinc-700">
+                      {c.openSteps || "—"}
+                      {(c.liveAlerts ?? 0) > 0 && (
+                        <span className="ml-2">
+                          <Badge tone="red">{c.liveAlerts} live</Badge>
+                        </span>
+                      )}
+                    </td>
                     <td className="px-4 py-3 text-zinc-600">{STATUS_LABEL[c.caseStatus] ?? c.caseStatus}</td>
                   </tr>
                 ))}

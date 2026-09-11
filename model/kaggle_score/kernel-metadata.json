@@ -1,0 +1,14 @@
+{
+  "id": "vedanttigade5/borrower-truth-score-invoices",
+  "title": "borrower-truth-score-invoices",
+  "code_file": "score_invoices.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": true,
+  "enable_gpu": true,
+  "machine_shape": "NvidiaTeslaT4",
+  "enable_internet": false,
+  "dataset_sources": ["vedanttigade5/borrower-truth-docs-score"],
+  "competition_sources": [],
+  "kernel_sources": ["vedanttigade5/borrower-truth-invoice-reader"]
+}

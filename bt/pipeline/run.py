@@ -22,6 +22,7 @@ import pyarrow as pa
 import pyarrow.parquet as pq
 
 from bt.combiner.combine import build_cases
+from bt.pipeline import dq
 from bt.common.metrics import pipeline_samples, push
 from bt.systems import (s1_collateral, s2_tape_source, s3_cash, s4_invoices, s5_hidden_debt,
                         s6_relationships, s7_financial)
@@ -55,8 +56,9 @@ def _guarded(ctx: Ctx, name: str, fn, simulate_fail: set[str], metrics: dict):
 def run(data_dir: str, as_of: int = 23, simulate_fail: set[str] | None = None, materialize: bool = True):
     simulate_fail = simulate_fail or set()
     t0 = time.perf_counter()
-    ctx = Ctx(data_dir, as_of, materialize=materialize)
-    metrics: dict = {}
+    overrides, dq_report = dq.stage(data_dir)  # quarantine bad files before anything reads them
+    ctx = Ctx(data_dir, as_of, materialize=materialize, overrides=overrides)
+    metrics: dict = {"data_quality": dq_report}
     signals = []
     signals += _guarded(ctx, "S6", lambda: s6_relationships.run(ctx), simulate_fail, metrics)
     if metrics["S6"]["status"] != "ok":  # degraded mode: downstream systems search the borrower only
@@ -75,7 +77,10 @@ def run(data_dir: str, as_of: int = 23, simulate_fail: set[str] | None = None, m
         upstream["s4_flags"].setdefault(s.entity_id, []).append(s.signal_id)
     signals += _guarded(ctx, "S7", lambda: s7_financial.run(ctx, upstream), simulate_fail, metrics)
 
-    coverage = {k: v["status"] for k, v in metrics.items()}
+    coverage = {k: v["status"] for k, v in metrics.items() if isinstance(v, dict) and "status" in v}
+    q = dq_report["quarantined"]
+    coverage["data"] = ("quarantined: " + ", ".join(f"{t} ({v['using']})" for t, v in q.items())) if q else "ok"
+    coverage["documents"] = ctx.shared.get("documents", "unavailable (rule checks only)")
     borrowers = [r["borrower_id"] for r in ctx.rows("SELECT borrower_id FROM borrowers ORDER BY 1")]
     t1 = time.perf_counter()
     cases = build_cases(signals, coverage, ctx.explanations, borrowers)
