@@ -1,0 +1,73 @@
+# Full stack for the demo. Runs in GitHub Codespaces (4-core / 16 GB), not on the 8 GB Mac.
+#   docker compose -f ops/docker-compose.yml up -d                      # core stack
+#   docker compose -f ops/docker-compose.yml --profile batch up -d      # + Airflow
+# Ports: case service 8081 · Grafana 3001 · Prometheus 9090 · Pushgateway 9091 · Kafka 9092 · Airflow 8080
+name: borrower-truth
+
+services:
+  redpanda:            # Kafka-API compatible broker, single node
+    image: docker.redpanda.com/redpandadata/redpanda:v24.2.7
+    command: [redpanda, start, --mode, dev-container, --smp, "1", --memory, 1G,
+              --kafka-addr, "internal://0.0.0.0:9093,external://0.0.0.0:9092",
+              --advertise-kafka-addr, "internal://redpanda:9093,external://localhost:9092"]
+    ports: ["9092:9092"]
+    healthcheck:
+      test: ["CMD", "rpk", "cluster", "health", "--exit-when-healthy"]
+      interval: 10s
+      retries: 10
+
+  topics:              # create topics with partitions keyed by borrower
+    image: docker.redpanda.com/redpandadata/redpanda:v24.2.7
+    depends_on: {redpanda: {condition: service_healthy}}
+    entrypoint: ["/bin/sh", "-c"]
+    command: ["rpk -X brokers=redpanda:9093 topic create payments -p 6 || true;
+               rpk -X brokers=redpanda:9093 topic create signals -p 6 || true;
+               rpk -X brokers=redpanda:9093 topic create payments.dlq -p 1 || true"]
+
+  case-service:
+    build: ../case-service
+    ports: ["8081:8081"]
+    volumes: ["casedb:/app/data"]
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- localhost:8081/actuator/health | grep -q UP"]
+      interval: 10s
+      retries: 12
+
+  s3-worker:
+    build: {context: .., dockerfile: ops/worker.Dockerfile}
+    command: ["python", "-m", "bt.stream.s3_worker", "--data", "data/out/demo", "--bootstrap", "redpanda:9093"]
+    environment: {PUSHGATEWAY_URL: "http://pushgateway:9091"}
+    volumes: ["../data:/app/data"]
+    depends_on: {topics: {condition: service_completed_successfully}}
+    restart: unless-stopped
+
+  pushgateway:
+    image: prom/pushgateway:v1.9.0
+    ports: ["9091:9091"]
+
+  prometheus:
+    image: prom/prometheus:v2.54.1
+    volumes: ["./prometheus.yml:/etc/prometheus/prometheus.yml:ro"]
+    ports: ["9090:9090"]
+
+  grafana:
+    image: grafana/grafana:11.2.0
+    environment:
+      GF_AUTH_ANONYMOUS_ENABLED: "true"
+      GF_AUTH_ANONYMOUS_ORG_ROLE: Viewer
+      GF_DASHBOARDS_DEFAULT_HOME_DASHBOARD_PATH: /etc/grafana/provisioning/dashboards/borrower-truth.json
+    volumes: ["./grafana/provisioning:/etc/grafana/provisioning:ro"]
+    ports: ["3001:3000"]
+
+  airflow:
+    profiles: ["batch"]
+    image: apache/airflow:2.10.2-python3.12
+    command: standalone
+    environment:
+      AIRFLOW__CORE__LOAD_EXAMPLES: "false"
+      AIRFLOW_VAR_BT_REPO: /workspaces/borrower-truth
+    volumes: ["../airflow/dags:/opt/airflow/dags:ro", "..:/workspaces/borrower-truth"]
+    ports: ["8080:8080"]
+
+volumes:
+  casedb:

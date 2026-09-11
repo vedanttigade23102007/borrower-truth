@@ -1,0 +1,11 @@
+SOURCE: Web search results for site:wellsfargojobs.com (Kafka / data engineer / India), run 2026-09-11
+TIER: secondary
+FETCHED: 2026-09-11
+NOTE: The posting pages themselves no longer load (404 to direct download, blank in browser, 403 on retry). These are the search engine's snippets of those wellsfargojobs.com pages, recorded verbatim as returned. Treat as secondary until a live posting is captured.
+
+Software Engineer in Platform Integration, BENGALURU (r-521222): supporting data synchronization using REST/GraphQL for synchronous patterns and Kafka/RabbitMQ for asynchronous workflows.
+Senior Data Engineer, Bengaluru: requires knowledge and experience in building microservices, webservices/REST API, and Apache Kafka/Pub-Sub services.
+Lead Data Engineer, BENGALURU (r-451826): good knowledge of real-time data streaming via Kafka and Cloud ecosystems such as Google Cloud Platform.
+Senior Software Engineer, BENGALURU (r-544660): Java-based backend development and modern frontend frameworks, along with working knowledge of Python, Apache Spark, and Kafka for data processing and streaming solutions.
+Software Engineer - Backend Java, Spring Boot, Microservices, Kafka, AI/ML, Gen AI, HYDERABAD (r-552636).
+Data Engineer-AI, HYDERABAD (r-570930): implementing batch and streaming migration patterns using Cloud Composer (Apache Airflow), Kafka, and Google Pub/Sub.

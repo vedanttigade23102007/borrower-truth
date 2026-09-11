@@ -1,0 +1,5 @@
+SOURCE: https://www.kaggle.com/docs/efficient-gpu-usage
+TIER: primary
+FETCHED: 2026-09-11 (captured via in-app browser; direct download returned only a JavaScript shell)
+
+Efficient GPU Usage Tips. Kaggle provides free access to NVIDIA TESLA P100 GPUs. These GPUs are useful for training deep learning models, though they do not accelerate most other workflows (i.e. libraries like pandas and scikit-learn do not benefit from access to GPUs). You can use up to a quota limit per week of GPU. The quota resets weekly and is 30 hours or sometimes higher depending on demand and resources.

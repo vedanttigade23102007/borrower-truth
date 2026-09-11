@@ -1,0 +1,5 @@
+SOURCE: https://guillaumejaume.github.io/FUNSD/
+TIER: primary
+FETCHED: 2026-09-11
+
+FUNSD Toggle navigation Home Description Download License Contact FUNSD: Form Understanding in Noisy Scanned Documents A dataset for Text Detection, Optical Character Recognition, Spatial Layout Analysis and Form Understanding. Dataset Overview A dataset for the document understanding community. 199 fully annotated forms 31485 words 9707 semantic entities 5304 relations Citation If you use this dataset for your research, please cite our paper : G. Jaume, H. K. Ekenel, J. Thiran "FUNSD: A Dataset for Form Understanding in Noisy Scanned Documents," 2019 Bibtex format: @inproceedings{jaume2019, title = {FUNSD: A Dataset for Form Understanding in Noisy Scanned Documents}, author = {Guillaume Jaume, Hazim Kemal Ekenel, Jean-Philippe Thiran}, booktitle = {Accepted to ICDAR-OST}, year = {2019} } Examples Word grouping and semantic entity labeling. Contact us Copyright © Design & Developed by Themefisher . Modified by Guillaume Jaume. All rights reserved.

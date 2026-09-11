@@ -1,0 +1,5 @@
+SOURCE: https://www.kaggle.com/docs/efficient-gpu-usage
+TIER: primary
+FETCHED: 2026-09-11
+
+Efficient GPU Usage Tips Documentation | Kaggle

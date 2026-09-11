@@ -1,0 +1,7 @@
+apiVersion: 1
+providers:
+  - name: borrower-truth
+    folder: Borrower Truth
+    type: file
+    options:
+      path: /etc/grafana/provisioning/dashboards

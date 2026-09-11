@@ -1,0 +1,43 @@
+# secrets — never commit
+.env
+.env.*
+*.pem
+kaggle.json
+
+# re-downloadable raw sources (fetch_sources.py rebuilds them)
+research/sources/*.raw
+# third-party news/article text: copyrighted, never committed (fetch_sources.py re-downloads for verify.py)
+research/sources/cnbc-*.txt
+research/sources/yahoo-*.txt
+research/sources/venturebeat-*.txt
+research/sources/fool-*.txt
+research/sources/gtr-*.txt
+research/sources/ciodive-*.txt
+research/sources/seekingalpha-*.txt
+
+# local case-service database (human decisions in the demo)
+case-service/data/
+
+# generated data and build output
+data/out/
+*.duckdb
+*.duckdb.wal
+*.parquet
+loadtest/results/raw/
+
+# python
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# node
+node_modules/
+.next/
+
+# java
+case-service/build/
+case-service/.gradle/
+
+# os / editor
+.DS_Store

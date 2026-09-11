@@ -1,0 +1,56 @@
+[
+ {
+  "borrowers": 120,
+  "scale": 1.0,
+  "rows": 1252165,
+  "seconds": 0.51,
+  "rows_per_second": 2468657,
+  "per_system": {
+   "S6": 0.006,
+   "S1": 0.042,
+   "S2": 0.118,
+   "S3": 0.229,
+   "S4": 0.084,
+   "S5": 0.008,
+   "S7": 0.004,
+   "combiner": 0.002
+  },
+  "generate_seconds": 3.4089410305023193
+ },
+ {
+  "borrowers": 240,
+  "scale": 2.0,
+  "rows": 5046945,
+  "seconds": 1.31,
+  "rows_per_second": 3853309,
+  "per_system": {
+   "S6": 0.007,
+   "S1": 0.123,
+   "S2": 0.32,
+   "S3": 0.583,
+   "S4": 0.241,
+   "S5": 0.01,
+   "S7": 0.005,
+   "combiner": 0.005
+  },
+  "generate_seconds": 12.846001148223877
+ },
+ {
+  "borrowers": 400,
+  "scale": 3.0,
+  "rows": 12375685,
+  "seconds": 2.3,
+  "rows_per_second": 5376029,
+  "per_system": {
+   "S6": 0.012,
+   "S1": 0.325,
+   "S2": 0.486,
+   "S3": 0.819,
+   "S4": 0.482,
+   "S5": 0.013,
+   "S7": 0.009,
+   "combiner": 0.007
+  },
+  "generate_seconds": 35.81386208534241
+ }
+]

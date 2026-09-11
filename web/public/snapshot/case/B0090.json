@@ -1,0 +1,1 @@
+{"caseData": {"borrowerId": "B0090", "verdict": "NO_ISSUE", "headline": "No issues found", "priority": 0.0, "findings": [], "signals": [], "explanations": [], "coverage": {"S6": "ok", "S1": "ok", "S2": "ok", "S3": "ok", "S4": "ok", "S5": "ok", "S7": "ok"}}, "steps": [], "audit": [], "caseStatus": "NO_ACTION", "unavailableSystems": []}

@@ -1,0 +1,645 @@
+SOURCE: https://www.occ.gov/static/enforcement-actions/eaAA-ENF-2024-72.pdf
+TIER: primary
+
+AGREEMENT BY AND BETWEEN 
+Wells Fargo Bank, N.A. 
+Sioux Falls, South Dakota 
+and  AA-ENF-2024-72 
+The Office of the Comptroller of the Currency 
+ 
+ 
+Wells Fargo Bank, N.A., Sioux Falls, South Dakota (“Bank”) and the Office of the 
+Comptroller of the Currency (“OCC”) wish to assure the safety and soundness of the Bank and 
+its compliance with laws and regulations. 
+The Comptroller of the Currency (“Comptroller”) has identified deficiencies relating to 
+the Bank’s anti-money laundering (“AML”) internal controls and financial crimes risk 
+management practices and violations of law, rule, or regulation, including 12 C.F.R. 
+§ 21.21(d)(1) (internal control pillar), 12 C.F.R. § 21.11(d) (suspicious activity reporting), 31 
+C.F.R. § 1020.210(a)(2)(v)(A) (customer due diligence), 31 C.F.R. § 1020.220(a)(2)(i)(A)(3) 
+(customer identification program), 31 C.F.R. § 1010.230(b)(2) (beneficial ownership), 31 C.F.R. 
+§ 1010.313 (currency transaction reporting), and 31 C.F.R. § 1010.410(f)(1) (travel rule). 
+The Bank has begun to take corrective action and has committed to taking all necessary 
+and appropriate steps to remedy the deficiencies identified by the OCC and to enhance its 
+internal controls and financial crimes risk management practices. 
+Therefore, the OCC, through the duly authorized representative of the Comptroller, and 
+the Bank, through its duly elected and acting Board of Directors (“Board”), hereby agree that the 
+Bank shall operate at all times in compliance with the following: 
+ARTICLE I 
+ 
+JURISDICTION 
+(1) The Bank is an “insured depository institution” as that term is defined in 
+12 U.S.C. § 1813(c)(2). 
+(2) The Bank is a national banking association within the meaning of 12 U.S.C. 
+§ 1813(q)(1)(A), and is chartered and examined by the OCC. See 12 U.S.C. § 1 et seq. 
+ARTICLE II 
+ 
+COMPLIANCE COMMITTEE 
+(1) The Board shall maintain a Compliance Committee of at least three (3) members, 
+of which a majority shall be directors who are not employees or officers of the Bank or any of its 
+subsidiaries or affiliates. In the event of a change of the membership, the Board shall submit in 
+writing to the Examiner-in-Charge within ten (10) days the name of any new or resigning 
+committee member. The Compliance Committee shall be responsible for approving the action 
+plan required under Article III of this Agreement, along with monitoring and overseeing the 
+Bank’s compliance with the provisions of this Agreement. The Compliance Committee shall 
+meet at least quarterly and maintain minutes of its meetings. 
+(2) Within forty-five (45) days after the end of the first full calendar quarter after the 
+Bank receives a written determination of no supervisory objection to the action plan required 
+under Article III of this Agreement, and thereafter within forty-five (45) days after the end of 
+each calendar quarter, the Bank shall prepare, and the Compliance Committee shall submit to the 
+Board, a written progress report setting forth in detail: 
+(a) the specific corrective actions undertaken to comply with each Article of 
+this Agreement; 
+(b) the results and status of the corrective actions; and 
+(c) a description of the outstanding corrective actions needed to achieve 
+compliance with each Article of this Agreement and the party or parties 
+responsible for the completion of outstanding corrective actions. 
+(3) The Board shall forward a copy of the progress report, with any additional 
+comments by the Board, to the Examiner-in-Charge within fifteen (15) days following the first 
+Board meeting following the Board’s receipt of such report. 
+ARTICLE III 
+ 
+BSA/AML AND OFAC SANCTIONS ACTION PLAN 
+ 
+(1) Within one-hundred twenty (120) days of the effective date of this Agreement, the 
+Bank shall submit to the Examiner-in-Charge for review and prior written determination of no 
+supervisory objection an acceptable written plan (“Action Plan”) that details the remedial actions 
+necessary to achieve and sustain compliance with the Bank Secrecy Act, as amended (31 U.S.C. 
+§ 5311 et seq.), and the rules and regulations promulgated thereunder (collectively, the “BSA”), 
+and all relevant U.S. economic sanctions laws, Executive Orders, rules and regulations, including 
+the rules and regulations of the Office of Foreign Assets Control (collectively, “OFAC 
+Sanctions”), and that incorporates the substantive requirements of Articles IV through XII of this 
+Agreement and all corrective actions addressing BSA/AML or OFAC Sanctions concerns and 
+violations formally communicated by the OCC to the Bank in writing that remain open as of the 
+effective date of this Agreement. 
+(2) The Action Plan shall include, at a minimum: 
+(a) a description of the required corrective actions; 
+(b) the specific Article and associated paragraph (and, if applicable, 
+subparagraph) that each corrective action will address; 
+(c) reasonable and well-supported timelines for completing the corrective 
+actions. These timelines shall reflect appropriate consideration of the 
+possible impact on timing caused by any interdependencies between 
+corrective actions, and further, shall be inclusive of time needed for the 
+Bank to validate completion and effectiveness of the corrective actions; 
+and 
+(d) the person(s) responsible for completing the corrective actions. 
+(3) Upon receipt of a written determination of no supervisory objection to the Action 
+Plan from the Examiner-in-Charge, the Board shall ensure the Bank has timely adopted the 
+Action Plan and shall verify that the Bank thereafter adheres to the Action Plan, including the 
+timelines set forth within the Action Plan. 
+(4) The Compliance Committee shall review the implementation of the Action Plan at 
+least quarterly, and more frequently if necessary or if required by the OCC in writing, and direct 
+Bank management to amend the Action Plan as needed. 
+(5) In the event the Examiner-in-Charge requires changes to the Action Plan, the 
+Bank shall promptly incorporate the required changes into the Action Plan and submit the 
+revised Action Plan to the Examiner-in-Charge for review and prior written determination of no 
+supervisory objection. 
+(6) The Bank shall not take any action, including modifications to the Action Plan 
+that has received a written determination of no supervisory objection from the Examiner-in-
+Charge, that will cause a significant deviation from, or material change to, the Action Plan.  
+(7) Where the Bank considers significant deviations from or material changes to the 
+Action Plan appropriate, the Bank shall submit the proposed modifications to the Action Plan to 
+the Examiner-in-Charge for prior written determination of no supervisory objection. Following 
+receipt of a written determination of no supervisory objection, the Board shall ensure the Bank 
+has timely adopted the revised Action Plan and shall verify that the Bank thereafter adheres to 
+the revised Action Plan, including the timelines set forth within the revised Action Plan. The 
+Bank shall provide quarterly written notifications to the Examiner-in-Charge of any other 
+modifications to the Action Plan. 
+(8) Within one hundred twenty (120) days of receipt of a prior written determination 
+of no supervisory objection to the Action Plan, the Bank’s Internal Audit department shall 
+complete a review of the Bank’s progress towards implementing the Action Plan. On a quarterly 
+basis thereafter, Internal Audit should review and communicate that Bank management’s Action 
+Plan progress report is accurate, including a review of whether any changes have occurred that 
+require no supervisory objection. The review shall be memorialized in writing and, within thirty 
+(30) days of completion, Internal Audit shall provide its report to the Compliance Committee and 
+the Examiner-in-Charge. 
+ARTICLE IV 
+ 
+FRONT-LINE FINANCIAL CRIMES RISK MANAGEMENT 
+ 
+(1) Within the time periods specified in the Action Plan for which the Examiner-in-
+Charge has provided no supervisory objection, the Bank shall enhance BSA/AML and OFAC 
+Sanctions compliance risk management by front-line units by, at a minimum: 
+(a) delineating clear roles and responsibilities and lines of authority for 
+BSA/AML and OFAC Sanctions front-line compliance risk management 
+functions; 
+(b) strengthening policies, procedures, and controls to ensure the effective 
+implementation by front-line units of the Bank’s enterprise-wide 
+BSA/AML and OFAC Sanctions programs; 
+(c) strengthening front-line BSA/AML and OFAC Sanctions controls testing 
+to ensure effective testing by personnel with the requisite knowledge, 
+skills, and experience and a process to report the results; 
+(d) improving and implementing an effective process to ensure the Bank 
+maintains sufficient front-line financial crimes operations staff with the 
+appropriate knowledge, skills, and experience needed to support the Bank’s 
+BSA/AML and OFAC Sanctions programs; and  
+(e) providing sufficient and ongoing BSA/AML and OFAC Sanctions training 
+to front-line employees based on the individual’s job-specific duties and 
+responsibilities. 
+ARTICLE V 
+ 
+INDEPENDENT RISK MANAGEMENT 
+ 
+(1) Within the time periods specified in the Action Plan for which the Examiner-in-
+Charge has provided no supervisory objection, the Bank shall enhance the independent second-
+line Financial Crimes Risk Management (“FCRM”) function and its oversight of front-line units 
+by, at a minimum: 
+(a) delineating clear roles and responsibilities and lines of authority for 
+BSA/AML and OFAC Sanctions compliance risk management within the 
+FCRM function; 
+(b) strengthening policies, procedures, and controls to ensure effective 
+implementation by FCRM of the Bank’s enterprise-wide BSA/AML and 
+OFAC Sanctions programs, including with respect to management 
+information reporting, the functioning of FCRM-related forums, and 
+oversight of front-line units; 
+(c) developing and implementing effective policies, procedures, and controls 
+to oversee the appropriate risk rating, monitoring, escalation, performance 
+of root cause and impact analyses, and resolution of BSA/AML and 
+OFAC Sanctions issues in a timely manner; 
+(d) strengthening the Bank’s second-line BSA/AML and OFAC Sanctions 
+testing program to ensure effective testing by personnel with the requisite 
+knowledge, skills, and experience and a process to report the results; 
+(e) reviewing, improving, and implementing an effective process to ensure the 
+Bank maintains sufficient FCRM staff with the appropriate knowledge, 
+skills, and experience needed to support the Bank’s BSA/AML and OFAC 
+Sanctions programs; and 
+(f) providing sufficient and ongoing BSA/AML and OFAC Sanctions training 
+to FCRM employees. 
+ARTICLE VI 
+ 
+BSA/AML AND OFAC SANCTIONS INDEPENDENT TESTING 
+ 
+(1) Within the time periods specified in the Action Plan for which the Examiner-in-
+Charge has provided no supervisory objection, the Bank shall develop, and the Audit Committee 
+of the Board (“Audit Committee”) shall approve, enhancements to the Bank’s written audit 
+program component concerning BSA/AML and OFAC Sanctions to ensure effective 
+independent testing of the Bank’s compliance with the BSA and OFAC Sanctions, relative to its 
+risk profile, and the overall adequacy of the Bank’s BSA/AML and OFAC Sanctions compliance 
+programs (“BSA/AML/OFAC Audit Program”). Refer to the FFIEC Bank Secrecy Act/Anti-
+Money Laundering Examination Manual: “BSA/AML Independent Testing” (2020). 
+(2) The BSA/AML/OFAC Audit Program shall address and determine, at a 
+minimum, whether: 
+(a) the Bank’s BSA/AML and OFAC Sanctions Risk Assessment adequately 
+captures its risk profile; 
+(b) the Bank’s policies, procedures, and controls are reasonably designed to 
+achieve compliance with the BSA and OFAC Sanctions and appropriate 
+for the Bank’s risk profile; 
+(c) the Bank adheres to its policies, procedures, and controls for BSA/AML 
+and OFAC Sanctions compliance; 
+(d) the Bank’s information technology sources, systems, and controls used to 
+support the BSA/AML and OFAC Sanctions compliance program are 
+adequate; 
+(e) management is taking appropriate and timely action to address any 
+deficiencies noted in independent testing and regulatory examinations; and 
+(f) BSA/AML and OFAC Sanctions training is provided for appropriate 
+personnel, tailored to specific functions and positions, and includes 
+supporting documentation. 
+(3) The BSA/AML/OFAC Audit Program shall also, at a minimum: 
+(a) include risk assessment processes that document the products, services, 
+customers, and geographies that impact the quantity and quality of the 
+Bank’s BSA/AML and OFAC Sanctions risks and the Bank’s controls;  
+(b) include processes for the development of and adherence to an appropriate 
+BSA/AML and OFAC Sanctions audit plan that takes into account the 
+Bank’s BSA/AML and OFAC Sanctions risks;  
+(c) require appropriate documentation supporting:  
+(i) the inclusion and exclusion of auditable areas in the Bank’s audit 
+universe and of internal controls for testing; and 
+(ii) changes to planned design of control and control effectiveness 
+testing; 
+(d) include controls for periodically reviewing, updating, and documenting 
+changes to the audit plan and communicating significant changes to the 
+Audit Committee; 
+(e) include appropriate audit test scripts designed to ensure consistent 
+execution of BSA/AML and OFAC Sanctions audits across the enterprise; 
+and  
+(f) include controls to ensure sufficient staff with the appropriate knowledge, 
+skills, and experience needed to support the BSA/AML/OFAC Audit 
+Program. 
+(4) Management shall require prompt reporting of deficiencies in BSA/AML and 
+OFAC Sanctions controls identified by Internal Audit through the BSA/AML/OFAC Audit 
+Program to the Audit Committee, and to senior management. The reports shall indicate the 
+severity of the deficiencies, the risks, and the required corrective actions. The Compliance 
+Committee shall ensure that management takes prompt action to remedy deficiencies cited in 
+audit reports. The Audit Committee shall ensure that the BSA/AML/OFAC Audit Program 
+reviews and validates corrective action promptly. 
+ARTICLE VII  
+ 
+CUSTOMER IDENTIFICATION PROGRAM, CUSTOMER DUE DILIGENCE, AND 
+CUSTOMER RISK IDENTIFICATION 
+ 
+(1) Within the time periods specified in the Action Plan for which the Examiner-in-
+Charge has provided no supervisory objection, the Board shall ensure that Bank management 
+develops and adopts an enhanced written customer due diligence program to ensure appropriate 
+and effective collection and analysis of customer due diligence (“CDD”) information by all 
+business lines (“CDD Program”). The CDD Program shall also ensure the Bank operates in 
+accordance with applicable laws and regulations, including applicable laws and regulations 
+addressing Customer Identification Program (“CIP”) requirements, CDD, and beneficial 
+ownership, and be consistent with the Bank’s money laundering, terrorist financing and other 
+illicit financial activity risk assessments. Refer to the FFIEC Bank Secrecy Act/Anti-Money 
+Laundering Examination Manual: “Customer Due Diligence” (2018), “Beneficial Ownership 
+Requirements for Legal Entity Customers” (2018), and “Customer Identification Program” 
+(2021).  
+(2) The Bank’s CDD Program shall include, at a minimum: 
+(a) clear definitions for customer risk levels;  
+(b) a methodology for assigning defined risk levels to the customer base that 
+considers the customer’s entire relationship and appropriate factors such 
+as type of customer; purpose of the account; geographic location; and the 
+expected account activity by type of service used, including the volume, 
+velocity, and frequency by dollar amount and number; 
+(c) risk-based requirements to collect, maintain, and timely update all 
+information necessary to establish an accurate customer risk profile; 
+(d) procedures to require the collection and verification of appropriate CIP 
+information for the opening of new accounts in compliance with 31 C.F.R. 
+§ 1020.220; 
+(e) procedures to require the collection and verification of appropriate 
+beneficial ownership information for the opening of new accounts for 
+legal entity customers in compliance with 31 C.F.R. § 1010.230;  
+(f) procedures that contain a clear statement of management’s and staff’s 
+responsibilities, including procedures, authority, and responsibility for 
+reviewing and approving changes to a customer’s risk profile, as 
+applicable; 
+(g) procedures to ensure staff responsible for CDD and CIP information have 
+sufficient authority, training, and skills to perform their assigned 
+responsibilities; 
+(h) procedures for identifying and timely remediating instances where 
+required CDD and CIP information is missing or incomplete; 
+(i) a process documented in writing to identify higher-risk current customers 
+and accounts exhibiting high-risk characteristics for money laundering, 
+terrorist financing, or other illicit activity;  
+(j) procedures for ongoing monitoring and periodic reviews of higher-risk 
+customers, which shall include, at a minimum: 
+(i) risk-based criteria establishing how often to conduct periodic 
+reviews of higher-risk customers; 
+(ii) documented evidence of transactional analysis, including 
+comparing expected, historical, and current activity, the source and 
+use of funds, trends, and activity patterns; and 
+(iii) documented analysis of all significant information in the file, 
+including the identification of significant disparities, investigation 
+of high-risk indicators and potentially suspicious activity, and 
+well-supported conclusions; and 
+(k) procedures to ensure that customer risk ratings are appropriately 
+incorporated into the Bank’s money laundering, terrorist financing and 
+other illicit financial activity risk assessment. 
+ARTICLE VIII 
+ 
+SUSPICIOUS ACTIVITY IDENTIFICATION 
+ 
+(1) The Bank shall incorporate the remediation of any gaps and deficiencies 
+identified by the Bank’s coverage assessment of its current suspicious activity identification and 
+transaction monitoring controls into the Action Plan required by Article III of this Agreement.  
+(2) Within the time periods specified in the Action Plan for which the Examiner-in-
+Charge has provided no supervisory objection, the Board shall ensure that Bank management 
+develops and adopts an enhanced suspicious activity monitoring and reporting program 
+(“Suspicious Activity Review Program”) to ensure the timely, appropriate, and effective 
+identification of unusual activity. Refer to the FFIEC Bank Secrecy Act/Anti-Money Laundering 
+Examination Manual: “Suspicious Activity Reporting – Overview” (2015), “Supervisory 
+Guidance on Model Risk Management,” April 11, 2011 (OCC Bulletin 2011-12); “Bank Secrecy 
+Act/Anti-Money Laundering: Interagency Statement on Model Risk Management for Bank 
+Systems Supporting BSA/AML Compliance,” April 12, 2021 (OCC Bulletin 2021-19); and the 
+“Model Risk Management” booklet of the Comptroller’s Handbook. 
+(3) The Bank’s Suspicious Activity Review Program shall include, at a minimum: 
+(a) policies, procedures, and controls for identifying reportable activity across 
+all lines of business, including suspicious activity relating to the opening 
+of new accounts, the monitoring of current accounts, and transactions 
+processed by, to, or through the Bank; 
+(b) procedures and controls for periodically reviewing the coverage of 
+transaction monitoring and reports; and 
+(c) procedures and controls to ensure that: 
+(i) transaction monitoring systems apply appropriate rules, 
+thresholds, and filters for monitoring transactions, accounts, 
+customers, products, services, and geographic areas 
+commensurate with the Bank’s BSA/AML risk profile; 
+(ii) the Bank’s methodology for establishing and adjusting rules, 
+thresholds and filters is appropriately documented; and 
+(iii) automated transaction monitoring systems are subject to periodic 
+independent validation, the findings of which are documented, 
+reported, and timely addressed. 
+ARTICLE IX 
+ 
+BSA/AML AND OFAC RISK ASSESSMENT 
+ 
+(1) Within the time periods specified in the Action Plan for which the Examiner-in-
+Charge has provided no supervisory objection, the Bank shall enhance its written, enterprise-
+wide BSA/AML and OFAC Sanctions Risk Assessment methodology. The BSA/AML and 
+OFAC Sanctions Risk Assessment methodology shall reflect a comprehensive analysis of the 
+Bank’s money laundering and terrorist financing, OFAC Sanctions, and other illicit financial 
+activity risks and provide strategies to control those risks and limit any identified vulnerabilities. 
+Refer to the FFIEC Bank Secrecy Act/Anti-Money Laundering Examination Manual: 
+“BSA/AML Risk Assessment” (2020) and “Office of Foreign Assets Control” (2015). 
+(2) The BSA/AML and OFAC Sanctions Risk Assessment methodology shall 
+include, at a minimum: 
+(a) an analysis of the Bank’s products, channels, customers (including 
+consideration of customers that typically pose higher BSA/AML and 
+OFAC Sanctions risk), transactions (including consideration of volumes 
+and types of transactions and services by country or geographic location), 
+and geographic locations in which the Bank is engaged;  
+(b) an assessment of BSA/AML and OFAC Sanctions risk both separately 
+within the Bank’s business lines and on a consolidated basis across all of 
+the Bank’s products, channels, transactions, customers, and geographies; 
+(c) a provision requiring maintenance of appropriate documentation of data 
+and information used to support the Bank’s BSA/AML and OFAC 
+Sanctions Risk Assessment’s conclusions (with supporting documentation 
+readily accessible for third-party review);  
+(d) an assessment of the adequacy of the Bank’s internal controls designed to 
+address the risks identified through the BSA/AML and OFAC Sanctions 
+Risk Assessment that incorporates findings from regulatory examinations, 
+front-line and second-line testing, and audit reviews; and 
+(e) identification of the Bank’s residual risk. 
+(3) In accordance with the timelines set forth in the Action Plan for which the 
+Examiner-in-Charge has provided no supervisory objection, and at least annually thereafter, 
+Bank management shall perform a written BSA/AML and OFAC Sanctions Risk Assessment in 
+accordance with the enhanced methodology required by this Article.  
+(4) Bank management shall review, and, as necessary, update the BSA/AML Risk 
+Assessment methodology annually, and more frequently if necessary or if required by the OCC 
+in writing, or whenever there is a significant change in BSA/AML and OFAC Sanctions risk 
+within the Bank or the lines of businesses within the Bank.  
+(5) The Board shall promptly review and provide credible challenge to the 
+BSA/AML and OFAC Sanctions Risk Assessment and any subsequent updates and document its 
+review in the Board minutes. The Bank shall promptly provide a copy of the BSA/AML and 
+OFAC Sanctions Risk Assessment and the minutes documenting the Board’s review of the 
+BSA/AML and OFAC Sanctions Risk Assessment to the Examiner-in-Charge. 
+(6) The Bank shall enhance its targeted BSA/AML and OFAC Sanctions risk 
+assessments to ensure that such risk assessments provide meaningful risk analysis with respect 
+to certain products, services, customers, geographies, and affiliate relationships and shared 
+services. 
+ARTICLE X 
+ 
+BSA/AML AND OFAC SANCTIONS SYSTEMS DESIGN AND ADEQUACY 
+AND DATA INTEGRITY  
+ 
+(1) Within the time periods specified in the Action Plan for which the Examiner-in-
+Charge has provided no supervisory objection, the Bank shall establish a methodology for, and 
+conduct, an assessment to evaluate whether the Bank’s current BSA/AML and OFAC Sanctions 
+transaction monitoring systems and reports, SAR filing system, OFAC Sanctions screening 
+systems, customer risk rating system, Currency Transaction Report filing system, and BSA/AML 
+and OFAC Sanctions risk assessment system (collectively, the “Key BSA/AML and OFAC 
+Compliance Systems”) are commensurate with the Bank’s BSA/AML and OFAC Sanctions risk 
+profile, operations, and lines of business, are adequately designed and working as intended, and 
+whether additional investments are needed to upgrade the Bank’s Key BSA/AML and OFAC 
+Compliance Systems (“BSA/AML and OFAC Systems Resource Assessment”). The Compliance 
+Committee shall ensure that management corrects any deficiencies identified by the BSA/AML 
+and OFAC Systems Resource Assessment and implements any plans or recommendations 
+resulting from the BSA/AML and OFAC Systems Resource Assessment. The Bank shall 
+incorporate its plan to implement effective remediation of any identified gaps and deficiencies 
+into the Action Plan required by Article III of this Agreement.  
+(2) Within the time periods specified in the Action Plan for which the Examiner-in-
+Charge has provided no supervisory objection, the Board shall ensure that the Bank develops and 
+adopts an effective written program to ensure the integrity of data relevant to the Key BSA/AML 
+and OFAC Compliance Systems (“Data Integrity Program”). 
+(3) The Data Integrity Program shall address or include, effective policies, 
+procedures, or associated controls, as applicable, to ensure, at a minimum, that the Bank: 
+(a) develops and periodically updates comprehensive inventories of Bank 
+systems which contain data relevant to the Key BSA/AML and OFAC 
+Sanctions Compliance Systems; 
+(b) establishes clear roles and responsibilities for the management and 
+oversight of BSA/AML and OFAC Sanctions data; 
+(c) identifies high priority BSA/AML and OFAC Sanctions use cases related 
+to the Key BSA/AML and OFAC Sanctions Compliance Systems; 
+(d) documents data dictionaries and data sourcing process maps and desktop 
+procedure(s) related to the Key BSA/AML and OFAC Sanctions 
+Compliance Systems; 
+(e) creates data lineage documentation for the Key BSA/AML and OFAC 
+Sanctions Compliance Systems, implements controls designed to ensure 
+the FCRM team is informed of systems-related projects impacting 
+financial crimes use cases, and remediates data defects within the lines of 
+business and relevant enterprise functions; 
+(f) creates comprehensive end-to-end data lineage documentation from Key 
+BSA/AML and OFAC Sanctions Compliance Systems to upstream 
+sources, performs quality assurance of lineage documentation, and defines 
+an enterprise process for notification of systems-related projects; 
+(g) enhances the FCRM team’s governance and oversight of data defects, 
+defect remediation, and systems-related projects impacting financial 
+crimes use cases; 
+(h) maintains procedures and controls to ensure timely and accurate 
+information is provided to the Key BSA/AML and OFAC Sanctions 
+Compliance Systems, including periodic data reconciliation of data feeds 
+to Key BSA/AML and OFAC Sanctions Compliance Systems; 
+(i) conducts risk-based data and control testing for completeness, accuracy, 
+and control effectiveness for Key BSA/AML and OFAC Sanctions 
+Compliance Systems; and 
+(j) provides training to targeted audiences involved in the data supply chain. 
+ARTICLE XI 
+ 
+OFAC SANCTIONS COMPLIANCE PROGRAM 
+ 
+(1) Within the time periods specified in the Action Plan for which the Examiner-in-
+Charge has provided no supervisory objection, the Board shall ensure that the Bank develops and 
+adopts an enhanced written compliance program designed to ensure that the Bank complies with 
+OFAC Sanctions (“OFAC Compliance Program”). Refer to the FFIEC Bank Secrecy Act/Anti-
+Money Laundering Examination Manual: “Office of Foreign Assets Control” (2015); 
+“Supervisory Guidance on Model Risk Management,” April 11, 2011 (OCC Bulletin 2011-12); 
+“Bank Secrecy Act/Anti-Money Laundering: Interagency Statement on Model Risk Management 
+for Bank Systems Supporting BSA/AML Compliance,” April 12, 2021 (OCC Bulletin 2021-19); 
+and the “Model Risk Management” booklet of the Comptroller’s Handbook. 
+(2)  The OFAC Compliance Program shall include, at a minimum: 
+(a) policies, procedures, and controls for screening and assessing new 
+potential customers, existing customers, and transactions against 
+applicable OFAC Sanctions lists and applicable regulatory requirements; 
+(b) procedures and controls to ensure that data relied upon to conduct OFAC 
+Sanctions screening is accurate; and 
+(c) procedures and controls to ensure that the Bank’s automatic OFAC 
+Sanctions screening system is timely and effectively tuned and, as 
+appropriate, validated.  
+ARTICLE XII 
+ 
+RESTRICTION ON NEW PRODUCTS, SERVICES, AND MARKETS 
+ 
+(1) Within sixty (60) days of the effective date of this Agreement, the Bank shall 
+submit to the Examiner-in-Charge, for review and prior written determination of no supervisory 
+objection, a new business initiative program to assess and mitigate the BSA/AML and OFAC 
+Sanctions risks of new products, services, or geographic markets. The program must include: 
+(a) clear definitions of the BSA/AML and OFAC risk levels applicable to new 
+products, services, and geographic markets; 
+(b) an effective process for assessing the BSA/AML or OFAC Sanctions risks 
+posed by new products, services, or geographic markets; and  
+(c) an effective process for determining that the Bank has sufficient internal 
+controls, including, but not limited to, sufficient CDD and suspicious 
+activity monitoring controls, and sufficient staff across its lines of defense 
+to mitigate such risks. 
+(2) Until the Bank receives a prior written determination of no supervisory objection 
+pursuant to Paragraph (1) of this Article: 
+(a) the Bank shall not expand into new products, services, or geographic 
+markets with a medium or high BSA/AML or OFAC Sanctions inherent 
+risk without receiving a prior written determination of no supervisory 
+objection from the Examiner-in-Charge. The Bank shall make any request 
+for a prior written determination of no supervisory objection in writing to 
+the Examiner-in-Charge and include a copy of the assessment discussed in 
+Paragraph (1); and 
+(b) the Bank shall not expand into new products, services, or geographic 
+markets with a low BSA/AML or OFAC Sanctions inherent risk without 
+providing at least thirty (30) days prior written notification and a copy of 
+the assessment discussed in Paragraph (1) to the Examiner-in-Charge. 
+(3) After the Bank receives a prior written determination of no supervisory objection 
+pursuant to Paragraph (1) of this Article, the Bank shall not expand into new products, services, 
+or geographic markets with a medium or high BSA/AML and OFAC Sanctions inherent risk 
+without providing at least thirty (30) days prior written notification and a copy of the assessment 
+discussed in Paragraph (1) to the Examiner-in-Charge.  
+(4) After receipt of any individual notification in writing, the Examiner-in-Charge 
+may extend the notification period described in Paragraph (2)(b) or (3) for an additional thirty 
+(30) days. 
+ARTICLE XIII 
+ 
+GENERAL BOARD RESPONSIBILITIES 
+ 
+(1) The Board shall ensure that the Bank has timely adopted and implemented all 
+corrective actions required by this Agreement, and shall verify that the Bank adheres to the 
+corrective actions and they are effective in addressing the Bank’s deficiencies that resulted in this 
+Agreement. 
+(2) In each instance in which this Agreement imposes responsibilities upon the Board 
+or one of its committees, including the Compliance Committee and Audit Committee, it is 
+intended to mean that the Board or the specified committee, as applicable, shall: 
+(a) authorize, direct, and adopt corrective actions as may be necessary for the 
+Bank to perform the obligations and undertakings imposed on the Bank by 
+this Agreement; 
+(b) ensure that the Bank has sufficient controls, management, personnel, 
+control systems, and corporate and risk governance to implement and 
+adhere to all provisions of this Agreement; 
+(c) require that Bank management and personnel have sufficient training and 
+authority to execute their duties and responsibilities pertaining to or 
+resulting from this Agreement; 
+(d) hold Bank management and personnel accountable for executing their 
+duties and responsibilities pertaining to or resulting from this Agreement; 
+(e) require appropriate, adequate, and timely reporting to the Board by Bank 
+management of corrective actions directed by the Board to be taken under 
+the terms of this Agreement; and 
+(f) address any noncompliance with corrective actions in a timely and 
+appropriate manner. 
+(3) With respect to each of the programs required by Articles VI (1), VII (1), VIII (2), 
+X (2), XI (1), and XII (1) (each, a “Program”), the Board shall review the effectiveness of the 
+Program at least annually, and more frequently if necessary or if required by the OCC in writing, 
+and cause management to amend the Program as needed or directed by the OCC. The Bank shall 
+forward a copy of each such adopted Program to the Examiner-in-Charge within fifteen (15) 
+days of adoption. Any material amendment to the Program shall be forwarded to the Examiner-
+in-Charge within fifteen (15) days of adoption.  
+ARTICLE XIV 
+ 
+OTHER PROVISIONS 
+ 
+(1) As a result of this Agreement, the Bank is not: 
+(a) precluded from being treated as an “eligible bank” for the purposes of 
+12 C.F.R. Part 5, unless the Bank fails to meet any of the requirements 
+contained in subparagraphs (1) – (4) of 12 C.F.R. § 5.3, Definitions, 
+Eligible bank or eligible savings association, or is otherwise informed in 
+writing by the OCC; 
+(b) subject to the restrictions in 12 C.F.R. § 5.51 requiring prior notice to the 
+OCC of changes in directors and senior executive officers or the 
+limitations on golden parachute payments set forth in 12 C.F.R. Part 359, 
+unless the Bank is otherwise subject to such requirements pursuant to 
+12 C.F.R. § 5.51(c)(7)(i) and (iii); and 
+(c) precluded from being treated as an “eligible bank” for the purposes of 
+12 C.F.R. Part 24, unless the Bank fails to meet any of the requirements 
+contained in 12 C.F.R. § 24.2(e)(1)-(3) or is otherwise informed in writing 
+by the OCC. 
+(2) This Agreement supersedes all prior OCC communications issued pursuant to 
+12 C.F.R. §§ 5.3, 5.51(c)(7)(ii), and 24.2(e)(4). 
+ARTICLE XV 
+ 
+CLOSING 
+ 
+(1) This Agreement is intended to be, and shall be construed to be, a “written 
+agreement” within the meaning of 12 U.S.C. § 1818, and expressly does not form, and may not 
+be construed to form, a contract binding on the United States, the OCC, or any officer, employee, 
+or agent of the OCC. Notwithstanding the absence of mutuality of obligation, or of 
+consideration, or of a contract, the OCC may enforce any of the commitments or obligations 
+herein undertaken by the Bank under its supervisory powers, including 12 U.S.C. § 1818(b)(1), 
+and not as a matter of contract law. The Bank expressly acknowledges that neither the Bank nor 
+the OCC has any intention to enter into a contract. The Bank also expressly acknowledges that 
+no officer, employee, or agent of the OCC has statutory or other authority to bind the United 
+States, the U.S. Treasury Department, the OCC, or any other federal bank regulatory agency or 
+entity, or any officer, employee, or agent of any of those entities to a contract affecting the 
+OCC’s exercise of its supervisory responsibilities. 
+(2) This Agreement is effective upon its issuance by the OCC, through the 
+Comptroller’s duly authorized representative. Except as otherwise expressly provided herein, all 
+references to “days” in this Agreement shall mean calendar days and the computation of any 
+period of time imposed by this Agreement shall not include the date of the act or event that 
+commences the period of time. 
+(3) The provisions of this Agreement shall remain effective and enforceable except to 
+the extent that, and until such time as, such provisions are amended, suspended, waived, or 
+terminated in writing by the OCC, through the Comptroller’s duly authorized representative. If 
+the Bank seeks an extension, amendment, suspension, waiver, or termination of any provision of 
+this Agreement, the Board or a Board-designee shall submit a written request to the Deputy 
+Comptroller asking for the desired relief. Any request submitted pursuant to this paragraph shall 
+include a statement setting forth in detail the special circumstances that warrant the desired relief 
+or prevent the Bank from complying with the relevant provision(s) of this Agreement, and shall 
+be accompanied by relevant supporting documentation. The OCC’s decision concerning a 
+request submitted pursuant to this paragraph, which will be communicated to the Board in 
+writing, is final and not subject to further review. 
+(4) The Bank will not be deemed to be in compliance with this Agreement until it has 
+adopted, implemented, and adhered to all of the corrective actions set forth in each Article of this 
+Agreement; the corrective actions are effective in addressing the Bank’s deficiencies; and the 
+OCC has verified and validated the corrective actions. An assessment of the effectiveness of the 
+corrective actions requires sufficient passage of time to demonstrate the sustained effectiveness 
+of the corrective actions. 
+(5) Each citation, issuance, or guidance referenced in this Agreement includes any 
+subsequent citation, issuance, or guidance that replaces, supersedes, amends, or revises the 
+referenced cited citation, issuance, or guidance. 
+(6) No separate promise or inducement of any kind has been made by the OCC, or by 
+its officers, employees, or agents, to cause or induce the Bank to enter into this Agreement. 
+(7) All reports, plans, or programs submitted to the OCC pursuant to this Agreement 
+shall be forwarded via email, to the Examiner-in-Charge, or other such designees as determined 
+by the Examiner-in-Charge. 
+(8) The terms of this Agreement, including this paragraph, are not subject to 
+amendment or modification by any extraneous expression, prior agreements, or prior 
+arrangements between the parties, whether oral or written. 
+ 
+IN TESTIMONY WHEREOF, the undersigned, authorized by the Comptroller as his duly 
+authorized representative, has hereunto set his signature on behalf of the Comptroller.  
+ 
+//s// Digitally Signed, Dated: 2024.09.12  
+ 
+ 
+ 
+ 
+ 
+Mark D. Richardson 
+Deputy Comptroller 
+Large Bank Supervision 
+ 
+IN TESTIMONY WHEREOF, the undersigned, as the duly elected and acting Board of 
+Directors of Well Fargo Bank, N.A. have hereunto set their signatures on behalf of the Bank. 
+ 
+//s// Digitally Signed       9/10/2024 
+Mark A. Chancy 
+ 
+ 
+//s// Digitally Signed 
+ Date 
+ 
+ 
+9/9/2024 
+Theodore F. Craver, Jr. 
+ 
+ 
+//s// Digitally Signed 
+ Date 
+  
+ 
+9/6/2024 
+Richard K. Davis 
+ 
+ 
+//s// Digitally Signed 
+ Date 
+ 
+ 
+9/9/2024 
+CeCelia G. Morken 
+ 
+ 
+//s// Digitally Signed 
+ Date 
+ 
+ 
+9/9/2024 
+Maria R. Morris 
+ 
+ 
+/s/ 
+ Date 
+ 
+ 
+9-10-2024 
+Charles W. Scharf 
+ 
+ 
+ Date 
+ 

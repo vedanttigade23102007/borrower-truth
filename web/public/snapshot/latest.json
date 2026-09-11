@@ -1,0 +1,54 @@
+{
+ "asOf": 23,
+ "receivedAt": "2026-09-11T09:40:41.096016Z",
+ "runMetrics": {
+  "S6": {
+   "status": "ok",
+   "seconds": 0.016,
+   "signals": 76
+  },
+  "S1": {
+   "status": "ok",
+   "seconds": 0.027,
+   "signals": 10
+  },
+  "S2": {
+   "status": "ok",
+   "seconds": 0.051,
+   "signals": 20
+  },
+  "S3": {
+   "status": "ok",
+   "seconds": 0.256,
+   "signals": 12
+  },
+  "S4": {
+   "status": "ok",
+   "seconds": 0.035,
+   "signals": 15
+  },
+  "S5": {
+   "status": "ok",
+   "seconds": 0.005,
+   "signals": 61
+  },
+  "S7": {
+   "status": "ok",
+   "seconds": 0.002,
+   "signals": 51
+  },
+  "combiner": {
+   "status": "ok",
+   "seconds": 0.002,
+   "cases": 120
+  },
+  "total_seconds": 0.865,
+  "as_of": 23
+ },
+ "verdicts": {
+  "EXPLAINED": 7,
+  "LIKELY_FRAUD": 29,
+  "NEEDS_MORE_EVIDENCE": 32,
+  "NO_ISSUE": 52
+ }
+}

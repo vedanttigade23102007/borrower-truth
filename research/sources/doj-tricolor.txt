@@ -1,0 +1,22 @@
+SOURCE: https://www.justice.gov/usao-sdny/pr/ceo-cfo-coo-charged-connection-billion-dollar-collapse-tricolor-auto
+TIER: primary
+FETCHED: 2026-09-11 (captured via in-app browser; direct download returned a bot-check page)
+NOTE: Verbatim excerpt of the press release body. Every fact is an allegation per the release's footnote [1].
+
+PRESS RELEASE CEO, CFO, COO Charged In Connection With Billion-Dollar Collapse Of Tricolor Auto. Wednesday, December 17, 2025. U.S. Attorney's Office, Southern District of New York. Daniel Chu—the Founder and CEO of Tricolor—and Three Others Charged With Systematically Defrauding Tricolor's Lenders.
+
+CHU and DAVID GOODGAME, Tricolor's former COO, are also charged with bank fraud and wire fraud offenses in connection with schemes to fraudulently double-pledge collateral to multiple lenders and manipulate the characteristics of collateral to make ineligible, near-worthless assets appear to meet lender requirements.
+
+Also unsealed today are the guilty pleas of JEROME KOLLAR, Tricolor's former CFO, and AMERYN SEIBOLD, a former finance executive at Tricolor.
+
+"At his direction, Tricolor repeatedly lied to banks and other credit providers, including by falsifying auto-loan data and 'double pledging' collateral. Fraud became an integral component of Tricolor's business strategy." — U.S. Attorney Jay Clayton.
+
+From in or about 2018 through in or about 2025, CHU, GOODGAME, KOLLAR, and SEIBOLD conspired to defraud the lenders and asset-backed securities investors of Tricolor Holdings, LLC and its affiliates ("Tricolor"), a subprime auto retailer and financing company. At CHU's direction, multiple Tricolor executives repeatedly double-pledged collateral to multiple lenders and manipulated the characteristics of collateral to make ineligible, near-worthless assets appear to meet lender requirements. By in or about August 2025, Tricolor had pledged approximately $2.2 billion of collateral to lenders and investors, but Tricolor had only approximately $1.4 billion of real collateral. The difference—consisting of approximately $800 million in bogus collateral—resulted from the series of schemes and the conspiracy. Tricolor's lenders extended billions in loans based on fabricated data and false statements.
+
+In or about the summer of 2025, lenders confronted CHU and others at Tricolor about problems with Tricolor's collateral. In a series of secretly recorded phone calls, CHU and his conspirators concocted plans to conceal or explain away the fraud. For example, on or about August 17, 2025, CHU proposed blaming certain loan data discrepancies on fictitious deferment policies. CHU acknowledged, however, that "where we would have an issue is if, if they sent an auditor and they said, pull this up on your screen, right, that would be a problem." KOLLAR agreed, stating, "Yes. That would be bad." These efforts to conceal failed.
+
+Unable to maintain its access to loans, and unable to sustain its business without substantial cash, Tricolor filed for Chapter 7 bankruptcy on September 10, 2025. By that time, the company's largest lenders had advanced and were owed more than $900 million as a result of the fraudulent double-pledging and collateral manipulation schemes.
+
+Press Release Number: 25-271.
+
+[1] The entirety of the text of the Indictment and the descriptions of the Indictment constitute only allegations, and every fact described should be treated as an allegation.

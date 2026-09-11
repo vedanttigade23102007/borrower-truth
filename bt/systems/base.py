@@ -1,0 +1,92 @@
+"""Shared context for the seven systems.
+
+`Ctx` exposes every input as a DuckDB view cut off at `as_of` (a month index),
+so the same code runs "live" (as_of = latest month) and in the 24-month replay
+used to measure how early each fraud is caught. Systems only ever see what
+existed at `as_of`, never the future and never labels.json.
+"""
+from __future__ import annotations
+
+import hashlib
+import os
+
+import duckdb
+import pyarrow.parquet as pq
+
+from bt.common.signal import Signal
+
+# Columns for tables that can legitimately be empty in a small book.
+EMPTY_SCHEMAS = {
+    "court_records": "case_id VARCHAR, defendant_name VARCHAR, plaintiff VARCHAR, kind VARCHAR, amount DOUBLE, month BIGINT",
+    "pledgecheck": "borrower_id VARCHAR, facility_id VARCHAR, month BIGINT, enrolled BOOLEAN, uniqueness VARCHAR, "
+                   "data_integrity VARCHAR, completeness VARCHAR, single_record VARCHAR",
+    "invoices": "borrower_id VARCHAR, invoice_id VARCHAR, facility_id VARCHAR, pledged_month BIGINT, invoice_number VARCHAR, "
+                "po_number VARCHAR, debtor_id VARCHAR, debtor_name VARCHAR, issue_month BIGINT, issue_day BIGINT, "
+                "due_days BIGINT, amount DOUBLE, description VARCHAR",
+    "tape": "month SMALLINT, facility_id VARCHAR, borrower_id VARCHAR, asset_id VARCHAR, vin VARCHAR, obligor_id VARCHAR, "
+            "balance DOUBLE, dpd_bucket_reported TINYINT, deferred_flag TINYINT, eligible_reported BOOLEAN",
+    "source_truth": "month SMALLINT, borrower_id VARCHAR, asset_id VARCHAR, dpd_bucket_true TINYINT, balance_true DOUBLE",
+}
+
+# view name -> (file, time filter using {a} = as_of)
+VIEWS = {
+    "borrowers": ("borrowers", None),
+    "facilities": ("facilities", None),
+    "persons": ("persons", None),
+    "gleif": ("gleif", None),
+    "entities": ("entities", "formed_month <= {a}"),
+    "disclosures": ("disclosures", "start_month <= {a}"),
+    "ucc": ("ucc_filings", "filed_month <= {a}"),
+    "courts": ("court_records", "month <= {a}"),
+    "financials": ("financials", "quarter * 3 + 2 <= {a}"),
+    "pledgecheck": ("pledgecheck", "month <= {a}"),
+    "tape": ("tape", "month <= {a}"),
+    "source_truth": ("source_truth", "month <= {a}"),
+    "payments": ("payments", "month <= {a}"),
+    "invoices": ("invoices", "pledged_month <= {a}"),
+}
+
+NORM_MACRO = ("CREATE OR REPLACE MACRO norm(s) AS "
+              "trim(regexp_replace(regexp_replace(upper(s), '[^A-Z0-9 ]', '', 'g'), ' +', ' ', 'g'))")
+
+
+class Ctx:
+    def __init__(self, data_dir: str, as_of: int = 23, con: duckdb.DuckDBPyConnection | None = None,
+                 materialize: bool = False):
+        self.data_dir = os.path.abspath(data_dir)
+        self.as_of = int(as_of)
+        self.con = con or duckdb.connect()
+        self.shared: dict = {}
+        self.explanations: dict[str, list[str]] = {}
+        self.con.execute(NORM_MACRO)
+        for view, (fname, where) in VIEWS.items():
+            src = self._source(fname)
+            sql = src if where is None else f"SELECT * FROM ({src}) WHERE {where.format(a=self.as_of)}"
+            kind = "TABLE" if materialize else "VIEW"
+            self.con.execute(f"CREATE OR REPLACE {kind} {view} AS {sql}")
+
+    def _source(self, fname: str) -> str:
+        p = os.path.join(self.data_dir, f"{fname}.parquet")
+        if os.path.exists(p) and len(pq.read_schema(p)) > 0:
+            return f"SELECT * FROM read_parquet('{p}')"
+        if fname in EMPTY_SCHEMAS:
+            cols = ", ".join(f"CAST(NULL AS {c.split()[1]}) AS {c.split()[0]}" for c in EMPTY_SCHEMAS[fname].split(", "))
+            return f"SELECT {cols} WHERE false"
+        raise FileNotFoundError(p)
+
+    def rows(self, sql: str, params=None) -> list[dict]:
+        cur = self.con.execute(sql, params or [])
+        cols = [d[0] for d in cur.description]
+        return [dict(zip(cols, r)) for r in cur.fetchall()]
+
+    def explain(self, borrower_id: str, text: str):
+        self.explanations.setdefault(borrower_id, []).append(text)
+
+
+def sig(system: str, borrower: str, typ: str, severity: float, confidence: float, evidence, explanation: str,
+        month: int, related=()) -> Signal:
+    ev = tuple(str(e) for e in evidence)
+    h = hashlib.md5("|".join((system, borrower, typ, *ev)).encode()).hexdigest()[:8]
+    return Signal(f"{system}-{borrower}-{typ}-{h}", borrower, system, typ,
+                  round(min(max(severity, 0.0), 1.0), 3), round(min(max(confidence, 0.0), 1.0), 3),
+                  ev, explanation, int(month), tuple(related))

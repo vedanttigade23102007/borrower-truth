@@ -1,0 +1,393 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Borrower Truth · Wells Fargo plan deck</title>
+<style>
+:root{--bg:#FBFCFE;--card:#FFFFFF;--sunk:#EFF3F9;--ink:#0B1220;--muted:#5B6678;--line:#DCE4EF;
+--accent:#1D4ED8;--accent-soft:#EAF1FF;--ok:#047857;--ok-bg:#E6F6EF;--warn:#B45309;--warn-bg:#FFF1E8;--crit:#C81E1E;--crit-bg:#FDECEC}
+*{box-sizing:border-box}
+html{scroll-snap-type:y mandatory;background:var(--sunk)}
+body{margin:0;color:var(--ink);font:18px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Helvetica,Arial,sans-serif}
+.slide{scroll-snap-align:start;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:4vh 4vw}
+.frame{width:min(1200px,100%);aspect-ratio:16/9;background:var(--card);border:1px solid var(--line);border-radius:18px;
+padding:44px 56px;display:flex;flex-direction:column;gap:16px;position:relative;overflow:hidden}
+.kicker{font-size:13px;letter-spacing:.09em;text-transform:uppercase;color:var(--accent);font-weight:700}
+h1,h2,h3{margin:0;letter-spacing:-.02em;line-height:1.15}
+h1{font-size:42px}h2{font-size:30px}h3{font-size:17px;margin-bottom:6px}
+.sub{color:var(--muted);font-size:18px;margin:0}
+.num{position:absolute;right:28px;bottom:16px;font-size:13px;color:var(--muted)}
+.big{font-size:80px;font-weight:800;letter-spacing:-.03em;color:var(--accent);line-height:1}
+.big-label{color:var(--muted);font-size:16px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.card{background:var(--sunk);border-radius:12px;padding:16px 18px;font-size:15px}
+.card.hl{background:var(--accent-soft);outline:2px solid var(--accent)}
+.card.bad{background:var(--crit-bg)}
+.metric .v{font-size:34px;font-weight:800;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.metric .l{font-size:14px;color:var(--muted)}
+table{border-collapse:collapse;width:100%;font-size:15px}
+th,td{text-align:left;padding:7px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+td.n{text-align:center;font-variant-numeric:tabular-nums}
+tr.win td{background:var(--accent-soft);font-weight:700}
+.pill{display:inline-block;padding:2px 9px;border-radius:999px;font-size:12px;font-weight:700;white-space:nowrap}
+.ok{background:var(--ok-bg);color:var(--ok)}.warn{background:var(--warn-bg);color:var(--warn)}
+.crit{background:var(--crit-bg);color:var(--crit)}.info{background:var(--accent-soft);color:var(--accent)}
+.timeline{display:flex;align-items:stretch}
+.timeline .step{flex:1;border-top:4px solid var(--accent);padding:12px 14px 0 0;font-size:15px}
+.timeline .step.bad{border-color:var(--crit)}.timeline .step.good{border-color:var(--ok)}
+.timeline .date{font-weight:800;font-size:16px}
+.flow{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.flow .box{background:var(--sunk);border:1px solid var(--line);border-radius:10px;padding:10px 14px;font-weight:600;font-size:15px}
+.flow .box.bad{background:var(--crit-bg);border-color:var(--crit);color:var(--crit)}
+.flow .box.good{background:var(--ok-bg);border-color:var(--ok);color:var(--ok)}
+.flow .arrow{color:var(--muted);font-size:22px}
+.flow-label{font-size:13px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+blockquote{margin:0;padding:12px 18px;border-left:4px solid var(--accent);background:var(--accent-soft);border-radius:0 10px 10px 0;font-size:17px}
+.map{display:grid;grid-template-columns:1fr 34px 1fr;gap:7px 8px;align-items:center;font-size:15px}
+.map .c{background:var(--crit-bg);color:#8f1515;border-radius:9px;padding:8px 12px}
+.map .s{background:var(--accent-soft);color:#173ea8;border-radius:9px;padding:8px 12px;font-weight:600}
+.map .a{text-align:center;color:var(--muted)}
+.arch{display:grid;grid-template-columns:1.1fr 36px 1fr 36px 1fr;gap:10px;align-items:center}
+.sys{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.sys div{background:var(--accent-soft);color:#173ea8;border-radius:9px;padding:8px 10px;font-size:14px;font-weight:600}
+.hub{background:var(--accent);color:#fff;border-radius:12px;padding:18px;font-size:16px}
+.hub b{font-size:19px;display:block;margin-bottom:4px}
+.out{background:var(--ok-bg);color:var(--ok);border-radius:12px;padding:18px;font-size:16px}
+.out b{font-size:19px;display:block;margin-bottom:4px}
+.bigarrow{font-size:28px;color:var(--muted);text-align:center}
+.case{border:1px solid var(--line);border-radius:12px;padding:16px 18px;font-size:14px;background:#fff}
+.case .row{display:flex;justify-content:space-between;border-bottom:1px solid var(--line);padding:6px 0}
+.bar{height:8px;border-radius:4px;background:var(--accent)}
+.verdict{border-radius:14px;padding:20px 26px;font-size:32px;font-weight:800;background:var(--ok-bg);color:var(--ok)}
+ul{margin:0;padding-left:22px}li{margin:5px 0}
+.fine{font-size:13px;color:var(--muted)}
+.mt{margin-top:auto}
+@media (max-width:900px){.frame{aspect-ratio:auto;padding:26px}.grid2,.grid3,.grid4,.arch,.sys{grid-template-columns:1fr}
+h1{font-size:30px}h2{font-size:24px}.big{font-size:54px}.timeline{flex-direction:column;gap:12px}}
+@media print{@page{size:1280px 720px;margin:0}html{background:#fff;scroll-snap-type:none}
+.slide{min-height:auto;padding:0;break-after:page}.frame{border:0;border-radius:0;width:1280px;height:720px}}
+@media (prefers-reduced-motion:no-preference){.slide{scroll-behavior:smooth}}
+</style>
+</head>
+<body>
+
+<!-- 1 Cover -->
+<section class="slide"><div class="frame">
+  <div class="kicker">Project plan · Wells Fargo 2027 Technology Program Intern · 11 Sep 2026</div>
+  <h1>Wells Fargo's biggest loan book is lending to other lenders. The frauds hitting that market use seven different tricks.</h1>
+  <p class="sub">Borrower Truth: seven connected checks and one combiner that answer a single question: "is this borrower's picture of itself true?"</p>
+  <div class="mt">
+    <div class="big">$208.8B</div>
+    <div class="big-label">Wells Fargo loans to non-bank financial firms, 20% of all its loans (30 Jun 2026) <span class="pill ok">VERIFIED — primary · 10-Q</span></div>
+  </div>
+</div></section>
+
+<!-- 2 One minute -->
+<section class="slide"><div class="frame">
+  <div class="kicker">In one minute</div>
+  <h2>A real problem from Wells Fargo's own filings, a fix designed the way big firms do it, and proof you can measure.</h2>
+  <div class="grid3 mt">
+    <div class="card"><h3>The problem</h3>Wells Fargo lends $208.8B to finance companies. In 2025–26 several such borrowers faked collateral, hid debt and rigged their numbers. Wells Fargo took its own fraud loss in this book in Q1 2026.</div>
+    <div class="card"><h3>Why one check fails</h3>Each trick hides in a different place: the loan file, the bank account, the invoice, the public lien register, the company registry, the accounts. A check that reads one place is blind to the rest.</div>
+    <div class="card hl"><h3>What we build</h3>Seven systems, one per trick, passing findings to each other. The output isn't a score but a solved case: what's wrong, the proof, the suggested fix and the drafted paperwork, for one-click human approval.</div>
+  </div>
+</div></section>
+
+<!-- 3 WF today -->
+<section class="slide"><div class="frame">
+  <div class="kicker">Wells Fargo today</div>
+  <h2>The scandal years are over. Wells Fargo is now growing fast with fewer people.</h2>
+  <div class="timeline">
+    <div class="step bad"><div class="date">2016</div>Fake-accounts scandal</div>
+    <div class="step bad"><div class="date">Feb 2018</div>Fed caps its growth</div>
+    <div class="step good"><div class="date">3 Jun 2025</div>Growth cap removed</div>
+    <div class="step good"><div class="date">5 Mar 2026</div>Fed's 2018 order ended</div>
+    <div class="step"><div class="date">2026</div>Growth mode</div>
+  </div>
+  <div class="grid4 mt">
+    <div class="card metric"><div class="v">$2.28T</div><div class="l">assets, +15% in a year</div></div>
+    <div class="card metric"><div class="v">197,466</div><div class="l">employees, −7% in a year</div></div>
+    <div class="card metric"><div class="v">60¢</div><div class="l">cost per $1 of revenue, Q2 2026</div></div>
+    <div class="card metric"><div class="v">$1.5B</div><div class="l">possible legal losses above reserves</div></div>
+  </div>
+  <p class="fine">All figures: Wells Fargo 10-Q (Q2 2026), 10-K (2025), WF newsroom. <span class="pill ok">VERIFIED — primary</span></p>
+</div></section>
+
+<!-- 4 Whole company scan -->
+<section class="slide"><div class="frame">
+  <div class="kicker">Step 1 · We scanned the whole company, not one department</div>
+  <h2>Six areas of Wells Fargo, and the biggest open problem in each.</h2>
+  <div class="grid3">
+    <div class="card"><h3>Consumer banking</h3>New card accounts up ~60%, auto loans doubled. Fast growth brings fraud risk. <span class="pill info">call</span></div>
+    <div class="card hl"><h3>Commercial and corporate lending</h3>$208.8B lent to finance companies. A "single fraud-related loss" in Q1 2026. <span class="pill ok">10-Q</span></div>
+    <div class="card"><h3>Investment banking</h3>Fees up 35%. Banker workload is growing. <span class="pill ok">10-Q</span></div>
+    <div class="card"><h3>Wealth management</h3>81¢ of cost per $1 of revenue, the costliest unit. <span class="pill ok">10-Q</span></div>
+    <div class="card"><h3>Risk and compliance</h3>Anti-money-laundering agreement still open. New "fair access" probes. <span class="pill ok">10-Q</span></div>
+    <div class="card"><h3>Technology and operations</h3>23 straight quarters of job cuts while rolling out AI. <span class="pill info">call</span></div>
+  </div>
+  <p class="fine mt">Green = Wells Fargo's own filing. Blue = earnings-call transcript (secondary).</p>
+</div></section>
+
+<!-- 5 Scoring -->
+<section class="slide"><div class="frame">
+  <div class="kicker">Step 2 · Every problem scored on the same 7 tests</div>
+  <h2>Borrower fraud wins 13 of 14. The runner-up is close, and we say why it lost.</h2>
+  <table>
+    <tr><th>Problem</th><th>Real</th><th>Open</th><th>Money</th><th>Buildable</th><th>Provable</th><th>Fits job</th><th>Big enough</th><th>Total</th></tr>
+    <tr class="win"><td>Fraud by borrowers in loans to finance companies</td><td class="n">2</td><td class="n">2</td><td class="n">2</td><td class="n">1</td><td class="n">2</td><td class="n">2</td><td class="n">2</td><td class="n">13</td></tr>
+    <tr><td>Anti-money-laundering data completeness</td><td class="n">2</td><td class="n">2</td><td class="n">1</td><td class="n">2</td><td class="n">2</td><td class="n">2</td><td class="n">1</td><td class="n">12</td></tr>
+    <tr><td>Fraud in fast-growing cards and auto loans</td><td class="n">1</td><td class="n">1</td><td class="n">2</td><td class="n">1</td><td class="n">2</td><td class="n">2</td><td class="n">2</td><td class="n">11</td></tr>
+    <tr><td>Fair-access account-closure audit</td><td class="n">2</td><td class="n">2</td><td class="n">0</td><td class="n">1</td><td class="n">1</td><td class="n">1</td><td class="n">1</td><td class="n">8</td></tr>
+    <tr><td>Wealth unit cost and vendor outages</td><td class="n">1</td><td class="n">1</td><td class="n">1</td><td class="n">0</td><td class="n">1</td><td class="n">2</td><td class="n">1</td><td class="n">7</td></tr>
+    <tr><td>Banker workload in investment banking</td><td class="n">2</td><td class="n">1</td><td class="n">1</td><td class="n">1</td><td class="n">1</td><td class="n">1</td><td class="n">0</td><td class="n">7</td></tr>
+  </table>
+  <p class="fine mt">Runner-up lost on "money" (no penalty attached) and "big enough" (it is one cause). The winner's weak spot: key data is private, so it scores 1 on "buildable". Full reasons: research/PROBLEMS.md</p>
+</div></section>
+
+<!-- 6 Explainer -->
+<section class="slide"><div class="frame">
+  <div class="kicker">For beginners · What "lending to lenders" means</div>
+  <h2>Wells Fargo lends to finance companies, and trusts their reports about what backs the loan.</h2>
+  <div class="flow-label">The way it is supposed to work</div>
+  <div class="flow"><div class="box">Wells Fargo</div><div class="arrow">→ lends to →</div><div class="box">Finance company (car lender, invoice buyer)</div><div class="arrow">→ lends to →</div><div class="box">Its customers</div><div class="arrow">→ repay →</div><div class="box good">Cash flows back to Wells Fargo</div></div>
+  <div class="flow-label">Where it breaks</div>
+  <div class="flow"><div class="box">Finance company sends a report: "here's the collateral"</div><div class="arrow">→</div><div class="box bad">Report is false: duplicated, dressed up or invented</div><div class="arrow">→</div><div class="box bad">Wells Fargo lends more against it</div></div>
+  <blockquote class="mt">Wells Fargo's own protections: "collateral eligibility requirements, contractual re-margining of collateral." Both depend on the borrower's reports. <span class="fine">— WF 10-Q, Q2 2026 <span class="pill ok">primary</span></span></blockquote>
+</div></section>
+
+<!-- 7 Evidence WF -->
+<section class="slide"><div class="frame">
+  <div class="kicker">The evidence · Wells Fargo's own book</div>
+  <h2>It's Wells Fargo's biggest and fastest-growing category, and it already took a fraud loss this year.</h2>
+  <div class="grid3">
+    <div class="card metric"><div class="v">$208.8B</div><div class="l">outstanding, 20% of all loans, $318.9B committed <span class="pill ok">10-Q</span></div></div>
+    <div class="card metric"><div class="v">+9%</div><div class="l">in six months ($191.1B → $208.8B) <span class="pill ok">10-Q</span></div></div>
+    <div class="card metric"><div class="v">~£143M</div><div class="l">exposure to MFS, a UK lender that collapsed in Feb 2026 <span class="pill info">CNBC</span></div></div>
+  </div>
+  <blockquote>Q1 2026: "higher net charge-offs driven by a single fraud-related loss" <span class="fine">— WF 10-Q <span class="pill ok">primary</span></span></blockquote>
+  <blockquote class="mt">After the loss, management sent teams to clients to "follow the money trail and trace back all the flows" by hand. <span class="fine">— Q1 2026 earnings call <span class="pill info">transcript</span></span></blockquote>
+</div></section>
+
+<!-- 8 How frauds worked -->
+<section class="slide"><div class="frame">
+  <div class="kicker">How the frauds worked · SEC and DOJ documents (allegations)</div>
+  <h2>Two recent cases used six different tricks between them.</h2>
+  <div class="grid2">
+    <div class="card"><h3>Tricolor (car lender, bankrupt Sep 2025)</h3>
+      <ul><li>Pledged <b>$2.2B</b> of collateral, but only <b>$1.4B</b> was real</li><li>Same loans pledged to several lenders</li><li>Defaulted loans made to "appear current"</li></ul>
+      <p class="fine">Lenders owed &gt;$900M. <span class="pill ok">DOJ · SEC</span></p></div>
+    <div class="card"><h3>First Brands (auto parts, bankrupt Sep 2025)</h3>
+      <ul><li>Fake and inflated invoices sold to invoice buyers</li><li>Collateral pledged 2–3 times</li><li>Hidden debt in related "James Entities"</li><li>Loan money disguised as customer payments; rigged accounts</li></ul>
+      <p class="fine">~$5B sales, $12M cash, &gt;$9B liabilities. <span class="pill ok">DOJ</span></p></div>
+  </div>
+  <blockquote class="mt">Tricolor's CEO, on a recorded call, about when the fraud would fail: "if they sent an auditor and they said, pull this up on your screen" <span class="fine">— DOJ SDNY <span class="pill ok">primary</span></span></blockquote>
+</div></section>
+
+<!-- 9 One check not enough -->
+<section class="slide"><div class="frame">
+  <div class="kicker">Why one system is not enough</div>
+  <h2>Seven tricks hide in seven different places. One check reads one place.</h2>
+  <div class="grid4">
+    <div class="card">Loan file (tape)</div><div class="card">The lender's own loan system</div><div class="card">Bank account inflows</div><div class="card">Invoices</div>
+    <div class="card">Public lien register</div><div class="card">Company ownership records</div><div class="card">Financial statements</div><div class="card hl"><b>= 7 places to look</b></div>
+  </div>
+  <div class="grid2 mt">
+    <div class="card bad"><h3>Simple approach (dropped)</h3>1 problem → 1 check → "caught 100%". Toy arithmetic. A real fraudster just uses a different trick.</div>
+    <div class="card hl"><h3>Big-firm approach (ours)</h3>Map every cause → one system per cause → systems feed each other → one combined decision. Like stacked filters: each has holes, but different holes.</div>
+  </div>
+</div></section>
+
+<!-- 10 PledgeCheck -->
+<section class="slide"><div class="frame">
+  <div class="kicker">What already exists · checked, not assumed</div>
+  <h2>Wells Fargo already backs a tool that guards the collateral pool. Nobody is watching the borrower around it.</h2>
+  <div class="grid2">
+    <div class="card"><h3>Setpoint PledgeCheck (Oct 2025), "backed by Citi and Wells Fargo"</h3>
+      <ul><li>Uniqueness: each asset in only one facility</li><li>Data integrity: VIN and address consistent</li><li>Completeness: collections match reports</li><li>Single record: matches the master file</li></ul>
+      <p class="fine">Works from tapes the borrower uploads. <span class="pill ok">Setpoint release</span></p></div>
+    <div class="card hl"><h3>Outside its view, and where First Brands' tricks sat</h3>
+      <ul><li>Hidden debt in related shell companies</li><li>Fake invoices sold to invoice buyers</li><li>Loan money disguised as customer payments. A "collections match" passes it, because the cash really arrives</li><li>Rigged financial statements</li></ul></div>
+  </div>
+  <p class="fine mt">Correction made during verification: an earlier draft said PledgeCheck "can't tell if tapes lie". Its own release shows it checks some of that, so we use its result as an input and don't compete with it.</p>
+</div></section>
+
+<!-- 11 Cause map -->
+<section class="slide"><div class="frame">
+  <div class="kicker">The cause map</div>
+  <h2>Every documented trick gets its own system.</h2>
+  <div class="map">
+    <div class="c">Same collateral pledged to 2–3 lenders</div><div class="a">→</div><div class="s">S1 Collateral integrity (uses PledgeCheck + checks within Wells Fargo)</div>
+    <div class="c">Bad loans dressed up as good</div><div class="a">→</div><div class="s">S2 Tape-vs-source: "pull this up on your screen", automated</div>
+    <div class="c">Loan money disguised as customer payments</div><div class="a">→</div><div class="s">S3 Cash provenance: who actually paid?</div>
+    <div class="c">Fake or inflated invoices</div><div class="a">→</div><div class="s">S4 Invoice authenticity</div>
+    <div class="c">Hidden debt with other lenders</div><div class="a">→</div><div class="s">S5 Hidden-debt finder: public liens, court records</div>
+    <div class="c">Related shell companies</div><div class="a">→</div><div class="s">S6 Relationship mapper: who owns whom</div>
+    <div class="c">Rigged financial statements</div><div class="a">→</div><div class="s">S7 Financial consistency: reported vs evidence</div>
+  </div>
+</div></section>
+
+<!-- 12 How they connect -->
+<section class="slide"><div class="frame">
+  <div class="kicker">How the systems connect</div>
+  <h2>Seven systems feed one combiner, and they also feed each other.</h2>
+  <div class="arch">
+    <div class="sys"><div>S1 Collateral</div><div>S2 Tape vs source</div><div>S3 Cash provenance</div><div>S4 Invoices</div><div>S5 Hidden debt</div><div>S6 Relationships</div><div style="grid-column:span 2">S7 Financial consistency</div></div>
+    <div class="bigarrow">→</div>
+    <div class="hub"><b>Combiner</b>One risk score. Stronger when independent systems agree.</div>
+    <div class="bigarrow">→</div>
+    <div class="out"><b>Case file</b>Ranked borrowers, every finding with its evidence. A human decides.</div>
+  </div>
+  <div class="flow-label">Worked chain: the First Brands pattern</div>
+  <div class="flow"><div class="box">S6 finds a shell owned by the same person</div><div class="arrow">→</div><div class="box">S5 finds a lender's lien on that shell</div><div class="arrow">→</div><div class="box">S3 sees that lender's money arriving as "customer" cash</div><div class="arrow">→</div><div class="box bad">S7: debt gap + cash gap</div></div>
+  <p class="fine mt">No single signal is proof. Four independent systems agreeing is a case worth a human's time.</p>
+</div></section>
+
+<!-- 13 Case file: verdict + fix -->
+<section class="slide"><div class="frame">
+  <div class="kicker">What a credit officer would see</div>
+  <h2>Not a score but a solved case: what's wrong, the proof, the fix and the paperwork, ready for one click.</h2>
+  <div class="grid2">
+    <div class="case">
+      <div class="row"><b>BORROWER-017 (synthetic)</b><span class="pill crit">Likely hidden debt · high confidence</span></div>
+      <div class="row"><span><b>Finding:</b> debt hidden in a related company</span><span></span></div>
+      <div class="row"><span>S6 shell company with the same owner</span><span class="pill info">evidence</span></div>
+      <div class="row"><span>S5 another lender's lien on that shell</span><span class="pill info">evidence</span></div>
+      <div class="row"><span>S3 that lender's money arriving as "customer" cash</span><span class="pill info">evidence</span></div>
+      <div class="row" style="border:0"><span>S7 disclosed debt ≠ discovered debt</span><span class="pill info">evidence</span></div>
+    </div>
+    <div class="case">
+      <div class="row"><b>Suggested fix (drafted, waiting for approval)</b><span></span></div>
+      <div class="row"><span>1. Payoff letter to the undisclosed lender (draft ready)</span><span class="pill ok">Approve</span></div>
+      <div class="row"><span>2. Pause advances on the affected inventory</span><span class="pill ok">Approve</span></div>
+      <div class="row"><span>3. Ownership and related-party certification (draft ready)</span><span class="pill ok">Approve</span></div>
+      <div class="row" style="border:0"><span>4. Re-test covenants on the real debt</span><span class="pill ok">Approve</span></div>
+    </div>
+  </div>
+  <p class="fine mt">Mock-up with synthetic data; no real company is shown or implied. A priority score still exists, but only to order the queue. Every step is tracked until the case is resolved.</p>
+</div></section>
+
+<!-- 13b Automation ladder -->
+<section class="slide"><div class="frame">
+  <div class="kicker">How much is automated</div>
+  <h2>The machine does the legwork. A human makes the call, with one click.</h2>
+  <div class="flow">
+    <div class="box good">Collect data</div><div class="arrow">→</div><div class="box good">Check 7 tricks</div><div class="arrow">→</div><div class="box good">Link findings</div><div class="arrow">→</div><div class="box good">Verdict (rules)</div><div class="arrow">→</div><div class="box good">Suggest fix</div><div class="arrow">→</div><div class="box good">Draft paperwork</div><div class="arrow">→</div><div class="box bad" style="background:var(--accent-soft);border-color:var(--accent);color:var(--accent)">Human approves</div><div class="arrow">→</div><div class="box good">Track to resolved</div>
+  </div>
+  <p class="fine">Green = automatic · Blue = the one human step</p>
+  <div class="grid2 mt">
+    <div class="card"><h3>Why the human stays</h3>The regulator's agreement with Wells Fargo cites model-risk guidance (OCC Bulletin 2011-12) <span class="pill ok">primary</span>. Wells Fargo's own AI agents help employees "navigate policies and procedures" and "sort through scores of documentation": they assist, not decide <span class="pill info">CIO Dive</span></div>
+    <div class="card hl"><h3>Wells Fargo already works this way</h3>Fargo: a small in-house model detects personal data before Google's model is called. "Poly-model", with Llama in-house. A network of agents re-underwrote 15 years of loan documents <span class="pill info">VentureBeat</span></div>
+  </div>
+</div></section>
+
+<!-- 14 Data map -->
+<section class="slide"><div class="frame">
+  <div class="kicker">Input map · where the data comes from</div>
+  <h2>Public data where it exists. Labelled fake data where banks keep it private.</h2>
+  <table>
+    <tr><th>Input</th><th>Who holds it</th><th>How we get it</th><th>Status</th></tr>
+    <tr><td>Who owns whom</td><td>GLEIF (public)</td><td>Free open API</td><td><span class="pill ok">ok</span></td></tr>
+    <tr><td>Court records</td><td>CourtListener (public)</td><td>Free API</td><td><span class="pill ok">ok</span></td></tr>
+    <tr><td>Lien filings (UCC)</td><td>State registers (public)</td><td>Free per-state search; bulk costs money, so a synthetic register at scale</td><td><span class="pill warn">partial</span></td></tr>
+    <tr><td>Loan files</td><td>Borrower</td><td>Synthetic, shaped on SEC public auto-loan data</td><td><span class="pill warn">synthetic</span></td></tr>
+    <tr><td>Bank inflows, invoices, accounts</td><td>Wells Fargo and borrower only</td><td>Synthetic, with every trick planted</td><td><span class="pill crit">private</span></td></tr>
+  </table>
+  <p class="fine mt">Honest consequence: the demo proves the design and the detection logic. Real-world accuracy needs Wells Fargo's own data, which is exactly the pitch: "here's the design; let me build it on yours."</p>
+</div></section>
+
+<!-- 15 Tools -->
+<section class="slide"><div class="frame">
+  <div class="kicker">Architecture and tools, in plain words</div>
+  <h2>Built on the same tools Wells Fargo's own engineers use.</h2>
+  <table style="font-size:14px">
+    <tr><th>Layer</th><th>Tool</th><th>Its one job</th><th>Wells Fargo link</th></tr>
+    <tr><td>Streaming</td><td>Kafka API (Redpanda locally)</td><td>Bank payments arrive live, so alerts are same-day</td><td><span class="pill info">job ads list Kafka</span></td></tr>
+    <tr><td>Batch jobs</td><td>Airflow</td><td>Nightly loads: loan files, liens, ownership, courts</td><td><span class="pill info">Cloud Composer = Airflow</span></td></tr>
+    <tr><td>7 systems</td><td>Python</td><td>One module per trick, same output shape</td><td><span class="pill ok">intern posting</span></td></tr>
+    <tr><td>Case and fix service</td><td>Java Spring Boot</td><td>Verdicts, playbooks, approvals, tracking</td><td><span class="pill ok">intern posting: Java</span></td></tr>
+    <tr><td>Reading documents</td><td>Fine-tuned small open model</td><td>Reads invoices, strips personal data, inside the bank</td><td><span class="pill info">Fargo pattern</span></td></tr>
+    <tr><td>Training and demo GPU</td><td>Kaggle (free, 30+ h/week) · Hugging Face ZeroGPU (free)</td><td>Fine-tune the model; host the live demo</td><td>—</td></tr>
+    <tr><td>Store</td><td>DuckDB (+ dbt, optional)</td><td>One fast database; tested transformations</td><td>—</td></tr>
+    <tr><td>Screens</td><td>Next.js</td><td>The credit officer's case screen</td><td>—</td></tr>
+    <tr><td>Monitoring / proof</td><td>Grafana (optional) · pytest, JUnit, promptfoo</td><td>Pipeline and model health; tests</td><td>—</td></tr>
+  </table>
+  <p class="fine mt">Your 8 GB Mac can't run all of this at once: heavy services run one at a time or in a cloud dev environment. "Job ads list Kafka" and "Cloud Composer" are from search snippets, because the pages no longer load.</p>
+</div></section>
+
+<!-- 16 Proof -->
+<section class="slide"><div class="frame">
+  <div class="kicker">How we prove it: realistic, not "100%"</div>
+  <h2>We plant every trick in a fake loan book, then show exactly what each system adds.</h2>
+  <div class="grid3">
+    <div class="card"><h3>1. Catch rate</h3>Per trick and overall, on a held-out book</div>
+    <div class="card hl"><h3>2. Switch-off test</h3>Turn off each system in turn. The drop in catches proves several systems beat one</div>
+    <div class="card hl"><h3>3. Beyond PledgeCheck</h3>Simulate its 4 published checks and count frauds that pass them but we catch</div>
+    <div class="card"><h3>4. Caught earlier</h3>Days sooner than a quarterly sample audit</div>
+    <div class="card"><h3>5. False alarms</h3>Per 100 honest borrowers, including innocent look-alikes</div>
+    <div class="card"><h3>6. Model proof</h3>Fine-tuned vs base model on held-out invoices; every drafted sentence cites a real finding</div>
+  </div>
+</div></section>
+
+<!-- 17 Risks -->
+<section class="slide"><div class="frame">
+  <div class="kicker">Why this could fail · said out loud</div>
+  <h2>The design is strong. Its limits are known and stated up front.</h2>
+  <div class="grid2">
+    <div class="card"><h3>Risks</h3><ul><li>Four of the seven systems need private data; the demo uses synthetic data</li><li>Planted frauds prove coverage, not real-world catch rates</li><li>Bulk lien data costs money; the demo uses samples</li></ul></div>
+    <div class="card"><h3>Rules we keep</h3><ul><li>Public data only; never touch Wells Fargo systems</li><li>"Open problem", never "loophole"</li><li>Fraud facts quoted as allegations from SEC/DOJ</li><li>Never suggest who Wells Fargo's Q1 loss borrower was</li><li>Fake data labelled; you send every message yourself</li></ul></div>
+  </div>
+</div></section>
+
+<!-- 18 Internship -->
+<section class="slide"><div class="frame">
+  <div class="kicker">How this gets you the internship</div>
+  <h2>You show up with a problem from their filings and a design no other applicant has.</h2>
+  <div class="grid2">
+    <div class="card"><h3>What you walk away with</h3><ul><li>System design document (done: design/SYSTEM-DESIGN.md)</li><li>Live demo link and a 3-minute video</li><li>1-page case study and a resume line</li><li>Referral message drafts (you send them)</li></ul></div>
+    <div class="card hl"><h3>Your 30-second interview story</h3>"Your biggest loan book is lending to lenders. Its frauds use seven tricks. You backed a tool that guards the collateral pool; I built seven connected checks that watch the borrower around it. It hands the officer a solved case (proof, fix, drafted paperwork) for one-click approval, reads documents with a model I fine-tuned so data never leaves the bank, and runs on your stack."</div>
+  </div>
+  <p class="fine mt">Honest expectation: Wells Fargo won't buy a student's software. This is built so they want to hire the person who designed it.</p>
+</div></section>
+
+<!-- 19 Evidence check -->
+<section class="slide"><div class="frame">
+  <div class="kicker">Evidence check</div>
+  <h2>57 claims in this deck, each matched against a saved source file.</h2>
+  <div class="grid3">
+    <div class="card"><span class="pill ok">VERIFIED — primary</span><div class="big" style="color:var(--ok);font-size:64px">42</div><p class="fine">Wells Fargo filings and job posting, SEC, DOJ, OCC, Setpoint, Kaggle, Hugging Face, data providers</p></div>
+    <div class="card"><span class="pill info">secondary</span><div class="big" style="font-size:64px">15</div><p class="fine">Earnings-call transcript, CNBC, Bloomberg via Yahoo, VentureBeat, CIO Dive, job-ad search snippets</p></div>
+    <div class="card"><span class="pill crit">unverified</span><div class="big" style="color:var(--crit);font-size:64px">0</div><p class="fine">Anything we couldn't match was cut</p></div>
+  </div>
+  <div class="card mt"><h3>Cut during checking</h3>First Brands "$2.7B fake receivables" (not in DOJ's release) · "PledgeCheck can't see if tapes lie" (contradicted by Setpoint's own release). Full table: research/VERIFY.md</div>
+</div></section>
+
+<!-- 20 Verdict -->
+<section class="slide"><div class="frame">
+  <div class="kicker">Verdict</div>
+  <div class="verdict">BUILD</div>
+  <h2>It's Wells Fargo's biggest loan category, it took a live fraud loss, the tricks are documented by prosecutors, and the one existing tool leaves a clear, borrower-sized gap.</h2>
+  <div class="grid2 mt">
+    <div class="card"><h3>Strongest reason against</h3>The data that matters most is private. The demo proves the design, not real-world accuracy.</div>
+    <div class="card hl"><h3>Your decision</h3>Build · change · drop. If build: screens next, then the full build of all 7 systems and the combiner, then the proof run.</div>
+  </div>
+</div></section>
+
+<script>
+const slides=[...document.querySelectorAll('.slide')];
+slides.forEach((s,i)=>{const n=document.createElement('div');n.className='num';n.textContent=(i+1)+' / '+slides.length;s.querySelector('.frame').appendChild(n)});
+addEventListener('keydown',e=>{
+  const fwd=['ArrowDown','ArrowRight','PageDown',' '],back=['ArrowUp','ArrowLeft','PageUp'];
+  if(!fwd.includes(e.key)&&!back.includes(e.key))return;
+  e.preventDefault();
+  const mid=scrollY+innerHeight/2;
+  let i=slides.findIndex(s=>s.offsetTop+s.offsetHeight>mid);if(i<0)i=slides.length-1;
+  i=Math.min(slides.length-1,Math.max(0,i+(fwd.includes(e.key)?1:-1)));
+  slides[i].scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});
+});
+</script>
+</body>
+</html>

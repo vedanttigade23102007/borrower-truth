@@ -1,0 +1,10 @@
+global:
+  scrape_interval: 5s
+
+scrape_configs:
+  - job_name: case-service
+    metrics_path: /actuator/prometheus
+    static_configs: [{targets: ["case-service:8081"]}]
+  - job_name: pushgateway          # pipeline runs and the streaming worker push here
+    honor_labels: true
+    static_configs: [{targets: ["pushgateway:9091"]}]
