@@ -340,10 +340,22 @@ The switch-off test shows every system contributes.
 - The console on Vercel, as a preview behind Vercel login.
 - Grafana and the case service on private Codespaces ports.
 
+**Closed after the audit** (evidence in `proof/AUDIT.md`):
+- The document model is wired into S4 (`DOC_DATA_MISMATCH`).
+- Real-time alerts reach the case through the signal bridge. After tightening the stream to facts only, all 8 borrowers alerted in the live run were planted frauds.
+- Data-quality quarantine with a last-good fallback.
+- A live GLEIF adapter with a stale-cache fallback.
+- Top-decile precision (98%) and fix quality (294/294).
+- The console verified in live mode.
+
 **Still to do:**
 - Line-item cross-check to cut false tamper flags.
 - Compare the document model against a zero-shot general VLM.
-- Test on real documents, which needs bank data.
+- Incremental processing and partitioned storage.
+- `CIRCULAR_FLOW`.
+- Model-written sentences and a faithfulness check.
+- The learning loop.
+- Test on real documents and data, which needs bank access.
 
 ## 11. Interview story, in 30 seconds
 "Your biggest loan book is lending to lenders. The frauds hitting that market use seven different tricks, and each one hides in a different place. You backed a tool that protects the collateral pool. I designed seven connected checks that watch the borrower around the pool. The system doesn't just flag a borrower: it tells the officer what's wrong, shows the proof, suggests the fix and drafts the paperwork, all for one-click approval. The document reading runs on a small model I fine-tuned, so borrower data never leaves the bank. It's built on your stack: Kafka, Airflow, Spring Boot."
