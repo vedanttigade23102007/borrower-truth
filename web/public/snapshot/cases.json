@@ -9,7 +9,8 @@
    "RELATED_SHELLS"
   ],
   "openSteps": 5,
-  "caseStatus": "AWAITING_APPROVAL"
+  "caseStatus": "AWAITING_APPROVAL",
+  "liveAlerts": 0
  },
  {
   "borrowerId": "B0028",
@@ -23,7 +24,8 @@
    "FIN_MANIPULATION"
   ],
   "openSteps": 11,
-  "caseStatus": "AWAITING_APPROVAL"
+  "caseStatus": "AWAITING_APPROVAL",
+  "liveAlerts": 0
  },
  {
   "borrowerId": "B0021",
@@ -35,7 +37,8 @@
    "RELATED_SHELLS"
   ],
   "openSteps": 5,
-  "caseStatus": "AWAITING_APPROVAL"
+  "caseStatus": "IN_PROGRESS",
+  "liveAlerts": 0
  },
  {
   "borrowerId": "B0023",
@@ -46,7 +49,8 @@
    "DOUBLE_PLEDGE"
   ],
   "openSteps": 3,
-  "caseStatus": "AWAITING_APPROVAL"
+  "caseStatus": "AWAITING_APPROVAL",
+  "liveAlerts": 0
  },
  {
   "borrowerId": "B0062",
@@ -58,7 +62,8 @@
    "RELATED_SHELLS"
   ],
   "openSteps": 5,
-  "caseStatus": "AWAITING_APPROVAL"
+  "caseStatus": "AWAITING_APPROVAL",
+  "liveAlerts": 0
  },
  {
   "borrowerId": "B0063",
@@ -73,7 +78,28 @@
    "FIN_MANIPULATION"
   ],
   "openSteps": 14,
-  "caseStatus": "AWAITING_APPROVAL"
+  "caseStatus": "AWAITING_APPROVAL",
+  "liveAlerts": 0
+ },
+ {
+  "borrowerId": "B0054",
+  "verdict": "NEEDS_MORE_EVIDENCE",
+  "headline": "Worth a look: invoices are fake, inflated or altered",
+  "priority": 1.0,
+  "mechanisms": [],
+  "openSteps": 0,
+  "caseStatus": "NO_ACTION",
+  "liveAlerts": 0
+ },
+ {
+  "borrowerId": "B0055",
+  "verdict": "NEEDS_MORE_EVIDENCE",
+  "headline": "Worth a look: money from lenders or linked companies is arriving dressed up as customer payments",
+  "priority": 1.0,
+  "mechanisms": [],
+  "openSteps": 0,
+  "caseStatus": "NO_ACTION",
+  "liveAlerts": 0
  },
  {
   "borrowerId": "B0042",
@@ -86,7 +112,8 @@
    "TAPE_DRESSUP"
   ],
   "openSteps": 9,
-  "caseStatus": "AWAITING_APPROVAL"
+  "caseStatus": "AWAITING_APPROVAL",
+  "liveAlerts": 0
  },
  {
   "borrowerId": "B0043",
@@ -101,7 +128,8 @@
    "FIN_MANIPULATION"
   ],
   "openSteps": 14,
-  "caseStatus": "AWAITING_APPROVAL"
+  "caseStatus": "AWAITING_APPROVAL",
+  "liveAlerts": 0
  },
  {
   "borrowerId": "B0116",
@@ -114,7 +142,8 @@
    "FIN_MANIPULATION"
   ],
   "openSteps": 9,
-  "caseStatus": "AWAITING_APPROVAL"
+  "caseStatus": "AWAITING_APPROVAL",
+  "liveAlerts": 0
  },
  {
   "borrowerId": "B0110",
@@ -128,7 +157,8 @@
    "FIN_MANIPULATION"
   ],
   "openSteps": 11,
-  "caseStatus": "AWAITING_APPROVAL"
+  "caseStatus": "AWAITING_APPROVAL",
+  "liveAlerts": 0
  },
  {
   "borrowerId": "B0103",
@@ -141,7 +171,8 @@
    "FIN_MANIPULATION"
   ],
   "openSteps": 9,
-  "caseStatus": "AWAITING_APPROVAL"
+  "caseStatus": "AWAITING_APPROVAL",
+  "liveAlerts": 0
  },
  {
   "borrowerId": "B0011",
@@ -152,7 +183,8 @@
    "TAPE_DRESSUP"
   ],
   "openSteps": 3,
-  "caseStatus": "AWAITING_APPROVAL"
+  "caseStatus": "AWAITING_APPROVAL",
+  "liveAlerts": 0
  },
  {
   "borrowerId": "B0077",
@@ -163,7 +195,8 @@
    "FAKE_INVOICES"
   ],
   "openSteps": 3,
-  "caseStatus": "AWAITING_APPROVAL"
+  "caseStatus": "AWAITING_APPROVAL",
+  "liveAlerts": 0
  },
  {
   "borrowerId": "B0072",
@@ -176,7 +209,8 @@
    "FIN_MANIPULATION"
   ],
   "openSteps": 9,
-  "caseStatus": "AWAITING_APPROVAL"
+  "caseStatus": "AWAITING_APPROVAL",
+  "liveAlerts": 0
  },
  {
   "borrowerId": "B0067",
@@ -190,7 +224,8 @@
    "FIN_MANIPULATION"
   ],
   "openSteps": 11,
-  "caseStatus": "AWAITING_APPROVAL"
+  "caseStatus": "AWAITING_APPROVAL",
+  "liveAlerts": 0
  },
  {
   "borrowerId": "B0097",
@@ -203,7 +238,8 @@
    "FIN_MANIPULATION"
   ],
   "openSteps": 9,
-  "caseStatus": "AWAITING_APPROVAL"
+  "caseStatus": "AWAITING_APPROVAL",
+  "liveAlerts": 0
  },
  {
   "borrowerId": "B0034",
@@ -214,7 +250,8 @@
    "FAKE_INVOICES"
   ],
   "openSteps": 3,
-  "caseStatus": "AWAITING_APPROVAL"
+  "caseStatus": "AWAITING_APPROVAL",
+  "liveAlerts": 0
  },
  {
   "borrowerId": "B0013",
@@ -225,7 +262,8 @@
    "FAKE_INVOICES"
   ],
   "openSteps": 3,
-  "caseStatus": "AWAITING_APPROVAL"
+  "caseStatus": "AWAITING_APPROVAL",
+  "liveAlerts": 0
  },
  {
   "borrowerId": "B0003",
@@ -236,7 +274,28 @@
    "TAPE_DRESSUP"
   ],
   "openSteps": 3,
-  "caseStatus": "AWAITING_APPROVAL"
+  "caseStatus": "AWAITING_APPROVAL",
+  "liveAlerts": 0
+ },
+ {
+  "borrowerId": "B0081",
+  "verdict": "NEEDS_MORE_EVIDENCE",
+  "headline": "Worth a look: invoices are fake, inflated or altered",
+  "priority": 0.92,
+  "mechanisms": [],
+  "openSteps": 0,
+  "caseStatus": "NO_ACTION",
+  "liveAlerts": 0
+ },
+ {
+  "borrowerId": "B0044",
+  "verdict": "NEEDS_MORE_EVIDENCE",
+  "headline": "Worth a look: invoices are fake, inflated or altered",
+  "priority": 0.878,
+  "mechanisms": [],
+  "openSteps": 0,
+  "caseStatus": "NO_ACTION",
+  "liveAlerts": 0
  },
  {
   "borrowerId": "B0027",
@@ -247,7 +306,8 @@
    "DOUBLE_PLEDGE"
   ],
   "openSteps": 3,
-  "caseStatus": "AWAITING_APPROVAL"
+  "caseStatus": "AWAITING_APPROVAL",
+  "liveAlerts": 0
  },
  {
   "borrowerId": "B0101",
@@ -258,7 +318,8 @@
    "DOUBLE_PLEDGE"
   ],
   "openSteps": 3,
-  "caseStatus": "AWAITING_APPROVAL"
+  "caseStatus": "AWAITING_APPROVAL",
+  "liveAlerts": 0
  },
  {
   "borrowerId": "B0017",
@@ -267,7 +328,8 @@
   "priority": 0.866,
   "mechanisms": [],
   "openSteps": 0,
-  "caseStatus": "NO_ACTION"
+  "caseStatus": "NO_ACTION",
+  "liveAlerts": 0
  },
  {
   "borrowerId": "B0012",
@@ -276,7 +338,8 @@
   "priority": 0.866,
   "mechanisms": [],
   "openSteps": 0,
-  "caseStatus": "NO_ACTION"
+  "caseStatus": "NO_ACTION",
+  "liveAlerts": 0
  },
  {
   "borrowerId": "B0006",
@@ -285,7 +348,8 @@
   "priority": 0.866,
   "mechanisms": [],
   "openSteps": 0,
-  "caseStatus": "NO_ACTION"
+  "caseStatus": "NO_ACTION",
+  "liveAlerts": 0
  },
  {
   "borrowerId": "B0005",
@@ -296,7 +360,8 @@
    "DOUBLE_PLEDGE"
   ],
   "openSteps": 3,
-  "caseStatus": "AWAITING_APPROVAL"
+  "caseStatus": "AWAITING_APPROVAL",
+  "liveAlerts": 0
  },
  {
   "borrowerId": "B0078",
@@ -305,7 +370,8 @@
   "priority": 0.866,
   "mechanisms": [],
   "openSteps": 0,
-  "caseStatus": "NO_ACTION"
+  "caseStatus": "NO_ACTION",
+  "liveAlerts": 0
  },
  {
   "borrowerId": "B0088",
@@ -316,7 +382,48 @@
    "HIDDEN_DEBT"
   ],
   "openSteps": 3,
-  "caseStatus": "AWAITING_APPROVAL"
+  "caseStatus": "AWAITING_APPROVAL",
+  "liveAlerts": 0
+ },
+ {
+  "borrowerId": "B0022",
+  "verdict": "NEEDS_MORE_EVIDENCE",
+  "headline": "Worth a look: invoices are fake, inflated or altered",
+  "priority": 0.85,
+  "mechanisms": [],
+  "openSteps": 0,
+  "caseStatus": "NO_ACTION",
+  "liveAlerts": 0
+ },
+ {
+  "borrowerId": "B0076",
+  "verdict": "NEEDS_MORE_EVIDENCE",
+  "headline": "Worth a look: invoices are fake, inflated or altered",
+  "priority": 0.85,
+  "mechanisms": [],
+  "openSteps": 0,
+  "caseStatus": "NO_ACTION",
+  "liveAlerts": 0
+ },
+ {
+  "borrowerId": "B0071",
+  "verdict": "NEEDS_MORE_EVIDENCE",
+  "headline": "Worth a look: invoices are fake, inflated or altered",
+  "priority": 0.85,
+  "mechanisms": [],
+  "openSteps": 0,
+  "caseStatus": "NO_ACTION",
+  "liveAlerts": 0
+ },
+ {
+  "borrowerId": "B0090",
+  "verdict": "NEEDS_MORE_EVIDENCE",
+  "headline": "Worth a look: invoices are fake, inflated or altered",
+  "priority": 0.85,
+  "mechanisms": [],
+  "openSteps": 0,
+  "caseStatus": "NO_ACTION",
+  "liveAlerts": 0
  },
  {
   "borrowerId": "B0099",
@@ -328,7 +435,8 @@
    "RELATED_SHELLS"
   ],
   "openSteps": 5,
-  "caseStatus": "AWAITING_APPROVAL"
+  "caseStatus": "AWAITING_APPROVAL",
+  "liveAlerts": 0
  },
  {
   "borrowerId": "B0113",
@@ -340,7 +448,8 @@
    "RELATED_SHELLS"
   ],
   "openSteps": 5,
-  "caseStatus": "AWAITING_APPROVAL"
+  "caseStatus": "AWAITING_APPROVAL",
+  "liveAlerts": 0
  },
  {
   "borrowerId": "B0004",
@@ -351,7 +460,8 @@
    "TAPE_DRESSUP"
   ],
   "openSteps": 3,
-  "caseStatus": "AWAITING_APPROVAL"
+  "caseStatus": "AWAITING_APPROVAL",
+  "liveAlerts": 0
  },
  {
   "borrowerId": "B0025",
@@ -362,16 +472,8 @@
    "FIN_MANIPULATION"
   ],
   "openSteps": 3,
-  "caseStatus": "AWAITING_APPROVAL"
- },
- {
-  "borrowerId": "B0055",
-  "verdict": "NEEDS_MORE_EVIDENCE",
-  "headline": "Worth a look: money from lenders or linked companies is arriving dressed up as customer payments",
-  "priority": 0.632,
-  "mechanisms": [],
-  "openSteps": 0,
-  "caseStatus": "NO_ACTION"
+  "caseStatus": "AWAITING_APPROVAL",
+  "liveAlerts": 0
  },
  {
   "borrowerId": "B0111",
@@ -380,7 +482,8 @@
   "priority": 0.595,
   "mechanisms": [],
   "openSteps": 0,
-  "caseStatus": "NO_ACTION"
+  "caseStatus": "NO_ACTION",
+  "liveAlerts": 0
  },
  {
   "borrowerId": "B0089",
@@ -389,7 +492,8 @@
   "priority": 0.595,
   "mechanisms": [],
   "openSteps": 0,
-  "caseStatus": "NO_ACTION"
+  "caseStatus": "NO_ACTION",
+  "liveAlerts": 0
  },
  {
   "borrowerId": "B0009",
@@ -398,7 +502,8 @@
   "priority": 0.594,
   "mechanisms": [],
   "openSteps": 0,
-  "caseStatus": "NO_ACTION"
+  "caseStatus": "NO_ACTION",
+  "liveAlerts": 0
  },
  {
   "borrowerId": "B0119",
@@ -407,7 +512,8 @@
   "priority": 0.548,
   "mechanisms": [],
   "openSteps": 0,
-  "caseStatus": "NO_ACTION"
+  "caseStatus": "NO_ACTION",
+  "liveAlerts": 0
  },
  {
   "borrowerId": "B0031",
@@ -416,7 +522,8 @@
   "priority": 0.541,
   "mechanisms": [],
   "openSteps": 0,
-  "caseStatus": "NO_ACTION"
+  "caseStatus": "NO_ACTION",
+  "liveAlerts": 0
  },
  {
   "borrowerId": "B0052",
@@ -425,7 +532,8 @@
   "priority": 0.541,
   "mechanisms": [],
   "openSteps": 0,
-  "caseStatus": "NO_ACTION"
+  "caseStatus": "NO_ACTION",
+  "liveAlerts": 0
  },
  {
   "borrowerId": "B0069",
@@ -436,7 +544,8 @@
    "FIN_MANIPULATION"
   ],
   "openSteps": 3,
-  "caseStatus": "AWAITING_APPROVAL"
+  "caseStatus": "AWAITING_APPROVAL",
+  "liveAlerts": 0
  },
  {
   "borrowerId": "B0080",
@@ -447,16 +556,8 @@
    "FIN_MANIPULATION"
   ],
   "openSteps": 3,
-  "caseStatus": "AWAITING_APPROVAL"
- },
- {
-  "borrowerId": "B0054",
-  "verdict": "NEEDS_MORE_EVIDENCE",
-  "headline": "Worth a look: the borrower has debt it has not disclosed",
-  "priority": 0.36,
-  "mechanisms": [],
-  "openSteps": 0,
-  "caseStatus": "NO_ACTION"
+  "caseStatus": "AWAITING_APPROVAL",
+  "liveAlerts": 0
  },
  {
   "borrowerId": "B0050",
@@ -465,7 +566,8 @@
   "priority": 0.36,
   "mechanisms": [],
   "openSteps": 0,
-  "caseStatus": "NO_ACTION"
+  "caseStatus": "NO_ACTION",
+  "liveAlerts": 0
  },
  {
   "borrowerId": "B0045",
@@ -474,7 +576,8 @@
   "priority": 0.36,
   "mechanisms": [],
   "openSteps": 0,
-  "caseStatus": "NO_ACTION"
+  "caseStatus": "NO_ACTION",
+  "liveAlerts": 0
  },
  {
   "borrowerId": "B0047",
@@ -483,7 +586,8 @@
   "priority": 0.36,
   "mechanisms": [],
   "openSteps": 0,
-  "caseStatus": "NO_ACTION"
+  "caseStatus": "NO_ACTION",
+  "liveAlerts": 0
  },
  {
   "borrowerId": "B0112",
@@ -492,7 +596,8 @@
   "priority": 0.36,
   "mechanisms": [],
   "openSteps": 0,
-  "caseStatus": "NO_ACTION"
+  "caseStatus": "NO_ACTION",
+  "liveAlerts": 0
  },
  {
   "borrowerId": "B0106",
@@ -501,7 +606,8 @@
   "priority": 0.36,
   "mechanisms": [],
   "openSteps": 0,
-  "caseStatus": "NO_ACTION"
+  "caseStatus": "NO_ACTION",
+  "liveAlerts": 0
  },
  {
   "borrowerId": "B0107",
@@ -510,7 +616,8 @@
   "priority": 0.36,
   "mechanisms": [],
   "openSteps": 0,
-  "caseStatus": "NO_ACTION"
+  "caseStatus": "NO_ACTION",
+  "liveAlerts": 0
  },
  {
   "borrowerId": "B0014",
@@ -519,16 +626,8 @@
   "priority": 0.36,
   "mechanisms": [],
   "openSteps": 0,
-  "caseStatus": "NO_ACTION"
- },
- {
-  "borrowerId": "B0081",
-  "verdict": "NEEDS_MORE_EVIDENCE",
-  "headline": "Worth a look: the borrower has debt it has not disclosed",
-  "priority": 0.36,
-  "mechanisms": [],
-  "openSteps": 0,
-  "caseStatus": "NO_ACTION"
+  "caseStatus": "NO_ACTION",
+  "liveAlerts": 0
  },
  {
   "borrowerId": "B0082",
@@ -537,7 +636,8 @@
   "priority": 0.36,
   "mechanisms": [],
   "openSteps": 0,
-  "caseStatus": "NO_ACTION"
+  "caseStatus": "NO_ACTION",
+  "liveAlerts": 0
  },
  {
   "borrowerId": "B0083",
@@ -546,7 +646,8 @@
   "priority": 0.36,
   "mechanisms": [],
   "openSteps": 0,
-  "caseStatus": "NO_ACTION"
+  "caseStatus": "NO_ACTION",
+  "liveAlerts": 0
  },
  {
   "borrowerId": "B0079",
@@ -555,7 +656,8 @@
   "priority": 0.36,
   "mechanisms": [],
   "openSteps": 0,
-  "caseStatus": "NO_ACTION"
+  "caseStatus": "NO_ACTION",
+  "liveAlerts": 0
  },
  {
   "borrowerId": "B0070",
@@ -564,7 +666,8 @@
   "priority": 0.36,
   "mechanisms": [],
   "openSteps": 0,
-  "caseStatus": "NO_ACTION"
+  "caseStatus": "NO_ACTION",
+  "liveAlerts": 0
  },
  {
   "borrowerId": "B0098",
@@ -573,7 +676,8 @@
   "priority": 0.36,
   "mechanisms": [],
   "openSteps": 0,
-  "caseStatus": "NO_ACTION"
+  "caseStatus": "NO_ACTION",
+  "liveAlerts": 0
  },
  {
   "borrowerId": "B0094",
@@ -582,7 +686,8 @@
   "priority": 0.36,
   "mechanisms": [],
   "openSteps": 0,
-  "caseStatus": "NO_ACTION"
+  "caseStatus": "NO_ACTION",
+  "liveAlerts": 0
  },
  {
   "borrowerId": "B0086",
@@ -591,7 +696,8 @@
   "priority": 0.36,
   "mechanisms": [],
   "openSteps": 0,
-  "caseStatus": "NO_ACTION"
+  "caseStatus": "NO_ACTION",
+  "liveAlerts": 0
  },
  {
   "borrowerId": "B0091",
@@ -600,7 +706,8 @@
   "priority": 0.332,
   "mechanisms": [],
   "openSteps": 0,
-  "caseStatus": "NO_ACTION"
+  "caseStatus": "NO_ACTION",
+  "liveAlerts": 0
  },
  {
   "borrowerId": "B0104",
@@ -609,7 +716,8 @@
   "priority": 0.3,
   "mechanisms": [],
   "openSteps": 0,
-  "caseStatus": "NO_ACTION"
+  "caseStatus": "NO_ACTION",
+  "liveAlerts": 0
  },
  {
   "borrowerId": "B0037",
@@ -618,7 +726,8 @@
   "priority": 0.26,
   "mechanisms": [],
   "openSteps": 0,
-  "caseStatus": "NO_ACTION"
+  "caseStatus": "NO_ACTION",
+  "liveAlerts": 0
  },
  {
   "borrowerId": "B0010",
@@ -627,7 +736,8 @@
   "priority": 0.26,
   "mechanisms": [],
   "openSteps": 0,
-  "caseStatus": "NO_ACTION"
+  "caseStatus": "NO_ACTION",
+  "liveAlerts": 0
  },
  {
   "borrowerId": "B0075",
@@ -636,7 +746,8 @@
   "priority": 0.26,
   "mechanisms": [],
   "openSteps": 0,
-  "caseStatus": "NO_ACTION"
+  "caseStatus": "NO_ACTION",
+  "liveAlerts": 0
  },
  {
   "borrowerId": "B0020",
@@ -645,7 +756,8 @@
   "priority": 0.24,
   "mechanisms": [],
   "openSteps": 0,
-  "caseStatus": "NO_ACTION"
+  "caseStatus": "NO_ACTION",
+  "liveAlerts": 0
  },
  {
   "borrowerId": "B0065",
@@ -654,7 +766,8 @@
   "priority": 0.24,
   "mechanisms": [],
   "openSteps": 0,
-  "caseStatus": "NO_ACTION"
+  "caseStatus": "NO_ACTION",
+  "liveAlerts": 0
  },
  {
   "borrowerId": "B0092",
@@ -663,7 +776,8 @@
   "priority": 0.24,
   "mechanisms": [],
   "openSteps": 0,
-  "caseStatus": "NO_ACTION"
+  "caseStatus": "NO_ACTION",
+  "liveAlerts": 0
  },
  {
   "borrowerId": "B0032",
@@ -672,7 +786,8 @@
   "priority": 0.157,
   "mechanisms": [],
   "openSteps": 0,
-  "caseStatus": "NO_ACTION"
+  "caseStatus": "NO_ACTION",
+  "liveAlerts": 0
  },
  {
   "borrowerId": "B0035",
@@ -681,7 +796,8 @@
   "priority": 0.157,
   "mechanisms": [],
   "openSteps": 0,
-  "caseStatus": "NO_ACTION"
+  "caseStatus": "NO_ACTION",
+  "liveAlerts": 0
  },
  {
   "borrowerId": "B0036",
@@ -690,7 +806,8 @@
   "priority": 0.157,
   "mechanisms": [],
   "openSteps": 0,
-  "caseStatus": "NO_ACTION"
+  "caseStatus": "NO_ACTION",
+  "liveAlerts": 0
  },
  {
   "borrowerId": "B0060",
@@ -699,7 +816,8 @@
   "priority": 0.157,
   "mechanisms": [],
   "openSteps": 0,
-  "caseStatus": "NO_ACTION"
+  "caseStatus": "NO_ACTION",
+  "liveAlerts": 0
  },
  {
   "borrowerId": "B0061",
@@ -708,7 +826,8 @@
   "priority": 0.157,
   "mechanisms": [],
   "openSteps": 0,
-  "caseStatus": "NO_ACTION"
+  "caseStatus": "NO_ACTION",
+  "liveAlerts": 0
  },
  {
   "borrowerId": "B0058",
@@ -717,7 +836,8 @@
   "priority": 0.157,
   "mechanisms": [],
   "openSteps": 0,
-  "caseStatus": "NO_ACTION"
+  "caseStatus": "NO_ACTION",
+  "liveAlerts": 0
  },
  {
   "borrowerId": "B0115",
@@ -726,7 +846,8 @@
   "priority": 0.157,
   "mechanisms": [],
   "openSteps": 0,
-  "caseStatus": "NO_ACTION"
+  "caseStatus": "NO_ACTION",
+  "liveAlerts": 0
  },
  {
   "borrowerId": "B0019",
@@ -735,7 +856,8 @@
   "priority": 0.157,
   "mechanisms": [],
   "openSteps": 0,
-  "caseStatus": "NO_ACTION"
+  "caseStatus": "NO_ACTION",
+  "liveAlerts": 0
  },
  {
   "borrowerId": "B0015",
@@ -744,7 +866,8 @@
   "priority": 0.157,
   "mechanisms": [],
   "openSteps": 0,
-  "caseStatus": "NO_ACTION"
+  "caseStatus": "NO_ACTION",
+  "liveAlerts": 0
  },
  {
   "borrowerId": "B0002",
@@ -753,7 +876,8 @@
   "priority": 0.157,
   "mechanisms": [],
   "openSteps": 0,
-  "caseStatus": "NO_ACTION"
+  "caseStatus": "NO_ACTION",
+  "liveAlerts": 0
  },
  {
   "borrowerId": "B0029",
@@ -762,7 +886,8 @@
   "priority": 0.122,
   "mechanisms": [],
   "openSteps": 0,
-  "caseStatus": "NO_ACTION"
+  "caseStatus": "NO_ACTION",
+  "liveAlerts": 0
  },
  {
   "borrowerId": "B0024",
@@ -771,16 +896,8 @@
   "priority": 0.122,
   "mechanisms": [],
   "openSteps": 0,
-  "caseStatus": "NO_ACTION"
- },
- {
-  "borrowerId": "B0044",
-  "verdict": "NO_ISSUE",
-  "headline": "No issues found",
-  "priority": 0.122,
-  "mechanisms": [],
-  "openSteps": 0,
-  "caseStatus": "NO_ACTION"
+  "caseStatus": "NO_ACTION",
+  "liveAlerts": 0
  },
  {
   "borrowerId": "B0046",
@@ -789,7 +906,8 @@
   "priority": 0.122,
   "mechanisms": [],
   "openSteps": 0,
-  "caseStatus": "NO_ACTION"
+  "caseStatus": "NO_ACTION",
+  "liveAlerts": 0
  },
  {
   "borrowerId": "B0040",
@@ -798,7 +916,8 @@
   "priority": 0.0,
   "mechanisms": [],
   "openSteps": 0,
-  "caseStatus": "NO_ACTION"
+  "caseStatus": "NO_ACTION",
+  "liveAlerts": 0
  },
  {
   "borrowerId": "B0039",
@@ -807,7 +926,8 @@
   "priority": 0.0,
   "mechanisms": [],
   "openSteps": 0,
-  "caseStatus": "NO_ACTION"
+  "caseStatus": "NO_ACTION",
+  "liveAlerts": 0
  },
  {
   "borrowerId": "B0033",
@@ -816,7 +936,8 @@
   "priority": 0.0,
   "mechanisms": [],
   "openSteps": 0,
-  "caseStatus": "NO_ACTION"
+  "caseStatus": "NO_ACTION",
+  "liveAlerts": 0
  },
  {
   "borrowerId": "B0038",
@@ -825,7 +946,8 @@
   "priority": 0.0,
   "mechanisms": [],
   "openSteps": 0,
-  "caseStatus": "NO_ACTION"
+  "caseStatus": "NO_ACTION",
+  "liveAlerts": 0
  },
  {
   "borrowerId": "B0030",
@@ -834,16 +956,8 @@
   "priority": 0.0,
   "mechanisms": [],
   "openSteps": 0,
-  "caseStatus": "NO_ACTION"
- },
- {
-  "borrowerId": "B0022",
-  "verdict": "EXPLAINED",
-  "headline": "Checks fired, but disclosures explain them",
-  "priority": 0.0,
-  "mechanisms": [],
-  "openSteps": 0,
-  "caseStatus": "NO_ACTION"
+  "caseStatus": "NO_ACTION",
+  "liveAlerts": 0
  },
  {
   "borrowerId": "B0026",
@@ -852,7 +966,8 @@
   "priority": 0.0,
   "mechanisms": [],
   "openSteps": 0,
-  "caseStatus": "NO_ACTION"
+  "caseStatus": "NO_ACTION",
+  "liveAlerts": 0
  },
  {
   "borrowerId": "B0053",
@@ -861,7 +976,8 @@
   "priority": 0.0,
   "mechanisms": [],
   "openSteps": 0,
-  "caseStatus": "NO_ACTION"
+  "caseStatus": "NO_ACTION",
+  "liveAlerts": 0
  },
  {
   "borrowerId": "B0056",
@@ -870,7 +986,8 @@
   "priority": 0.0,
   "mechanisms": [],
   "openSteps": 0,
-  "caseStatus": "NO_ACTION"
+  "caseStatus": "NO_ACTION",
+  "liveAlerts": 0
  },
  {
   "borrowerId": "B0057",
@@ -879,7 +996,8 @@
   "priority": 0.0,
   "mechanisms": [],
   "openSteps": 0,
-  "caseStatus": "NO_ACTION"
+  "caseStatus": "NO_ACTION",
+  "liveAlerts": 0
  },
  {
   "borrowerId": "B0059",
@@ -888,7 +1006,8 @@
   "priority": 0.0,
   "mechanisms": [],
   "openSteps": 0,
-  "caseStatus": "NO_ACTION"
+  "caseStatus": "NO_ACTION",
+  "liveAlerts": 0
  },
  {
   "borrowerId": "B0051",
@@ -897,7 +1016,8 @@
   "priority": 0.0,
   "mechanisms": [],
   "openSteps": 0,
-  "caseStatus": "NO_ACTION"
+  "caseStatus": "NO_ACTION",
+  "liveAlerts": 0
  },
  {
   "borrowerId": "B0048",
@@ -906,7 +1026,8 @@
   "priority": 0.0,
   "mechanisms": [],
   "openSteps": 0,
-  "caseStatus": "NO_ACTION"
+  "caseStatus": "NO_ACTION",
+  "liveAlerts": 0
  },
  {
   "borrowerId": "B0049",
@@ -915,7 +1036,8 @@
   "priority": 0.0,
   "mechanisms": [],
   "openSteps": 0,
-  "caseStatus": "NO_ACTION"
+  "caseStatus": "NO_ACTION",
+  "liveAlerts": 0
  },
  {
   "borrowerId": "B0117",
@@ -924,7 +1046,8 @@
   "priority": 0.0,
   "mechanisms": [],
   "openSteps": 0,
-  "caseStatus": "NO_ACTION"
+  "caseStatus": "NO_ACTION",
+  "liveAlerts": 0
  },
  {
   "borrowerId": "B0118",
@@ -933,7 +1056,8 @@
   "priority": 0.0,
   "mechanisms": [],
   "openSteps": 0,
-  "caseStatus": "NO_ACTION"
+  "caseStatus": "NO_ACTION",
+  "liveAlerts": 0
  },
  {
   "borrowerId": "B0114",
@@ -942,7 +1066,8 @@
   "priority": 0.0,
   "mechanisms": [],
   "openSteps": 0,
-  "caseStatus": "NO_ACTION"
+  "caseStatus": "NO_ACTION",
+  "liveAlerts": 0
  },
  {
   "borrowerId": "B0105",
@@ -951,7 +1076,8 @@
   "priority": 0.0,
   "mechanisms": [],
   "openSteps": 0,
-  "caseStatus": "NO_ACTION"
+  "caseStatus": "NO_ACTION",
+  "liveAlerts": 0
  },
  {
   "borrowerId": "B0108",
@@ -960,7 +1086,8 @@
   "priority": 0.0,
   "mechanisms": [],
   "openSteps": 0,
-  "caseStatus": "NO_ACTION"
+  "caseStatus": "NO_ACTION",
+  "liveAlerts": 0
  },
  {
   "borrowerId": "B0109",
@@ -969,7 +1096,8 @@
   "priority": 0.0,
   "mechanisms": [],
   "openSteps": 0,
-  "caseStatus": "NO_ACTION"
+  "caseStatus": "NO_ACTION",
+  "liveAlerts": 0
  },
  {
   "borrowerId": "B0100",
@@ -978,7 +1106,8 @@
   "priority": 0.0,
   "mechanisms": [],
   "openSteps": 0,
-  "caseStatus": "NO_ACTION"
+  "caseStatus": "NO_ACTION",
+  "liveAlerts": 0
  },
  {
   "borrowerId": "B0102",
@@ -987,7 +1116,8 @@
   "priority": 0.0,
   "mechanisms": [],
   "openSteps": 0,
-  "caseStatus": "NO_ACTION"
+  "caseStatus": "NO_ACTION",
+  "liveAlerts": 0
  },
  {
   "borrowerId": "B0018",
@@ -996,7 +1126,8 @@
   "priority": 0.0,
   "mechanisms": [],
   "openSteps": 0,
-  "caseStatus": "NO_ACTION"
+  "caseStatus": "NO_ACTION",
+  "liveAlerts": 0
  },
  {
   "borrowerId": "B0016",
@@ -1005,7 +1136,8 @@
   "priority": 0.0,
   "mechanisms": [],
   "openSteps": 0,
-  "caseStatus": "NO_ACTION"
+  "caseStatus": "NO_ACTION",
+  "liveAlerts": 0
  },
  {
   "borrowerId": "B0007",
@@ -1014,7 +1146,8 @@
   "priority": 0.0,
   "mechanisms": [],
   "openSteps": 0,
-  "caseStatus": "NO_ACTION"
+  "caseStatus": "NO_ACTION",
+  "liveAlerts": 0
  },
  {
   "borrowerId": "B0008",
@@ -1023,7 +1156,8 @@
   "priority": 0.0,
   "mechanisms": [],
   "openSteps": 0,
-  "caseStatus": "NO_ACTION"
+  "caseStatus": "NO_ACTION",
+  "liveAlerts": 0
  },
  {
   "borrowerId": "B0120",
@@ -1032,7 +1166,8 @@
   "priority": 0.0,
   "mechanisms": [],
   "openSteps": 0,
-  "caseStatus": "NO_ACTION"
+  "caseStatus": "NO_ACTION",
+  "liveAlerts": 0
  },
  {
   "borrowerId": "B0001",
@@ -1041,7 +1176,8 @@
   "priority": 0.0,
   "mechanisms": [],
   "openSteps": 0,
-  "caseStatus": "NO_ACTION"
+  "caseStatus": "NO_ACTION",
+  "liveAlerts": 0
  },
  {
   "borrowerId": "B0084",
@@ -1050,7 +1186,8 @@
   "priority": 0.0,
   "mechanisms": [],
   "openSteps": 0,
-  "caseStatus": "NO_ACTION"
+  "caseStatus": "NO_ACTION",
+  "liveAlerts": 0
  },
  {
   "borrowerId": "B0085",
@@ -1059,25 +1196,8 @@
   "priority": 0.0,
   "mechanisms": [],
   "openSteps": 0,
-  "caseStatus": "NO_ACTION"
- },
- {
-  "borrowerId": "B0076",
-  "verdict": "NO_ISSUE",
-  "headline": "No issues found",
-  "priority": 0.0,
-  "mechanisms": [],
-  "openSteps": 0,
-  "caseStatus": "NO_ACTION"
- },
- {
-  "borrowerId": "B0071",
-  "verdict": "NO_ISSUE",
-  "headline": "No issues found",
-  "priority": 0.0,
-  "mechanisms": [],
-  "openSteps": 0,
-  "caseStatus": "NO_ACTION"
+  "caseStatus": "NO_ACTION",
+  "liveAlerts": 0
  },
  {
   "borrowerId": "B0073",
@@ -1086,7 +1206,8 @@
   "priority": 0.0,
   "mechanisms": [],
   "openSteps": 0,
-  "caseStatus": "NO_ACTION"
+  "caseStatus": "NO_ACTION",
+  "liveAlerts": 0
  },
  {
   "borrowerId": "B0074",
@@ -1095,7 +1216,8 @@
   "priority": 0.0,
   "mechanisms": [],
   "openSteps": 0,
-  "caseStatus": "NO_ACTION"
+  "caseStatus": "NO_ACTION",
+  "liveAlerts": 0
  },
  {
   "borrowerId": "B0064",
@@ -1104,7 +1226,8 @@
   "priority": 0.0,
   "mechanisms": [],
   "openSteps": 0,
-  "caseStatus": "NO_ACTION"
+  "caseStatus": "NO_ACTION",
+  "liveAlerts": 0
  },
  {
   "borrowerId": "B0066",
@@ -1113,7 +1236,8 @@
   "priority": 0.0,
   "mechanisms": [],
   "openSteps": 0,
-  "caseStatus": "NO_ACTION"
+  "caseStatus": "NO_ACTION",
+  "liveAlerts": 0
  },
  {
   "borrowerId": "B0068",
@@ -1122,16 +1246,8 @@
   "priority": 0.0,
   "mechanisms": [],
   "openSteps": 0,
-  "caseStatus": "NO_ACTION"
- },
- {
-  "borrowerId": "B0090",
-  "verdict": "NO_ISSUE",
-  "headline": "No issues found",
-  "priority": 0.0,
-  "mechanisms": [],
-  "openSteps": 0,
-  "caseStatus": "NO_ACTION"
+  "caseStatus": "NO_ACTION",
+  "liveAlerts": 0
  },
  {
   "borrowerId": "B0093",
@@ -1140,7 +1256,8 @@
   "priority": 0.0,
   "mechanisms": [],
   "openSteps": 0,
-  "caseStatus": "NO_ACTION"
+  "caseStatus": "NO_ACTION",
+  "liveAlerts": 0
  },
  {
   "borrowerId": "B0095",
@@ -1149,7 +1266,8 @@
   "priority": 0.0,
   "mechanisms": [],
   "openSteps": 0,
-  "caseStatus": "NO_ACTION"
+  "caseStatus": "NO_ACTION",
+  "liveAlerts": 0
  },
  {
   "borrowerId": "B0096",
@@ -1158,7 +1276,8 @@
   "priority": 0.0,
   "mechanisms": [],
   "openSteps": 0,
-  "caseStatus": "NO_ACTION"
+  "caseStatus": "NO_ACTION",
+  "liveAlerts": 0
  },
  {
   "borrowerId": "B0087",
@@ -1167,6 +1286,7 @@
   "priority": 0.0,
   "mechanisms": [],
   "openSteps": 0,
-  "caseStatus": "NO_ACTION"
+  "caseStatus": "NO_ACTION",
+  "liveAlerts": 0
  }
 ]

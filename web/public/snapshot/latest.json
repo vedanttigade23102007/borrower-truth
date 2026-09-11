@@ -1,31 +1,35 @@
 {
  "asOf": 23,
- "receivedAt": "2026-09-11T09:56:45.741097Z",
+ "receivedAt": "2026-09-11T12:28:04.816289Z",
  "runMetrics": {
+  "data_quality": {
+   "quarantined": {},
+   "checked": 9
+  },
   "S6": {
    "status": "ok",
-   "seconds": 0.015,
+   "seconds": 0.014,
    "signals": 76
   },
   "S1": {
    "status": "ok",
-   "seconds": 0.036,
+   "seconds": 0.031,
    "signals": 10
   },
   "S2": {
    "status": "ok",
-   "seconds": 0.184,
+   "seconds": 0.058,
    "signals": 20
   },
   "S3": {
    "status": "ok",
-   "seconds": 0.448,
+   "seconds": 0.281,
    "signals": 12
   },
   "S4": {
    "status": "ok",
-   "seconds": 0.037,
-   "signals": 15
+   "seconds": 0.041,
+   "signals": 29
   },
   "S5": {
    "status": "ok",
@@ -35,20 +39,20 @@
   "S7": {
    "status": "ok",
    "seconds": 0.002,
-   "signals": 51
+   "signals": 60
   },
   "combiner": {
    "status": "ok",
-   "seconds": 0.002,
+   "seconds": 0.003,
    "cases": 120
   },
-  "total_seconds": 1.222,
+  "total_seconds": 1.056,
   "as_of": 23
  },
  "verdicts": {
-  "EXPLAINED": 7,
+  "EXPLAINED": 6,
   "LIKELY_FRAUD": 29,
-  "NEEDS_MORE_EVIDENCE": 32,
-  "NO_ISSUE": 52
+  "NEEDS_MORE_EVIDENCE": 37,
+  "NO_ISSUE": 48
  }
 }

@@ -48,7 +48,9 @@ Rules were tuned on one synthetic book (seed 7). The numbers below come from fiv
 |---|---|---|
 | Frauds caught | **95%** (143/150) | 47% (71/150) |
 | Honest borrowers flagged "likely fraud" | 0 per 100 | 2.4 per 100 |
-| Honest borrowers sent to "worth a look" | 29 per 100 (the real review workload) | – |
+| Honest borrowers sent to "worth a look" | 31 per 100 (the real review workload) | – |
+| Highest-priority 10% of the queue that are real frauds | 98% (59/60) | – |
+| Suggested fixes that target a planted trick | 100% (294/294) | – |
 | Detection vs the audit (median) | **120 days earlier** | – |
 | Frauds PledgeCheck's four checks never flagged | **111** | – |
 | One monthly run, 120 borrowers | 0.67 s | – |
@@ -80,6 +82,15 @@ Every system loses detections when it is switched off, so each one earns its pla
 - It **caught all 11 tampered invoices**, with false flags on 3.3% of clean ones; every flag goes to a person to confirm.
 - It reads 120 invoices per minute.
 - The untrained base model scores 0%. That's a weak comparison (it can't produce the format without training), and is labelled as such.
+
+**Real-time alerts reach the case, and only real ones go out** (`proof/STACK-DEMO.md`):
+- A Kafka-to-Java bridge forwards streaming alerts to the case service.
+- Only facts are streamed: money from a linked company or a lender.
+- In the live run, **all 8 borrowers alerted were planted frauds**, and all 8 disguised-receipt frauds were alerted.
+
+**Document check in S4** (`proof/model/MODEL.md`):
+- On a book the model never saw, it caught **24 of 24 tampered invoices** with **2.9% false flags**.
+- The second read helped only a little: false flags went from 17 to 15.
 
 **Full stack, live in Codespaces** (`proof/STACK-DEMO.md`):
 - 59,551 payments streamed through Kafka.

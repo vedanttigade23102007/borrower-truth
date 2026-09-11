@@ -295,7 +295,9 @@ A great tool can still fail to fit a bank. This design plans for that from day o
 |---|---|
 | Catch rate | 95% (143/150) vs 47% for a quarterly sample audit |
 | Honest borrowers flagged "likely fraud" | 0 per 100 |
-| Honest borrowers routed to "worth a look" | 29 per 100 |
+| Honest borrowers routed to "worth a look" | 31 per 100 (the document check's false flags add about 2) |
+| Top-decile precision (highest-priority 10% that are real frauds) | 98% (59/60) |
+| Suggested fixes that target a planted mechanism | 100% (294/294) |
 | Detection vs the audit (median) | 120 days earlier |
 | Frauds never flagged by PledgeCheck | 111 |
 | Weakest mechanism | dressed-up tapes, 73% |
