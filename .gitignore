@@ -18,6 +18,9 @@ research/sources/seekingalpha-*.txt
 # local case-service database (human decisions in the demo)
 case-service/data/
 
+# trained model weights (hundreds of MB): published privately on Hugging Face, never in git
+model/kaggle/output/
+
 # generated data and build output
 data/out/
 *.duckdb

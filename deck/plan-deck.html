@@ -353,6 +353,49 @@ h1{font-size:30px}h2{font-size:24px}.big{font-size:54px}.timeline{flex-direction
   <p class="fine mt">Honest expectation: Wells Fargo won't buy a student's software. This is built so they want to hire the person who designed it.</p>
 </div></section>
 
+<!-- B1 Built -->
+<section class="slide"><div class="frame">
+  <div class="kicker">Status · built and running, not a plan any more</div>
+  <h2>Every part in this deck now exists and has been tested end to end.</h2>
+  <div class="grid3">
+    <div class="card"><h3>Seven checks + combiner</h3>Python and DuckDB. 13 tests. One monthly run of 120 borrowers takes under 1.4 s.</div>
+    <div class="card"><h3>Case, verdict and fix service</h3>Java 21 and Spring Boot. Playbooks, drafted letters, one-click approval, audit log. It refuses "done" before "approved".</div>
+    <div class="card"><h3>Review console</h3>Next.js. Deployed privately on Vercel, visible only to your Vercel account.</div>
+    <div class="card"><h3>Live streaming</h3>Kafka API and a streaming worker. A suspicious payer is flagged 24 ms after the payment lands.</div>
+    <div class="card"><h3>Document model</h3>Fine-tuned on a free Kaggle GPU. It reads invoice totals with 96.5% accuracy.</div>
+    <div class="card"><h3>Operations</h3>Airflow nightly job, Prometheus and Grafana, dead-letter replay, break-it test.</div>
+  </div>
+</div></section>
+
+<!-- B2 Proof -->
+<section class="slide"><div class="frame">
+  <div class="kicker">The proof · 5 fresh synthetic books it never saw (600 borrowers)</div>
+  <h2>It caught 95% of planted frauds, twice the quarterly audit's rate, and a median 120 days sooner.</h2>
+  <div class="grid4">
+    <div class="card metric"><div class="v">95%</div><div class="l">frauds caught (143/150). The audit caught 47%.</div></div>
+    <div class="card metric"><div class="v">120 days</div><div class="l">earlier than the audit, median</div></div>
+    <div class="card metric"><div class="v">0 / 100</div><div class="l">honest borrowers marked "likely fraud"</div></div>
+    <div class="card metric"><div class="v">29 / 100</div><div class="l">honest borrowers sent to "worth a look": the real workload</div></div>
+  </div>
+  <div class="grid2 mt">
+    <div class="card"><h3>Beyond what already exists</h3>111 caught frauds were never flagged by PledgeCheck's four checks.</div>
+    <div class="card"><h3>Weakest spot, said plainly</h3>Bad loans reported as good: 73% caught. And all of this is synthetic, so it proves coverage, not real-world rates.</div>
+  </div>
+</div></section>
+
+<!-- B3 Live -->
+<section class="slide"><div class="frame">
+  <div class="kicker">Live in the cloud · and the trained model</div>
+  <h2>A suspicious payment is flagged in 24 ms, and the invoice reader catches every tampered document.</h2>
+  <div class="grid4">
+    <div class="card metric"><div class="v">24 ms</div><div class="l">payment to signal, median (p95 29 ms)</div></div>
+    <div class="card metric"><div class="v">59,551</div><div class="l">payments streamed, 0 lost, 0 duplicated</div></div>
+    <div class="card metric"><div class="v">96.5%</div><div class="l">invoice totals read correctly (unseen borrowers)</div></div>
+    <div class="card metric"><div class="v">11 / 11</div><div class="l">tampered invoices caught; 3.3% false flags, each checked by a person</div></div>
+  </div>
+  <p class="fine mt">Model compared only with its untrained base (0%): a weak baseline, labelled as such. Scale test: 12.4M rows in 2.3 s on one 8 GB laptop.</p>
+</div></section>
+
 <!-- 19 Evidence check -->
 <section class="slide"><div class="frame">
   <div class="kicker">Evidence check</div>
