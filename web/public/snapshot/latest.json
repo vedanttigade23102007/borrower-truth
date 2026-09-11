@@ -1,35 +1,35 @@
 {
  "asOf": 23,
- "receivedAt": "2026-09-11T09:40:41.096016Z",
+ "receivedAt": "2026-09-11T09:56:45.741097Z",
  "runMetrics": {
   "S6": {
    "status": "ok",
-   "seconds": 0.016,
+   "seconds": 0.015,
    "signals": 76
   },
   "S1": {
    "status": "ok",
-   "seconds": 0.027,
+   "seconds": 0.036,
    "signals": 10
   },
   "S2": {
    "status": "ok",
-   "seconds": 0.051,
+   "seconds": 0.184,
    "signals": 20
   },
   "S3": {
    "status": "ok",
-   "seconds": 0.256,
+   "seconds": 0.448,
    "signals": 12
   },
   "S4": {
    "status": "ok",
-   "seconds": 0.035,
+   "seconds": 0.037,
    "signals": 15
   },
   "S5": {
    "status": "ok",
-   "seconds": 0.005,
+   "seconds": 0.006,
    "signals": 61
   },
   "S7": {
@@ -42,7 +42,7 @@
    "seconds": 0.002,
    "cases": 120
   },
-  "total_seconds": 0.865,
+  "total_seconds": 1.222,
   "as_of": 23
  },
  "verdicts": {
