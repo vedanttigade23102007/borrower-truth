@@ -41,12 +41,18 @@ export default function OpsPage() {
 
   if (error) return <ErrorState message={error} onRetry={() => void load()} />;
 
+  // only entries that are checks (they carry a status and a timing); other run metadata is shown separately
   const rows = latest
     ? Object.entries(latest.runMetrics).filter(
-        (e): e is [string, SystemMetric] => typeof e[1] === "object" && e[1] !== null,
+        (e): e is [string, SystemMetric] =>
+          typeof e[1] === "object" && e[1] !== null && "status" in e[1] && typeof (e[1] as SystemMetric).seconds === "number",
       )
     : [];
   const total = latest?.runMetrics["total_seconds"];
+  const dq = latest?.runMetrics["data_quality"] as
+    | { checked?: number; quarantined?: Record<string, { issues: string[]; using: string }> }
+    | undefined;
+  const quarantined = Object.entries(dq?.quarantined ?? {});
 
   return (
     <div className="space-y-6">
@@ -106,6 +112,19 @@ export default function OpsPage() {
           </table>
         )}
       </Card>
+
+      {dq && (
+        <Card className="px-4 py-3 text-sm">
+          <span className="font-medium text-zinc-900">Input data quality: </span>
+          {quarantined.length === 0 ? (
+            <span className="text-zinc-600">all {dq.checked ?? 0} input files passed their checks.</span>
+          ) : (
+            <span className="text-red-700">
+              {quarantined.map(([t, v]) => `${t} quarantined (${v.issues[0]}; using ${v.using})`).join(" · ")}
+            </span>
+          )}
+        </Card>
+      )}
 
       <Card className="overflow-hidden">
         <h2 className="border-b border-zinc-200 px-4 py-3 text-sm font-medium text-zinc-900">
