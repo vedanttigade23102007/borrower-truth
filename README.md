@@ -75,6 +75,13 @@ Every system loses detections when it is switched off, so each one earns its pla
 - **Drafting fallbacks:** drafts fall back from the model to templates.
 - **Delivery fallbacks:** if the case service is down, the pipeline parks the run and replays it later.
 
+**Full stack, live in Codespaces** (`proof/STACK-DEMO.md`):
+- 59,551 payments streamed through Kafka.
+- A suspicious payer is flagged **24 ms after the payment arrives** (p50; p95 29 ms).
+- 0 dead letters.
+- The batch run takes 1.34 s.
+- All services are healthy and reporting to Grafana.
+
 ## Architecture
 
 ```
