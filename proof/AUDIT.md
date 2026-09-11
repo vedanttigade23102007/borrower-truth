@@ -49,7 +49,7 @@ A line-by-line check of `design/SYSTEM-DESIGN.md` against the code. It was start
 | Claim | Status | Evidence |
 |---|---|---|
 | Kafka streaming, offsets, dedupe, dead-letter queue | built ✓ | STACK-DEMO.md |
-| Airflow nightly job | *(result pending)* | `airflow dags test` in Codespaces |
+| Airflow nightly job | **built ✓** (was written, never run) | `airflow dags test` in Codespaces: all 4 tasks SUCCESS (refresh → run seven checks → publish 120 cases → replay dead letters), 0 errors |
 | Bad-file quarantine with last-good fallback | **built ✓** | test_fallbacks.py (schema break → last good copy, same verdicts) |
 | Public-data cache with "stale since" | **built ✓** | test_fallbacks.py (source down → stale cache; no cache → clear error) |
 | Isolated checks, time budget, break-it test | built ✓ | test_pipeline; STACK-DEMO break-it |
