@@ -27,6 +27,19 @@
 
 **Speed:** 120 invoices per minute on one T4.
 
+## Wired into S4: document vs data on a book it never saw
+
+The batch job (`model/kaggle_score/score_invoices.py`, Kaggle T4) read the documents on file for two books. S4 compares each read total with the borrower's data record (`DOC_DATA_MISMATCH`). If the first read disagrees, the document is read a second time with beam search before it is flagged.
+
+| Book | Documents | Tampered caught | False flags, first read | False flags after second look | Speed |
+|---|---|---|---|---|---|
+| Held-out book (seed 201, never used in training) | 540 | **24 / 24** | 17 / 516 (3.3%) | **15 / 516 (2.9%)** | 150 docs/min |
+| Demo book (seed 7; partly the training borrowers) | 495 | 27 / 27 | 14 / 468 (3.0%) | 14 / 468 (3.0%) | 152 docs/min |
+
+**The second look helps only a little:** 17 → 15 false flags on the held-out book, and no change on the demo book. It is kept because it is cheap: only the 41 disagreeing documents were read again. The real fix for digit slips, cross-checking the total against the line items, needs the model retrained to read line items. That is not done.
+
+Raw numbers: `proof/model/score_metrics.json`.
+
 ## Honest caveats
 - **The baseline is weak.** The base checkpoint cannot produce this output format without fine-tuning, so 0% shows fine-tuning is necessary. It does *not* show we beat a strong general-purpose vision-language model; that comparison has not been run.
 - **Errors are digit slips.** Examples: `B0013-12121` read as `B0013-121`; `69331.83` read as `69311.83`. The false tamper flags come from these misread totals.

@@ -63,8 +63,8 @@ A collections-matching check passes disguised loan money, because the cash reall
   - Duplicate fingerprints across facilities and financing partners (same debtor + amount + date + description, normalised).
   - Edit and inflation detection: the amount changes between versions; the amount is implausible for the debtor's size.
   - Dilution analysis: invoices that never get paid by the named debtor.
-  - Claude reads document images and extracts fields. It never scores.
-- **Output signals:** `DUPLICATE_INVOICE`, `ALTERED_INVOICE`, `UNPAID_BY_DEBTOR`.
+  - A fine-tuned document model (Donut, §6a) reads the invoice images. S4 compares the total it reads with the borrower's data record; it reads twice before flagging. The model never scores or decides. If no reads are available, S4 runs on its rules alone, and every case says so.
+- **Output signals:** `ALTERED_INVOICE`, `UNPAID_BY_DEBTOR`, `IMPLAUSIBLE_AMOUNT`, `DOC_DATA_MISMATCH`. Identical duplicate invoices are caught by S1 (`DUPLICATE_ASSET`).
 
 ### S5 Hidden-debt finder: *who else has a claim on this borrower?*
 - **Inputs:** UCC financing statements (public; free per-state search, bulk data paid) against the borrower **and every entity S6 links to it**; court records (CourtListener API [D2]); the debt the borrower disclosed.
@@ -184,7 +184,8 @@ The intern posting asks for Java, C#, SQL and Python [W18, primary]. WF's India 
 
 | Job | Model | How |
 |---|---|---|
-| Read invoices, receipts and statements (S4, S3), and scrub personal data | A **small open vision-language model, fine-tuned** with LoRA/QLoRA | Train on **Kaggle** free P100 GPUs, 30+ hours a week [G1]. Data: CORD receipts (CC-BY-4.0) [D3], FUNSD forms (licence to confirm) [D4], plus synthetic altered and duplicate invoices |
+| Read invoices (S4) | **Donut** (`naver-clova-ix/donut-base`, OCR-free, ~200M params), **fully fine-tuned** | **Built.** Trained on Kaggle's free T4. The P100 failed: the image's PyTorch dropped its support. Data: 806 synthetic invoices, split by borrower. CORD/FUNSD were not used. Batch reading runs as a Kaggle job (`model/kaggle_score`). The weights are on Hugging Face, private. Results: `proof/model/MODEL.md` |
+| Scrub personal data from documents | A small open model | **Not built** |
 | Write findings, verdict sentences and draft letters | A small open instruct model | Prompted with the signal records only; must cite signal IDs |
 | Optional larger model | Any provider, via the same interface | Sees **scrubbed** text only, the Fargo pattern |
 | Live demo hosting | **Hugging Face ZeroGPU Space** (free) [G2] | Can be slow to wake up; the demo also ships precomputed results as a fallback |
@@ -236,9 +237,9 @@ First line: credit officers and portfolio managers for NDFI facilities. Second l
 
 **How it scales.** Every check is scoped to one borrower, so the work partitions by `borrower_id`:
 - **Streaming:** payment events go to a Kafka topic keyed by `borrower_id`. Adding partitions and consumers scales S3 linearly.
-- **Batch:** tapes, filings and financials are processed **incrementally**. Only rows that changed since the last run are processed, found by content hash / change data capture. Nothing is recomputed from scratch.
-- **Storage and engine:** columnar Parquet, partitioned by borrower and month. The same SQL runs on DuckDB (demo, one machine) and on Spark or BigQuery (bank scale).
-- **Workers:** stateless, horizontally scalable containers, one pool per system.
+- **Batch:** tapes, filings and financials are processed **incrementally**: only rows that changed since the last run, found by content hash or change data capture. *Designed for bank scale, not built.* The demo recomputes everything, which takes 1.3 s for 120 borrowers.
+- **Storage and engine:** columnar Parquet. *Partitioning by borrower and month is designed, not built* (the demo uses one file per table). The same SQL runs on DuckDB (demo, one machine) and on Spark or BigQuery (bank scale).
+- **Workers:** stateless containers, one pool per system. *Built: one streaming worker and one bridge. Not built: autoscaled pools.*
 - WF does not disclose borrower or asset counts for this book, so capacity is **measured, not claimed**. The load test runs 10k → 1M → 10M+ synthetic rows and reports throughput and latency per system. Bank-scale capacity is extrapolated from that curve, with the arithmetic shown.
 
 **Speed targets** (our proposed service levels, to be measured):
@@ -286,7 +287,7 @@ A great tool can still fail to fit a bank. This design plans for that from day o
 
 ## 14. Built and measured (11 Sep 2026)
 
-Everything in §1–§13 is implemented. Measured on synthetic data:
+**Not everything in §1–§13 is built.** `proof/AUDIT.md` checks every claim line by line: built, partial, not built, or corrected. An earlier version of this section said "everything is implemented"; that was wrong, and the audit exists because of it. Measured on synthetic data:
 
 **Held-out proof** (seeds 201–205, never used while tuning; `proof/REPORT.md`):
 

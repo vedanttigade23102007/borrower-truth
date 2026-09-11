@@ -27,6 +27,10 @@ from bt.systems import s6_relationships
 from bt.systems.base import Ctx
 
 REFRESH_S = 300
+# Real time is for facts: money from a linked company or a lender. A payment from an unknown
+# person is normal (relatives, employers, insurers pay loans); the batch S3 judges that pattern
+# with its share-of-inflows threshold. Streaming it per payment flooded honest borrowers' cases.
+STRONG = {"RELATED_PARTY_INFLOW", "LENDER_FUNDS_AS_RECEIPTS"}
 
 
 class Reference:
@@ -74,6 +78,7 @@ def main(argv=None):
     ap.add_argument("--data", default="data/out/demo")
     ap.add_argument("--bootstrap", default=os.environ.get("KAFKA", "localhost:9092"))
     ap.add_argument("--group", default="s3-cash-provenance")
+    ap.add_argument("--emit-weak", action="store_true", help="also stream unknown-payer events (noisy)")
     a = ap.parse_args(argv)
 
     ref = Reference(a.data)
@@ -103,6 +108,9 @@ def main(argv=None):
                         seen.popitem(last=False)
                     res = ref.classify(ev)
                     counts["events"] += 1
+                    if res and res[0] not in STRONG and not a.emit_weak:
+                        counts["weak_left_to_batch"] += 1
+                        res = None
                     if res:
                         typ, ent = res
                         counts[f"signal_{typ}"] += 1
@@ -126,7 +134,8 @@ def main(argv=None):
                 q = sorted(lat)
                 samples = [("bt_stream_events_total", {}, counts["events"]),
                            ("bt_stream_dlq_total", {}, counts["dlq"]),
-                           ("bt_stream_duplicates_total", {}, counts["duplicates"])]
+                           ("bt_stream_duplicates_total", {}, counts["duplicates"]),
+                           ("bt_stream_weak_left_to_batch_total", {}, counts["weak_left_to_batch"])]
                 samples += [("bt_stream_signals_total", {"type": k[7:]}, v) for k, v in counts.items() if k.startswith("signal_")]
                 if q:
                     samples += [("bt_stream_latency_seconds", {"quantile": "0.5"}, statistics.median(q)),

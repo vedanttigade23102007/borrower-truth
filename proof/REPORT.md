@@ -9,19 +9,22 @@ Held-out seeds [201, 202, 203, 204, 205] · 600 borrowers · 150 with planted fr
 | False alarms per 100 honest borrowers (ever, any month) | 0.0 | |
 | Median days earlier than the audit (frauds both caught, n=71) | 120 | – |
 | Frauds the audit never caught but we did | 75 | – |
-| Honest borrowers routed to 'needs more evidence' (review load) per 100 | 29.1 | |
+| Top-decile precision (highest-priority 10% of the queue that are real frauds) | 59/60 (98%) | |
+| Caught frauds whose suggested fix targets a planted mechanism | 100% | |
+| Suggested fixes that target a planted mechanism (all fixes on caught frauds) | 294/294 (100%) | |
+| Honest borrowers routed to 'needs more evidence' (review load) per 100 | 31.3 | |
 | Planted frauds left at 'needs more evidence' (not missed, not flagged) | 4 | |
 | Frauds caught that PledgeCheck's four checks never flagged | 111 (PledgeCheck flagged 33) | |
-| Mean run time, all borrowers, one month | 0.669 s | |
+| Mean run time, all borrowers, one month | 0.728 s | |
 
 ## When we caught it, relative to the fraud's first effects in the data
 
 | Timing | Frauds |
 |---|---|
-| 1-3 months later | 28 |
+| 1-3 months later | 27 |
 | before the effects start | 25 |
 | over 3 months later | 11 |
-| same month | 79 |
+| same month | 80 |
 
 'Before the effects start' happens because precursors are public records that exist before the fraud shows up in loan or payment data: a shell company is formed, or a lien is filed. It is not a sign the system sees the future.
 
