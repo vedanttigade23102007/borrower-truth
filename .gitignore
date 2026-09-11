@@ -44,3 +44,6 @@ case-service/.gradle/
 
 # os / editor
 .DS_Store
+
+# public-data adapter cache (regenerated on demand)
+data/cache/
