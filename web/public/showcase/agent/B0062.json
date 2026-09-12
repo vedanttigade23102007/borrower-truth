@@ -55,12 +55,6 @@
    ]
   },
   {
-   "text": "The borrower is linked to \"Ironwood Receivables LLC,\" a shell company with no operations and the same address as the borrower",
-   "cites": [
-    "S6-B0062-SHELL_INDICATORS-64344dfa"
-   ]
-  },
-  {
    "text": "A lien exists on \"Ironwood Supply Group LLC\" by \"Harbor Capital Partners LP,\" which the borrower did not disclose",
    "cites": [
     "S5-B0062-COMPETING_LIEN-a39fbd57"
@@ -89,7 +83,12 @@
    "cites": []
   }
  ],
- "dropped": [],
+ "dropped": [
+  {
+   "text": "The borrower is linked to \"Ironwood Receivables LLC,\" a shell company with no operations and the same address as the borrower [S6-B0062-SHELL_INDICATORS-64344dfa]",
+   "reason": "cites an unknown source: S6-B0062-SHELL_INDICATORS-64344dfa"
+  }
+ ],
  "rounds": 2,
  "tokens": 4417,
  "seconds": 53.1,

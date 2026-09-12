@@ -55,25 +55,9 @@
    ]
   },
   {
-   "text": "The borrower is linked to three shell companies with no operations, same address, and shared officers",
-   "cites": [
-    "S6-B0041-SHELL_INDICATORS-de69d832",
-    "S6-B0041-SHELL_INDICATORS-5a323f86",
-    "S6-B0041-SHELL_INDICATORS-7a4358b2"
-   ]
-  },
-  {
    "text": "A lien exists on a related company by Bluebonnet Asset Finance LP, which the borrower did not disclose",
    "cites": [
     "S5-B0041-COMPETING_LIEN-eada8f04"
-   ]
-  },
-  {
-   "text": "The borrower disclosed a parent holding company but not the shell companies",
-   "cites": [
-    "S6-B0041-RELATED_ENTITY-e2f5eb7e",
-    "S6-B0041-RELATED_ENTITY-2e56d0e3",
-    "S6-B0041-RELATED_ENTITY-7863d2ff"
    ]
   },
   {
@@ -87,7 +71,16 @@
    "cites": []
   }
  ],
- "dropped": [],
+ "dropped": [
+  {
+   "text": "The borrower is linked to three shell companies with no operations, same address, and shared officers [S6-B0041-SHELL_INDICATORS-de69d832, S6-B0041-SHELL_INDICATORS-5a323f86, S6-B0041-SHELL_INDICATORS-7a4358b2]",
+   "reason": "cites an unknown source: S6-B0041-SHELL_INDICATORS-5a323f86"
+  },
+  {
+   "text": "The borrower disclosed a parent holding company but not the shell companies [S6-B0041-RELATED_ENTITY-e2f5eb7e, S6-B0041-RELATED_ENTITY-2e56d0e3, S6-B0041-RELATED_ENTITY-7863d2ff]",
+   "reason": "cites an unknown source: S6-B0041-RELATED_ENTITY-2e56d0e3"
+  }
+ ],
  "rounds": 2,
  "tokens": 4714,
  "seconds": 60.3,

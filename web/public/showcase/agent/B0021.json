@@ -55,27 +55,9 @@
    ]
   },
   {
-   "text": "The borrower is connected to undisclosed shell companies, including 'Canyon Trade Services LLC', which shares the same officer and address",
-   "cites": [
-    "S6-B0021-SHELL_INDICATORS-1eda5f97"
-   ]
-  },
-  {
-   "text": "'Canyon Trade Services LLC' has no operations and is not registered in the GLEIF database",
-   "cites": [
-    "S6-B0021-SHELL_INDICATORS-1eda5f97"
-   ]
-  },
-  {
    "text": "14 loans were flagged 'deferred' with no disclosed deferment programme",
    "cites": [
     "S2-B0021-DEFERMENT_WITHOUT_PROGRAM-5f5587f2"
-   ]
-  },
-  {
-   "text": "The borrower disclosed a debt to 'Silverline Specialty Finance LLC' for an equipment lease",
-   "cites": [
-    "S6-B0021-RELATED_ENTITY-73cec962"
    ]
   },
   {
@@ -91,7 +73,20 @@
    ]
   }
  ],
- "dropped": [],
+ "dropped": [
+  {
+   "text": "The borrower is connected to undisclosed shell companies, including 'Canyon Trade Services LLC', which shares the same officer and address [S6-B0021-SHELL_INDICATORS-1eda5f97]",
+   "reason": "cites an unknown source: S6-B0021-SHELL_INDICATORS-1eda5f97"
+  },
+  {
+   "text": "'Canyon Trade Services LLC' has no operations and is not registered in the GLEIF database [S6-B0021-SHELL_INDICATORS-1eda5f97]",
+   "reason": "cites an unknown source: S6-B0021-SHELL_INDICATORS-1eda5f97"
+  },
+  {
+   "text": "The borrower disclosed a debt to 'Silverline Specialty Finance LLC' for an equipment lease [S6-B0021-RELATED_ENTITY-73cec962]",
+   "reason": "cites an unknown source: S6-B0021-RELATED_ENTITY-73cec962"
+  }
+ ],
  "rounds": 2,
  "tokens": 4566,
  "seconds": 62.4,

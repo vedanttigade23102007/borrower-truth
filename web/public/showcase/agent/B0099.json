@@ -61,13 +61,6 @@
    ]
   },
   {
-   "text": "The borrower is connected to two other shell companies, \"Granite Trade Services LLC\" and \"Granite Auto Corp,\" which share the same officer and address",
-   "cites": [
-    "S6-B0099-SHELL_INDICATORS-7470798a",
-    "S6-B0099-RELATED_ENTITY-b174c853"
-   ]
-  },
-  {
    "text": "A UCC lien was filed against \"Granite Auto Corp\" by Wells Fargo Bank, N.A., securing all assets including receivables",
    "cites": [
     "T3"
@@ -92,7 +85,12 @@
    ]
   }
  ],
- "dropped": [],
+ "dropped": [
+  {
+   "text": "The borrower is connected to two other shell companies, \"Granite Trade Services LLC\" and \"Granite Auto Corp,\" which share the same officer and address [S6-B0099-SHELL_INDICATORS-7470798a, S6-B0099-RELATED_ENTITY-b174c853]",
+   "reason": "cites an unknown source: S6-B0099-SHELL_INDICATORS-7470798a"
+  }
+ ],
  "rounds": 2,
  "tokens": 4009,
  "seconds": 56.1,

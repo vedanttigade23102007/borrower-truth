@@ -55,12 +55,6 @@
    ]
   },
   {
-   "text": "Lakeshore Receivables LLC has no operations, shares the same address as the borrower, and lacks a LEI",
-   "cites": [
-    "S6-B0028-SHELL_INDICATORS-d4401ac6"
-   ]
-  },
-  {
    "text": "The borrower has a judgment of $7,209,023 against Lakeshore Receivables LLC in favor of Silverline Credit Fund LP",
    "cites": [
     "S5-B0028-JUDGMENT-5c5e0929"
@@ -86,6 +80,10 @@
   }
  ],
  "dropped": [
+  {
+   "text": "Lakeshore Receivables LLC has no operations, shares the same address as the borrower, and lacks a LEI [S6-B0028-SHELL_INDICATORS-d4401ac6]",
+   "reason": "cites an unknown source: S6-B0028-SHELL_INDICATORS-d4401ac6"
+  },
   {
    "text": "Could not confirm if the shell companies are fully disclosed or if the judgment impacts the borrower's financial stability.",
    "reason": "cites no source"
