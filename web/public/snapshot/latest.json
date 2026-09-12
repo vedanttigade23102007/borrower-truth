@@ -1,6 +1,6 @@
 {
  "asOf": 23,
- "receivedAt": "2026-09-11T12:28:04.816289Z",
+ "receivedAt": "2026-09-11T17:49:13.891958Z",
  "runMetrics": {
   "data_quality": {
    "quarantined": {},
@@ -8,12 +8,12 @@
   },
   "S6": {
    "status": "ok",
-   "seconds": 0.014,
+   "seconds": 0.009,
    "signals": 76
   },
   "S1": {
    "status": "ok",
-   "seconds": 0.031,
+   "seconds": 0.032,
    "signals": 10
   },
   "S2": {
@@ -23,7 +23,7 @@
   },
   "S3": {
    "status": "ok",
-   "seconds": 0.281,
+   "seconds": 0.251,
    "signals": 12
   },
   "S4": {
@@ -41,12 +41,35 @@
    "seconds": 0.002,
    "signals": 60
   },
+  "manifest": {
+   "as_of": 23,
+   "inputs": {
+    "borrowers": "01b1832dcf01bff8",
+    "court_records": "a79407e3d9e271c7",
+    "disclosures": "069b42daedf69dfe",
+    "doc_reads": "c5c0b7073fb1f912",
+    "entities": "c1cc57992a15b52b",
+    "facilities": "ac876e56664fca9d",
+    "financials": "f66adc51cd7b983a",
+    "gleif": "0e84cc4e59000477",
+    "invoices": "290ea012da9effd1",
+    "payments": "26b691188e86bf7b",
+    "persons": "ac7775719cf132a1",
+    "pledgecheck": "bb196f91c09eedb3",
+    "source_truth": "4ad3eae6341fd192",
+    "tape": "73548d0aa41fc3e1",
+    "ucc_filings": "dc69464a1eac5eca"
+   },
+   "inputs_digest": "1baafa7cb6dd",
+   "rule_version": "c5261f73b139",
+   "code_version": "bdffa8f"
+  },
   "combiner": {
    "status": "ok",
-   "seconds": 0.003,
+   "seconds": 0.079,
    "cases": 120
   },
-  "total_seconds": 1.056,
+  "total_seconds": 1.077,
   "as_of": 23
  },
  "verdicts": {

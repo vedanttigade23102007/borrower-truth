@@ -1,0 +1,429 @@
+{
+ "borrower_id": "B0028",
+ "name": "Lakeshore Lending Group LLC",
+ "planted": [
+  "DISGUISED_RECEIPTS",
+  "FIN_MANIPULATION",
+  "HIDDEN_DEBT",
+  "RELATED_SHELLS"
+ ],
+ "pattern": "first_brands_like",
+ "fraud_start_month": 8,
+ "registry": [
+  {
+   "entity_id": "E000369",
+   "name": "Lakeshore Lending Group LLC",
+   "kind": "borrower",
+   "officer_person_id": "P00028",
+   "has_operations": true,
+   "formed_month": -90,
+   "address": "5586 Main St, Suite 351"
+  },
+  {
+   "entity_id": "E000372",
+   "name": "Lakeshore Receivables III LLC",
+   "kind": "company",
+   "officer_person_id": "P00028",
+   "has_operations": false,
+   "formed_month": 4,
+   "address": "5586 Main St, Suite 351"
+  },
+  {
+   "entity_id": "E000371",
+   "name": "Lakeshore Receivables II LLC",
+   "kind": "company",
+   "officer_person_id": "P00028",
+   "has_operations": false,
+   "formed_month": 6,
+   "address": "5586 Main St, Suite 351"
+  },
+  {
+   "entity_id": "E000370",
+   "name": "Lakeshore Receivables LLC",
+   "kind": "company",
+   "officer_person_id": "P00028",
+   "has_operations": false,
+   "formed_month": 7,
+   "address": "5586 Main St, Suite 351"
+  }
+ ],
+ "payments": [
+  {
+   "month": 23,
+   "payer_name": "Lakeshore Receivables LLC",
+   "amount": 11656.16,
+   "memo": "customer remittance"
+  },
+  {
+   "month": 23,
+   "payer_name": "Lakeshore Receivables LLC",
+   "amount": 5009.8,
+   "memo": "customer remittance"
+  },
+  {
+   "month": 23,
+   "payer_name": "Luis Patel",
+   "amount": 171.58,
+   "memo": "loan payment"
+  },
+  {
+   "month": 23,
+   "payer_name": "David Brown",
+   "amount": 139.96,
+   "memo": "loan payment"
+  },
+  {
+   "month": 23,
+   "payer_name": "Maria Garcia",
+   "amount": 163.86,
+   "memo": "loan payment"
+  }
+ ],
+ "liens": [
+  {
+   "debtor_name": "Lakeshore Lending Group LLC",
+   "secured_party_name": "Wells Fargo Bank, N.A.",
+   "collateral_desc": "all assets, including receivables and chattel paper",
+   "filed_month": -12
+  },
+  {
+   "debtor_name": "Lakeshore Lending Group LLC",
+   "secured_party_name": "Silverline Credit Fund LLC",
+   "collateral_desc": "second-priority lien on all assets",
+   "filed_month": -10
+  },
+  {
+   "debtor_name": "Lakeshore Lending Group LLC",
+   "secured_party_name": "Beacon Credit Fund LLC",
+   "collateral_desc": "specific equipment: servers, forklifts and related leases",
+   "filed_month": 4
+  }
+ ],
+ "financials": [
+  {
+   "quarter": 0,
+   "revenue_reported": 34244.25,
+   "covenant_metric_reported": 1.32,
+   "covenant_threshold": 1.0
+  },
+  {
+   "quarter": 1,
+   "revenue_reported": 19762.91,
+   "covenant_metric_reported": 1.35,
+   "covenant_threshold": 1.0
+  },
+  {
+   "quarter": 2,
+   "revenue_reported": 26592.39,
+   "covenant_metric_reported": 1.04,
+   "covenant_threshold": 1.0
+  },
+  {
+   "quarter": 3,
+   "revenue_reported": 39616.7,
+   "covenant_metric_reported": 1.03,
+   "covenant_threshold": 1.0
+  },
+  {
+   "quarter": 4,
+   "revenue_reported": 30605.94,
+   "covenant_metric_reported": 1.03,
+   "covenant_threshold": 1.0
+  },
+  {
+   "quarter": 5,
+   "revenue_reported": 38854.27,
+   "covenant_metric_reported": 1.04,
+   "covenant_threshold": 1.0
+  },
+  {
+   "quarter": 6,
+   "revenue_reported": 34188.92,
+   "covenant_metric_reported": 1.02,
+   "covenant_threshold": 1.0
+  },
+  {
+   "quarter": 7,
+   "revenue_reported": 43157.45,
+   "covenant_metric_reported": 1.02,
+   "covenant_threshold": 1.0
+  }
+ ],
+ "verdict": "LIKELY_FRAUD",
+ "headline": "Likely: money from lenders or linked companies is arriving dressed up as customer payments",
+ "findings": [
+  {
+   "mechanism": "DISGUISED_RECEIPTS",
+   "confidence": "high",
+   "plain": "money from lenders or linked companies is arriving dressed up as customer payments",
+   "signals": [
+    "S3-B0028-RELATED_PARTY_INFLOW-3a0eb607"
+   ],
+   "corroborated_by": [
+    "S6-B0028-SHELL_INDICATORS-d4401ac6",
+    "S5-B0028-JUDGMENT-5c5e0929",
+    "S6-B0028-RELATED_ENTITY-c834cd08"
+   ],
+   "sources": [
+    "courts",
+    "payments",
+    "registry"
+   ],
+   "systems": [
+    "S3"
+   ],
+   "first_month": 8
+  },
+  {
+   "mechanism": "HIDDEN_DEBT",
+   "confidence": "high",
+   "plain": "the borrower has debt it has not disclosed",
+   "signals": [
+    "S5-B0028-JUDGMENT-5c5e0929"
+   ],
+   "corroborated_by": [
+    "S3-B0028-RELATED_PARTY_INFLOW-3a0eb607",
+    "S6-B0028-SHELL_INDICATORS-d4401ac6",
+    "S6-B0028-RELATED_ENTITY-c834cd08"
+   ],
+   "sources": [
+    "courts",
+    "payments",
+    "registry"
+   ],
+   "systems": [
+    "S5"
+   ],
+   "first_month": 22
+  },
+  {
+   "mechanism": "RELATED_SHELLS",
+   "confidence": "high",
+   "plain": "the borrower is connected to undisclosed shell companies",
+   "signals": [
+    "S6-B0028-SHELL_INDICATORS-d4401ac6",
+    "S6-B0028-SHELL_INDICATORS-f376955d",
+    "S6-B0028-SHELL_INDICATORS-3d5fc0d6",
+    "S6-B0028-RELATED_ENTITY-c834cd08",
+    "S6-B0028-RELATED_ENTITY-59a99a7c",
+    "S6-B0028-RELATED_ENTITY-26978907"
+   ],
+   "corroborated_by": [
+    "S3-B0028-RELATED_PARTY_INFLOW-3a0eb607",
+    "S5-B0028-JUDGMENT-5c5e0929"
+   ],
+   "sources": [
+    "courts",
+    "payments",
+    "registry"
+   ],
+   "systems": [
+    "S6"
+   ],
+   "first_month": 4
+  },
+  {
+   "mechanism": "FIN_MANIPULATION",
+   "confidence": "medium",
+   "plain": "the reported financial statements don't fit the evidence",
+   "signals": [
+    "S7-B0028-CASH_REVENUE_GAP-5fa8e835",
+    "S7-B0028-COVENANT_EDGE_PATTERN-66a0bfd5"
+   ],
+   "corroborated_by": [],
+   "sources": [
+    "covenant_certificate",
+    "financials_vs_cash"
+   ],
+   "systems": [
+    "S7"
+   ],
+   "first_month": 20
+  }
+ ],
+ "signals": [
+  {
+   "signal_id": "S3-B0028-RELATED_PARTY_INFLOW-3a0eb607",
+   "entity_id": "B0028",
+   "system": "S3",
+   "type": "RELATED_PARTY_INFLOW",
+   "severity": 0.8,
+   "confidence": 0.85,
+   "evidence": [
+    "payment:T000101676",
+    "payment:T000101677",
+    "payment:T000101678",
+    "payer:Lakeshore Receivables LLC",
+    "total:$229,587 in 28 payments"
+   ],
+   "explanation": "$229,587 (31.7% of inflows) arrived as 'customer' cash from 'Lakeshore Receivables LLC', an undisclosed company linked to the borrower",
+   "observed_month": 8,
+   "related_entities": [
+    "E000370"
+   ]
+  },
+  {
+   "signal_id": "S6-B0028-SHELL_INDICATORS-d4401ac6",
+   "entity_id": "B0028",
+   "system": "S6",
+   "type": "SHELL_INDICATORS",
+   "severity": 0.6,
+   "confidence": 0.8,
+   "evidence": [
+    "registry:E000370",
+    "officer_match:True",
+    "address_match:True"
+   ],
+   "explanation": "'Lakeshore Receivables LLC' looks like a shell: no operations, same address as borrower, no LEI / not in GLEIF",
+   "observed_month": 7,
+   "related_entities": [
+    "E000370"
+   ]
+  },
+  {
+   "signal_id": "S6-B0028-SHELL_INDICATORS-f376955d",
+   "entity_id": "B0028",
+   "system": "S6",
+   "type": "SHELL_INDICATORS",
+   "severity": 0.6,
+   "confidence": 0.8,
+   "evidence": [
+    "registry:E000371",
+    "officer_match:True",
+    "address_match:True"
+   ],
+   "explanation": "'Lakeshore Receivables II LLC' looks like a shell: no operations, same address as borrower, no LEI / not in GLEIF",
+   "observed_month": 6,
+   "related_entities": [
+    "E000371"
+   ]
+  },
+  {
+   "signal_id": "S6-B0028-SHELL_INDICATORS-3d5fc0d6",
+   "entity_id": "B0028",
+   "system": "S6",
+   "type": "SHELL_INDICATORS",
+   "severity": 0.6,
+   "confidence": 0.8,
+   "evidence": [
+    "registry:E000372",
+    "officer_match:True",
+    "address_match:True"
+   ],
+   "explanation": "'Lakeshore Receivables III LLC' looks like a shell: no operations, same address as borrower, no LEI / not in GLEIF",
+   "observed_month": 4,
+   "related_entities": [
+    "E000372"
+   ]
+  },
+  {
+   "signal_id": "S7-B0028-CASH_REVENUE_GAP-5fa8e835",
+   "entity_id": "B0028",
+   "system": "S7",
+   "type": "CASH_REVENUE_GAP",
+   "severity": 0.635,
+   "confidence": 0.75,
+   "evidence": [
+    "financials:B0028:Q6",
+    "financials:B0028:Q7",
+    "s3:verified_collections:B0028"
+   ],
+   "explanation": "Reported revenue is running 24% above what verified customer cash supports (2 quarters in a row)",
+   "observed_month": 20,
+   "related_entities": []
+  },
+  {
+   "signal_id": "S5-B0028-JUDGMENT-5c5e0929",
+   "entity_id": "B0028",
+   "system": "S5",
+   "type": "JUDGMENT",
+   "severity": 0.5,
+   "confidence": 0.9,
+   "evidence": [
+    "court:CV-00003"
+   ],
+   "explanation": "Judgment of $7,209,023 against 'Lakeshore Receivables LLC' in favour of Silverline Credit Fund LP",
+   "observed_month": 22,
+   "related_entities": [
+    "E000370"
+   ]
+  },
+  {
+   "signal_id": "S6-B0028-RELATED_ENTITY-c834cd08",
+   "entity_id": "B0028",
+   "system": "S6",
+   "type": "RELATED_ENTITY",
+   "severity": 0.35,
+   "confidence": 0.9,
+   "evidence": [
+    "registry:E000370",
+    "officer_match:True",
+    "address_match:True"
+   ],
+   "explanation": "Undisclosed related company 'Lakeshore Receivables LLC' shares the borrower's officer",
+   "observed_month": 7,
+   "related_entities": [
+    "E000370"
+   ]
+  },
+  {
+   "signal_id": "S6-B0028-RELATED_ENTITY-59a99a7c",
+   "entity_id": "B0028",
+   "system": "S6",
+   "type": "RELATED_ENTITY",
+   "severity": 0.35,
+   "confidence": 0.9,
+   "evidence": [
+    "registry:E000371",
+    "officer_match:True",
+    "address_match:True"
+   ],
+   "explanation": "Undisclosed related company 'Lakeshore Receivables II LLC' shares the borrower's officer",
+   "observed_month": 6,
+   "related_entities": [
+    "E000371"
+   ]
+  },
+  {
+   "signal_id": "S6-B0028-RELATED_ENTITY-26978907",
+   "entity_id": "B0028",
+   "system": "S6",
+   "type": "RELATED_ENTITY",
+   "severity": 0.35,
+   "confidence": 0.9,
+   "evidence": [
+    "registry:E000372",
+    "officer_match:True",
+    "address_match:True"
+   ],
+   "explanation": "Undisclosed related company 'Lakeshore Receivables III LLC' shares the borrower's officer",
+   "observed_month": 4,
+   "related_entities": [
+    "E000372"
+   ]
+  },
+  {
+   "signal_id": "S7-B0028-COVENANT_EDGE_PATTERN-66a0bfd5",
+   "entity_id": "B0028",
+   "system": "S7",
+   "type": "COVENANT_EDGE_PATTERN",
+   "severity": 0.5,
+   "confidence": 0.6,
+   "evidence": [
+    "financials:B0028:Q6:covenant=1.0227",
+    "financials:B0028:Q7:covenant=1.0238"
+   ],
+   "explanation": "Covenant metric landed within 5% above the threshold two quarters running",
+   "observed_month": 20,
+   "related_entities": []
+  }
+ ],
+ "decision": {
+  "decision_id": "B0028-m23-e98793918542",
+  "result_digest": "e98793918542",
+  "inputs_digest": "1baafa7cb6dd",
+  "rule_version": "c5261f73b139",
+  "code_version": "bdffa8f",
+  "as_of": 23
+ }
+}

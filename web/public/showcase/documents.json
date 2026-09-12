@@ -1,0 +1,74 @@
+[
+ {
+  "invoice_id": "INV00003391",
+  "borrower_id": "B0013",
+  "image": "/showcase/docs/INV00003391.png",
+  "read_total": "30179.07",
+  "first_read": "30179.07",
+  "second_look": true,
+  "record_amount": 21161.02,
+  "flagged": true,
+  "truly_tampered": true,
+  "outcome": "tampered, caught"
+ },
+ {
+  "invoice_id": "INV00003681",
+  "borrower_id": "B0013",
+  "image": "/showcase/docs/INV00003681.png",
+  "read_total": "77717.32",
+  "first_read": "77717.32",
+  "second_look": true,
+  "record_amount": 28947.41,
+  "flagged": true,
+  "truly_tampered": true,
+  "outcome": "tampered, caught"
+ },
+ {
+  "invoice_id": "INV00004802",
+  "borrower_id": "B0013",
+  "image": "/showcase/docs/INV00004802.png",
+  "read_total": "18857.29",
+  "first_read": "18857.29",
+  "second_look": true,
+  "record_amount": 7472.62,
+  "flagged": true,
+  "truly_tampered": true,
+  "outcome": "tampered, caught"
+ },
+ {
+  "invoice_id": "INV00000140",
+  "borrower_id": "B0012",
+  "image": "/showcase/docs/INV00000140.png",
+  "read_total": "112694.54",
+  "first_read": "112694.54",
+  "second_look": false,
+  "record_amount": 112694.54,
+  "flagged": false,
+  "truly_tampered": false,
+  "outcome": "clean, passed"
+ },
+ {
+  "invoice_id": "INV00000295",
+  "borrower_id": "B0012",
+  "image": "/showcase/docs/INV00000295.png",
+  "read_total": "116587.33",
+  "first_read": "116587.33",
+  "second_look": false,
+  "record_amount": 116587.33,
+  "flagged": false,
+  "truly_tampered": false,
+  "outcome": "clean, passed"
+ },
+ {
+  "invoice_id": "INV00003867",
+  "borrower_id": "B0013",
+  "image": "/showcase/docs/INV00003867.png",
+  "read_total": "21683.15",
+  "first_read": "21683.15",
+  "second_look": true,
+  "record_amount": 212683.15,
+  "flagged": true,
+  "truly_tampered": false,
+  "outcome": "clean but flagged (a model misread: a person checks it)"
+ }
+]

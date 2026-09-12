@@ -1,0 +1,27 @@
+{
+ "replayed": 120,
+ "identical": 120,
+ "different": 0,
+ "inputs_changed": [],
+ "rules_changed": false,
+ "inputs": {
+  "borrowers": "01b1832dcf01bff8",
+  "court_records": "a79407e3d9e271c7",
+  "disclosures": "069b42daedf69dfe",
+  "doc_reads": "c5c0b7073fb1f912",
+  "entities": "c1cc57992a15b52b",
+  "facilities": "ac876e56664fca9d",
+  "financials": "f66adc51cd7b983a",
+  "gleif": "0e84cc4e59000477",
+  "invoices": "290ea012da9effd1",
+  "payments": "26b691188e86bf7b",
+  "persons": "ac7775719cf132a1",
+  "pledgecheck": "bb196f91c09eedb3",
+  "source_truth": "4ad3eae6341fd192",
+  "tape": "73548d0aa41fc3e1",
+  "ucc_filings": "dc69464a1eac5eca"
+ },
+ "inputs_digest": "1baafa7cb6dd",
+ "rule_version": "c5261f73b139",
+ "code_version": "bdffa8f"
+}

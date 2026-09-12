@@ -1,0 +1,954 @@
+{
+ "book": "the demo book shown in the console",
+ "borrowers": 120,
+ "total_rows": 1296619,
+ "tables": [
+  {
+   "table": "borrowers",
+   "title": "Borrowers",
+   "what": "The finance companies Wells Fargo lends to (car lenders, invoice-based businesses, mortgage lenders).",
+   "rows": 120,
+   "columns": [
+    {
+     "name": "borrower_id",
+     "meaning": "ID used everywhere"
+    },
+    {
+     "name": "name",
+     "meaning": "company name"
+    },
+    {
+     "name": "btype",
+     "meaning": "kind of lending business"
+    },
+    {
+     "name": "state",
+     "meaning": "US state"
+    },
+    {
+     "name": "facility_limit",
+     "meaning": "size of the credit line ($)"
+    }
+   ],
+   "sample": [
+    {
+     "borrower_id": "B0028",
+     "name": "Lakeshore Lending Group LLC",
+     "btype": "consumer_finance",
+     "state": "FL",
+     "facility_limit": 324387706.32
+    },
+    {
+     "borrower_id": "B0001",
+     "name": "Ironwood Parts LP",
+     "btype": "consumer_finance",
+     "state": "OH",
+     "facility_limit": 254704685.45
+    }
+   ]
+  },
+  {
+   "table": "entities",
+   "title": "Company registry",
+   "what": "Every company the system knows about: borrowers, their affiliates, lenders, customers. Like a state business register.",
+   "rows": 556,
+   "columns": [
+    {
+     "name": "entity_id",
+     "meaning": "registry ID"
+    },
+    {
+     "name": "name",
+     "meaning": "legal name"
+    },
+    {
+     "name": "kind",
+     "meaning": "borrower / company / lender / debtor / holding"
+    },
+    {
+     "name": "officer_person_id",
+     "meaning": "who runs it"
+    },
+    {
+     "name": "address",
+     "meaning": "registered address"
+    },
+    {
+     "name": "formed_month",
+     "meaning": "when it was formed (month of the timeline)"
+    },
+    {
+     "name": "has_operations",
+     "meaning": "does it actually do business?"
+    }
+   ],
+   "sample": [
+    {
+     "entity_id": "E000369",
+     "name": "Lakeshore Lending Group LLC",
+     "kind": "borrower",
+     "officer_person_id": "P00028",
+     "address": "5586 Main St, Suite 351",
+     "formed_month": -90,
+     "has_operations": true
+    },
+    {
+     "entity_id": "E000372",
+     "name": "Lakeshore Receivables III LLC",
+     "kind": "company",
+     "officer_person_id": "P00028",
+     "address": "5586 Main St, Suite 351",
+     "formed_month": 4,
+     "has_operations": false
+    },
+    {
+     "entity_id": "E000371",
+     "name": "Lakeshore Receivables II LLC",
+     "kind": "company",
+     "officer_person_id": "P00028",
+     "address": "5586 Main St, Suite 351",
+     "formed_month": 6,
+     "has_operations": false
+    },
+    {
+     "entity_id": "E000370",
+     "name": "Lakeshore Receivables LLC",
+     "kind": "company",
+     "officer_person_id": "P00028",
+     "address": "5586 Main St, Suite 351",
+     "formed_month": 7,
+     "has_operations": false
+    },
+    {
+     "entity_id": "E000001",
+     "name": "Canyon Specialty Finance LP",
+     "kind": "lender",
+     "officer_person_id": null,
+     "address": "8972 Center Dr, Suite 1",
+     "formed_month": -240,
+     "has_operations": true
+    },
+    {
+     "entity_id": "E000002",
+     "name": "Prairie Capital Partners LLC",
+     "kind": "lender",
+     "officer_person_id": null,
+     "address": "3008 Industrial Pkwy, Suite 2",
+     "formed_month": -240,
+     "has_operations": true
+    },
+    {
+     "entity_id": "E000003",
+     "name": "Canyon Capital Partners LLC",
+     "kind": "lender",
+     "officer_person_id": null,
+     "address": "8213 Main St, Suite 3",
+     "formed_month": -240,
+     "has_operations": true
+    },
+    {
+     "entity_id": "E000004",
+     "name": "Harbor Credit Fund LP",
+     "kind": "lender",
+     "officer_person_id": null,
+     "address": "3036 Market Ave, Suite 4",
+     "formed_month": -240,
+     "has_operations": true
+    },
+    {
+     "entity_id": "E000005",
+     "name": "Silverline Credit Fund LP",
+     "kind": "lender",
+     "officer_person_id": null,
+     "address": "4455 Oak Blvd, Suite 5",
+     "formed_month": -240,
+     "has_operations": true
+    }
+   ]
+  },
+  {
+   "table": "tape",
+   "title": "Loan file (tape)",
+   "what": "What the borrower reports each month about the loans it pledged as collateral.",
+   "rows": 393934,
+   "columns": [
+    {
+     "name": "month",
+     "meaning": "month of the timeline (0-23)"
+    },
+    {
+     "name": "facility_id",
+     "meaning": "which Wells Fargo credit line"
+    },
+    {
+     "name": "asset_id",
+     "meaning": "loan ID"
+    },
+    {
+     "name": "vin",
+     "meaning": "vehicle ID (synthetic, starts with SYN)"
+    },
+    {
+     "name": "balance",
+     "meaning": "amount owed ($)"
+    },
+    {
+     "name": "dpd_bucket_reported",
+     "meaning": "reported lateness: 0 current, 1 = 30 days, 2 = 60, 3 = 90+"
+    },
+    {
+     "name": "deferred_flag",
+     "meaning": "payment pause reported"
+    },
+    {
+     "name": "eligible_reported",
+     "meaning": "counts toward borrowing"
+    }
+   ],
+   "sample": [
+    {
+     "month": 0,
+     "facility_id": "F0028A",
+     "asset_id": "A-B0028-000001",
+     "vin": "SYNR3XLPFVHYATXEM",
+     "balance": 13331.61,
+     "dpd_bucket_reported": 0,
+     "deferred_flag": 0,
+     "eligible_reported": true
+    },
+    {
+     "month": 0,
+     "facility_id": "F0028A",
+     "asset_id": "A-B0028-000002",
+     "vin": "SYNMV1DCU3LV6GA1F",
+     "balance": 9982.58,
+     "dpd_bucket_reported": 0,
+     "deferred_flag": 0,
+     "eligible_reported": true
+    },
+    {
+     "month": 0,
+     "facility_id": "F0028A",
+     "asset_id": "A-B0028-000005",
+     "vin": "SYNLMVYHHX5JCFRZ9",
+     "balance": 5557.38,
+     "dpd_bucket_reported": 0,
+     "deferred_flag": 0,
+     "eligible_reported": true
+    },
+    {
+     "month": 0,
+     "facility_id": "F0028A",
+     "asset_id": "A-B0028-000008",
+     "vin": "SYN3M12VK582TCEJS",
+     "balance": 1824.42,
+     "dpd_bucket_reported": 0,
+     "deferred_flag": 0,
+     "eligible_reported": true
+    },
+    {
+     "month": 0,
+     "facility_id": "F0028A",
+     "asset_id": "A-B0028-000012",
+     "vin": "SYNH2PUK718EMLDZ7",
+     "balance": 3455.26,
+     "dpd_bucket_reported": 1,
+     "deferred_flag": 0,
+     "eligible_reported": true
+    },
+    {
+     "month": 0,
+     "facility_id": "F0028A",
+     "asset_id": "A-B0028-000016",
+     "vin": "SYN5GWHGUMBRFUG39",
+     "balance": 11353.85,
+     "dpd_bucket_reported": 0,
+     "deferred_flag": 0,
+     "eligible_reported": true
+    },
+    {
+     "month": 0,
+     "facility_id": "F0028A",
+     "asset_id": "A-B0028-000020",
+     "vin": "SYNYW83LYN8ZY19GX",
+     "balance": 11201.78,
+     "dpd_bucket_reported": 0,
+     "deferred_flag": 0,
+     "eligible_reported": true
+    },
+    {
+     "month": 0,
+     "facility_id": "F0028A",
+     "asset_id": "A-B0028-000022",
+     "vin": "SYNST2K37X2Z5XYJ4",
+     "balance": 2557.89,
+     "dpd_bucket_reported": 0,
+     "deferred_flag": 0,
+     "eligible_reported": true
+    },
+    {
+     "month": 0,
+     "facility_id": "F0028A",
+     "asset_id": "A-B0028-000023",
+     "vin": "SYNXFUJ3502USHZD9",
+     "balance": 4431.72,
+     "dpd_bucket_reported": 0,
+     "deferred_flag": 0,
+     "eligible_reported": true
+    },
+    {
+     "month": 0,
+     "facility_id": "F0028A",
+     "asset_id": "A-B0028-000024",
+     "vin": "SYNBMK0RXS3EBRN84",
+     "balance": 3725.22,
+     "dpd_bucket_reported": 0,
+     "deferred_flag": 0,
+     "eligible_reported": true
+    }
+   ]
+  },
+  {
+   "table": "source_truth",
+   "title": "Servicer system",
+   "what": "What the borrower's own loan system really says. The system samples it the way an auditor would.",
+   "rows": 397517,
+   "columns": [
+    {
+     "name": "month",
+     "meaning": "month"
+    },
+    {
+     "name": "asset_id",
+     "meaning": "loan ID"
+    },
+    {
+     "name": "dpd_bucket_true",
+     "meaning": "real lateness"
+    },
+    {
+     "name": "balance_true",
+     "meaning": "real balance ($)"
+    }
+   ],
+   "sample": [
+    {
+     "month": 0,
+     "asset_id": "A-B0028-000001",
+     "dpd_bucket_true": 0,
+     "balance_true": 13331.61
+    },
+    {
+     "month": 0,
+     "asset_id": "A-B0028-000002",
+     "dpd_bucket_true": 0,
+     "balance_true": 9982.58
+    },
+    {
+     "month": 0,
+     "asset_id": "A-B0028-000005",
+     "dpd_bucket_true": 0,
+     "balance_true": 5557.38
+    },
+    {
+     "month": 0,
+     "asset_id": "A-B0028-000008",
+     "dpd_bucket_true": 0,
+     "balance_true": 1824.42
+    },
+    {
+     "month": 0,
+     "asset_id": "A-B0028-000012",
+     "dpd_bucket_true": 1,
+     "balance_true": 3455.26
+    },
+    {
+     "month": 0,
+     "asset_id": "A-B0028-000016",
+     "dpd_bucket_true": 0,
+     "balance_true": 11353.85
+    },
+    {
+     "month": 0,
+     "asset_id": "A-B0028-000020",
+     "dpd_bucket_true": 0,
+     "balance_true": 11201.78
+    },
+    {
+     "month": 0,
+     "asset_id": "A-B0028-000022",
+     "dpd_bucket_true": 0,
+     "balance_true": 2557.89
+    },
+    {
+     "month": 0,
+     "asset_id": "A-B0028-000023",
+     "dpd_bucket_true": 0,
+     "balance_true": 4431.72
+    },
+    {
+     "month": 0,
+     "asset_id": "A-B0028-000024",
+     "dpd_bucket_true": 0,
+     "balance_true": 3725.22
+    }
+   ]
+  },
+  {
+   "table": "payments",
+   "title": "Bank payments",
+   "what": "Money arriving in the collection account Wells Fargo controls.",
+   "rows": 430655,
+   "columns": [
+    {
+     "name": "txn_id",
+     "meaning": "transaction ID"
+    },
+    {
+     "name": "month",
+     "meaning": "month"
+    },
+    {
+     "name": "payer_name",
+     "meaning": "who sent it (as the bank sees it)"
+    },
+    {
+     "name": "amount",
+     "meaning": "amount ($)"
+    },
+    {
+     "name": "memo",
+     "meaning": "reference text"
+    },
+    {
+     "name": "ref",
+     "meaning": "loan or invoice it pays"
+    }
+   ],
+   "sample": [
+    {
+     "txn_id": "T000099544",
+     "month": 0,
+     "payer_name": "Priya Garcia",
+     "amount": 399.95,
+     "memo": "loan payment",
+     "ref": "A-B0028-000001"
+    },
+    {
+     "txn_id": "T000099545",
+     "month": 0,
+     "payer_name": "Luis Patel",
+     "amount": 299.48,
+     "memo": "loan payment",
+     "ref": "A-B0028-000002"
+    },
+    {
+     "txn_id": "T000099546",
+     "month": 0,
+     "payer_name": "David Davis",
+     "amount": 166.72,
+     "memo": "loan payment",
+     "ref": "A-B0028-000005"
+    },
+    {
+     "txn_id": "T000099547",
+     "month": 1,
+     "payer_name": "Carlos Johnson",
+     "amount": 54.73,
+     "memo": "loan payment",
+     "ref": "A-B0028-000008"
+    },
+    {
+     "txn_id": "T000099548",
+     "month": 0,
+     "payer_name": "Grace Martinez",
+     "amount": 340.62,
+     "memo": "loan payment",
+     "ref": "A-B0028-000016"
+    },
+    {
+     "txn_id": "T000099549",
+     "month": 0,
+     "payer_name": "Linda Moore",
+     "amount": 336.05,
+     "memo": "loan payment",
+     "ref": "A-B0028-000020"
+    },
+    {
+     "txn_id": "T000099550",
+     "month": 0,
+     "payer_name": "Nora Moore",
+     "amount": 76.74,
+     "memo": "loan payment",
+     "ref": "A-B0028-000022"
+    },
+    {
+     "txn_id": "T000099551",
+     "month": 0,
+     "payer_name": "Carlos Brown",
+     "amount": 132.95,
+     "memo": "loan payment",
+     "ref": "A-B0028-000023"
+    },
+    {
+     "txn_id": "T000099552",
+     "month": 0,
+     "payer_name": "Carlos Martinez",
+     "amount": 111.76,
+     "memo": "loan payment",
+     "ref": "A-B0028-000024"
+    },
+    {
+     "txn_id": "T000099553",
+     "month": 0,
+     "payer_name": "Daniel Garcia",
+     "amount": 232.35,
+     "memo": "loan payment",
+     "ref": "A-B0028-000027"
+    }
+   ]
+  },
+  {
+   "table": "invoices",
+   "title": "Invoices",
+   "what": "Invoices pledged as collateral by invoice-based borrowers.",
+   "rows": 70106,
+   "columns": [
+    {
+     "name": "invoice_number",
+     "meaning": "the borrower's number"
+    },
+    {
+     "name": "debtor_name",
+     "meaning": "the customer who owes it"
+    },
+    {
+     "name": "amount",
+     "meaning": "amount ($)"
+    },
+    {
+     "name": "issue_month",
+     "meaning": "issued"
+    },
+    {
+     "name": "due_days",
+     "meaning": "payment terms"
+    },
+    {
+     "name": "facility_id",
+     "meaning": "credit line"
+    }
+   ],
+   "sample": []
+  },
+  {
+   "table": "ucc_filings",
+   "title": "Lien filings (UCC)",
+   "what": "Public records of who has a claim on a company's assets. Names and addresses, no IDs.",
+   "rows": 236,
+   "columns": [
+    {
+     "name": "debtor_name",
+     "meaning": "company the lien is against"
+    },
+    {
+     "name": "debtor_address",
+     "meaning": "its address on the filing"
+    },
+    {
+     "name": "secured_party_name",
+     "meaning": "the lender holding the lien"
+    },
+    {
+     "name": "collateral_desc",
+     "meaning": "what is pledged"
+    },
+    {
+     "name": "filed_month",
+     "meaning": "when (negative = before the timeline)"
+    }
+   ],
+   "sample": [
+    {
+     "debtor_name": "Apex Auto Corp",
+     "debtor_address": "2749 Elm St, Suite 387",
+     "secured_party_name": "Wells Fargo Bank, N.A.",
+     "collateral_desc": "all assets, including receivables and chattel paper",
+     "filed_month": -12
+    },
+    {
+     "debtor_name": "Apex Auto Corp",
+     "debtor_address": "2749 Elm St, Suite 387",
+     "secured_party_name": "Redwood Specialty Finance LP",
+     "collateral_desc": "second-priority lien on all assets",
+     "filed_month": -10
+    },
+    {
+     "debtor_name": "Apex Capital Corp",
+     "debtor_address": "6789 Harbor Rd, Suite 347",
+     "secured_party_name": "Wells Fargo Bank, N.A.",
+     "collateral_desc": "all assets, including receivables and chattel paper",
+     "filed_month": -12
+    },
+    {
+     "debtor_name": "Apex Capital LLC",
+     "debtor_address": "5971 Harbor Rd, Suite 455",
+     "secured_party_name": "Wells Fargo Bank, N.A.",
+     "collateral_desc": "all assets, including receivables and chattel paper",
+     "filed_month": -12
+    },
+    {
+     "debtor_name": "Apex Capital LLC",
+     "debtor_address": "5971 Harbor Rd, Suite 455",
+     "secured_party_name": "Silverline Specialty Finance LLC",
+     "collateral_desc": "second-priority lien on all assets",
+     "filed_month": -10
+    },
+    {
+     "debtor_name": "Apex Capital LLC",
+     "debtor_address": "5971 Harbor Rd, Suite 455",
+     "secured_party_name": "Prairie Capital Partners LLC",
+     "collateral_desc": "specific equipment: servers, forklifts and related leases",
+     "filed_month": 4
+    },
+    {
+     "debtor_name": "Apex Inventory Holdings LLC",
+     "debtor_address": "5971 Harbor Rd, Suite 455",
+     "secured_party_name": "Ironwood Capital Partners LP",
+     "collateral_desc": "all assets of the debtor",
+     "filed_month": 16
+    },
+    {
+     "debtor_name": "Apex Partners Corp",
+     "debtor_address": "2328 Harbor Rd, Suite 321",
+     "secured_party_name": "Wells Fargo Bank, N.A.",
+     "collateral_desc": "all assets, including receivables and chattel paper",
+     "filed_month": -12
+    },
+    {
+     "debtor_name": "Apex Partners Corp",
+     "debtor_address": "2328 Harbor Rd, Suite 321",
+     "secured_party_name": "Sterling Capital Partners LLC",
+     "collateral_desc": "second-priority lien on all assets",
+     "filed_month": -10
+    },
+    {
+     "debtor_name": "Apex Partners Corp",
+     "debtor_address": "2328 Harbor Rd, Suite 321",
+     "secured_party_name": "Canyon Capital Partners LLC",
+     "collateral_desc": "specific equipment: servers, forklifts and related leases",
+     "filed_month": 4
+    }
+   ]
+  },
+  {
+   "table": "court_records",
+   "title": "Court records",
+   "what": "Judgments against companies.",
+   "rows": 13,
+   "columns": [
+    {
+     "name": "defendant_name",
+     "meaning": "company"
+    },
+    {
+     "name": "plaintiff",
+     "meaning": "who sued"
+    },
+    {
+     "name": "amount",
+     "meaning": "judgment ($)"
+    },
+    {
+     "name": "month",
+     "meaning": "when"
+    }
+   ],
+   "sample": [
+    {
+     "defendant_name": "Apex Inventory Holdings LLC",
+     "plaintiff": "Ironwood Capital Partners LP",
+     "amount": 18342371.3,
+     "month": 22
+    },
+    {
+     "defendant_name": "Beacon Distribution LP",
+     "plaintiff": "(synthetic) former landlord",
+     "amount": 104855.6,
+     "month": 14
+    },
+    {
+     "defendant_name": "Bluebonnet Parts LP",
+     "plaintiff": "(synthetic) former landlord",
+     "amount": 137803.18,
+     "month": 8
+    },
+    {
+     "defendant_name": "Cobalt Holdings LLC",
+     "plaintiff": "(synthetic) former landlord",
+     "amount": 141436.02,
+     "month": 20
+    },
+    {
+     "defendant_name": "Crescent Motor LLC",
+     "plaintiff": "(synthetic) former landlord",
+     "amount": 52625.94,
+     "month": 18
+    },
+    {
+     "defendant_name": "Crescent Partners Corp",
+     "plaintiff": "(synthetic) former landlord",
+     "amount": 160024.07,
+     "month": 21
+    },
+    {
+     "defendant_name": "Harbor Capital Group LLC",
+     "plaintiff": "(synthetic) former landlord",
+     "amount": 198810.71,
+     "month": 0
+    },
+    {
+     "defendant_name": "Harbor Trade Corp",
+     "plaintiff": "(synthetic) former landlord",
+     "amount": 181092.36,
+     "month": 11
+    },
+    {
+     "defendant_name": "Ironwood Receivables LLC",
+     "plaintiff": "Harbor Capital Partners LP",
+     "amount": 10621441.61,
+     "month": 22
+    },
+    {
+     "defendant_name": "Lakeshore Receivables LLC",
+     "plaintiff": "Silverline Credit Fund LP",
+     "amount": 7209022.84,
+     "month": 22
+    }
+   ]
+  },
+  {
+   "table": "financials",
+   "title": "Financial statements",
+   "what": "What the borrower reports each quarter.",
+   "rows": 960,
+   "columns": [
+    {
+     "name": "quarter",
+     "meaning": "quarter (0-7)"
+    },
+    {
+     "name": "revenue_reported",
+     "meaning": "revenue ($)"
+    },
+    {
+     "name": "receivables_reported",
+     "meaning": "receivables ($)"
+    },
+    {
+     "name": "debt_reported",
+     "meaning": "debt ($)"
+    },
+    {
+     "name": "covenant_metric_reported",
+     "meaning": "covenant ratio"
+    },
+    {
+     "name": "covenant_threshold",
+     "meaning": "minimum allowed"
+    }
+   ],
+   "sample": [
+    {
+     "quarter": 0,
+     "revenue_reported": 34244.25,
+     "receivables_reported": 489830.5,
+     "debt_reported": 65210624.0,
+     "covenant_metric_reported": 1.32,
+     "covenant_threshold": 1.0
+    },
+    {
+     "quarter": 1,
+     "revenue_reported": 19762.91,
+     "receivables_reported": 495125.19,
+     "debt_reported": 65214224.0,
+     "covenant_metric_reported": 1.35,
+     "covenant_threshold": 1.0
+    },
+    {
+     "quarter": 2,
+     "revenue_reported": 26592.39,
+     "receivables_reported": 502781.31,
+     "debt_reported": 65219432.0,
+     "covenant_metric_reported": 1.04,
+     "covenant_threshold": 1.0
+    },
+    {
+     "quarter": 3,
+     "revenue_reported": 39616.7,
+     "receivables_reported": 543059.62,
+     "debt_reported": 65246820.0,
+     "covenant_metric_reported": 1.03,
+     "covenant_threshold": 1.0
+    },
+    {
+     "quarter": 4,
+     "revenue_reported": 30605.94,
+     "receivables_reported": 544849.69,
+     "debt_reported": 65248036.0,
+     "covenant_metric_reported": 1.03,
+     "covenant_threshold": 1.0
+    },
+    {
+     "quarter": 5,
+     "revenue_reported": 38854.27,
+     "receivables_reported": 551692.75,
+     "debt_reported": 65252692.0,
+     "covenant_metric_reported": 1.04,
+     "covenant_threshold": 1.0
+    },
+    {
+     "quarter": 6,
+     "revenue_reported": 34188.92,
+     "receivables_reported": 497808.94,
+     "debt_reported": 65216052.0,
+     "covenant_metric_reported": 1.02,
+     "covenant_threshold": 1.0
+    },
+    {
+     "quarter": 7,
+     "revenue_reported": 43157.45,
+     "receivables_reported": 424123.81,
+     "debt_reported": 65165944.0,
+     "covenant_metric_reported": 1.02,
+     "covenant_threshold": 1.0
+    },
+    {
+     "quarter": 0,
+     "revenue_reported": 99685.57,
+     "receivables_reported": 1621301.75,
+     "debt_reported": 1102485.25,
+     "covenant_metric_reported": 1.73,
+     "covenant_threshold": 1.0
+    },
+    {
+     "quarter": 1,
+     "revenue_reported": 76675.65,
+     "receivables_reported": 1551244.75,
+     "debt_reported": 1054846.5,
+     "covenant_metric_reported": 1.91,
+     "covenant_threshold": 1.0
+    }
+   ]
+  },
+  {
+   "table": "disclosures",
+   "title": "Disclosures",
+   "what": "What the borrower told Wells Fargo: its debts, affiliates, payment-pause programmes.",
+   "rows": 170,
+   "columns": [
+    {
+     "name": "kind",
+     "meaning": "debt / related_party / deferment_program"
+    },
+    {
+     "name": "counterparty_entity_id",
+     "meaning": "who"
+    },
+    {
+     "name": "note",
+     "meaning": "detail"
+    }
+   ],
+   "sample": [
+    {
+     "kind": "debt",
+     "counterparty_entity_id": "E000013",
+     "note": "disclosed subordinated facility"
+    },
+    {
+     "kind": "debt",
+     "counterparty_entity_id": "E000011",
+     "note": "equipment lease"
+    },
+    {
+     "kind": "related_party",
+     "counterparty_entity_id": "E000316",
+     "note": "parent holding company"
+    }
+   ]
+  },
+  {
+   "table": "pledgecheck",
+   "title": "PledgeCheck results (simulated)",
+   "what": "Setpoint PledgeCheck's four published checks, for borrowers enrolled in it.",
+   "rows": 2352,
+   "columns": [
+    {
+     "name": "month",
+     "meaning": "month"
+    },
+    {
+     "name": "uniqueness",
+     "meaning": "collateral in only one facility?"
+    },
+    {
+     "name": "completeness",
+     "meaning": "collections match reports?"
+    }
+   ],
+   "sample": [
+    {
+     "month": 0,
+     "uniqueness": "PASS",
+     "completeness": "PASS"
+    },
+    {
+     "month": 0,
+     "uniqueness": "PASS",
+     "completeness": "PASS"
+    },
+    {
+     "month": 1,
+     "uniqueness": "PASS",
+     "completeness": "PASS"
+    },
+    {
+     "month": 1,
+     "uniqueness": "PASS",
+     "completeness": "PASS"
+    },
+    {
+     "month": 2,
+     "uniqueness": "PASS",
+     "completeness": "PASS"
+    },
+    {
+     "month": 2,
+     "uniqueness": "PASS",
+     "completeness": "PASS"
+    },
+    {
+     "month": 3,
+     "uniqueness": "PASS",
+     "completeness": "PASS"
+    },
+    {
+     "month": 3,
+     "uniqueness": "PASS",
+     "completeness": "PASS"
+    },
+    {
+     "month": 4,
+     "uniqueness": "PASS",
+     "completeness": "PASS"
+    },
+    {
+     "month": 4,
+     "uniqueness": "PASS",
+     "completeness": "PASS"
+    }
+   ]
+  }
+ ]
+}

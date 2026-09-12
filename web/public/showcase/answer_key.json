@@ -1,0 +1,1945 @@
+{
+ "counts": {
+  "cleared": 54,
+  "caught": 29,
+  "worth a look (honest)": 36,
+  "sent to review": 1
+ },
+ "borrowers": [
+  {
+   "borrower_id": "B0001",
+   "planted": [],
+   "lookalikes": [
+    "THIRD_PARTY_PAYER"
+   ],
+   "verdict": "NO_ISSUE",
+   "found": [],
+   "right_mechanisms": [],
+   "status": "cleared",
+   "priority": 0.0
+  },
+  {
+   "borrower_id": "B0002",
+   "planted": [],
+   "lookalikes": [
+    "DEFERMENT_PROGRAM",
+    "DISCLOSED_EQUIPMENT_LIEN",
+    "NEW_AFFILIATE"
+   ],
+   "verdict": "NO_ISSUE",
+   "found": [],
+   "right_mechanisms": [],
+   "status": "cleared",
+   "priority": 0.157
+  },
+  {
+   "borrower_id": "B0003",
+   "planted": [
+    "TAPE_DRESSUP"
+   ],
+   "lookalikes": [
+    "DEFERMENT_PROGRAM",
+    "NEW_AFFILIATE",
+    "THIRD_PARTY_PAYER"
+   ],
+   "verdict": "LIKELY_FRAUD",
+   "found": [
+    "TAPE_DRESSUP"
+   ],
+   "right_mechanisms": [
+    "TAPE_DRESSUP"
+   ],
+   "status": "caught",
+   "priority": 0.949
+  },
+  {
+   "borrower_id": "B0004",
+   "planted": [
+    "TAPE_DRESSUP"
+   ],
+   "lookalikes": [
+    "THIRD_PARTY_PAYER"
+   ],
+   "verdict": "LIKELY_FRAUD",
+   "found": [
+    "TAPE_DRESSUP"
+   ],
+   "right_mechanisms": [
+    "TAPE_DRESSUP"
+   ],
+   "status": "caught",
+   "priority": 0.72
+  },
+  {
+   "borrower_id": "B0005",
+   "planted": [
+    "DOUBLE_PLEDGE"
+   ],
+   "lookalikes": [],
+   "verdict": "LIKELY_FRAUD",
+   "found": [
+    "DOUBLE_PLEDGE"
+   ],
+   "right_mechanisms": [
+    "DOUBLE_PLEDGE"
+   ],
+   "status": "caught",
+   "priority": 0.866
+  },
+  {
+   "borrower_id": "B0006",
+   "planted": [],
+   "lookalikes": [
+    "DISCLOSED_EQUIPMENT_LIEN",
+    "NAME_TYPO",
+    "STALE_LIEN"
+   ],
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "found": [],
+   "right_mechanisms": [],
+   "status": "worth a look (honest)",
+   "priority": 0.866
+  },
+  {
+   "borrower_id": "B0007",
+   "planted": [],
+   "lookalikes": [
+    "DEFERMENT_PROGRAM",
+    "DISCLOSED_EQUIPMENT_LIEN",
+    "NAME_TYPO"
+   ],
+   "verdict": "NO_ISSUE",
+   "found": [],
+   "right_mechanisms": [],
+   "status": "cleared",
+   "priority": 0.0
+  },
+  {
+   "borrower_id": "B0008",
+   "planted": [],
+   "lookalikes": [
+    "THIRD_PARTY_PAYER"
+   ],
+   "verdict": "NO_ISSUE",
+   "found": [],
+   "right_mechanisms": [],
+   "status": "cleared",
+   "priority": 0.0
+  },
+  {
+   "borrower_id": "B0009",
+   "planted": [],
+   "lookalikes": [
+    "NEW_AFFILIATE",
+    "STALE_LIEN"
+   ],
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "found": [],
+   "right_mechanisms": [],
+   "status": "worth a look (honest)",
+   "priority": 0.594
+  },
+  {
+   "borrower_id": "B0010",
+   "planted": [],
+   "lookalikes": [
+    "LATE_TAPE",
+    "NEW_AFFILIATE",
+    "UNDISCLOSED_DEFERRAL"
+   ],
+   "verdict": "NO_ISSUE",
+   "found": [],
+   "right_mechanisms": [],
+   "status": "cleared",
+   "priority": 0.26
+  },
+  {
+   "borrower_id": "B0011",
+   "planted": [
+    "TAPE_DRESSUP"
+   ],
+   "lookalikes": [
+    "NEW_AFFILIATE"
+   ],
+   "verdict": "LIKELY_FRAUD",
+   "found": [
+    "TAPE_DRESSUP"
+   ],
+   "right_mechanisms": [
+    "TAPE_DRESSUP"
+   ],
+   "status": "caught",
+   "priority": 1.0
+  },
+  {
+   "borrower_id": "B0012",
+   "planted": [],
+   "lookalikes": [
+    "DISCLOSED_EQUIPMENT_LIEN"
+   ],
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "found": [],
+   "right_mechanisms": [],
+   "status": "worth a look (honest)",
+   "priority": 0.866
+  },
+  {
+   "borrower_id": "B0013",
+   "planted": [
+    "FAKE_INVOICES"
+   ],
+   "lookalikes": [],
+   "verdict": "LIKELY_FRAUD",
+   "found": [
+    "FAKE_INVOICES"
+   ],
+   "right_mechanisms": [
+    "FAKE_INVOICES"
+   ],
+   "status": "caught",
+   "priority": 0.976
+  },
+  {
+   "borrower_id": "B0014",
+   "planted": [],
+   "lookalikes": [
+    "STALE_LIEN"
+   ],
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "found": [],
+   "right_mechanisms": [],
+   "status": "worth a look (honest)",
+   "priority": 0.36
+  },
+  {
+   "borrower_id": "B0015",
+   "planted": [],
+   "lookalikes": [
+    "NEW_AFFILIATE"
+   ],
+   "verdict": "NO_ISSUE",
+   "found": [],
+   "right_mechanisms": [],
+   "status": "cleared",
+   "priority": 0.157
+  },
+  {
+   "borrower_id": "B0016",
+   "planted": [],
+   "lookalikes": [],
+   "verdict": "NO_ISSUE",
+   "found": [],
+   "right_mechanisms": [],
+   "status": "cleared",
+   "priority": 0.0
+  },
+  {
+   "borrower_id": "B0017",
+   "planted": [],
+   "lookalikes": [
+    "DISCLOSED_EQUIPMENT_LIEN",
+    "NAME_TYPO",
+    "UNDISCLOSED_DEFERRAL"
+   ],
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "found": [],
+   "right_mechanisms": [],
+   "status": "worth a look (honest)",
+   "priority": 0.866
+  },
+  {
+   "borrower_id": "B0018",
+   "planted": [],
+   "lookalikes": [
+    "DISCLOSED_EQUIPMENT_LIEN",
+    "THIRD_PARTY_PAYER"
+   ],
+   "verdict": "NO_ISSUE",
+   "found": [],
+   "right_mechanisms": [],
+   "status": "cleared",
+   "priority": 0.0
+  },
+  {
+   "borrower_id": "B0019",
+   "planted": [],
+   "lookalikes": [
+    "NEW_AFFILIATE"
+   ],
+   "verdict": "NO_ISSUE",
+   "found": [],
+   "right_mechanisms": [],
+   "status": "cleared",
+   "priority": 0.157
+  },
+  {
+   "borrower_id": "B0020",
+   "planted": [],
+   "lookalikes": [
+    "DEFERMENT_PROGRAM",
+    "NEW_AFFILIATE",
+    "UNDISCLOSED_DEFERRAL"
+   ],
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "found": [],
+   "right_mechanisms": [],
+   "status": "worth a look (honest)",
+   "priority": 0.24
+  },
+  {
+   "borrower_id": "B0021",
+   "planted": [
+    "DISGUISED_RECEIPTS",
+    "RELATED_SHELLS"
+   ],
+   "lookalikes": [
+    "DISCLOSED_EQUIPMENT_LIEN",
+    "UNDISCLOSED_DEFERRAL"
+   ],
+   "verdict": "LIKELY_FRAUD",
+   "found": [
+    "DISGUISED_RECEIPTS",
+    "RELATED_SHELLS"
+   ],
+   "right_mechanisms": [
+    "DISGUISED_RECEIPTS",
+    "RELATED_SHELLS"
+   ],
+   "status": "caught",
+   "priority": 1.0
+  },
+  {
+   "borrower_id": "B0022",
+   "planted": [],
+   "lookalikes": [
+    "DISCLOSED_EQUIPMENT_LIEN",
+    "DISCLOSED_RELATED_LEASE",
+    "SEASONAL_REVENUE"
+   ],
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "found": [],
+   "right_mechanisms": [],
+   "status": "worth a look (honest)",
+   "priority": 0.85
+  },
+  {
+   "borrower_id": "B0023",
+   "planted": [
+    "DOUBLE_PLEDGE"
+   ],
+   "lookalikes": [
+    "DISCLOSED_RELATED_LEASE"
+   ],
+   "verdict": "LIKELY_FRAUD",
+   "found": [
+    "DOUBLE_PLEDGE"
+   ],
+   "right_mechanisms": [
+    "DOUBLE_PLEDGE"
+   ],
+   "status": "caught",
+   "priority": 1.0
+  },
+  {
+   "borrower_id": "B0024",
+   "planted": [],
+   "lookalikes": [
+    "NAME_TYPO"
+   ],
+   "verdict": "NO_ISSUE",
+   "found": [],
+   "right_mechanisms": [],
+   "status": "cleared",
+   "priority": 0.122
+  },
+  {
+   "borrower_id": "B0025",
+   "planted": [
+    "FIN_MANIPULATION"
+   ],
+   "lookalikes": [
+    "DISCLOSED_EQUIPMENT_LIEN",
+    "STALE_LIEN"
+   ],
+   "verdict": "LIKELY_FRAUD",
+   "found": [
+    "FIN_MANIPULATION"
+   ],
+   "right_mechanisms": [
+    "FIN_MANIPULATION"
+   ],
+   "status": "caught",
+   "priority": 0.661
+  },
+  {
+   "borrower_id": "B0026",
+   "planted": [],
+   "lookalikes": [
+    "DISCLOSED_RELATED_LEASE",
+    "NAME_TYPO"
+   ],
+   "verdict": "EXPLAINED",
+   "found": [],
+   "right_mechanisms": [],
+   "status": "cleared",
+   "priority": 0.0
+  },
+  {
+   "borrower_id": "B0027",
+   "planted": [
+    "DOUBLE_PLEDGE"
+   ],
+   "lookalikes": [
+    "DEFERMENT_PROGRAM",
+    "DISCLOSED_RELATED_LEASE",
+    "LATE_TAPE"
+   ],
+   "verdict": "LIKELY_FRAUD",
+   "found": [
+    "DOUBLE_PLEDGE"
+   ],
+   "right_mechanisms": [
+    "DOUBLE_PLEDGE"
+   ],
+   "status": "caught",
+   "priority": 0.866
+  },
+  {
+   "borrower_id": "B0028",
+   "planted": [
+    "DISGUISED_RECEIPTS",
+    "FIN_MANIPULATION",
+    "HIDDEN_DEBT",
+    "RELATED_SHELLS"
+   ],
+   "lookalikes": [
+    "DISCLOSED_EQUIPMENT_LIEN"
+   ],
+   "verdict": "LIKELY_FRAUD",
+   "found": [
+    "DISGUISED_RECEIPTS",
+    "FIN_MANIPULATION",
+    "HIDDEN_DEBT",
+    "RELATED_SHELLS"
+   ],
+   "right_mechanisms": [
+    "DISGUISED_RECEIPTS",
+    "FIN_MANIPULATION",
+    "HIDDEN_DEBT",
+    "RELATED_SHELLS"
+   ],
+   "status": "caught",
+   "priority": 1.0
+  },
+  {
+   "borrower_id": "B0029",
+   "planted": [],
+   "lookalikes": [],
+   "verdict": "NO_ISSUE",
+   "found": [],
+   "right_mechanisms": [],
+   "status": "cleared",
+   "priority": 0.122
+  },
+  {
+   "borrower_id": "B0030",
+   "planted": [],
+   "lookalikes": [],
+   "verdict": "NO_ISSUE",
+   "found": [],
+   "right_mechanisms": [],
+   "status": "cleared",
+   "priority": 0.0
+  },
+  {
+   "borrower_id": "B0031",
+   "planted": [],
+   "lookalikes": [
+    "NEW_AFFILIATE"
+   ],
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "found": [],
+   "right_mechanisms": [],
+   "status": "worth a look (honest)",
+   "priority": 0.541
+  },
+  {
+   "borrower_id": "B0032",
+   "planted": [],
+   "lookalikes": [
+    "LATE_TAPE",
+    "NEW_AFFILIATE"
+   ],
+   "verdict": "NO_ISSUE",
+   "found": [],
+   "right_mechanisms": [],
+   "status": "cleared",
+   "priority": 0.157
+  },
+  {
+   "borrower_id": "B0033",
+   "planted": [],
+   "lookalikes": [
+    "UNDISCLOSED_DEFERRAL"
+   ],
+   "verdict": "NO_ISSUE",
+   "found": [],
+   "right_mechanisms": [],
+   "status": "cleared",
+   "priority": 0.0
+  },
+  {
+   "borrower_id": "B0034",
+   "planted": [
+    "FAKE_INVOICES"
+   ],
+   "lookalikes": [],
+   "verdict": "LIKELY_FRAUD",
+   "found": [
+    "FAKE_INVOICES"
+   ],
+   "right_mechanisms": [
+    "FAKE_INVOICES"
+   ],
+   "status": "caught",
+   "priority": 0.976
+  },
+  {
+   "borrower_id": "B0035",
+   "planted": [],
+   "lookalikes": [
+    "NAME_TYPO",
+    "NEW_AFFILIATE",
+    "THIRD_PARTY_PAYER"
+   ],
+   "verdict": "NO_ISSUE",
+   "found": [],
+   "right_mechanisms": [],
+   "status": "cleared",
+   "priority": 0.157
+  },
+  {
+   "borrower_id": "B0036",
+   "planted": [],
+   "lookalikes": [
+    "NEW_AFFILIATE"
+   ],
+   "verdict": "NO_ISSUE",
+   "found": [],
+   "right_mechanisms": [],
+   "status": "cleared",
+   "priority": 0.157
+  },
+  {
+   "borrower_id": "B0037",
+   "planted": [],
+   "lookalikes": [
+    "NAME_TYPO",
+    "NEW_AFFILIATE",
+    "SEASONAL_REVENUE"
+   ],
+   "verdict": "NO_ISSUE",
+   "found": [],
+   "right_mechanisms": [],
+   "status": "cleared",
+   "priority": 0.26
+  },
+  {
+   "borrower_id": "B0038",
+   "planted": [],
+   "lookalikes": [
+    "DISCLOSED_RELATED_LEASE",
+    "UNDISCLOSED_DEFERRAL"
+   ],
+   "verdict": "EXPLAINED",
+   "found": [],
+   "right_mechanisms": [],
+   "status": "cleared",
+   "priority": 0.0
+  },
+  {
+   "borrower_id": "B0039",
+   "planted": [],
+   "lookalikes": [
+    "DISCLOSED_RELATED_LEASE"
+   ],
+   "verdict": "EXPLAINED",
+   "found": [],
+   "right_mechanisms": [],
+   "status": "cleared",
+   "priority": 0.0
+  },
+  {
+   "borrower_id": "B0040",
+   "planted": [],
+   "lookalikes": [
+    "LATE_TAPE"
+   ],
+   "verdict": "NO_ISSUE",
+   "found": [],
+   "right_mechanisms": [],
+   "status": "cleared",
+   "priority": 0.0
+  },
+  {
+   "borrower_id": "B0041",
+   "planted": [
+    "HIDDEN_DEBT",
+    "RELATED_SHELLS"
+   ],
+   "lookalikes": [],
+   "verdict": "LIKELY_FRAUD",
+   "found": [
+    "HIDDEN_DEBT",
+    "RELATED_SHELLS"
+   ],
+   "right_mechanisms": [
+    "HIDDEN_DEBT",
+    "RELATED_SHELLS"
+   ],
+   "status": "caught",
+   "priority": 1.0
+  },
+  {
+   "borrower_id": "B0042",
+   "planted": [
+    "DOUBLE_PLEDGE",
+    "FIN_MANIPULATION",
+    "TAPE_DRESSUP"
+   ],
+   "lookalikes": [
+    "STALE_LIEN"
+   ],
+   "verdict": "LIKELY_FRAUD",
+   "found": [
+    "DOUBLE_PLEDGE",
+    "FIN_MANIPULATION",
+    "TAPE_DRESSUP"
+   ],
+   "right_mechanisms": [
+    "DOUBLE_PLEDGE",
+    "FIN_MANIPULATION",
+    "TAPE_DRESSUP"
+   ],
+   "status": "caught",
+   "priority": 1.0
+  },
+  {
+   "borrower_id": "B0043",
+   "planted": [
+    "DISGUISED_RECEIPTS",
+    "FAKE_INVOICES",
+    "FIN_MANIPULATION",
+    "HIDDEN_DEBT",
+    "RELATED_SHELLS"
+   ],
+   "lookalikes": [
+    "NAME_TYPO",
+    "NEW_AFFILIATE",
+    "SEASONAL_REVENUE"
+   ],
+   "verdict": "LIKELY_FRAUD",
+   "found": [
+    "DISGUISED_RECEIPTS",
+    "FAKE_INVOICES",
+    "FIN_MANIPULATION",
+    "HIDDEN_DEBT",
+    "RELATED_SHELLS"
+   ],
+   "right_mechanisms": [
+    "DISGUISED_RECEIPTS",
+    "FAKE_INVOICES",
+    "FIN_MANIPULATION",
+    "HIDDEN_DEBT",
+    "RELATED_SHELLS"
+   ],
+   "status": "caught",
+   "priority": 1.0
+  },
+  {
+   "borrower_id": "B0044",
+   "planted": [],
+   "lookalikes": [],
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "found": [],
+   "right_mechanisms": [],
+   "status": "worth a look (honest)",
+   "priority": 0.878
+  },
+  {
+   "borrower_id": "B0045",
+   "planted": [],
+   "lookalikes": [
+    "NAME_TYPO",
+    "STALE_LIEN"
+   ],
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "found": [],
+   "right_mechanisms": [],
+   "status": "worth a look (honest)",
+   "priority": 0.36
+  },
+  {
+   "borrower_id": "B0046",
+   "planted": [],
+   "lookalikes": [],
+   "verdict": "NO_ISSUE",
+   "found": [],
+   "right_mechanisms": [],
+   "status": "cleared",
+   "priority": 0.122
+  },
+  {
+   "borrower_id": "B0047",
+   "planted": [],
+   "lookalikes": [
+    "NAME_TYPO"
+   ],
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "found": [],
+   "right_mechanisms": [],
+   "status": "worth a look (honest)",
+   "priority": 0.36
+  },
+  {
+   "borrower_id": "B0048",
+   "planted": [],
+   "lookalikes": [],
+   "verdict": "NO_ISSUE",
+   "found": [],
+   "right_mechanisms": [],
+   "status": "cleared",
+   "priority": 0.0
+  },
+  {
+   "borrower_id": "B0049",
+   "planted": [],
+   "lookalikes": [],
+   "verdict": "NO_ISSUE",
+   "found": [],
+   "right_mechanisms": [],
+   "status": "cleared",
+   "priority": 0.0
+  },
+  {
+   "borrower_id": "B0050",
+   "planted": [],
+   "lookalikes": [
+    "NAME_TYPO",
+    "STALE_LIEN"
+   ],
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "found": [],
+   "right_mechanisms": [],
+   "status": "worth a look (honest)",
+   "priority": 0.36
+  },
+  {
+   "borrower_id": "B0051",
+   "planted": [],
+   "lookalikes": [
+    "DISCLOSED_EQUIPMENT_LIEN"
+   ],
+   "verdict": "NO_ISSUE",
+   "found": [],
+   "right_mechanisms": [],
+   "status": "cleared",
+   "priority": 0.0
+  },
+  {
+   "borrower_id": "B0052",
+   "planted": [],
+   "lookalikes": [
+    "NEW_AFFILIATE"
+   ],
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "found": [],
+   "right_mechanisms": [],
+   "status": "worth a look (honest)",
+   "priority": 0.541
+  },
+  {
+   "borrower_id": "B0053",
+   "planted": [],
+   "lookalikes": [],
+   "verdict": "NO_ISSUE",
+   "found": [],
+   "right_mechanisms": [],
+   "status": "cleared",
+   "priority": 0.0
+  },
+  {
+   "borrower_id": "B0054",
+   "planted": [],
+   "lookalikes": [],
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "found": [],
+   "right_mechanisms": [],
+   "status": "worth a look (honest)",
+   "priority": 1.0
+  },
+  {
+   "borrower_id": "B0055",
+   "planted": [],
+   "lookalikes": [
+    "DISCLOSED_RELATED_LEASE"
+   ],
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "found": [],
+   "right_mechanisms": [],
+   "status": "worth a look (honest)",
+   "priority": 1.0
+  },
+  {
+   "borrower_id": "B0056",
+   "planted": [],
+   "lookalikes": [],
+   "verdict": "NO_ISSUE",
+   "found": [],
+   "right_mechanisms": [],
+   "status": "cleared",
+   "priority": 0.0
+  },
+  {
+   "borrower_id": "B0057",
+   "planted": [],
+   "lookalikes": [
+    "LATE_TAPE"
+   ],
+   "verdict": "NO_ISSUE",
+   "found": [],
+   "right_mechanisms": [],
+   "status": "cleared",
+   "priority": 0.0
+  },
+  {
+   "borrower_id": "B0058",
+   "planted": [],
+   "lookalikes": [
+    "NAME_TYPO",
+    "NEW_AFFILIATE",
+    "UNDISCLOSED_DEFERRAL"
+   ],
+   "verdict": "NO_ISSUE",
+   "found": [],
+   "right_mechanisms": [],
+   "status": "cleared",
+   "priority": 0.157
+  },
+  {
+   "borrower_id": "B0059",
+   "planted": [],
+   "lookalikes": [],
+   "verdict": "NO_ISSUE",
+   "found": [],
+   "right_mechanisms": [],
+   "status": "cleared",
+   "priority": 0.0
+  },
+  {
+   "borrower_id": "B0060",
+   "planted": [],
+   "lookalikes": [
+    "DEFERMENT_PROGRAM",
+    "NEW_AFFILIATE"
+   ],
+   "verdict": "NO_ISSUE",
+   "found": [],
+   "right_mechanisms": [],
+   "status": "cleared",
+   "priority": 0.157
+  },
+  {
+   "borrower_id": "B0061",
+   "planted": [],
+   "lookalikes": [
+    "NAME_TYPO",
+    "NEW_AFFILIATE"
+   ],
+   "verdict": "NO_ISSUE",
+   "found": [],
+   "right_mechanisms": [],
+   "status": "cleared",
+   "priority": 0.157
+  },
+  {
+   "borrower_id": "B0062",
+   "planted": [
+    "HIDDEN_DEBT",
+    "RELATED_SHELLS"
+   ],
+   "lookalikes": [
+    "SEASONAL_REVENUE"
+   ],
+   "verdict": "LIKELY_FRAUD",
+   "found": [
+    "HIDDEN_DEBT",
+    "RELATED_SHELLS"
+   ],
+   "right_mechanisms": [
+    "HIDDEN_DEBT",
+    "RELATED_SHELLS"
+   ],
+   "status": "caught",
+   "priority": 1.0
+  },
+  {
+   "borrower_id": "B0063",
+   "planted": [
+    "DISGUISED_RECEIPTS",
+    "FAKE_INVOICES",
+    "FIN_MANIPULATION",
+    "HIDDEN_DEBT",
+    "RELATED_SHELLS"
+   ],
+   "lookalikes": [
+    "DISCLOSED_EQUIPMENT_LIEN",
+    "DISCLOSED_RELATED_LEASE",
+    "SEASONAL_REVENUE"
+   ],
+   "verdict": "LIKELY_FRAUD",
+   "found": [
+    "DISGUISED_RECEIPTS",
+    "FAKE_INVOICES",
+    "FIN_MANIPULATION",
+    "HIDDEN_DEBT",
+    "RELATED_SHELLS"
+   ],
+   "right_mechanisms": [
+    "DISGUISED_RECEIPTS",
+    "FAKE_INVOICES",
+    "FIN_MANIPULATION",
+    "HIDDEN_DEBT",
+    "RELATED_SHELLS"
+   ],
+   "status": "caught",
+   "priority": 1.0
+  },
+  {
+   "borrower_id": "B0064",
+   "planted": [],
+   "lookalikes": [
+    "NAME_TYPO"
+   ],
+   "verdict": "NO_ISSUE",
+   "found": [],
+   "right_mechanisms": [],
+   "status": "cleared",
+   "priority": 0.0
+  },
+  {
+   "borrower_id": "B0065",
+   "planted": [],
+   "lookalikes": [],
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "found": [],
+   "right_mechanisms": [],
+   "status": "worth a look (honest)",
+   "priority": 0.24
+  },
+  {
+   "borrower_id": "B0066",
+   "planted": [],
+   "lookalikes": [
+    "DISCLOSED_EQUIPMENT_LIEN",
+    "DISCLOSED_RELATED_LEASE"
+   ],
+   "verdict": "NO_ISSUE",
+   "found": [],
+   "right_mechanisms": [],
+   "status": "cleared",
+   "priority": 0.0
+  },
+  {
+   "borrower_id": "B0067",
+   "planted": [
+    "DISGUISED_RECEIPTS",
+    "FIN_MANIPULATION",
+    "HIDDEN_DEBT",
+    "RELATED_SHELLS"
+   ],
+   "lookalikes": [
+    "DISCLOSED_EQUIPMENT_LIEN",
+    "DISCLOSED_RELATED_LEASE",
+    "THIRD_PARTY_PAYER"
+   ],
+   "verdict": "LIKELY_FRAUD",
+   "found": [
+    "DISGUISED_RECEIPTS",
+    "FIN_MANIPULATION",
+    "HIDDEN_DEBT",
+    "RELATED_SHELLS"
+   ],
+   "right_mechanisms": [
+    "DISGUISED_RECEIPTS",
+    "FIN_MANIPULATION",
+    "HIDDEN_DEBT",
+    "RELATED_SHELLS"
+   ],
+   "status": "caught",
+   "priority": 1.0
+  },
+  {
+   "borrower_id": "B0068",
+   "planted": [],
+   "lookalikes": [
+    "UNDISCLOSED_DEFERRAL"
+   ],
+   "verdict": "NO_ISSUE",
+   "found": [],
+   "right_mechanisms": [],
+   "status": "cleared",
+   "priority": 0.0
+  },
+  {
+   "borrower_id": "B0069",
+   "planted": [
+    "FIN_MANIPULATION"
+   ],
+   "lookalikes": [
+    "DISCLOSED_EQUIPMENT_LIEN",
+    "NAME_TYPO"
+   ],
+   "verdict": "LIKELY_FRAUD",
+   "found": [
+    "FIN_MANIPULATION"
+   ],
+   "right_mechanisms": [
+    "FIN_MANIPULATION"
+   ],
+   "status": "caught",
+   "priority": 0.454
+  },
+  {
+   "borrower_id": "B0070",
+   "planted": [],
+   "lookalikes": [
+    "STALE_LIEN"
+   ],
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "found": [],
+   "right_mechanisms": [],
+   "status": "worth a look (honest)",
+   "priority": 0.36
+  },
+  {
+   "borrower_id": "B0071",
+   "planted": [],
+   "lookalikes": [],
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "found": [],
+   "right_mechanisms": [],
+   "status": "worth a look (honest)",
+   "priority": 0.85
+  },
+  {
+   "borrower_id": "B0072",
+   "planted": [
+    "DOUBLE_PLEDGE",
+    "FIN_MANIPULATION",
+    "TAPE_DRESSUP"
+   ],
+   "lookalikes": [],
+   "verdict": "LIKELY_FRAUD",
+   "found": [
+    "DOUBLE_PLEDGE",
+    "FIN_MANIPULATION",
+    "TAPE_DRESSUP"
+   ],
+   "right_mechanisms": [
+    "DOUBLE_PLEDGE",
+    "FIN_MANIPULATION",
+    "TAPE_DRESSUP"
+   ],
+   "status": "caught",
+   "priority": 1.0
+  },
+  {
+   "borrower_id": "B0073",
+   "planted": [],
+   "lookalikes": [
+    "DEFERMENT_PROGRAM",
+    "THIRD_PARTY_PAYER"
+   ],
+   "verdict": "EXPLAINED",
+   "found": [],
+   "right_mechanisms": [],
+   "status": "cleared",
+   "priority": 0.0
+  },
+  {
+   "borrower_id": "B0074",
+   "planted": [],
+   "lookalikes": [],
+   "verdict": "NO_ISSUE",
+   "found": [],
+   "right_mechanisms": [],
+   "status": "cleared",
+   "priority": 0.0
+  },
+  {
+   "borrower_id": "B0075",
+   "planted": [],
+   "lookalikes": [
+    "DISCLOSED_RELATED_LEASE",
+    "NEW_AFFILIATE"
+   ],
+   "verdict": "EXPLAINED",
+   "found": [],
+   "right_mechanisms": [],
+   "status": "cleared",
+   "priority": 0.26
+  },
+  {
+   "borrower_id": "B0076",
+   "planted": [],
+   "lookalikes": [
+    "SEASONAL_REVENUE"
+   ],
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "found": [],
+   "right_mechanisms": [],
+   "status": "worth a look (honest)",
+   "priority": 0.85
+  },
+  {
+   "borrower_id": "B0077",
+   "planted": [
+    "FAKE_INVOICES"
+   ],
+   "lookalikes": [
+    "NAME_TYPO",
+    "STALE_LIEN"
+   ],
+   "verdict": "LIKELY_FRAUD",
+   "found": [
+    "FAKE_INVOICES"
+   ],
+   "right_mechanisms": [
+    "FAKE_INVOICES"
+   ],
+   "status": "caught",
+   "priority": 1.0
+  },
+  {
+   "borrower_id": "B0078",
+   "planted": [],
+   "lookalikes": [
+    "DISCLOSED_EQUIPMENT_LIEN"
+   ],
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "found": [],
+   "right_mechanisms": [],
+   "status": "worth a look (honest)",
+   "priority": 0.866
+  },
+  {
+   "borrower_id": "B0079",
+   "planted": [],
+   "lookalikes": [],
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "found": [],
+   "right_mechanisms": [],
+   "status": "worth a look (honest)",
+   "priority": 0.36
+  },
+  {
+   "borrower_id": "B0080",
+   "planted": [
+    "FIN_MANIPULATION"
+   ],
+   "lookalikes": [
+    "DISCLOSED_RELATED_LEASE"
+   ],
+   "verdict": "LIKELY_FRAUD",
+   "found": [
+    "FIN_MANIPULATION"
+   ],
+   "right_mechanisms": [
+    "FIN_MANIPULATION"
+   ],
+   "status": "caught",
+   "priority": 0.375
+  },
+  {
+   "borrower_id": "B0081",
+   "planted": [],
+   "lookalikes": [
+    "DISCLOSED_EQUIPMENT_LIEN",
+    "STALE_LIEN"
+   ],
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "found": [],
+   "right_mechanisms": [],
+   "status": "worth a look (honest)",
+   "priority": 0.92
+  },
+  {
+   "borrower_id": "B0082",
+   "planted": [],
+   "lookalikes": [
+    "DISCLOSED_EQUIPMENT_LIEN",
+    "LATE_TAPE"
+   ],
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "found": [],
+   "right_mechanisms": [],
+   "status": "worth a look (honest)",
+   "priority": 0.36
+  },
+  {
+   "borrower_id": "B0083",
+   "planted": [],
+   "lookalikes": [
+    "DEFERMENT_PROGRAM"
+   ],
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "found": [],
+   "right_mechanisms": [],
+   "status": "worth a look (honest)",
+   "priority": 0.36
+  },
+  {
+   "borrower_id": "B0084",
+   "planted": [],
+   "lookalikes": [
+    "UNDISCLOSED_DEFERRAL"
+   ],
+   "verdict": "NO_ISSUE",
+   "found": [],
+   "right_mechanisms": [],
+   "status": "cleared",
+   "priority": 0.0
+  },
+  {
+   "borrower_id": "B0085",
+   "planted": [],
+   "lookalikes": [],
+   "verdict": "NO_ISSUE",
+   "found": [],
+   "right_mechanisms": [],
+   "status": "cleared",
+   "priority": 0.0
+  },
+  {
+   "borrower_id": "B0086",
+   "planted": [],
+   "lookalikes": [
+    "STALE_LIEN"
+   ],
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "found": [],
+   "right_mechanisms": [],
+   "status": "worth a look (honest)",
+   "priority": 0.36
+  },
+  {
+   "borrower_id": "B0087",
+   "planted": [],
+   "lookalikes": [],
+   "verdict": "NO_ISSUE",
+   "found": [],
+   "right_mechanisms": [],
+   "status": "cleared",
+   "priority": 0.0
+  },
+  {
+   "borrower_id": "B0088",
+   "planted": [
+    "HIDDEN_DEBT"
+   ],
+   "lookalikes": [
+    "THIRD_PARTY_PAYER"
+   ],
+   "verdict": "LIKELY_FRAUD",
+   "found": [
+    "HIDDEN_DEBT"
+   ],
+   "right_mechanisms": [
+    "HIDDEN_DEBT"
+   ],
+   "status": "caught",
+   "priority": 0.866
+  },
+  {
+   "borrower_id": "B0089",
+   "planted": [],
+   "lookalikes": [
+    "UNDISCLOSED_DEFERRAL"
+   ],
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "found": [],
+   "right_mechanisms": [],
+   "status": "worth a look (honest)",
+   "priority": 0.595
+  },
+  {
+   "borrower_id": "B0090",
+   "planted": [],
+   "lookalikes": [
+    "NAME_TYPO"
+   ],
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "found": [],
+   "right_mechanisms": [],
+   "status": "worth a look (honest)",
+   "priority": 0.85
+  },
+  {
+   "borrower_id": "B0091",
+   "planted": [],
+   "lookalikes": [
+    "DISCLOSED_RELATED_LEASE",
+    "NEW_AFFILIATE"
+   ],
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "found": [],
+   "right_mechanisms": [],
+   "status": "worth a look (honest)",
+   "priority": 0.332
+  },
+  {
+   "borrower_id": "B0092",
+   "planted": [],
+   "lookalikes": [
+    "DISCLOSED_EQUIPMENT_LIEN",
+    "DISCLOSED_RELATED_LEASE",
+    "NEW_AFFILIATE"
+   ],
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "found": [],
+   "right_mechanisms": [],
+   "status": "worth a look (honest)",
+   "priority": 0.24
+  },
+  {
+   "borrower_id": "B0093",
+   "planted": [],
+   "lookalikes": [
+    "LATE_TAPE"
+   ],
+   "verdict": "NO_ISSUE",
+   "found": [],
+   "right_mechanisms": [],
+   "status": "cleared",
+   "priority": 0.0
+  },
+  {
+   "borrower_id": "B0094",
+   "planted": [],
+   "lookalikes": [
+    "UNDISCLOSED_DEFERRAL"
+   ],
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "found": [],
+   "right_mechanisms": [],
+   "status": "worth a look (honest)",
+   "priority": 0.36
+  },
+  {
+   "borrower_id": "B0095",
+   "planted": [],
+   "lookalikes": [
+    "DISCLOSED_RELATED_LEASE"
+   ],
+   "verdict": "EXPLAINED",
+   "found": [],
+   "right_mechanisms": [],
+   "status": "cleared",
+   "priority": 0.0
+  },
+  {
+   "borrower_id": "B0096",
+   "planted": [],
+   "lookalikes": [
+    "DISCLOSED_EQUIPMENT_LIEN"
+   ],
+   "verdict": "NO_ISSUE",
+   "found": [],
+   "right_mechanisms": [],
+   "status": "cleared",
+   "priority": 0.0
+  },
+  {
+   "borrower_id": "B0097",
+   "planted": [
+    "DOUBLE_PLEDGE",
+    "FIN_MANIPULATION",
+    "TAPE_DRESSUP"
+   ],
+   "lookalikes": [
+    "STALE_LIEN"
+   ],
+   "verdict": "LIKELY_FRAUD",
+   "found": [
+    "DOUBLE_PLEDGE",
+    "FIN_MANIPULATION",
+    "TAPE_DRESSUP"
+   ],
+   "right_mechanisms": [
+    "DOUBLE_PLEDGE",
+    "FIN_MANIPULATION",
+    "TAPE_DRESSUP"
+   ],
+   "status": "caught",
+   "priority": 1.0
+  },
+  {
+   "borrower_id": "B0098",
+   "planted": [],
+   "lookalikes": [
+    "NAME_TYPO"
+   ],
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "found": [],
+   "right_mechanisms": [],
+   "status": "worth a look (honest)",
+   "priority": 0.36
+  },
+  {
+   "borrower_id": "B0099",
+   "planted": [
+    "DISGUISED_RECEIPTS",
+    "RELATED_SHELLS"
+   ],
+   "lookalikes": [
+    "LATE_TAPE"
+   ],
+   "verdict": "LIKELY_FRAUD",
+   "found": [
+    "DISGUISED_RECEIPTS",
+    "RELATED_SHELLS"
+   ],
+   "right_mechanisms": [
+    "DISGUISED_RECEIPTS",
+    "RELATED_SHELLS"
+   ],
+   "status": "caught",
+   "priority": 0.846
+  },
+  {
+   "borrower_id": "B0100",
+   "planted": [],
+   "lookalikes": [
+    "DISCLOSED_EQUIPMENT_LIEN"
+   ],
+   "verdict": "NO_ISSUE",
+   "found": [],
+   "right_mechanisms": [],
+   "status": "cleared",
+   "priority": 0.0
+  },
+  {
+   "borrower_id": "B0101",
+   "planted": [
+    "DOUBLE_PLEDGE"
+   ],
+   "lookalikes": [
+    "DEFERMENT_PROGRAM",
+    "NAME_TYPO"
+   ],
+   "verdict": "LIKELY_FRAUD",
+   "found": [
+    "DOUBLE_PLEDGE"
+   ],
+   "right_mechanisms": [
+    "DOUBLE_PLEDGE"
+   ],
+   "status": "caught",
+   "priority": 0.866
+  },
+  {
+   "borrower_id": "B0102",
+   "planted": [],
+   "lookalikes": [
+    "LATE_TAPE",
+    "NAME_TYPO"
+   ],
+   "verdict": "NO_ISSUE",
+   "found": [],
+   "right_mechanisms": [],
+   "status": "cleared",
+   "priority": 0.0
+  },
+  {
+   "borrower_id": "B0103",
+   "planted": [
+    "DOUBLE_PLEDGE",
+    "FIN_MANIPULATION",
+    "TAPE_DRESSUP"
+   ],
+   "lookalikes": [
+    "DISCLOSED_RELATED_LEASE",
+    "UNDISCLOSED_DEFERRAL"
+   ],
+   "verdict": "LIKELY_FRAUD",
+   "found": [
+    "DOUBLE_PLEDGE",
+    "FIN_MANIPULATION",
+    "TAPE_DRESSUP"
+   ],
+   "right_mechanisms": [
+    "DOUBLE_PLEDGE",
+    "FIN_MANIPULATION",
+    "TAPE_DRESSUP"
+   ],
+   "status": "caught",
+   "priority": 1.0
+  },
+  {
+   "borrower_id": "B0104",
+   "planted": [],
+   "lookalikes": [
+    "DISCLOSED_RELATED_LEASE",
+    "THIRD_PARTY_PAYER",
+    "UNDISCLOSED_DEFERRAL"
+   ],
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "found": [],
+   "right_mechanisms": [],
+   "status": "worth a look (honest)",
+   "priority": 0.3
+  },
+  {
+   "borrower_id": "B0105",
+   "planted": [],
+   "lookalikes": [
+    "THIRD_PARTY_PAYER"
+   ],
+   "verdict": "NO_ISSUE",
+   "found": [],
+   "right_mechanisms": [],
+   "status": "cleared",
+   "priority": 0.0
+  },
+  {
+   "borrower_id": "B0106",
+   "planted": [],
+   "lookalikes": [
+    "DISCLOSED_EQUIPMENT_LIEN",
+    "DISCLOSED_RELATED_LEASE",
+    "STALE_LIEN"
+   ],
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "found": [],
+   "right_mechanisms": [],
+   "status": "worth a look (honest)",
+   "priority": 0.36
+  },
+  {
+   "borrower_id": "B0107",
+   "planted": [],
+   "lookalikes": [
+    "DEFERMENT_PROGRAM"
+   ],
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "found": [],
+   "right_mechanisms": [],
+   "status": "worth a look (honest)",
+   "priority": 0.36
+  },
+  {
+   "borrower_id": "B0108",
+   "planted": [],
+   "lookalikes": [
+    "NAME_TYPO",
+    "SEASONAL_REVENUE"
+   ],
+   "verdict": "NO_ISSUE",
+   "found": [],
+   "right_mechanisms": [],
+   "status": "cleared",
+   "priority": 0.0
+  },
+  {
+   "borrower_id": "B0109",
+   "planted": [],
+   "lookalikes": [
+    "NAME_TYPO"
+   ],
+   "verdict": "NO_ISSUE",
+   "found": [],
+   "right_mechanisms": [],
+   "status": "cleared",
+   "priority": 0.0
+  },
+  {
+   "borrower_id": "B0110",
+   "planted": [
+    "DISGUISED_RECEIPTS",
+    "FIN_MANIPULATION",
+    "HIDDEN_DEBT",
+    "RELATED_SHELLS"
+   ],
+   "lookalikes": [
+    "DISCLOSED_EQUIPMENT_LIEN"
+   ],
+   "verdict": "LIKELY_FRAUD",
+   "found": [
+    "DISGUISED_RECEIPTS",
+    "FIN_MANIPULATION",
+    "HIDDEN_DEBT",
+    "RELATED_SHELLS"
+   ],
+   "right_mechanisms": [
+    "DISGUISED_RECEIPTS",
+    "FIN_MANIPULATION",
+    "HIDDEN_DEBT",
+    "RELATED_SHELLS"
+   ],
+   "status": "caught",
+   "priority": 1.0
+  },
+  {
+   "borrower_id": "B0111",
+   "planted": [
+    "TAPE_DRESSUP"
+   ],
+   "lookalikes": [
+    "NAME_TYPO",
+    "THIRD_PARTY_PAYER",
+    "UNDISCLOSED_DEFERRAL"
+   ],
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "found": [],
+   "right_mechanisms": [],
+   "status": "sent to review",
+   "priority": 0.595
+  },
+  {
+   "borrower_id": "B0112",
+   "planted": [],
+   "lookalikes": [
+    "DISCLOSED_EQUIPMENT_LIEN",
+    "NAME_TYPO"
+   ],
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "found": [],
+   "right_mechanisms": [],
+   "status": "worth a look (honest)",
+   "priority": 0.36
+  },
+  {
+   "borrower_id": "B0113",
+   "planted": [
+    "DISGUISED_RECEIPTS",
+    "RELATED_SHELLS"
+   ],
+   "lookalikes": [
+    "NAME_TYPO"
+   ],
+   "verdict": "LIKELY_FRAUD",
+   "found": [
+    "DISGUISED_RECEIPTS",
+    "RELATED_SHELLS"
+   ],
+   "right_mechanisms": [
+    "DISGUISED_RECEIPTS",
+    "RELATED_SHELLS"
+   ],
+   "status": "caught",
+   "priority": 0.837
+  },
+  {
+   "borrower_id": "B0114",
+   "planted": [],
+   "lookalikes": [
+    "DISCLOSED_EQUIPMENT_LIEN"
+   ],
+   "verdict": "NO_ISSUE",
+   "found": [],
+   "right_mechanisms": [],
+   "status": "cleared",
+   "priority": 0.0
+  },
+  {
+   "borrower_id": "B0115",
+   "planted": [],
+   "lookalikes": [
+    "NEW_AFFILIATE"
+   ],
+   "verdict": "NO_ISSUE",
+   "found": [],
+   "right_mechanisms": [],
+   "status": "cleared",
+   "priority": 0.157
+  },
+  {
+   "borrower_id": "B0116",
+   "planted": [
+    "DOUBLE_PLEDGE",
+    "FIN_MANIPULATION",
+    "TAPE_DRESSUP"
+   ],
+   "lookalikes": [],
+   "verdict": "LIKELY_FRAUD",
+   "found": [
+    "DOUBLE_PLEDGE",
+    "FIN_MANIPULATION",
+    "TAPE_DRESSUP"
+   ],
+   "right_mechanisms": [
+    "DOUBLE_PLEDGE",
+    "FIN_MANIPULATION",
+    "TAPE_DRESSUP"
+   ],
+   "status": "caught",
+   "priority": 1.0
+  },
+  {
+   "borrower_id": "B0117",
+   "planted": [],
+   "lookalikes": [
+    "DISCLOSED_EQUIPMENT_LIEN",
+    "LATE_TAPE"
+   ],
+   "verdict": "NO_ISSUE",
+   "found": [],
+   "right_mechanisms": [],
+   "status": "cleared",
+   "priority": 0.0
+  },
+  {
+   "borrower_id": "B0118",
+   "planted": [],
+   "lookalikes": [
+    "DISCLOSED_EQUIPMENT_LIEN"
+   ],
+   "verdict": "NO_ISSUE",
+   "found": [],
+   "right_mechanisms": [],
+   "status": "cleared",
+   "priority": 0.0
+  },
+  {
+   "borrower_id": "B0119",
+   "planted": [],
+   "lookalikes": [
+    "DISCLOSED_EQUIPMENT_LIEN",
+    "NEW_AFFILIATE",
+    "THIRD_PARTY_PAYER",
+    "UNDISCLOSED_DEFERRAL"
+   ],
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "found": [],
+   "right_mechanisms": [],
+   "status": "worth a look (honest)",
+   "priority": 0.548
+  },
+  {
+   "borrower_id": "B0120",
+   "planted": [],
+   "lookalikes": [
+    "DISCLOSED_EQUIPMENT_LIEN",
+    "LATE_TAPE"
+   ],
+   "verdict": "NO_ISSUE",
+   "found": [],
+   "right_mechanisms": [],
+   "status": "cleared",
+   "priority": 0.0
+  }
+ ],
+ "heldout": [
+  {
+   "seed": 201,
+   "borrowers": 120,
+   "fraud": 30,
+   "caught": 29,
+   "sent_to_review": 1,
+   "missed": 0,
+   "false_alarms": 0,
+   "honest_worth_a_look": 29,
+   "per_mechanism": {
+    "DOUBLE_PLEDGE": [
+     9,
+     9
+    ],
+    "TAPE_DRESSUP": [
+     5,
+     9
+    ],
+    "DISGUISED_RECEIPTS": [
+     8,
+     8
+    ],
+    "FAKE_INVOICES": [
+     7,
+     7
+    ],
+    "HIDDEN_DEBT": [
+     8,
+     8
+    ],
+    "RELATED_SHELLS": [
+     10,
+     10
+    ],
+    "FIN_MANIPULATION": [
+     13,
+     13
+    ]
+   }
+  },
+  {
+   "seed": 202,
+   "borrowers": 120,
+   "fraud": 30,
+   "caught": 30,
+   "sent_to_review": 0,
+   "missed": 0,
+   "false_alarms": 0,
+   "honest_worth_a_look": 29,
+   "per_mechanism": {
+    "DOUBLE_PLEDGE": [
+     9,
+     9
+    ],
+    "TAPE_DRESSUP": [
+     7,
+     9
+    ],
+    "DISGUISED_RECEIPTS": [
+     8,
+     8
+    ],
+    "FAKE_INVOICES": [
+     6,
+     6
+    ],
+    "HIDDEN_DEBT": [
+     8,
+     8
+    ],
+    "RELATED_SHELLS": [
+     10,
+     10
+    ],
+    "FIN_MANIPULATION": [
+     12,
+     13
+    ]
+   }
+  },
+  {
+   "seed": 203,
+   "borrowers": 120,
+   "fraud": 30,
+   "caught": 28,
+   "sent_to_review": 1,
+   "missed": 1,
+   "false_alarms": 0,
+   "honest_worth_a_look": 26,
+   "per_mechanism": {
+    "DOUBLE_PLEDGE": [
+     8,
+     9
+    ],
+    "TAPE_DRESSUP": [
+     7,
+     9
+    ],
+    "DISGUISED_RECEIPTS": [
+     8,
+     8
+    ],
+    "FAKE_INVOICES": [
+     8,
+     8
+    ],
+    "HIDDEN_DEBT": [
+     8,
+     8
+    ],
+    "RELATED_SHELLS": [
+     8,
+     8
+    ],
+    "FIN_MANIPULATION": [
+     12,
+     13
+    ]
+   }
+  },
+  {
+   "seed": 204,
+   "borrowers": 120,
+   "fraud": 30,
+   "caught": 28,
+   "sent_to_review": 1,
+   "missed": 1,
+   "false_alarms": 0,
+   "honest_worth_a_look": 28,
+   "per_mechanism": {
+    "DOUBLE_PLEDGE": [
+     9,
+     9
+    ],
+    "TAPE_DRESSUP": [
+     7,
+     9
+    ],
+    "DISGUISED_RECEIPTS": [
+     8,
+     8
+    ],
+    "FAKE_INVOICES": [
+     6,
+     6
+    ],
+    "HIDDEN_DEBT": [
+     8,
+     8
+    ],
+    "RELATED_SHELLS": [
+     9,
+     9
+    ],
+    "FIN_MANIPULATION": [
+     10,
+     13
+    ]
+   }
+  },
+  {
+   "seed": 205,
+   "borrowers": 120,
+   "fraud": 30,
+   "caught": 28,
+   "sent_to_review": 1,
+   "missed": 1,
+   "false_alarms": 0,
+   "honest_worth_a_look": 29,
+   "per_mechanism": {
+    "DOUBLE_PLEDGE": [
+     9,
+     9
+    ],
+    "TAPE_DRESSUP": [
+     7,
+     9
+    ],
+    "DISGUISED_RECEIPTS": [
+     8,
+     8
+    ],
+    "FAKE_INVOICES": [
+     6,
+     6
+    ],
+    "HIDDEN_DEBT": [
+     8,
+     8
+    ],
+    "RELATED_SHELLS": [
+     8,
+     8
+    ],
+    "FIN_MANIPULATION": [
+     12,
+     13
+    ]
+   }
+  }
+ ]
+}
