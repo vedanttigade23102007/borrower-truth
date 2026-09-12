@@ -34,6 +34,8 @@ export const SOURCE: Record<string, string> = {
   courts: "court records",
   registry: "company registry",
   financials_vs_cash: "financials vs cash",
+  financial_statements: "financial statements",
+  operating_account: "operating account",
   covenant_certificate: "covenant certificate",
 };
 

@@ -33,3 +33,16 @@ Re-run with a warm worker (same 59,551 payments):
 **Notes:**
 - The producer rate was capped at 3,000 events/s by design; the worker kept up with no backlog. Its maximum throughput was not measured here.
 - Latency is measured from when the producer sent the event to when the worker classified it, on one machine. Real bank networks add transport time.
+
+## Update 12 Sep 2026: the dashboard seen, and the full path timed
+
+Re-run in Codespaces with the stack hardened (host ports on localhost only, writes to the case service need the shared key).
+
+| What | Result |
+|---|---|
+| Grafana dashboard | **rendered to an image by Grafana's own renderer**: [grafana-dashboard.png](grafana-dashboard.png). Every panel draws data. S4 shows 0 because the demo's last step crashes S4 on purpose, and the dashboard reports it. "Human decisions" is empty because nobody had approved anything in the fresh stack |
+| Payment into Kafka → alert visible on the officer's case (case-service API) | **p50 1.50 s · max 1.54 s**, 10 of 10 tagged test payments arrived. The bridge batches alerts every 2 s, which is most of that time |
+| Payment → worker signal | p50 24 ms · p95 29 ms (unchanged) |
+| Dead letters / duplicates | 0 / 0 |
+
+Found on the way: the first render attempt failed because macOS metadata files (`._provider.yml`), copied by my file sync from a Mac, crashed Grafana's provisioning. That came from how I copied the files, not from the repo. The sync now disables them.

@@ -8,6 +8,13 @@ Every inflow to the collection account is matched to a known payer (a loan
 obligor on the tape, or an invoice debtor). Unknown payers are resolved against
 the company registry and S6's relationship graph. Publishes verified collections
 per quarter for S7.
+
+CIRCULAR_FLOW: money that leaves the borrower's operating account for a company
+and comes back from the same company, days later, as a "customer" payment of
+almost the same amount that settles no invoice or loan, again and again. The
+middleman can look completely unrelated in the registry; the round trip itself
+is the evidence. A customer that is also a supplier doesn't trigger it: its
+payments settle invoices.
 """
 from rapidfuzz import fuzz, process
 
@@ -29,6 +36,24 @@ SELECT borrower_id, pn, min(payer_name) AS name, sum(amount) AS amt, count(*) AS
        min(month) AS first_m, list(txn_id ORDER BY txn_id)[1:3] AS ex
 FROM pay_class WHERE NOT known GROUP BY 1, 2
 """
+
+
+ROUND_TRIPS = """
+WITH o AS (SELECT borrower_id, txn_id, month, month * 30 + day AS d, amount, norm(payee_name) AS pn, payee_name
+           FROM outflows),
+     -- only payments that settle nothing: a real customer's payment is applied to an invoice or a loan
+     i AS (SELECT borrower_id, txn_id, month * 30 + day AS d, amount, norm(payer_name) AS pn FROM payments
+           WHERE coalesce(ref, '') = ''
+              OR (ref NOT LIKE 'A-%' AND ref NOT IN (SELECT invoice_number FROM invoices))),
+     pairs AS (
+        SELECT o.borrower_id, o.pn, o.payee_name, o.txn_id AS out_id, o.month, o.amount, i.txn_id AS in_id
+        FROM o JOIN i ON i.borrower_id = o.borrower_id AND i.pn = o.pn
+                     AND i.d BETWEEN o.d + 1 AND o.d + ? AND abs(i.amount - o.amount) <= ? * o.amount)
+SELECT borrower_id, pn, min(payee_name) AS name, count(DISTINCT out_id) AS n, sum(DISTINCT amount) AS amt,
+       min(month) AS first_m, list(DISTINCT out_id ORDER BY out_id)[1:2] AS outs, list(DISTINCT in_id ORDER BY in_id)[1:2] AS ins
+FROM pairs GROUP BY 1, 2
+"""
+ROUND_TRIP_DAYS, ROUND_TRIP_TOLERANCE, ROUND_TRIP_MIN = 35, 0.02, 3
 
 
 def run(ctx: Ctx):
@@ -68,6 +93,17 @@ def run(ctx: Ctx):
             out.append(sig("S3", b, "NON_OBLIGOR_PAYER", 0.5, 0.6, ev,
                            f"${r['amt']:,.0f} ({share:.1%} of inflows) came from '{r['name']}', who is not a known "
                            f"customer or obligor", r["first_m"], [ent["entity_id"]] if ent else []))
+
+    for r in ctx.rows(ROUND_TRIPS, [ROUND_TRIP_DAYS, ROUND_TRIP_TOLERANCE]):
+        if r["n"] < ROUND_TRIP_MIN:
+            continue
+        ent = ents.get(r["pn"])
+        out.append(sig("S3", r["borrower_id"], "CIRCULAR_FLOW", 0.85, 0.85,
+                       [f"outflow:{t}" for t in r["outs"]] + [f"payment:{t}" for t in r["ins"]]
+                       + [f"counterparty:{r['name']}", f"round_trips:{r['n']}"],
+                       f"{r['n']} times, money sent to '{r['name']}' came back from '{r['name']}' within "
+                       f"{ROUND_TRIP_DAYS} days as a 'customer' payment of almost the same amount that settles no invoice "
+                       f"(${r['amt']:,.0f} in total)", r["first_m"], [ent["entity_id"]] if ent else []))
 
     if rescued:
         con.execute("CREATE OR REPLACE TEMP TABLE rescued (borrower_id VARCHAR, pn VARCHAR)")

@@ -1,9 +1,8 @@
 {
  "counts": {
-  "cleared": 54,
-  "caught": 29,
-  "worth a look (honest)": 36,
-  "sent to review": 1
+  "cleared": 47,
+  "caught": 38,
+  "worth a look (honest)": 35
  },
  "borrowers": [
   {
@@ -50,7 +49,7 @@
     "TAPE_DRESSUP"
    ],
    "status": "caught",
-   "priority": 0.949
+   "priority": 0.95
   },
   {
    "borrower_id": "B0004",
@@ -68,7 +67,7 @@
     "TAPE_DRESSUP"
    ],
    "status": "caught",
-   "priority": 0.72
+   "priority": 0.95
   },
   {
    "borrower_id": "B0005",
@@ -175,20 +174,24 @@
    "borrower_id": "B0012",
    "planted": [],
    "lookalikes": [
-    "DISCLOSED_EQUIPMENT_LIEN"
+    "DISCLOSED_EQUIPMENT_LIEN",
+    "TWO_WAY_TRADE",
+    "VIRTUAL_OFFICE"
    ],
    "verdict": "NEEDS_MORE_EVIDENCE",
    "found": [],
    "right_mechanisms": [],
    "status": "worth a look (honest)",
-   "priority": 0.866
+   "priority": 0.98
   },
   {
    "borrower_id": "B0013",
    "planted": [
     "FAKE_INVOICES"
    ],
-   "lookalikes": [],
+   "lookalikes": [
+    "TWO_WAY_TRADE"
+   ],
    "verdict": "LIKELY_FRAUD",
    "found": [
     "FAKE_INVOICES"
@@ -197,7 +200,7 @@
     "FAKE_INVOICES"
    ],
    "status": "caught",
-   "priority": 0.976
+   "priority": 1.0
   },
   {
    "borrower_id": "B0014",
@@ -215,7 +218,8 @@
    "borrower_id": "B0015",
    "planted": [],
    "lookalikes": [
-    "NEW_AFFILIATE"
+    "NEW_AFFILIATE",
+    "TWO_WAY_TRADE"
    ],
    "verdict": "NO_ISSUE",
    "found": [],
@@ -262,15 +266,21 @@
   },
   {
    "borrower_id": "B0019",
-   "planted": [],
+   "planted": [
+    "DISGUISED_RECEIPTS"
+   ],
    "lookalikes": [
     "NEW_AFFILIATE"
    ],
-   "verdict": "NO_ISSUE",
-   "found": [],
-   "right_mechanisms": [],
-   "status": "cleared",
-   "priority": 0.157
+   "verdict": "LIKELY_FRAUD",
+   "found": [
+    "DISGUISED_RECEIPTS"
+   ],
+   "right_mechanisms": [
+    "DISGUISED_RECEIPTS"
+   ],
+   "status": "caught",
+   "priority": 0.95
   },
   {
    "borrower_id": "B0020",
@@ -342,15 +352,22 @@
   },
   {
    "borrower_id": "B0024",
-   "planted": [],
-   "lookalikes": [
-    "NAME_TYPO"
+   "planted": [
+    "DISGUISED_RECEIPTS"
    ],
-   "verdict": "NO_ISSUE",
-   "found": [],
-   "right_mechanisms": [],
-   "status": "cleared",
-   "priority": 0.122
+   "lookalikes": [
+    "NAME_TYPO",
+    "TWO_WAY_TRADE"
+   ],
+   "verdict": "LIKELY_FRAUD",
+   "found": [
+    "DISGUISED_RECEIPTS"
+   ],
+   "right_mechanisms": [
+    "DISGUISED_RECEIPTS"
+   ],
+   "status": "caught",
+   "priority": 0.95
   },
   {
    "borrower_id": "B0025",
@@ -433,13 +450,22 @@
   },
   {
    "borrower_id": "B0029",
-   "planted": [],
+   "planted": [
+    "DISGUISED_RECEIPTS",
+    "RELATED_SHELLS"
+   ],
    "lookalikes": [],
-   "verdict": "NO_ISSUE",
-   "found": [],
-   "right_mechanisms": [],
-   "status": "cleared",
-   "priority": 0.122
+   "verdict": "LIKELY_FRAUD",
+   "found": [
+    "DISGUISED_RECEIPTS",
+    "RELATED_SHELLS"
+   ],
+   "right_mechanisms": [
+    "DISGUISED_RECEIPTS",
+    "RELATED_SHELLS"
+   ],
+   "status": "caught",
+   "priority": 0.95
   },
   {
    "borrower_id": "B0030",
@@ -502,7 +528,7 @@
     "FAKE_INVOICES"
    ],
    "status": "caught",
-   "priority": 0.976
+   "priority": 1.0
   },
   {
    "borrower_id": "B0035",
@@ -549,13 +575,14 @@
    "planted": [],
    "lookalikes": [
     "DISCLOSED_RELATED_LEASE",
-    "UNDISCLOSED_DEFERRAL"
+    "UNDISCLOSED_DEFERRAL",
+    "VIRTUAL_OFFICE"
    ],
    "verdict": "EXPLAINED",
    "found": [],
    "right_mechanisms": [],
    "status": "cleared",
-   "priority": 0.0
+   "priority": 0.157
   },
   {
    "borrower_id": "B0039",
@@ -682,7 +709,9 @@
   {
    "borrower_id": "B0046",
    "planted": [],
-   "lookalikes": [],
+   "lookalikes": [
+    "TWO_WAY_TRADE"
+   ],
    "verdict": "NO_ISSUE",
    "found": [],
    "right_mechanisms": [],
@@ -929,20 +958,27 @@
   },
   {
    "borrower_id": "B0065",
-   "planted": [],
+   "planted": [
+    "DISGUISED_RECEIPTS"
+   ],
    "lookalikes": [],
-   "verdict": "NEEDS_MORE_EVIDENCE",
-   "found": [],
-   "right_mechanisms": [],
-   "status": "worth a look (honest)",
-   "priority": 0.24
+   "verdict": "LIKELY_FRAUD",
+   "found": [
+    "DISGUISED_RECEIPTS"
+   ],
+   "right_mechanisms": [
+    "DISGUISED_RECEIPTS"
+   ],
+   "status": "caught",
+   "priority": 0.95
   },
   {
    "borrower_id": "B0066",
    "planted": [],
    "lookalikes": [
     "DISCLOSED_EQUIPMENT_LIEN",
-    "DISCLOSED_RELATED_LEASE"
+    "DISCLOSED_RELATED_LEASE",
+    "TWO_WAY_TRADE"
    ],
    "verdict": "NO_ISSUE",
    "found": [],
@@ -981,15 +1017,24 @@
   },
   {
    "borrower_id": "B0068",
-   "planted": [],
+   "planted": [
+    "DISGUISED_RECEIPTS",
+    "RELATED_SHELLS"
+   ],
    "lookalikes": [
     "UNDISCLOSED_DEFERRAL"
    ],
-   "verdict": "NO_ISSUE",
-   "found": [],
-   "right_mechanisms": [],
-   "status": "cleared",
-   "priority": 0.0
+   "verdict": "LIKELY_FRAUD",
+   "found": [
+    "DISGUISED_RECEIPTS",
+    "RELATED_SHELLS"
+   ],
+   "right_mechanisms": [
+    "DISGUISED_RECEIPTS",
+    "RELATED_SHELLS"
+   ],
+   "status": "caught",
+   "priority": 0.95
   },
   {
    "borrower_id": "B0069",
@@ -1025,7 +1070,9 @@
   {
    "borrower_id": "B0071",
    "planted": [],
-   "lookalikes": [],
+   "lookalikes": [
+    "TWO_WAY_TRADE"
+   ],
    "verdict": "NEEDS_MORE_EVIDENCE",
    "found": [],
    "right_mechanisms": [],
@@ -1069,13 +1116,22 @@
   },
   {
    "borrower_id": "B0074",
-   "planted": [],
+   "planted": [
+    "DISGUISED_RECEIPTS",
+    "RELATED_SHELLS"
+   ],
    "lookalikes": [],
-   "verdict": "NO_ISSUE",
-   "found": [],
-   "right_mechanisms": [],
-   "status": "cleared",
-   "priority": 0.0
+   "verdict": "LIKELY_FRAUD",
+   "found": [
+    "DISGUISED_RECEIPTS",
+    "RELATED_SHELLS"
+   ],
+   "right_mechanisms": [
+    "DISGUISED_RECEIPTS",
+    "RELATED_SHELLS"
+   ],
+   "status": "caught",
+   "priority": 0.95
   },
   {
    "borrower_id": "B0075",
@@ -1094,7 +1150,8 @@
    "borrower_id": "B0076",
    "planted": [],
    "lookalikes": [
-    "SEASONAL_REVENUE"
+    "SEASONAL_REVENUE",
+    "TWO_WAY_TRADE"
    ],
    "verdict": "NEEDS_MORE_EVIDENCE",
    "found": [],
@@ -1203,13 +1260,14 @@
    "borrower_id": "B0084",
    "planted": [],
    "lookalikes": [
-    "UNDISCLOSED_DEFERRAL"
+    "UNDISCLOSED_DEFERRAL",
+    "VIRTUAL_OFFICE"
    ],
    "verdict": "NO_ISSUE",
    "found": [],
    "right_mechanisms": [],
    "status": "cleared",
-   "priority": 0.0
+   "priority": 0.157
   },
   {
    "borrower_id": "B0085",
@@ -1225,13 +1283,14 @@
    "borrower_id": "B0086",
    "planted": [],
    "lookalikes": [
-    "STALE_LIEN"
+    "STALE_LIEN",
+    "VIRTUAL_OFFICE"
    ],
    "verdict": "NEEDS_MORE_EVIDENCE",
    "found": [],
    "right_mechanisms": [],
    "status": "worth a look (honest)",
-   "priority": 0.36
+   "priority": 0.541
   },
   {
    "borrower_id": "B0087",
@@ -1415,7 +1474,7 @@
     "RELATED_SHELLS"
    ],
    "status": "caught",
-   "priority": 0.846
+   "priority": 0.95
   },
   {
    "borrower_id": "B0100",
@@ -1450,16 +1509,22 @@
   },
   {
    "borrower_id": "B0102",
-   "planted": [],
+   "planted": [
+    "DISGUISED_RECEIPTS"
+   ],
    "lookalikes": [
     "LATE_TAPE",
     "NAME_TYPO"
    ],
-   "verdict": "NO_ISSUE",
-   "found": [],
-   "right_mechanisms": [],
-   "status": "cleared",
-   "priority": 0.0
+   "verdict": "LIKELY_FRAUD",
+   "found": [
+    "DISGUISED_RECEIPTS"
+   ],
+   "right_mechanisms": [
+    "DISGUISED_RECEIPTS"
+   ],
+   "status": "caught",
+   "priority": 0.95
   },
   {
    "borrower_id": "B0103",
@@ -1600,11 +1665,15 @@
     "THIRD_PARTY_PAYER",
     "UNDISCLOSED_DEFERRAL"
    ],
-   "verdict": "NEEDS_MORE_EVIDENCE",
-   "found": [],
-   "right_mechanisms": [],
-   "status": "sent to review",
-   "priority": 0.595
+   "verdict": "LIKELY_FRAUD",
+   "found": [
+    "TAPE_DRESSUP"
+   ],
+   "right_mechanisms": [
+    "TAPE_DRESSUP"
+   ],
+   "status": "caught",
+   "priority": 1.0
   },
   {
    "borrower_id": "B0112",
@@ -1638,7 +1707,7 @@
     "RELATED_SHELLS"
    ],
    "status": "caught",
-   "priority": 0.837
+   "priority": 0.95
   },
   {
    "borrower_id": "B0114",
@@ -1703,13 +1772,14 @@
    "borrower_id": "B0118",
    "planted": [],
    "lookalikes": [
-    "DISCLOSED_EQUIPMENT_LIEN"
+    "DISCLOSED_EQUIPMENT_LIEN",
+    "VIRTUAL_OFFICE"
    ],
    "verdict": "NO_ISSUE",
    "found": [],
    "right_mechanisms": [],
    "status": "cleared",
-   "priority": 0.0
+   "priority": 0.157
   },
   {
    "borrower_id": "B0119",
@@ -1728,40 +1798,49 @@
   },
   {
    "borrower_id": "B0120",
-   "planted": [],
+   "planted": [
+    "DISGUISED_RECEIPTS",
+    "RELATED_SHELLS"
+   ],
    "lookalikes": [
     "DISCLOSED_EQUIPMENT_LIEN",
     "LATE_TAPE"
    ],
-   "verdict": "NO_ISSUE",
-   "found": [],
-   "right_mechanisms": [],
-   "status": "cleared",
-   "priority": 0.0
+   "verdict": "LIKELY_FRAUD",
+   "found": [
+    "DISGUISED_RECEIPTS",
+    "RELATED_SHELLS"
+   ],
+   "right_mechanisms": [
+    "DISGUISED_RECEIPTS",
+    "RELATED_SHELLS"
+   ],
+   "status": "caught",
+   "priority": 0.95
   }
  ],
  "heldout": [
   {
-   "seed": 201,
+   "seed": 301,
    "borrowers": 120,
-   "fraud": 30,
-   "caught": 29,
-   "sent_to_review": 1,
+   "fraud": 38,
+   "caught": 38,
+   "sent_to_review": 0,
    "missed": 0,
    "false_alarms": 0,
-   "honest_worth_a_look": 29,
+   "honest_worth_a_look": 21,
    "per_mechanism": {
     "DOUBLE_PLEDGE": [
      9,
      9
     ],
     "TAPE_DRESSUP": [
-     5,
+     9,
      9
     ],
     "DISGUISED_RECEIPTS": [
-     8,
-     8
+     16,
+     16
     ],
     "FAKE_INVOICES": [
      7,
@@ -1772,8 +1851,8 @@
      8
     ],
     "RELATED_SHELLS": [
-     10,
-     10
+     13,
+     13
     ],
     "FIN_MANIPULATION": [
      13,
@@ -1782,10 +1861,90 @@
    }
   },
   {
-   "seed": 202,
+   "seed": 302,
    "borrowers": 120,
-   "fraud": 30,
-   "caught": 30,
+   "fraud": 38,
+   "caught": 37,
+   "sent_to_review": 0,
+   "missed": 1,
+   "false_alarms": 0,
+   "honest_worth_a_look": 28,
+   "per_mechanism": {
+    "DOUBLE_PLEDGE": [
+     8,
+     9
+    ],
+    "TAPE_DRESSUP": [
+     9,
+     9
+    ],
+    "DISGUISED_RECEIPTS": [
+     16,
+     16
+    ],
+    "FAKE_INVOICES": [
+     6,
+     6
+    ],
+    "HIDDEN_DEBT": [
+     8,
+     8
+    ],
+    "RELATED_SHELLS": [
+     11,
+     11
+    ],
+    "FIN_MANIPULATION": [
+     12,
+     13
+    ]
+   }
+  },
+  {
+   "seed": 303,
+   "borrowers": 120,
+   "fraud": 38,
+   "caught": 38,
+   "sent_to_review": 0,
+   "missed": 0,
+   "false_alarms": 0,
+   "honest_worth_a_look": 21,
+   "per_mechanism": {
+    "DOUBLE_PLEDGE": [
+     9,
+     9
+    ],
+    "TAPE_DRESSUP": [
+     9,
+     9
+    ],
+    "DISGUISED_RECEIPTS": [
+     16,
+     16
+    ],
+    "FAKE_INVOICES": [
+     6,
+     6
+    ],
+    "HIDDEN_DEBT": [
+     8,
+     8
+    ],
+    "RELATED_SHELLS": [
+     12,
+     12
+    ],
+    "FIN_MANIPULATION": [
+     13,
+     13
+    ]
+   }
+  },
+  {
+   "seed": 304,
+   "borrowers": 120,
+   "fraud": 38,
+   "caught": 38,
    "sent_to_review": 0,
    "missed": 0,
    "false_alarms": 0,
@@ -1796,92 +1955,52 @@
      9
     ],
     "TAPE_DRESSUP": [
-     7,
+     9,
      9
     ],
     "DISGUISED_RECEIPTS": [
-     8,
-     8
+     16,
+     16
     ],
     "FAKE_INVOICES": [
-     6,
-     6
+     7,
+     7
     ],
     "HIDDEN_DEBT": [
      8,
      8
     ],
     "RELATED_SHELLS": [
-     10,
-     10
+     14,
+     14
     ],
     "FIN_MANIPULATION": [
-     12,
+     13,
      13
     ]
    }
   },
   {
-   "seed": 203,
+   "seed": 305,
    "borrowers": 120,
-   "fraud": 30,
-   "caught": 28,
-   "sent_to_review": 1,
-   "missed": 1,
+   "fraud": 38,
+   "caught": 38,
+   "sent_to_review": 0,
+   "missed": 0,
    "false_alarms": 0,
    "honest_worth_a_look": 26,
    "per_mechanism": {
     "DOUBLE_PLEDGE": [
-     8,
-     9
-    ],
-    "TAPE_DRESSUP": [
-     7,
-     9
-    ],
-    "DISGUISED_RECEIPTS": [
-     8,
-     8
-    ],
-    "FAKE_INVOICES": [
-     8,
-     8
-    ],
-    "HIDDEN_DEBT": [
-     8,
-     8
-    ],
-    "RELATED_SHELLS": [
-     8,
-     8
-    ],
-    "FIN_MANIPULATION": [
-     12,
-     13
-    ]
-   }
-  },
-  {
-   "seed": 204,
-   "borrowers": 120,
-   "fraud": 30,
-   "caught": 28,
-   "sent_to_review": 1,
-   "missed": 1,
-   "false_alarms": 0,
-   "honest_worth_a_look": 28,
-   "per_mechanism": {
-    "DOUBLE_PLEDGE": [
      9,
      9
     ],
     "TAPE_DRESSUP": [
-     7,
+     9,
      9
     ],
     "DISGUISED_RECEIPTS": [
-     8,
-     8
+     16,
+     16
     ],
     "FAKE_INVOICES": [
      6,
@@ -1892,51 +2011,11 @@
      8
     ],
     "RELATED_SHELLS": [
-     9,
-     9
-    ],
-    "FIN_MANIPULATION": [
-     10,
-     13
-    ]
-   }
-  },
-  {
-   "seed": 205,
-   "borrowers": 120,
-   "fraud": 30,
-   "caught": 28,
-   "sent_to_review": 1,
-   "missed": 1,
-   "false_alarms": 0,
-   "honest_worth_a_look": 29,
-   "per_mechanism": {
-    "DOUBLE_PLEDGE": [
-     9,
-     9
-    ],
-    "TAPE_DRESSUP": [
-     7,
-     9
-    ],
-    "DISGUISED_RECEIPTS": [
-     8,
-     8
-    ],
-    "FAKE_INVOICES": [
-     6,
-     6
-    ],
-    "HIDDEN_DEBT": [
-     8,
-     8
-    ],
-    "RELATED_SHELLS": [
-     8,
-     8
-    ],
-    "FIN_MANIPULATION": [
      12,
+     12
+    ],
+    "FIN_MANIPULATION": [
+     11,
      13
     ]
    }

@@ -51,14 +51,16 @@ export default function TestPage() {
     }),
   );
   const weakest = Object.entries(mech).sort((a, b) => a[1][0] / a[1][1] - b[1][0] / b[1][1])[0];
+  const nAll = k.data.borrowers.length;
+  const nFraud = k.data.borrowers.filter((b) => b.planted.length > 0).length;
 
   return (
     <div className="space-y-10">
       <div className="max-w-4xl">
         <h1 className="text-2xl font-semibold tracking-tight text-zinc-900">Test it yourself</h1>
         <p className="mt-2 text-zinc-700">
-          Fraud was planted in 30 of the 120 demo borrowers. Here is the answer key next to what the system said, misses
-          and review workload included. Open any borrower to see the evidence and judge the call yourself.
+          Fraud was planted in {nFraud} of the {nAll} demo borrowers. Here is the answer key next to what the system
+          said, misses and review workload included. Open any borrower to see the evidence and judge the call yourself.
         </p>
       </div>
 
@@ -82,8 +84,8 @@ export default function TestPage() {
         <div className="flex flex-wrap items-center gap-2 text-sm">
           <span className="text-zinc-500">Show</span>
           {[
-            ["fraud", "all 30 frauds"],
-            ["all", "all 120 borrowers"],
+            ["fraud", `all ${nFraud} frauds`],
+            ["all", `all ${nAll} borrowers`],
           ].map(([v, l]) => (
             <button
               key={v}
@@ -147,9 +149,11 @@ export default function TestPage() {
       </section>
 
       <section className="space-y-3">
-        <h2 className="text-lg font-semibold tracking-tight text-zinc-900">The honest test: five books it never saw</h2>
+        <h2 className="text-lg font-semibold tracking-tight text-zinc-900">The honest test: {h.length} books it never saw</h2>
         <p className="max-w-4xl text-sm text-zinc-600">
-          Five fresh books generated after the rules were frozen, 600 borrowers and 150 planted frauds.
+          {h.length} fresh books generated after the rules were frozen: {tot.fraud + tot.honest} borrowers and{" "}
+          {tot.fraud} planted frauds, including the two harder variants (a front-person shell and a round trip through a
+          middleman).
         </p>
         <Card className="overflow-x-auto">
           <table className="w-full text-right text-sm tabular-nums">

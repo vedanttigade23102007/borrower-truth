@@ -15,37 +15,45 @@ from collections import defaultdict
 
 MECHANISM_OF = {
     "DUPLICATE_ASSET": "DOUBLE_PLEDGE", "PLEDGECHECK_UNIQUENESS_FAIL": "DOUBLE_PLEDGE",
+    "PLEDGECHECK_ABSENT": "DOUBLE_PLEDGE",
     "PLEDGECHECK_COMPLETENESS_FAIL": "TAPE_DRESSUP", "PLEDGECHECK_COMPLETENESS_FAIL_RECEIVABLES": "FAKE_INVOICES",
     "CURRENT_WITHOUT_PAYMENT": "TAPE_DRESSUP", "DEFERMENT_WITHOUT_PROGRAM": "TAPE_DRESSUP",
     "IMPOSSIBLE_TRANSITION": "TAPE_DRESSUP", "SOURCE_MISMATCH": "TAPE_DRESSUP",
+    "TARGETED_SOURCE_MISMATCH": "TAPE_DRESSUP", "ATTRIBUTE_REWRITE": "TAPE_DRESSUP",
+    "ELIGIBILITY_EDGE_CLUSTER": "TAPE_DRESSUP",
     "RELATED_PARTY_INFLOW": "DISGUISED_RECEIPTS", "LENDER_FUNDS_AS_RECEIPTS": "DISGUISED_RECEIPTS",
-    "NON_OBLIGOR_PAYER": "DISGUISED_RECEIPTS",
+    "NON_OBLIGOR_PAYER": "DISGUISED_RECEIPTS", "CIRCULAR_FLOW": "DISGUISED_RECEIPTS",
     "ALTERED_INVOICE": "FAKE_INVOICES", "UNPAID_BY_DEBTOR": "FAKE_INVOICES", "IMPLAUSIBLE_AMOUNT": "FAKE_INVOICES",
     "RECEIVABLES_QUALITY": "FAKE_INVOICES", "DOC_DATA_MISMATCH": "FAKE_INVOICES",
     "UNDISCLOSED_SECURED_PARTY": "HIDDEN_DEBT", "COMPETING_LIEN": "HIDDEN_DEBT", "DEBT_GAP": "HIDDEN_DEBT",
     "JUDGMENT": "HIDDEN_DEBT",
     "SHELL_INDICATORS": "RELATED_SHELLS", "RELATED_ENTITY": "RELATED_SHELLS",
     "CASH_REVENUE_GAP": "FIN_MANIPULATION", "COVENANT_EDGE_PATTERN": "FIN_MANIPULATION",
+    "RECEIVABLES_OUTPACE_REVENUE": "FAKE_INVOICES",
 }
 
 # where each signal's evidence actually comes from
 SOURCE = {
-    "DUPLICATE_ASSET": "wf_facilities", "PLEDGECHECK_UNIQUENESS_FAIL": "pledgecheck",
+    "DUPLICATE_ASSET": "wf_facilities", "PLEDGECHECK_UNIQUENESS_FAIL": "pledgecheck", "PLEDGECHECK_ABSENT": "pledgecheck",
     "PLEDGECHECK_COMPLETENESS_FAIL": "pledgecheck", "PLEDGECHECK_COMPLETENESS_FAIL_RECEIVABLES": "pledgecheck",
     "CURRENT_WITHOUT_PAYMENT": "payments", "DEFERMENT_WITHOUT_PROGRAM": "tape_flags",
     "IMPOSSIBLE_TRANSITION": "tape_history", "SOURCE_MISMATCH": "servicer_system",
+    "TARGETED_SOURCE_MISMATCH": "servicer_system", "ATTRIBUTE_REWRITE": "tape_history",
+    "ELIGIBILITY_EDGE_CLUSTER": "tape_flags",
     "RELATED_PARTY_INFLOW": "payments", "LENDER_FUNDS_AS_RECEIPTS": "payments", "NON_OBLIGOR_PAYER": "payments",
+    "CIRCULAR_FLOW": "operating_account",
     "ALTERED_INVOICE": "invoices", "UNPAID_BY_DEBTOR": "payments", "IMPLAUSIBLE_AMOUNT": "invoices",
     "DOC_DATA_MISMATCH": "documents",
     "UNDISCLOSED_SECURED_PARTY": "ucc", "COMPETING_LIEN": "ucc", "JUDGMENT": "courts",
     "SHELL_INDICATORS": "registry", "RELATED_ENTITY": "registry",
     "CASH_REVENUE_GAP": "financials_vs_cash", "COVENANT_EDGE_PATTERN": "covenant_certificate",
+    "RECEIVABLES_OUTPACE_REVENUE": "financial_statements",
     "DEBT_GAP": "derived", "RECEIVABLES_QUALITY": "derived",
 }
 
 # checkable facts (not statistical inferences): strong enough to stand alone
-FACT = {"DUPLICATE_ASSET", "PLEDGECHECK_UNIQUENESS_FAIL", "ALTERED_INVOICE", "SOURCE_MISMATCH",
-        "LENDER_FUNDS_AS_RECEIPTS", "RELATED_PARTY_INFLOW", "COMPETING_LIEN"}
+FACT = {"DUPLICATE_ASSET", "PLEDGECHECK_UNIQUENESS_FAIL", "ALTERED_INVOICE", "SOURCE_MISMATCH", "TARGETED_SOURCE_MISMATCH",
+        "LENDER_FUNDS_AS_RECEIPTS", "RELATED_PARTY_INFLOW", "COMPETING_LIEN", "CIRCULAR_FLOW", "ATTRIBUTE_REWRITE"}
 
 # an undisclosed lien on the loan collateral itself means that collateral is pledged twice
 DOUBLE_PLEDGE_HINT = ("receivables and chattel paper",)
@@ -61,7 +69,9 @@ PLAIN = {
 }
 
 WEIGHT = {"S1": 1.0, "S2": 1.0, "S3": 1.0, "S4": 1.0, "S5": 0.9, "S6": 0.5, "S7": 0.8}
+CONTEXT = {"PLEDGECHECK_ABSENT"}  # coverage notes shown to the officer; never scored
 MIN_X = 0.25  # severity x confidence needed for a clue to count as corroboration
+ESCALATE_PRIORITY = 0.95
 
 
 def _x(s):
@@ -89,7 +99,9 @@ def build_cases(signals, coverage: dict, explanations: dict, borrowers: list[str
         by_b[s.entity_id].append(s)
     cases = []
     for b in borrowers:
-        sigs = sorted(by_b.get(b, []), key=lambda s: -_x(s))
+        all_sigs = sorted(by_b.get(b, []), key=lambda s: -_x(s))
+        notes = [s for s in all_sigs if s.type in CONTEXT]
+        sigs = [s for s in all_sigs if s.type not in CONTEXT]
         per_sys = defaultdict(float)
         for s in sigs:
             per_sys[s.system] = max(per_sys[s.system], _x(s))
@@ -131,6 +143,10 @@ def build_cases(signals, coverage: dict, explanations: dict, borrowers: list[str
                                  first_month=min(s.observed_month for s in ss)))
         order = {"high": 0, "medium": 1, "low": 2}
         findings.sort(key=lambda f: (order[f["confidence"]], f["mechanism"]))
+        # hard escalation: a checkable fact confirmed by an independent source jumps the queue
+        if any(f["confidence"] == "high" and any(s.type in FACT and _x(s) >= 0.5 for s in groups[f["mechanism"]])
+               for f in findings):
+            priority = max(priority, ESCALATE_PRIORITY)
         actionable = [f for f in findings if f["confidence"] in ("high", "medium")]
         if actionable:
             verdict = "LIKELY_FRAUD"
@@ -144,7 +160,7 @@ def build_cases(signals, coverage: dict, explanations: dict, borrowers: list[str
                     f"Worth a look: {findings[0]['plain']}" if findings else
                     "Checks fired, but disclosures explain them" if verdict == "EXPLAINED" else "No issues found")
         cases.append(dict(borrower_id=b, verdict=verdict, headline=headline, priority=round(priority, 3),
-                          findings=findings, signals=[s.row() for s in sigs],
+                          findings=findings, signals=[s.row() for s in sigs + notes],
                           explanations=explanations.get(b, []), coverage=coverage))
     cases.sort(key=lambda c: -c["priority"])
     return cases

@@ -28,6 +28,7 @@ def main(argv=None):
     cases = get(f"{a.api}/cases")
     json.dump(latest, open(os.path.join(a.out, "latest.json"), "w"), indent=1)
     json.dump(cases, open(os.path.join(a.out, "cases.json"), "w"), indent=1)
+    json.dump(get(f"{a.api}/feedback"), open(os.path.join(a.out, "feedback.json"), "w"), indent=1)
     for c in cases:
         json.dump(get(f"{a.api}/cases/{c['borrowerId']}"), open(os.path.join(a.out, "case", f"{c['borrowerId']}.json"), "w"))
     print(f"snapshot: {len(cases)} cases -> {a.out}")

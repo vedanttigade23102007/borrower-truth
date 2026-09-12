@@ -155,7 +155,7 @@ def evaluate_book(data):
         per_mechanism={m: [per_mech_hit[m], per_mech[m]] for m in FRAUD_MECHS},
         per_pattern={p: [sum(1 for b in fraud if labels[b]["pattern"] == p and b in caught),
                          sum(1 for b in fraud if labels[b]["pattern"] == p)]
-                     for p in ("tricolor_like", "first_brands_like", "single")},
+                     for p in sorted({labels[b]["pattern"] for b in fraud})},
         ablation=ablation,
         baseline_caught=len(fraud & set(base)), baseline_false_alarms=len(honest & set(base)),
         pledgecheck_caught=len(fraud & pc), beyond_pledgecheck=len(caught - pc),
@@ -171,8 +171,9 @@ def summarize(results: dict) -> dict:
     fraud, honest = tot("fraud"), tot("honest")
     mech = {m: [sum(r["per_mechanism"][m][0] for r in results.values()),
                 sum(r["per_mechanism"][m][1] for r in results.values())] for m in FRAUD_MECHS}
-    pat = {p: [sum(r["per_pattern"][p][0] for r in results.values()),
-               sum(r["per_pattern"][p][1] for r in results.values())] for p in ("tricolor_like", "first_brands_like", "single")}
+    patterns = sorted({p for r in results.values() for p in r["per_pattern"]})
+    pat = {p: [sum(r["per_pattern"].get(p, [0, 0])[0] for r in results.values()),
+               sum(r["per_pattern"].get(p, [0, 0])[1] for r in results.values())] for p in patterns}
     abl = {s: {k: sum(r["ablation"][s][k] for r in results.values()) for k in ("borrowers_lost", "mechanism_detections_lost")}
            for s in SYSTEMS}
     lead = [d for r in results.values() for d in r["lead_days"]]

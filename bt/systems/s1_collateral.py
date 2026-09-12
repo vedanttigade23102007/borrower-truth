@@ -9,6 +9,10 @@ First Brands F1).
    VIN / obligor fingerprint, not only asset ID, because a second pledge can
    relabel the ID.
 3. The same invoice (same number, same amount) pledged to two WF facilities.
+4. PLEDGECHECK_ABSENT: the borrower isn't enrolled in PledgeCheck, so nobody can
+   see whether its collateral is also pledged at *other* lenders. Context for the
+   officer (a coverage gap), never evidence of fraud: it doesn't move the verdict
+   or the queue.
 """
 from bt.systems.base import Ctx, sig
 
@@ -51,6 +55,13 @@ def run(ctx: Ctx):
                            [f"pledgecheck:{r['borrower_id']}:completeness:first_month={r['c_first']}"],
                            "Setpoint PledgeCheck: actual collections don't match what the borrower reported",
                            r["c_first"]))
+    enrolled = {r["borrower_id"] for r in ctx.rows("SELECT DISTINCT borrower_id FROM pledgecheck")}
+    for r in ctx.rows("SELECT borrower_id FROM borrowers ORDER BY 1"):
+        if r["borrower_id"] not in enrolled:
+            out.append(sig("S1", r["borrower_id"], "PLEDGECHECK_ABSENT", 0.1, 1.0,
+                           [f"pledgecheck:{r['borrower_id']}:not_enrolled"],
+                           "Not enrolled in Setpoint PledgeCheck: whether this collateral is also pledged at other "
+                           "lenders can't be verified", ctx.as_of))
     lo = max(0, ctx.as_of - 2)
     for r in ctx.rows(TAPE_DUP, [lo, ctx.as_of]):
         out.append(sig("S1", r["borrower_id"], "DUPLICATE_ASSET", 0.9, min(0.99, 0.6 + 0.05 * r["n_dup"]),

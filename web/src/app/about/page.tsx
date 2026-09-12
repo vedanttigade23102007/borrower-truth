@@ -23,13 +23,13 @@ type Proof = {
 };
 
 const SYSTEMS: [string, string, string][] = [
-  ["S1", "Collateral integrity", "Is the same collateral pledged twice? Uses PledgeCheck's result plus checks inside the bank."],
-  ["S2", "Tape vs source", "Does the loan file match the lender's own system? \"Pull this up on your screen,\" automated."],
-  ["S3", "Cash provenance", "Who actually paid? Lender money dressed up as customer payments is caught by the payer, not the amount."],
+  ["S1", "Collateral integrity", "Is the same collateral pledged twice? Uses PledgeCheck's result plus checks inside the bank, and says when a borrower isn't enrolled, so other lenders can't be checked."],
+  ["S2", "Tape vs source", "Does the loan file match the lender's own system? \"Pull this up on your screen,\" automated: it pulls the loans reported current that paid nothing, and catches credit scores rewritten to clear the eligibility line."],
+  ["S3", "Cash provenance", "Who actually paid? Lender or affiliate money dressed up as customer payments is caught by the payer, and money sent out to a middleman that comes back as 'customer' cash is caught by the round trip."],
   ["S4", "Invoice authenticity", "Re-submitted invoices with new amounts, invoices the customer never pays, impossible amounts."],
   ["S5", "Hidden-debt finder", "Public lien filings and court records against the borrower and every company linked to it."],
-  ["S6", "Relationship mapper", "Who shares the owner or address? Shell-like companies that were never disclosed."],
-  ["S7", "Financial consistency", "Does reported revenue fit verified cash? Covenants repeatedly just clearing the line?"],
+  ["S6", "Relationship mapper", "Who shares the owner, address, phone number or registered agent? Shell-like companies that were never disclosed, even when a front person is on the paperwork."],
+  ["S7", "Financial consistency", "Does reported revenue fit verified cash? Are receivables piling up far faster than revenue? Covenants repeatedly just clearing the line?"],
 ];
 
 export default function AboutPage() {

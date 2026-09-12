@@ -1,7 +1,8 @@
 {
  "book": "the demo book shown in the console",
  "borrowers": 120,
- "total_rows": 1296619,
+ "frauds": 38,
+ "total_rows": 1316552,
  "tables": [
   {
    "table": "borrowers",
@@ -51,7 +52,7 @@
    "table": "entities",
    "title": "Company registry",
    "what": "Every company the system knows about: borrowers, their affiliates, lenders, customers. Like a state business register.",
-   "rows": 556,
+   "rows": 569,
    "columns": [
     {
      "name": "entity_id",
@@ -74,6 +75,14 @@
      "meaning": "registered address"
     },
     {
+     "name": "phone",
+     "meaning": "phone number on file"
+    },
+    {
+     "name": "registered_agent",
+     "meaning": "who receives legal papers for it (a service, or a person)"
+    },
+    {
      "name": "formed_month",
      "meaning": "when it was formed (month of the timeline)"
     },
@@ -89,6 +98,8 @@
      "kind": "borrower",
      "officer_person_id": "P00028",
      "address": "5586 Main St, Suite 351",
+     "phone": null,
+     "registered_agent": null,
      "formed_month": -90,
      "has_operations": true
     },
@@ -98,6 +109,8 @@
      "kind": "company",
      "officer_person_id": "P00028",
      "address": "5586 Main St, Suite 351",
+     "phone": null,
+     "registered_agent": null,
      "formed_month": 4,
      "has_operations": false
     },
@@ -107,6 +120,8 @@
      "kind": "company",
      "officer_person_id": "P00028",
      "address": "5586 Main St, Suite 351",
+     "phone": null,
+     "registered_agent": null,
      "formed_month": 6,
      "has_operations": false
     },
@@ -116,6 +131,8 @@
      "kind": "company",
      "officer_person_id": "P00028",
      "address": "5586 Main St, Suite 351",
+     "phone": null,
+     "registered_agent": null,
      "formed_month": 7,
      "has_operations": false
     },
@@ -125,6 +142,8 @@
      "kind": "lender",
      "officer_person_id": null,
      "address": "8972 Center Dr, Suite 1",
+     "phone": "555-514-8733",
+     "registered_agent": "(synthetic) Registered Agent Services LLC, 12 Filing Way",
      "formed_month": -240,
      "has_operations": true
     },
@@ -134,6 +153,8 @@
      "kind": "lender",
      "officer_person_id": null,
      "address": "3008 Industrial Pkwy, Suite 2",
+     "phone": "555-490-3895",
+     "registered_agent": "(synthetic) Registered Agent Services LLC, 12 Filing Way",
      "formed_month": -240,
      "has_operations": true
     },
@@ -143,6 +164,8 @@
      "kind": "lender",
      "officer_person_id": null,
      "address": "8213 Main St, Suite 3",
+     "phone": "555-839-6505",
+     "registered_agent": "(synthetic) Registered Agent Services LLC, 12 Filing Way",
      "formed_month": -240,
      "has_operations": true
     },
@@ -152,6 +175,8 @@
      "kind": "lender",
      "officer_person_id": null,
      "address": "3036 Market Ave, Suite 4",
+     "phone": "555-327-9397",
+     "registered_agent": "(synthetic) Statutory Agent Co, 7 Compliance Ct",
      "formed_month": -240,
      "has_operations": true
     },
@@ -161,6 +186,8 @@
      "kind": "lender",
      "officer_person_id": null,
      "address": "4455 Oak Blvd, Suite 5",
+     "phone": "555-634-7160",
+     "registered_agent": "(synthetic) Registered Agent Services LLC, 12 Filing Way",
      "formed_month": -240,
      "has_operations": true
     }
@@ -193,6 +220,10 @@
      "meaning": "amount owed ($)"
     },
     {
+     "name": "credit_score",
+     "meaning": "borrower's credit score at origination (600+ needed to count as collateral)"
+    },
+    {
      "name": "dpd_bucket_reported",
      "meaning": "reported lateness: 0 current, 1 = 30 days, 2 = 60, 3 = 90+"
     },
@@ -212,6 +243,7 @@
      "asset_id": "A-B0028-000001",
      "vin": "SYNR3XLPFVHYATXEM",
      "balance": 13331.61,
+     "credit_score": 638,
      "dpd_bucket_reported": 0,
      "deferred_flag": 0,
      "eligible_reported": true
@@ -222,6 +254,7 @@
      "asset_id": "A-B0028-000002",
      "vin": "SYNMV1DCU3LV6GA1F",
      "balance": 9982.58,
+     "credit_score": 679,
      "dpd_bucket_reported": 0,
      "deferred_flag": 0,
      "eligible_reported": true
@@ -232,6 +265,7 @@
      "asset_id": "A-B0028-000005",
      "vin": "SYNLMVYHHX5JCFRZ9",
      "balance": 5557.38,
+     "credit_score": 685,
      "dpd_bucket_reported": 0,
      "deferred_flag": 0,
      "eligible_reported": true
@@ -242,6 +276,7 @@
      "asset_id": "A-B0028-000008",
      "vin": "SYN3M12VK582TCEJS",
      "balance": 1824.42,
+     "credit_score": 693,
      "dpd_bucket_reported": 0,
      "deferred_flag": 0,
      "eligible_reported": true
@@ -252,6 +287,7 @@
      "asset_id": "A-B0028-000012",
      "vin": "SYNH2PUK718EMLDZ7",
      "balance": 3455.26,
+     "credit_score": 685,
      "dpd_bucket_reported": 1,
      "deferred_flag": 0,
      "eligible_reported": true
@@ -262,6 +298,7 @@
      "asset_id": "A-B0028-000016",
      "vin": "SYN5GWHGUMBRFUG39",
      "balance": 11353.85,
+     "credit_score": 655,
      "dpd_bucket_reported": 0,
      "deferred_flag": 0,
      "eligible_reported": true
@@ -272,6 +309,7 @@
      "asset_id": "A-B0028-000020",
      "vin": "SYNYW83LYN8ZY19GX",
      "balance": 11201.78,
+     "credit_score": 732,
      "dpd_bucket_reported": 0,
      "deferred_flag": 0,
      "eligible_reported": true
@@ -282,6 +320,7 @@
      "asset_id": "A-B0028-000022",
      "vin": "SYNST2K37X2Z5XYJ4",
      "balance": 2557.89,
+     "credit_score": 815,
      "dpd_bucket_reported": 0,
      "deferred_flag": 0,
      "eligible_reported": true
@@ -292,6 +331,7 @@
      "asset_id": "A-B0028-000023",
      "vin": "SYNXFUJ3502USHZD9",
      "balance": 4431.72,
+     "credit_score": 719,
      "dpd_bucket_reported": 0,
      "deferred_flag": 0,
      "eligible_reported": true
@@ -302,6 +342,7 @@
      "asset_id": "A-B0028-000024",
      "vin": "SYNBMK0RXS3EBRN84",
      "balance": 3725.22,
+     "credit_score": 635,
      "dpd_bucket_reported": 0,
      "deferred_flag": 0,
      "eligible_reported": true
@@ -398,7 +439,7 @@
    "table": "payments",
    "title": "Bank payments",
    "what": "Money arriving in the collection account Wells Fargo controls.",
-   "rows": 430655,
+   "rows": 430850,
    "columns": [
     {
      "name": "txn_id",
@@ -505,6 +546,106 @@
      "amount": 232.35,
      "memo": "loan payment",
      "ref": "A-B0028-000027"
+    }
+   ]
+  },
+  {
+   "table": "outflows",
+   "title": "Operating-account payments",
+   "what": "Money leaving the borrower's own operating account: payroll, rent, suppliers, debt service.",
+   "rows": 19725,
+   "columns": [
+    {
+     "name": "txn_id",
+     "meaning": "transaction ID"
+    },
+    {
+     "name": "month",
+     "meaning": "month"
+    },
+    {
+     "name": "payee_name",
+     "meaning": "who received it"
+    },
+    {
+     "name": "amount",
+     "meaning": "amount ($)"
+    },
+    {
+     "name": "memo",
+     "meaning": "what it was for"
+    }
+   ],
+   "sample": [
+    {
+     "txn_id": "O000004602",
+     "month": 0,
+     "payee_name": "(synthetic) Payroll Services LLC",
+     "amount": 2063.78,
+     "memo": "payroll"
+    },
+    {
+     "txn_id": "O000004603",
+     "month": 0,
+     "payee_name": "(synthetic) Payroll Services LLC",
+     "amount": 2125.97,
+     "memo": "payroll"
+    },
+    {
+     "txn_id": "O000004604",
+     "month": 0,
+     "payee_name": "(synthetic) Ironwood Property Management LLC",
+     "amount": 604.23,
+     "memo": "rent"
+    },
+    {
+     "txn_id": "O000004605",
+     "month": 0,
+     "payee_name": "Silverline Parts Corp",
+     "amount": 887.28,
+     "memo": "vendor payment"
+    },
+    {
+     "txn_id": "O000004606",
+     "month": 0,
+     "payee_name": "Keystone Partners Group LLC",
+     "amount": 472.15,
+     "memo": "vendor payment"
+    },
+    {
+     "txn_id": "O000004607",
+     "month": 0,
+     "payee_name": "Bluebonnet Trade LLC",
+     "amount": 711.35,
+     "memo": "vendor payment"
+    },
+    {
+     "txn_id": "O000004608",
+     "month": 0,
+     "payee_name": "Magnolia Funding Group LLC",
+     "amount": 191.47,
+     "memo": "vendor payment"
+    },
+    {
+     "txn_id": "O000004609",
+     "month": 0,
+     "payee_name": "Ironwood Finance Inc",
+     "amount": 412.87,
+     "memo": "vendor payment"
+    },
+    {
+     "txn_id": "O000004610",
+     "month": 0,
+     "payee_name": "Redwood Holdings Corp",
+     "amount": 860.01,
+     "memo": "vendor payment"
+    },
+    {
+     "txn_id": "O000004611",
+     "month": 0,
+     "payee_name": "Silverline Credit Fund LLC",
+     "amount": 906.34,
+     "memo": "debt service"
     }
    ]
   },

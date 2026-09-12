@@ -55,6 +55,18 @@ class CaseFlowTest {
     }
 
     @Test
+    void feedbackCountsDecisionsPerFindingType() {
+        service.ingest(run());
+        List<StepView> steps = service.detail("B0001").orElseThrow().steps();
+        service.decide("B0001", steps.get(0).code(), new DecisionIn("APPROVE", "officer.a", null));
+        service.decide("B0001", steps.get(1).code(), new DecisionIn("REJECT", "officer.a", "already cleared"));
+        FeedbackRow f = service.feedback().stream().filter(r -> r.mechanism().equals("HIDDEN_DEBT")).findFirst().orElseThrow();
+        assertEquals(1, f.approved());
+        assertEquals(1, f.rejected());
+        assertEquals(steps.size() - 2, f.proposed());
+    }
+
+    @Test
     void liveAlertsAttachToTheCaseAndAreCapped() {
         service.ingest(run());
         List<LiveAlertIn> alerts = new java.util.ArrayList<>();

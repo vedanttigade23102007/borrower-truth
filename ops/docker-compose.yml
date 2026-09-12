@@ -30,7 +30,7 @@ services:
     ports: ["127.0.0.1:8081:8081"]
     environment:
       SERVER_ADDRESS: 0.0.0.0     # inside the container network; the host port above stays localhost-only
-      BT_API_KEY: ${BT_API_KEY:?export BT_API_KEY first (see the top of this file)}
+      BT_API_KEY: ${BT_API_KEY:-}   # set it before "up" (see the top); without it, writes from other containers get 403
     volumes: ["casedb:/app/data"]
     healthcheck:
       test: ["CMD-SHELL", "wget -qO- localhost:8081/actuator/health | grep -q UP"]
@@ -48,7 +48,7 @@ services:
   signal-bridge:       # real-time S3 alerts -> case service (live alerts on the case page)
     build: {context: .., dockerfile: ops/worker.Dockerfile}
     command: ["python", "-m", "bt.stream.signal_bridge", "--bootstrap", "redpanda:9093", "--api", "http://case-service:8081"]
-    environment: {PUSHGATEWAY_URL: "http://pushgateway:9091", BT_API_KEY: "${BT_API_KEY:?}"}
+    environment: {PUSHGATEWAY_URL: "http://pushgateway:9091", BT_API_KEY: "${BT_API_KEY:-}"}
     volumes: ["../data:/app/data"]
     depends_on:
       topics: {condition: service_completed_successfully}
@@ -70,8 +70,14 @@ services:
       GF_AUTH_ANONYMOUS_ENABLED: "true"
       GF_AUTH_ANONYMOUS_ORG_ROLE: Viewer
       GF_DASHBOARDS_DEFAULT_HOME_DASHBOARD_PATH: /etc/grafana/provisioning/dashboards/borrower-truth.json
+      GF_RENDERING_SERVER_URL: http://renderer:8081/render      # used only when the "render" profile runs
+      GF_RENDERING_CALLBACK_URL: http://grafana:3000/
     volumes: ["./grafana/provisioning:/etc/grafana/provisioning:ro"]
     ports: ["127.0.0.1:3001:3000"]
+
+  renderer:            # turns a dashboard into a PNG, so its panels can be checked without a browser
+    profiles: ["render"]
+    image: grafana/grafana-image-renderer:3.11.6
 
   airflow:
     profiles: ["batch"]
@@ -83,7 +89,7 @@ services:
       AIRFLOW_VAR_BT_REPO: /workspaces/borrower-truth
       AIRFLOW_VAR_BT_DATA: data/out/demo
       CASE_SERVICE_URL: http://case-service:8081
-      BT_API_KEY: ${BT_API_KEY:?}
+      BT_API_KEY: ${BT_API_KEY:-}
       PUSHGATEWAY_URL: http://pushgateway:9091
       UV_PROJECT_ENVIRONMENT: /tmp/bt-venv
       UV_CACHE_DIR: /tmp/uv-cache

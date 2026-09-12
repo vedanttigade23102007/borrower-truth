@@ -25,11 +25,13 @@ TABLES = {
                    "state": "US state", "facility_limit": "size of the credit line ($)"}),
     "entities": ("Company registry", "Every company the system knows about: borrowers, their affiliates, lenders, customers. Like a state business register.",
                  {"entity_id": "registry ID", "name": "legal name", "kind": "borrower / company / lender / debtor / holding",
-                  "officer_person_id": "who runs it", "address": "registered address",
+                  "officer_person_id": "who runs it", "address": "registered address", "phone": "phone number on file",
+                  "registered_agent": "who receives legal papers for it (a service, or a person)",
                   "formed_month": "when it was formed (month of the timeline)", "has_operations": "does it actually do business?"}),
     "tape": ("Loan file (tape)", "What the borrower reports each month about the loans it pledged as collateral.",
              {"month": "month of the timeline (0-23)", "facility_id": "which Wells Fargo credit line", "asset_id": "loan ID",
               "vin": "vehicle ID (synthetic, starts with SYN)", "balance": "amount owed ($)",
+              "credit_score": "borrower's credit score at origination (600+ needed to count as collateral)",
               "dpd_bucket_reported": "reported lateness: 0 current, 1 = 30 days, 2 = 60, 3 = 90+",
               "deferred_flag": "payment pause reported", "eligible_reported": "counts toward borrowing"}),
     "source_truth": ("Servicer system", "What the borrower's own loan system really says. The system samples it the way an auditor would.",
@@ -37,6 +39,9 @@ TABLES = {
     "payments": ("Bank payments", "Money arriving in the collection account Wells Fargo controls.",
                  {"txn_id": "transaction ID", "month": "month", "payer_name": "who sent it (as the bank sees it)",
                   "amount": "amount ($)", "memo": "reference text", "ref": "loan or invoice it pays"}),
+    "outflows": ("Operating-account payments", "Money leaving the borrower's own operating account: payroll, rent, suppliers, debt service.",
+                 {"txn_id": "transaction ID", "month": "month", "payee_name": "who received it",
+                  "amount": "amount ($)", "memo": "what it was for"}),
     "invoices": ("Invoices", "Invoices pledged as collateral by invoice-based borrowers.",
                  {"invoice_number": "the borrower's number", "debtor_name": "the customer who owes it",
                   "amount": "amount ($)", "issue_month": "issued", "due_days": "payment terms", "facility_id": "credit line"}),
@@ -127,6 +132,7 @@ def main(argv=None):
         tables.append(dict(table=t, title=title, what=what, rows=n, columns=[dict(name=k, meaning=cols[k]) for k in keep],
                            sample=sample))
     json.dump(dict(book="the demo book shown in the console", borrowers=len(labels),
+                   frauds=sum(1 for v in labels.values() if v["fraud"]),
                    total_rows=sum(t["rows"] for t in tables), tables=tables),
               open(os.path.join(a.out, "tables.json"), "w"), indent=1, default=str)
 

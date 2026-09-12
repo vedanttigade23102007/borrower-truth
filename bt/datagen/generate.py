@@ -67,12 +67,20 @@ VIN_CHARS = np.array(list("ABCDEFGHJKLMNPRSTUVWXYZ0123456789"))
 
 SMALL = ("borrowers", "facilities", "entities", "persons", "gleif", "disclosures",
          "ucc_filings", "court_records", "financials", "pledgecheck")
-BIG = ("tape", "source_truth", "payments", "invoices")
+BIG = ("tape", "source_truth", "payments", "invoices", "outflows")
+COMMERCIAL_AGENTS = ("(synthetic) Corporate Agents Inc, 100 Registry Plaza",
+                     "(synthetic) Registered Agent Services LLC, 12 Filing Way",
+                     "(synthetic) Statutory Agent Co, 7 Compliance Ct")
+VARIANT_SHARE = 0.03  # of the book, for each of the two harder variants added in extras()
+ELIGIBLE_SCORE = 600  # facility rule: a loan needs a credit score of 600+ at origination to count as collateral
 
 
 class Book:
     def __init__(self, seed: int, n_borrowers: int, scale: float, fraud_rate: float):
         self.rng = np.random.default_rng(seed)
+        # extras() draws from its own stream, after everything else: every table it doesn't touch is unchanged
+        self.rng2 = np.random.default_rng([seed, 2026])
+        self._n_out = 0
         self.seed, self.n, self.scale, self.fraud_rate = seed, n_borrowers, scale, fraud_rate
         self.small = {k: [] for k in SMALL}
         self.big = {k: [] for k in BIG}
@@ -603,6 +611,205 @@ class Book:
     def run(self):
         for i, p in enumerate(self.plan(), start=1):
             self.borrower(i, p)
+        self.extras()
+
+    # ---------- extras: contact details, operating-account outflows, two harder fraud variants ----------
+    def _person2(self) -> str:
+        self._n_person += 1
+        pid = f"P{self._n_person:05d}"
+        self.small["persons"].append(dict(person_id=pid, name=f"{self.rng2.choice(FIRST)} {self.rng2.choice(LAST)}"))
+        return pid
+
+    def _address2(self) -> str:
+        self._n_addr += 1
+        return f"{int(self.rng2.integers(10, 9999))} {self.rng2.choice(STREETS)}, Suite {self._n_addr}"
+
+    def _phone2(self) -> str:
+        return f"555-{int(self.rng2.integers(100, 1000))}-{int(self.rng2.integers(1000, 10000))}"
+
+    def _name2(self, words) -> str:
+        for _ in range(1000):
+            n = f"{self.rng2.choice(W1)} {self.rng2.choice(words)} {self.rng2.choice(['LLC', 'Inc'])}"
+            if n not in self._names:
+                self._names.add(n)
+                return n
+        raise RuntimeError("ran out of company names")
+
+    def _entity2(self, kind, name, officer, address, formed, ops, state, phone, agent) -> str:
+        eid = self.entity(kind, name, officer, address, formed, ops, state=state)
+        self.small["entities"][-1].update(phone=phone, registered_agent=agent)
+        return eid
+
+    def _out(self, bid, account, rows):
+        """rows: (month, day, payee_id, payee_name, amount, memo) -> the borrower's operating-account outflows."""
+        if not rows:
+            return
+        m, d, pid, pn, amt, memo = zip(*rows)
+        k = len(rows)
+        ids = np.char.add("O", np.char.zfill((np.arange(k) + self._n_out).astype(str), 9))
+        self._n_out += k
+        self.big["outflows"].append(dict(
+            txn_id=ids, month=np.array(m, np.int16), day=np.array(d, np.int8), borrower_id=np.full(k, bid),
+            account_id=np.full(k, account), payee_id=np.array(pid), payee_name=np.array(pn),
+            amount=np.round(np.array(amt, float), 2), memo=np.array(memo)))
+
+    def _pay(self, bid, account, rows):
+        """rows: (month, day, payer_id, payer_name, amount) -> extra 'customer remittance' inflows."""
+        m, d, pid, pn, amt = zip(*rows)
+        k = len(rows)
+        self.big["payments"].append(dict(
+            txn_id=self.txn_ids(k), month=np.array(m, np.int16), day=np.array(d, np.int8), borrower_id=np.full(k, bid),
+            account_id=np.full(k, account), payer_id=np.array(pid), payer_name=np.array(pn),
+            amount=np.round(np.array(amt, float), 2), memo=np.full(k, "customer remittance"), ref=np.full(k, "")))
+
+    def extras(self):
+        r2 = self.rng2
+        M = MONTHS
+        ents = self.small["entities"]
+        pname = {p["person_id"]: p["name"] for p in self.small["persons"]}
+        brow = {b["borrower_id"]: b for b in self.small["borrowers"]}
+        ent_of = {e["entity_id"]: e for e in ents}
+        first_fac = {}
+        for f in self.small["facilities"]:
+            first_fac.setdefault(f["borrower_id"], f["facility_id"])
+        pb = np.concatenate([c["borrower_id"] for c in self.big["payments"]])
+        pa_ = np.concatenate([c["amount"] for c in self.big["payments"]])
+        avg_coll = {b: max(float(pa_[pb == b].sum()) / M, 20_000.0) for b in brow}
+
+        # 1. phone number and registered agent for every company in the registry
+        for e in ents:
+            e["phone"] = self._phone2()
+            own = e["officer_person_id"] and r2.random() < 0.3
+            e["registered_agent"] = (f"{pname[e['officer_person_id']]}, {e['address']}" if own
+                                     else str(r2.choice(COMMERCIAL_AGENTS)))
+        for b, v in self.labels.items():  # fraud shells often keep the borrower's phone or owner-as-agent
+            be = ent_of[brow[b]["entity_id"]]
+            for s in v["planted"].get("shells", []):
+                if r2.random() < 0.6:
+                    ent_of[s]["phone"] = be["phone"]
+                if r2.random() < 0.5:
+                    ent_of[s]["registered_agent"] = be["registered_agent"]
+
+        honest = [b for b, v in sorted(self.labels.items()) if not v["fraud"]]
+        k = max(1, round(self.n * VARIANT_SHARE))
+        picks = list(r2.choice(honest, size=min(2 * k, len(honest)), replace=False))
+        nominee, round_trip = picks[:k], picks[k:]
+        rest = [b for b in honest if b not in picks]
+
+        # 2. honest look-alikes for the new links: a neighbour in a shared virtual office (same phone), and an
+        #    unrelated operating business that uses the owner as its registered agent
+        for b in rest:
+            be = ent_of[brow[b]["entity_id"]]
+            if r2.random() < 0.05:
+                self._entity2("company", self._name2(["Consulting", "Logistics", "Services", "Staffing"]),
+                              self._person2(), self._address2(), int(r2.integers(-200, -40)), True, be["state"],
+                              be["phone"], str(r2.choice(COMMERCIAL_AGENTS)))
+                self.labels[b]["benign"] = sorted(self.labels[b]["benign"] + ["VIRTUAL_OFFICE"])
+            if r2.random() < 0.03:
+                be["registered_agent"] = f"{pname[be['officer_person_id']]}, {be['address']}"
+                self._entity2("company", self._name2(["Bakery", "Studio", "Landscaping", "Dental"]),
+                              self._person2(), self._address2(), int(r2.integers(-200, -40)), True, be["state"],
+                              self._phone2(), be["registered_agent"])
+                self.labels[b]["benign"] = sorted(self.labels[b]["benign"] + ["OWNER_IS_AGENT_ELSEWHERE"])
+
+        # 3. every borrower's operating account: payroll, rent, vendors, disclosed debt service
+        debt_lenders = {}
+        for d in self.small["disclosures"]:
+            if d["kind"] == "debt":
+                debt_lenders.setdefault(d["borrower_id"], []).append(d["counterparty_entity_id"])
+        customers = {}
+        for c in self.big["invoices"]:
+            for b, dn, did in zip(c["borrower_id"], c["debtor_name"], c["debtor_id"]):
+                customers.setdefault(str(b), {})[str(did)] = str(dn)
+        for b in sorted(brow):
+            acct, size = first_fac[b] + "-OPER", avg_coll[b]
+            landlord = f"(synthetic) {r2.choice(W1)} Property Management LLC"
+            two_way = []
+            if b in customers and r2.random() < 0.25:  # honest: a customer that is also a supplier
+                ids = sorted(customers[b])
+                two_way = list(r2.choice(ids, size=min(2, len(ids)), replace=False))
+                self.labels[b]["benign"] = sorted(self.labels[b]["benign"] + ["TWO_WAY_TRADE"])
+            rows = []
+            for m in range(M):
+                for _ in range(2):
+                    rows.append((m, int(r2.integers(1, 29)), "PAYROLL", "(synthetic) Payroll Services LLC",
+                                 size * r2.uniform(0.04, 0.08), "payroll"))
+                rows.append((m, 1, "RENT", landlord, size * 0.02, "rent"))
+                for _ in range(int(r2.poisson(3))):
+                    v = str(r2.choice(self.debtors))
+                    rows.append((m, int(r2.integers(1, 29)), v, self.ename(v), size * r2.uniform(0.005, 0.03), "vendor payment"))
+                for L in debt_lenders.get(b, []):
+                    rows.append((m, 15, L, self.ename(L), size * 0.03, "debt service"))
+                for did in two_way:
+                    rows.append((m, int(r2.integers(1, 29)), did, customers[b][did], size * r2.uniform(0.005, 0.04),
+                                 "vendor payment"))
+            self._out(b, acct, rows)
+
+        # 4a. nominee shell: registered to someone else at another address, but it has the borrower's phone
+        #     (and the owner as registered agent when the owner acts as agent), and it pays the borrower as a "customer"
+        for b in nominee:
+            be, start = ent_of[brow[b]["entity_id"]], int(r2.integers(6, 17))
+            agent = be["registered_agent"] if be["registered_agent"].startswith(pname[be["officer_person_id"]]) \
+                else str(r2.choice(COMMERCIAL_AGENTS))
+            eid = self._entity2("company", self._name2(["Customer Collections", "Trade Services", "Receivables Co"]),
+                                self._person2(), self._address2(), start - int(r2.integers(1, 5)), False, be["state"],
+                                be["phone"], agent)
+            rows = [(m, int(r2.integers(1, 29)), eid, self.ename(eid), avg_coll[b] * r2.uniform(0.04, 0.12))
+                    for m in range(start, M) for _ in range(int(r2.integers(1, 4)))]
+            self._pay(b, first_fac[b] + "-COLL", rows)
+            self.labels[b].update(fraud=True, pattern="nominee_shell", start_month=start,
+                                  mechanisms=sorted(["DISGUISED_RECEIPTS", "RELATED_SHELLS"]),
+                                  planted=dict(self.labels[b]["planted"], nominee_shell=eid))
+
+        # 4b. round trip through a legitimate-looking middleman: out of the operating account, back in days later
+        #     as a "customer" payment of almost the same amount
+        for b in round_trip:
+            be, start = ent_of[brow[b]["entity_id"]], int(r2.integers(6, 17))
+            eid = self._entity2("company", self._name2(["Industrial Supply", "Wholesale", "Distributors"]),
+                                self._person2(), self._address2(), int(r2.integers(-200, -60)), True,
+                                str(r2.choice(STATES)), self._phone2(), str(r2.choice(COMMERCIAL_AGENTS)))
+            outs, ins = [], []
+            for m in range(start, M - 1):
+                for _ in range(int(r2.integers(1, 3))):
+                    amt, d1 = avg_coll[b] * r2.uniform(0.05, 0.12), int(r2.integers(1, 21))
+                    back = m * 30 + d1 + int(r2.integers(3, 21))
+                    outs.append((m, d1, eid, self.ename(eid), amt, "vendor payment"))
+                    ins.append((min(back // 30, M - 1), min(max(back % 30, 1), 28), eid, self.ename(eid),
+                                amt * r2.uniform(0.985, 0.999)))
+            self._out(b, first_fac[b] + "-OPER", outs)
+            self._pay(b, first_fac[b] + "-COLL", ins)
+            self.labels[b].update(fraud=True, pattern="round_trip", start_month=start,
+                                  mechanisms=["DISGUISED_RECEIPTS"],
+                                  planted=dict(self.labels[b]["planted"], round_trip_via=eid))
+
+        # 5. credit score at origination on every tape row. It should never change. Dress-up borrowers rewrite
+        #    some sub-600 scores to just over the eligibility line (Tricolor, as alleged: ineligible collateral made
+        #    to "meet lender requirements"); honest servicers occasionally correct a score once.
+        dress = {b for b, v in self.labels.items() if "TAPE_DRESSUP" in v["mechanisms"]}
+        scores, cheat, fix = {}, {}, {}
+        for ch in self.big["tape"]:
+            b = str(ch["borrower_id"][0])
+            u, inv = np.unique(ch["vin"], return_inverse=True)
+            new = [v for v in u if v not in scores]
+            for v, x in zip(new, np.clip(r2.normal(680, 55, len(new)), 480, 850).astype(int)):
+                scores[v] = int(x)
+                if b in dress and x < ELIGIBLE_SCORE and r2.random() < 0.6:
+                    cheat[v] = (self.labels[b]["start_month"], int(r2.integers(ELIGIBLE_SCORE, ELIGIBLE_SCORE + 13)))
+                elif r2.random() < 0.003:
+                    fix[v] = (int(r2.integers(1, M)), int(r2.choice([-1, 1]) * r2.integers(5, 41)))
+            base = np.array([scores[v] for v in u])
+            c_m = np.array([cheat.get(v, (10_000, 0))[0] for v in u])[inv]
+            c_v = np.array([cheat.get(v, (0, 0))[1] for v in u])[inv]
+            f_m = np.array([fix.get(v, (10_000, 0))[0] for v in u])[inv]
+            f_d = np.array([fix.get(v, (0, 0))[1] for v in u])[inv]
+            month = ch["month"].astype(int)
+            rep = base[inv] + np.where(month >= f_m, f_d, 0)
+            ch["credit_score"] = np.where(month >= c_m, c_v, rep).astype(np.int16)
+        vins_of = {}
+        for ch in self.big["tape"]:
+            vins_of.setdefault(str(ch["borrower_id"][0]), set()).update(ch["vin"].tolist())
+        for b in dress:
+            self.labels[b]["planted"]["rewritten_scores"] = sum(1 for v in cheat if v in vins_of.get(b, ()))
 
     def write(self, out):
         os.makedirs(out, exist_ok=True)
@@ -621,6 +828,8 @@ class Book:
         with open(os.path.join(out, "labels.json"), "w") as f:
             json.dump(self.labels, f, indent=1)
         manifest = dict(SYNTHETIC="All data in this folder is synthetic. No real company, person or loan.",
+                        generator="v2: + contact details, operating-account outflows, nominee-shell and "
+                                  "round-trip variants (own random stream; earlier tables unchanged)",
                         seed=self.seed, borrowers=self.n, scale=self.scale, fraud_rate=self.fraud_rate,
                         months=MONTHS, rows=counts, generated=time.strftime("%Y-%m-%d %H:%M:%S"))
         with open(os.path.join(out, "manifest.json"), "w") as f:

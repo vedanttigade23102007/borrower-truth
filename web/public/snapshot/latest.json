@@ -1,6 +1,6 @@
 {
  "asOf": 23,
- "receivedAt": "2026-09-12T09:57:06.639641Z",
+ "receivedAt": "2026-09-12T10:46:58.399828Z",
  "runMetrics": {
   "data_quality": {
    "quarantined": {},
@@ -8,38 +8,38 @@
   },
   "S6": {
    "status": "ok",
-   "seconds": 0.013,
-   "signals": 76
+   "seconds": 0.011,
+   "signals": 89
   },
   "S1": {
    "status": "ok",
    "seconds": 0.034,
-   "signals": 10
+   "signals": 63
   },
   "S2": {
    "status": "ok",
-   "seconds": 0.054,
-   "signals": 20
+   "seconds": 0.099,
+   "signals": 39
   },
   "S3": {
    "status": "ok",
-   "seconds": 0.258,
-   "signals": 12
+   "seconds": 0.413,
+   "signals": 24
   },
   "S4": {
    "status": "ok",
-   "seconds": 0.04,
+   "seconds": 0.052,
    "signals": 29
   },
   "S5": {
    "status": "ok",
-   "seconds": 0.005,
+   "seconds": 0.009,
    "signals": 61
   },
   "S7": {
    "status": "ok",
-   "seconds": 0.002,
-   "signals": 60
+   "seconds": 0.005,
+   "signals": 65
   },
   "manifest": {
    "as_of": 23,
@@ -48,34 +48,35 @@
     "court_records": "a79407e3d9e271c7",
     "disclosures": "069b42daedf69dfe",
     "doc_reads": "c5c0b7073fb1f912",
-    "entities": "c1cc57992a15b52b",
+    "entities": "fce842ed930f19c7",
     "facilities": "ac876e56664fca9d",
     "financials": "f66adc51cd7b983a",
     "gleif": "0e84cc4e59000477",
     "invoices": "290ea012da9effd1",
-    "payments": "26b691188e86bf7b",
-    "persons": "ac7775719cf132a1",
+    "outflows": "6060ead84a2b5f83",
+    "payments": "325fdb80d4a859bc",
+    "persons": "17d86503475efbd6",
     "pledgecheck": "bb196f91c09eedb3",
     "source_truth": "4ad3eae6341fd192",
-    "tape": "73548d0aa41fc3e1",
+    "tape": "3de0a0e8d0de92db",
     "ucc_filings": "dc69464a1eac5eca"
    },
-   "inputs_digest": "1baafa7cb6dd",
-   "rule_version": "c5261f73b139",
-   "code_version": "3253587"
+   "inputs_digest": "d8cd6b338715",
+   "rule_version": "246bf431643e",
+   "code_version": "9f12345+local-changes"
   },
   "combiner": {
    "status": "ok",
-   "seconds": 0.076,
+   "seconds": 0.099,
    "cases": 120
   },
-  "total_seconds": 1.108,
+  "total_seconds": 1.528,
   "as_of": 23
  },
  "verdicts": {
   "EXPLAINED": 6,
-  "LIKELY_FRAUD": 29,
-  "NEEDS_MORE_EVIDENCE": 37,
-  "NO_ISSUE": 48
+  "LIKELY_FRAUD": 38,
+  "NEEDS_MORE_EVIDENCE": 35,
+  "NO_ISSUE": 41
  }
 }

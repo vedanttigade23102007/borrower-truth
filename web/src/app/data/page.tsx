@@ -22,10 +22,12 @@ export default function DataPage() {
       <div className="max-w-4xl">
         <h1 className="text-2xl font-semibold tracking-tight text-zinc-900">The data</h1>
         <p className="mt-2 text-zinc-700">
-          Everything here is synthetic: a made-up book of 120 finance-company borrowers over 24 months. Fraud is planted
-          in 30 of them, using the tricks described in the public court filings on First Brands and Tricolor, next to
-          honest borrowers that look suspicious for innocent reasons. You see the shape of every input and 10 sample
-          rows from each. The full dataset, the code and the model weights are not published.
+          Everything here is synthetic: a made-up book of {tables.data?.borrowers ?? 120} finance-company borrowers over
+          24 months. Fraud is planted in {tables.data?.frauds ?? "about a third"} of them, using the tricks described in
+          the public court filings on First Brands and Tricolor plus two harder ones (a shell registered to a front
+          person, and money sent round through a middleman), next to honest borrowers that look suspicious for innocent
+          reasons. You see the shape of every input and 10 sample rows from each. The full dataset, the code and the
+          model weights are not published.
         </p>
         <nav aria-label="On this page" className="mt-4 flex flex-wrap gap-2 text-sm">
           {SECTIONS.map(([id, label]) => (

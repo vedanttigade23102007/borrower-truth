@@ -141,6 +141,19 @@ public class CaseService {
         return steps(borrowerId).stream().filter(x -> x.code().equals(code)).findFirst().orElseThrow();
     }
 
+    /**
+     * The learning loop, kept human: officers' approvals and rejections per finding type. A type whose fixes are
+     * rejected often goes to the rules owner for review. Rules never change themselves; that would be an
+     * unvalidated model change.
+     */
+    public List<FeedbackRow> feedback() {
+        return jdbc.query("SELECT mechanism, "
+                        + "SUM(CASE WHEN status='PROPOSED' THEN 1 ELSE 0 END), SUM(CASE WHEN status='APPROVED' THEN 1 ELSE 0 END), "
+                        + "SUM(CASE WHEN status='REJECTED' THEN 1 ELSE 0 END), SUM(CASE WHEN status='DONE' THEN 1 ELSE 0 END) "
+                        + "FROM fix_step GROUP BY mechanism ORDER BY mechanism",
+                (rs, i) -> new FeedbackRow(rs.getString(1), rs.getLong(2), rs.getLong(3), rs.getLong(4), rs.getLong(5)));
+    }
+
     public RunStatus status() {
         Map<String, Long> verdicts = cases.values().stream()
                 .collect(Collectors.groupingBy(CaseIn::verdict, TreeMap::new, Collectors.counting()));

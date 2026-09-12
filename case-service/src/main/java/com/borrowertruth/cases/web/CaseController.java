@@ -54,6 +54,11 @@ public class CaseController {
         return service.decide(borrowerId, code, in);
     }
 
+    @GetMapping("/feedback")
+    public List<FeedbackRow> feedback() {
+        return service.feedback();
+    }
+
     @GetMapping("/audit")
     public List<AuditView> audit() {
         return service.audit(null);

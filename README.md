@@ -21,13 +21,13 @@ Every claim is matched against a saved source by `research/verify.py` (57 of 57 
 
 | # | System | What it catches |
 |---|---|---|
-| S1 | Collateral integrity | Collateral pledged twice. Ingests the PledgeCheck result and matches VINs across Wells Fargo facilities |
-| S2 | Tape vs source | Bad loans reported as good: missing payments, fake deferrals, impossible jumps, servicer-system sampling |
-| S3 | Cash provenance | Lender or affiliate money dressed up as customer payments. It checks *who* paid, not how much |
+| S1 | Collateral integrity | Collateral pledged twice. Ingests the PledgeCheck result and matches VINs across Wells Fargo facilities; notes when a borrower isn't enrolled, so other lenders can't be checked |
+| S2 | Tape vs source | Bad loans reported as good: missing payments, fake deferrals, impossible jumps, a servicer-system pull *targeted by the cash* (loans reported current that paid nothing), and credit scores rewritten after origination to clear the eligibility line |
+| S3 | Cash provenance | Lender or affiliate money dressed up as customer payments. It checks *who* paid, not how much, and catches money sent out to a middleman that comes back as "customer" cash |
 | S4 | Invoice authenticity | Re-submitted invoices with new amounts, unpaid invoices, impossible amounts, plus a document-reading model |
 | S5 | Hidden-debt finder | Undisclosed liens and judgments, matched on names and addresses the way real lien registers work |
-| S6 | Relationship mapper | Undisclosed linked companies and shells |
-| S7 | Financial consistency | Revenue that verified cash doesn't support; covenants that repeatedly just clear the line |
+| S6 | Relationship mapper | Undisclosed linked companies and shells, linked by owner, address, phone number or registered agent, so a shell with a front person on the paperwork is still found |
+| S7 | Financial consistency | Revenue that verified cash doesn't support; receivables piling up far faster than revenue; covenants that repeatedly just clear the line |
 
 The systems feed each other. For example, S6 finds a shell, S5 finds a lien on it, and S3 sees that lender's money arriving as "customer" cash.
 
@@ -43,6 +43,7 @@ A person approves every step. Nothing is sent or changed without approval.
 Around the decision:
 - **Decision record.** Every verdict carries fingerprints of its inputs, the rule code and the git commit. `bt.pipeline.replay` recomputes a run and either shows every decision is identical (120 of 120 on the demo run) or names the input or rule that changed.
 - **Investigator agent** (`bt/agent/`). After the rules decide, an open model (Qwen3-8B / gpt-oss, open weights) investigates with read-only tools: registry, liens, courts, payments, disclosures, live GLEIF. It drafts a memo for the credit officer. Code enforces the guardrails: every line must cite a signal or a tool call, every number must appear in what it cites, and claims about what was disclosed or whether liens and judgments exist are checked against the records. Lines that fail are dropped and counted. The agent never decides.
+- **Feedback loop, kept human.** Officers' approvals and rejections are counted per finding type (`/api/feedback`, Operations page). A type whose fixes keep getting rejected goes to the person who owns the rules; the rules never change themselves.
 - **Public console** (`web/`): the review queue, each case with its fix, memo and decision record, a data section (dictionary, sample rows, one fraud step by step, invoice documents), and "Test it yourself", the answer key including misses.
 
 ## Proof: data it never saw
@@ -148,9 +149,10 @@ Set `NEXT_PUBLIC_API_URL=http://localhost:8081` for live mode; without it the co
 
 **Full stack** (Codespaces, 16 GB):
 ```bash
+export BT_API_KEY=$(openssl rand -hex 16)
 docker compose -f ops/docker-compose.yml up -d
 ```
-Grafana is on :3001.
+Grafana is on :3001. All ports are bound to localhost; the case service accepts writes from other machines only with `X-BT-Key`.
 
 ## Limits, said plainly
 - Four of the seven systems need data that only a bank and its borrower hold. The demo proves the design and the detection logic; real accuracy needs real data.

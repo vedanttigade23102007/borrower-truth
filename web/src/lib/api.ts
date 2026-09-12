@@ -15,7 +15,10 @@ async function getJSON<T>(apiPath: string, snapshotPath: string): Promise<T> {
 }
 
 // ---------- demo overlay (browser only) ----------
-type Overlay = Record<string, Record<string, { status: StepStatus; decidedBy: string; decidedAt: string; note: string | null }>>;
+type Overlay = Record<
+  string,
+  Record<string, { status: StepStatus; decidedBy: string; decidedAt: string; note: string | null; mechanism?: string; from?: StepStatus }>
+>;
 const OVERLAY_KEY = "bt-demo-decisions";
 const AUDIT_KEY = "bt-demo-audit";
 
@@ -105,11 +108,46 @@ export async function decide(id: string, step: Step, decision: Decision, user: s
   }
   const now = new Date().toISOString();
   const overlay = read<Overlay>(OVERLAY_KEY, {});
-  overlay[id] = { ...(overlay[id] ?? {}), [step.code]: { status: NEXT[decision].to, decidedBy: user, decidedAt: now, note: note || null } };
+  const prev = overlay[id]?.[step.code];
+  overlay[id] = {
+    ...(overlay[id] ?? {}),
+    [step.code]: {
+      status: NEXT[decision].to,
+      decidedBy: user,
+      decidedAt: now,
+      note: note || null,
+      mechanism: step.mechanism,
+      from: prev?.from ?? step.status, // the status in the snapshot, for the feedback counts
+    },
+  };
   write(OVERLAY_KEY, overlay);
   const audit = read<AuditEvent[]>(AUDIT_KEY, []);
   audit.unshift({ id: Date.now(), at: now, actor: user, borrowerId: id, action: `STEP_${NEXT[decision].to}`, detail: step.code + (note ? ` — ${note}` : "") });
   write(AUDIT_KEY, audit.slice(0, 500));
+}
+
+export type FeedbackRow = { mechanism: string; proposed: number; approved: number; rejected: number; done: number };
+
+/** Officers' decisions per finding type. Demo mode adds this browser's own decisions to the snapshot counts. */
+export async function fetchFeedback(): Promise<FeedbackRow[]> {
+  const rows = await getJSON<FeedbackRow[]>("/api/feedback", "/snapshot/feedback.json");
+  if (!isDemo) return rows;
+  const byM = new Map(rows.map((r) => [r.mechanism, { ...r }]));
+  const key: Record<StepStatus, "proposed" | "approved" | "rejected" | "done"> = {
+    PROPOSED: "proposed",
+    APPROVED: "approved",
+    REJECTED: "rejected",
+    DONE: "done",
+  };
+  for (const steps of Object.values(read<Overlay>(OVERLAY_KEY, {}))) {
+    for (const s of Object.values(steps)) {
+      const r = s.mechanism && s.from ? byM.get(s.mechanism) : undefined;
+      if (!r || !s.from) continue;
+      r[key[s.from]] = Math.max(0, r[key[s.from]] - 1);
+      r[key[s.status]] += 1;
+    }
+  }
+  return [...byM.values()];
 }
 
 export function resetDemo() {

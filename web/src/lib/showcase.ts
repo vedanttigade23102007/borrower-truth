@@ -7,7 +7,7 @@ import type { Verdict } from "./types";
 
 export type Column = { name: string; meaning: string };
 export type TableInfo = { table: string; title: string; what: string; rows: number; columns: Column[]; sample: Record<string, unknown>[] };
-export type Tables = { book: string; borrowers: number; total_rows: number; tables: TableInfo[] };
+export type Tables = { book: string; borrowers: number; frauds?: number; total_rows: number; tables: TableInfo[] };
 
 type RawFinding = { mechanism: string; confidence: string; plain: string; signals: string[]; first_month: number };
 type RawSignal = { signal_id: string; system: string; type: string; explanation: string; observed_month: number };

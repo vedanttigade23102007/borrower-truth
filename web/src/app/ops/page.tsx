@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { Badge, Card, ErrorState, Skeleton } from "@/components/ui";
-import { fetchLatest } from "@/lib/api";
-import { SYSTEM, fmtDate } from "@/lib/labels";
+import { fetchFeedback, fetchLatest, type FeedbackRow } from "@/lib/api";
+import { MECHANISM, SYSTEM, fmtDate } from "@/lib/labels";
 import type { RunStatus, SystemMetric } from "@/lib/types";
 
 type Scale = { borrowers: number; scale: number; rows: number; seconds: number; rows_per_second: number };
@@ -22,6 +22,7 @@ const FALLBACKS = [
 export default function OpsPage() {
   const [latest, setLatest] = useState<RunStatus | null>(null);
   const [scale, setScale] = useState<Scale[] | null>(null);
+  const [feedback, setFeedback] = useState<FeedbackRow[] | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   const [attempt, setAttempt] = useState(0);
@@ -31,11 +32,13 @@ export default function OpsPage() {
     Promise.all([
       fetchLatest(),
       fetch("/scale.json", { cache: "no-store" }).then((r) => (r.ok ? (r.json() as Promise<Scale[]>) : [])),
+      fetchFeedback().catch(() => [] as FeedbackRow[]),
     ])
-      .then(([l, s]) => {
+      .then(([l, s, f]) => {
         if (!live) return;
         setLatest(l);
         setScale(s);
+        setFeedback(f);
         setError(null);
       })
       .catch((e: unknown) => live && setError(e instanceof Error ? e.message : String(e)));
@@ -130,6 +133,57 @@ export default function OpsPage() {
           )}
         </Card>
       )}
+
+      <Card className="overflow-hidden">
+        <h2 className="border-b border-zinc-200 px-4 py-3 text-sm font-medium text-zinc-900">
+          What officers decided about each finding type
+        </h2>
+        {!feedback ? (
+          <div className="p-4">
+            <Skeleton className="h-24 w-full" />
+          </div>
+        ) : feedback.length === 0 ? (
+          <p className="px-4 py-6 text-sm text-zinc-500">No suggested fixes yet.</p>
+        ) : (
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm">
+              <thead className="bg-zinc-50 text-left text-xs text-zinc-500">
+                <tr>
+                  <th className="px-4 py-2 font-medium">Finding type</th>
+                  <th className="px-4 py-2 text-right font-medium">Waiting</th>
+                  <th className="px-4 py-2 text-right font-medium">Approved</th>
+                  <th className="px-4 py-2 text-right font-medium">Done</th>
+                  <th className="px-4 py-2 text-right font-medium">Rejected</th>
+                  <th className="px-4 py-2 text-right font-medium">Rejected share of decided</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-zinc-100 tabular-nums">
+                {feedback.map((f) => {
+                  const decided = f.approved + f.done + f.rejected;
+                  const rate = decided ? f.rejected / decided : null;
+                  return (
+                    <tr key={f.mechanism}>
+                      <td className="px-4 py-2 text-zinc-900">{MECHANISM[f.mechanism] ?? f.mechanism}</td>
+                      <td className="px-4 py-2 text-right">{f.proposed}</td>
+                      <td className="px-4 py-2 text-right">{f.approved}</td>
+                      <td className="px-4 py-2 text-right">{f.done}</td>
+                      <td className="px-4 py-2 text-right">{f.rejected}</td>
+                      <td className="px-4 py-2 text-right">
+                        {rate === null ? "—" : <Badge tone={rate >= 0.3 && decided >= 5 ? "amber" : "zinc"}>{Math.round(rate * 100)}%</Badge>}
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        )}
+        <p className="border-t border-zinc-100 px-4 py-2 text-xs text-zinc-500">
+          This is the learning loop, kept human. A finding type whose fixes officers keep rejecting (amber: 30% or more
+          of at least 5 decisions) goes to the person who owns the rules. The rules never change themselves: that would
+          be an unvalidated model change.
+        </p>
+      </Card>
 
       <Card className="overflow-hidden">
         <h2 className="border-b border-zinc-200 px-4 py-3 text-sm font-medium text-zinc-900">

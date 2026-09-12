@@ -51,5 +51,8 @@ public final class Dto {
 
     public record AuditView(long id, Instant at, String actor, String borrowerId, String action, String detail) {}
 
+    /** How officers treated one finding type's suggested fixes: what a rules owner reviews. */
+    public record FeedbackRow(String mechanism, long proposed, long approved, long rejected, long done) {}
+
     public record RunStatus(Integer asOf, Instant receivedAt, Map<String, Object> runMetrics, Map<String, Long> verdicts) {}
 }

@@ -285,7 +285,7 @@ A great tool can still fail to fit a bank. This design plans for that from day o
 - **Adoptable piece by piece:** each system runs alone, so WF could start with S3 alone.
 - **Not solvable from outside (stated plainly):** WF's approval timelines (security, third-party risk, model-risk validation) and access to real data. The design makes those reviews easy; it cannot skip them.
 
-## 14. Built and measured (11 Sep 2026)
+## 14. Built and measured (11–12 Sep 2026)
 
 **Not everything in §1–§13 is built.** `proof/AUDIT.md` checks every claim line by line: built, partial, not built, or corrected. An earlier version of this section said "everything is implemented"; that was wrong, and the audit exists because of it. Measured on synthetic data:
 
@@ -336,22 +336,32 @@ The switch-off test shows every system contributes.
 - 0 dead letters.
 - Batch run: 1.34 s.
 
-**Deployed privately:**
-- The console on Vercel, as a preview behind Vercel login.
-- Grafana and the case service on private Codespaces ports.
+**Deployed:**
+- The console on Vercel (production, public by link; search engines are told not to index it; security headers on every page).
+- Grafana and the case service in Codespaces, on ports bound to localhost; writes to the case service from another machine need a shared key.
 
 **Closed after the audit** (evidence in `proof/AUDIT.md`):
 - The document model is wired into S4 (`DOC_DATA_MISMATCH`).
 - Real-time alerts reach the case through the signal bridge. After tightening the stream to facts only, all 8 borrowers alerted in the live run were planted frauds.
 - Data-quality quarantine with a last-good fallback.
 - A live GLEIF adapter with a stale-cache fallback.
-- Top-decile precision (98%) and fix quality (294/294).
+- Top-decile precision and fix quality measured.
 - The console verified in live mode.
+
+**Closed on 12 Sep 2026** (evidence in `proof/AUDIT.md`):
+- S2: the servicer pull is aimed by the cash (loans reported current that paid nothing), which took the old weakest check from 73% to 100%; credit scores rewritten after origination; loans clustered just above the eligibility line.
+- S3: round trips through a middleman, using the borrower's operating-account outflows.
+- S6: links by phone number and registered agent, so a shell registered to a front person is still found.
+- S7: receivables piling up far faster than revenue (invoice borrowers).
+- S1: a coverage note when a borrower isn't enrolled in PledgeCheck.
+- Hard escalations jump the queue; officer feedback per finding type goes to the rules owner.
+- Grafana rendered to an image; payment-to-case latency measured (p50 1.5 s).
 
 **Still to do:**
 - Line-item cross-check to cut false tamper flags.
 - Compare the document model against a zero-shot general VLM.
-- Incremental processing and partitioned storage.
+- Incremental processing and partitioned storage (deliberately deferred: no gain on one machine).
+- Obligor confirmations, a single-counterparty check, SEC ABS-EE calibration (needs a contact email for EDGAR).
 - `CIRCULAR_FLOW`.
 - Model-written sentences and a faithfulness check.
 - The learning loop.

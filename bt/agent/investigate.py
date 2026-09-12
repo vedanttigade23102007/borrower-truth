@@ -49,6 +49,9 @@ TOOLS = [
     ("payer_summary", "Payments into the borrower's collection account from one payer: count, total, months, memos, "
                       "and share of all inflows.", {"borrower_id": "e.g. B0028", "payer_name": "exact payer name"}),
     ("disclosures", "What the borrower disclosed to the bank: debts, affiliates, programmes.", {"borrower_id": "e.g. B0028"}),
+    ("outgoing_payments", "Money the borrower sent from its own operating account to one payee: count, total, months, "
+                          "and whether the same payee also sent money back.", {"borrower_id": "e.g. B0028",
+                                                                               "payee_name": "exact payee name"}),
     ("gleif_lookup", "Live public legal-entity (LEI) registry: exact legal-name match, with parent companies.",
      {"name": "exact legal name"}),
 ]
@@ -71,7 +74,7 @@ class Tools:
 
     def __init__(self, data_dir: str, cases: list[dict], live_gleif: bool = True):
         self.con = duckdb.connect()
-        for t in ("entities", "ucc_filings", "court_records", "payments", "persons", "disclosures", "borrowers"):
+        for t in ("entities", "ucc_filings", "court_records", "payments", "persons", "disclosures", "borrowers", "outflows"):
             f = os.path.join(data_dir, f"{t}.parquet")
             if os.path.exists(f):
                 self.con.execute(f"CREATE VIEW {t} AS SELECT * FROM read_parquet('{f}')")
@@ -177,6 +180,19 @@ class Tools:
                             FROM disclosures d LEFT JOIN entities e ON e.entity_id = d.counterparty_entity_id
                             WHERE d.borrower_id = ? ORDER BY d.kind""", borrower_id) or \
             {"result": "the borrower disclosed nothing"}
+
+    def t_outgoing_payments(self, borrower_id, payee_name):
+        if not self.rows("SELECT count(*) AS n FROM duckdb_views() WHERE view_name = 'outflows'")[0]["n"]:
+            return {"result": "no operating-account data for this book"}
+        r = self.rows("""SELECT count(*) AS payments, sum(amount) AS total, min(month) AS first_month,
+                                max(month) AS last_month, list(DISTINCT memo ORDER BY memo) AS memos
+                         FROM outflows WHERE borrower_id = ? AND lower(payee_name) = lower(?)""",
+                      borrower_id, payee_name)[0]
+        back = self.rows("SELECT count(*) AS n, sum(amount) AS total FROM payments WHERE borrower_id = ? "
+                         "AND lower(payer_name) = lower(?)", borrower_id, payee_name)[0]
+        if not r["payments"]:
+            return {"result": f"no payments to '{payee_name}'"}
+        return dict(r, payee=payee_name, same_party_paid_back=back["n"], paid_back_total=back["total"])
 
     def t_gleif_lookup(self, name):
         if not self.live_gleif:

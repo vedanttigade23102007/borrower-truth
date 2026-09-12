@@ -8,6 +8,10 @@ Uses other systems' outputs (this is where the chaining pays off):
   S5 undisclosed liens     -> DEBT_GAP
   S4 invoice findings      -> RECEIVABLES_QUALITY
 and its own                -> COVENANT_EDGE_PATTERN (repeatedly just clearing the line)
+                           -> RECEIVABLES_OUTPACE_REVENUE (invoice-based borrowers: reported
+                              receivables pile up far faster than revenue, the footprint of
+                              invoices that will never be paid). Not applied to loan books:
+                              on those the ratio drifts as much for honest borrowers.
 """
 import statistics
 
@@ -38,6 +42,20 @@ def run(ctx: Ctx, upstream: dict):
                            [f"financials:{b}:Q{q['quarter']}:covenant={q['covenant_metric_reported']}" for q in edge],
                            "Covenant metric landed within 5% above the threshold two quarters running",
                            edge[0]["quarter"] * 3 + 2))
+    invoice_based = {r["borrower_id"] for r in ctx.rows("SELECT borrower_id FROM borrowers WHERE btype = 'receivables_finance'")}
+    for b, qs in fin.items():
+        dso = [(q["quarter"], q["receivables_reported"] / q["revenue_reported"]) for q in qs if q["revenue_reported"] > 0]
+        if b not in invoice_based or len(dso) < 6:
+            continue
+        base = statistics.median(r for _, r in dso[:4])
+        last2 = dso[-2:]
+        if base > 0 and all(r > base * 2.0 for _, r in last2):
+            mult = last2[-1][1] / base
+            out.append(sig("S7", b, "RECEIVABLES_OUTPACE_REVENUE", min(1.0, 0.3 + mult / 10), 0.7,
+                           [f"financials:{b}:Q{q}:receivables/revenue={r:.2f}" for q, r in last2]
+                           + [f"financials:{b}:baseline={base:.2f}"],
+                           f"Reported receivables are {mult:.1f}x their usual size relative to revenue "
+                           f"(2 quarters in a row): money is booked that isn't being collected", last2[0][0] * 3 + 2))
     for b, ids in upstream.get("s5_undisclosed", {}).items():
         out.append(sig("S7", b, "DEBT_GAP", 0.7, 0.8, [f"signal:{i}" for i in ids[:3]] + [f"financials:{b}:debt_reported"],
                        f"Debt reported to Wells Fargo omits {len(ids)} secured lender(s) found in public lien filings",

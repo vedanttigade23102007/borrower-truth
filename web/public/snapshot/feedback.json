@@ -1,0 +1,51 @@
+[
+ {
+  "mechanism": "DISGUISED_RECEIPTS",
+  "proposed": 47,
+  "approved": 1,
+  "rejected": 0,
+  "done": 0
+ },
+ {
+  "mechanism": "DOUBLE_PLEDGE",
+  "proposed": 27,
+  "approved": 0,
+  "rejected": 0,
+  "done": 0
+ },
+ {
+  "mechanism": "FAKE_INVOICES",
+  "proposed": 15,
+  "approved": 0,
+  "rejected": 0,
+  "done": 0
+ },
+ {
+  "mechanism": "FIN_MANIPULATION",
+  "proposed": 39,
+  "approved": 0,
+  "rejected": 0,
+  "done": 0
+ },
+ {
+  "mechanism": "HIDDEN_DEBT",
+  "proposed": 24,
+  "approved": 0,
+  "rejected": 0,
+  "done": 0
+ },
+ {
+  "mechanism": "RELATED_SHELLS",
+  "proposed": 28,
+  "approved": 0,
+  "rejected": 0,
+  "done": 0
+ },
+ {
+  "mechanism": "TAPE_DRESSUP",
+  "proposed": 27,
+  "approved": 0,
+  "rejected": 0,
+  "done": 0
+ }
+]

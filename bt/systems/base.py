@@ -26,6 +26,8 @@ EMPTY_SCHEMAS = {
     "tape": "month SMALLINT, facility_id VARCHAR, borrower_id VARCHAR, asset_id VARCHAR, vin VARCHAR, obligor_id VARCHAR, "
             "balance DOUBLE, dpd_bucket_reported TINYINT, deferred_flag TINYINT, eligible_reported BOOLEAN",
     "source_truth": "month SMALLINT, borrower_id VARCHAR, asset_id VARCHAR, dpd_bucket_true TINYINT, balance_true DOUBLE",
+    "outflows": "txn_id VARCHAR, month SMALLINT, day TINYINT, borrower_id VARCHAR, account_id VARCHAR, payee_id VARCHAR, "
+                "payee_name VARCHAR, amount DOUBLE, memo VARCHAR",
 }
 
 # view name -> (file, time filter using {a} = as_of)
@@ -43,6 +45,7 @@ VIEWS = {
     "tape": ("tape", "month <= {a}"),
     "source_truth": ("source_truth", "month <= {a}"),
     "payments": ("payments", "month <= {a}"),
+    "outflows": ("outflows", "month <= {a}"),  # the borrower's operating account at WF (older books: empty)
     "invoices": ("invoices", "pledged_month <= {a}"),
 }
 

@@ -160,9 +160,9 @@
     "S3-B0028-RELATED_PARTY_INFLOW-3a0eb607"
    ],
    "corroborated_by": [
-    "S6-B0028-SHELL_INDICATORS-d4401ac6",
+    "S6-B0028-SHELL_INDICATORS-a80898c9",
     "S5-B0028-JUDGMENT-5c5e0929",
-    "S6-B0028-RELATED_ENTITY-c834cd08"
+    "S6-B0028-RELATED_ENTITY-f7cb7314"
    ],
    "sources": [
     "courts",
@@ -183,8 +183,8 @@
    ],
    "corroborated_by": [
     "S3-B0028-RELATED_PARTY_INFLOW-3a0eb607",
-    "S6-B0028-SHELL_INDICATORS-d4401ac6",
-    "S6-B0028-RELATED_ENTITY-c834cd08"
+    "S6-B0028-SHELL_INDICATORS-a80898c9",
+    "S6-B0028-RELATED_ENTITY-f7cb7314"
    ],
    "sources": [
     "courts",
@@ -201,11 +201,11 @@
    "confidence": "high",
    "plain": "the borrower is connected to undisclosed shell companies",
    "signals": [
-    "S6-B0028-SHELL_INDICATORS-d4401ac6",
-    "S6-B0028-SHELL_INDICATORS-f376955d",
+    "S6-B0028-SHELL_INDICATORS-a80898c9",
+    "S6-B0028-SHELL_INDICATORS-98f585ed",
     "S6-B0028-SHELL_INDICATORS-3d5fc0d6",
-    "S6-B0028-RELATED_ENTITY-c834cd08",
-    "S6-B0028-RELATED_ENTITY-59a99a7c",
+    "S6-B0028-RELATED_ENTITY-f7cb7314",
+    "S6-B0028-RELATED_ENTITY-f6f8a16f",
     "S6-B0028-RELATED_ENTITY-26978907"
    ],
    "corroborated_by": [
@@ -263,7 +263,7 @@
    ]
   },
   {
-   "signal_id": "S6-B0028-SHELL_INDICATORS-d4401ac6",
+   "signal_id": "S6-B0028-SHELL_INDICATORS-a80898c9",
    "entity_id": "B0028",
    "system": "S6",
    "type": "SHELL_INDICATORS",
@@ -272,7 +272,9 @@
    "evidence": [
     "registry:E000370",
     "officer_match:True",
-    "address_match:True"
+    "address_match:True",
+    "phone_match:True",
+    "agent_match:False"
    ],
    "explanation": "'Lakeshore Receivables LLC' looks like a shell: no operations, same address as borrower, no LEI / not in GLEIF",
    "observed_month": 7,
@@ -281,7 +283,7 @@
    ]
   },
   {
-   "signal_id": "S6-B0028-SHELL_INDICATORS-f376955d",
+   "signal_id": "S6-B0028-SHELL_INDICATORS-98f585ed",
    "entity_id": "B0028",
    "system": "S6",
    "type": "SHELL_INDICATORS",
@@ -290,7 +292,9 @@
    "evidence": [
     "registry:E000371",
     "officer_match:True",
-    "address_match:True"
+    "address_match:True",
+    "phone_match:True",
+    "agent_match:False"
    ],
    "explanation": "'Lakeshore Receivables II LLC' looks like a shell: no operations, same address as borrower, no LEI / not in GLEIF",
    "observed_month": 6,
@@ -349,7 +353,7 @@
    ]
   },
   {
-   "signal_id": "S6-B0028-RELATED_ENTITY-c834cd08",
+   "signal_id": "S6-B0028-RELATED_ENTITY-f7cb7314",
    "entity_id": "B0028",
    "system": "S6",
    "type": "RELATED_ENTITY",
@@ -358,16 +362,18 @@
    "evidence": [
     "registry:E000370",
     "officer_match:True",
-    "address_match:True"
+    "address_match:True",
+    "phone_match:True",
+    "agent_match:False"
    ],
-   "explanation": "Undisclosed related company 'Lakeshore Receivables LLC' shares the borrower's officer",
+   "explanation": "Undisclosed related company 'Lakeshore Receivables LLC' shares the borrower's officer and address and phone number",
    "observed_month": 7,
    "related_entities": [
     "E000370"
    ]
   },
   {
-   "signal_id": "S6-B0028-RELATED_ENTITY-59a99a7c",
+   "signal_id": "S6-B0028-RELATED_ENTITY-f6f8a16f",
    "entity_id": "B0028",
    "system": "S6",
    "type": "RELATED_ENTITY",
@@ -376,9 +382,11 @@
    "evidence": [
     "registry:E000371",
     "officer_match:True",
-    "address_match:True"
+    "address_match:True",
+    "phone_match:True",
+    "agent_match:False"
    ],
-   "explanation": "Undisclosed related company 'Lakeshore Receivables II LLC' shares the borrower's officer",
+   "explanation": "Undisclosed related company 'Lakeshore Receivables II LLC' shares the borrower's officer and address and phone number",
    "observed_month": 6,
    "related_entities": [
     "E000371"
@@ -396,7 +404,7 @@
     "officer_match:True",
     "address_match:True"
    ],
-   "explanation": "Undisclosed related company 'Lakeshore Receivables III LLC' shares the borrower's officer",
+   "explanation": "Undisclosed related company 'Lakeshore Receivables III LLC' shares the borrower's officer and address",
    "observed_month": 4,
    "related_entities": [
     "E000372"
@@ -416,14 +424,28 @@
    "explanation": "Covenant metric landed within 5% above the threshold two quarters running",
    "observed_month": 20,
    "related_entities": []
+  },
+  {
+   "signal_id": "S1-B0028-PLEDGECHECK_ABSENT-0bb6734d",
+   "entity_id": "B0028",
+   "system": "S1",
+   "type": "PLEDGECHECK_ABSENT",
+   "severity": 0.1,
+   "confidence": 1.0,
+   "evidence": [
+    "pledgecheck:B0028:not_enrolled"
+   ],
+   "explanation": "Not enrolled in Setpoint PledgeCheck: whether this collateral is also pledged at other lenders can't be verified",
+   "observed_month": 23,
+   "related_entities": []
   }
  ],
  "decision": {
-  "decision_id": "B0028-m23-e98793918542",
-  "result_digest": "e98793918542",
-  "inputs_digest": "1baafa7cb6dd",
-  "rule_version": "c5261f73b139",
-  "code_version": "3253587",
+  "decision_id": "B0028-m23-62b0c621c805",
+  "result_digest": "62b0c621c805",
+  "inputs_digest": "d8cd6b338715",
+  "rule_version": "246bf431643e",
+  "code_version": "9f12345+local-changes",
   "as_of": 23
  }
 }
