@@ -673,8 +673,9 @@ class Book:
         for f in self.small["facilities"]:
             first_fac.setdefault(f["borrower_id"], f["facility_id"])
         pb = np.concatenate([c["borrower_id"] for c in self.big["payments"]])
-        pa_ = np.concatenate([c["amount"] for c in self.big["payments"]])
-        avg_coll = {b: max(float(pa_[pb == b].sum()) / M, 20_000.0) for b in brow}
+        ub, pinv = np.unique(pb, return_inverse=True)
+        paid_by = dict(zip(ub.tolist(), np.bincount(pinv, weights=np.concatenate([c["amount"] for c in self.big["payments"]]))))
+        avg_coll = {b: max(float(paid_by.get(b, 0.0)) / M, 20_000.0) for b in brow}
 
         # 1. phone number and registered agent for every company in the registry
         for e in ents:
@@ -786,7 +787,7 @@ class Book:
         #    some sub-600 scores to just over the eligibility line (Tricolor, as alleged: ineligible collateral made
         #    to "meet lender requirements"); honest servicers occasionally correct a score once.
         dress = {b for b, v in self.labels.items() if "TAPE_DRESSUP" in v["mechanisms"]}
-        scores, cheat, fix = {}, {}, {}
+        scores, cheat, fix, n_cheat = {}, {}, {}, {}
         for ch in self.big["tape"]:
             b = str(ch["borrower_id"][0])
             u, inv = np.unique(ch["vin"], return_inverse=True)
@@ -795,6 +796,7 @@ class Book:
                 scores[v] = int(x)
                 if b in dress and x < ELIGIBLE_SCORE and r2.random() < 0.6:
                     cheat[v] = (self.labels[b]["start_month"], int(r2.integers(ELIGIBLE_SCORE, ELIGIBLE_SCORE + 13)))
+                    n_cheat[b] = n_cheat.get(b, 0) + 1
                 elif r2.random() < 0.003:
                     fix[v] = (int(r2.integers(1, M)), int(r2.choice([-1, 1]) * r2.integers(5, 41)))
             base = np.array([scores[v] for v in u])
@@ -805,11 +807,8 @@ class Book:
             month = ch["month"].astype(int)
             rep = base[inv] + np.where(month >= f_m, f_d, 0)
             ch["credit_score"] = np.where(month >= c_m, c_v, rep).astype(np.int16)
-        vins_of = {}
-        for ch in self.big["tape"]:
-            vins_of.setdefault(str(ch["borrower_id"][0]), set()).update(ch["vin"].tolist())
         for b in dress:
-            self.labels[b]["planted"]["rewritten_scores"] = sum(1 for v in cheat if v in vins_of.get(b, ()))
+            self.labels[b]["planted"]["rewritten_scores"] = n_cheat.get(b, 0)
 
     def write(self, out):
         os.makedirs(out, exist_ok=True)
