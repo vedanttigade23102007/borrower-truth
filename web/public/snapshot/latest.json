@@ -1,6 +1,6 @@
 {
  "asOf": 23,
- "receivedAt": "2026-09-11T19:39:06.424281Z",
+ "receivedAt": "2026-09-12T09:57:06.639641Z",
  "runMetrics": {
   "data_quality": {
    "quarantined": {},
@@ -8,7 +8,7 @@
   },
   "S6": {
    "status": "ok",
-   "seconds": 0.017,
+   "seconds": 0.013,
    "signals": 76
   },
   "S1": {
@@ -18,22 +18,22 @@
   },
   "S2": {
    "status": "ok",
-   "seconds": 0.062,
+   "seconds": 0.054,
    "signals": 20
   },
   "S3": {
    "status": "ok",
-   "seconds": 0.284,
+   "seconds": 0.258,
    "signals": 12
   },
   "S4": {
    "status": "ok",
-   "seconds": 0.043,
+   "seconds": 0.04,
    "signals": 29
   },
   "S5": {
    "status": "ok",
-   "seconds": 0.006,
+   "seconds": 0.005,
    "signals": 61
   },
   "S7": {
@@ -62,14 +62,14 @@
    },
    "inputs_digest": "1baafa7cb6dd",
    "rule_version": "c5261f73b139",
-   "code_version": "d9b13fe"
+   "code_version": "3253587"
   },
   "combiner": {
    "status": "ok",
-   "seconds": 0.081,
+   "seconds": 0.076,
    "cases": 120
   },
-  "total_seconds": 1.157,
+  "total_seconds": 1.108,
   "as_of": 23
  },
  "verdicts": {
