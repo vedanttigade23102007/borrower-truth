@@ -66,6 +66,11 @@ blockquote{margin:0;padding:12px 18px;border-left:4px solid var(--accent);backgr
 ul{margin:0;padding-left:22px}li{margin:5px 0}
 .fine{font-size:13px;color:var(--muted)}
 .mt{margin-top:auto}
+.cmp{font-size:14px}.cmp th,.cmp td{text-align:center;padding:5px 6px;vertical-align:middle}
+.cmp th:first-child,.cmp td:first-child{text-align:left}
+.cmp th{font-size:11px;line-height:1.25}
+.cmp .y{color:var(--ok);font-weight:800;font-size:17px}.cmp .p{color:var(--warn);font-weight:800;font-size:17px}.cmp .x{color:#A3ADBD}
+.cmp tr.us td{background:var(--accent-soft);font-weight:700}
 @media (max-width:900px){.frame{aspect-ratio:auto;padding:26px}.grid2,.grid3,.grid4,.arch,.sys{grid-template-columns:1fr}
 h1{font-size:30px}h2{font-size:24px}.big{font-size:54px}.timeline{flex-direction:column;gap:12px}}
 @media print{@page{size:1280px 720px;margin:0}html{background:#fff;scroll-snap-type:none}
@@ -237,7 +242,7 @@ h1{font-size:30px}h2{font-size:24px}.big{font-size:54px}.timeline{flex-direction
   <div class="arch">
     <div class="sys"><div>S1 Collateral</div><div>S2 Tape vs source</div><div>S3 Cash provenance</div><div>S4 Invoices</div><div>S5 Hidden debt</div><div>S6 Relationships</div><div style="grid-column:span 2">S7 Financial consistency</div></div>
     <div class="bigarrow">→</div>
-    <div class="hub"><b>Combiner</b>One risk score. Stronger when independent systems agree.</div>
+    <div class="hub"><b>Combiner</b>One verdict per borrower. Stronger when independent systems agree.</div>
     <div class="bigarrow">→</div>
     <div class="out"><b>Case file</b>Ranked borrowers, every finding with its evidence. A human decides.</div>
   </div>
@@ -358,7 +363,7 @@ h1{font-size:30px}h2{font-size:24px}.big{font-size:54px}.timeline{flex-direction
   <div class="kicker">Status · built and running, not a plan any more</div>
   <h2>Every part in this deck now exists and has been tested end to end.</h2>
   <div class="grid3">
-    <div class="card"><h3>Seven checks + combiner</h3>Python and DuckDB. 25 tests. One monthly run of 120 borrowers takes under 1.4 s.</div>
+    <div class="card"><h3>Seven checks + combiner</h3>Python and DuckDB. 27 Python and 10 Java tests. One monthly run of 120 borrowers takes under 1.4 s.</div>
     <div class="card"><h3>Case, verdict and fix service</h3>Java 21 and Spring Boot. Playbooks, drafted letters, one-click approval, audit log. It refuses "done" before "approved".</div>
     <div class="card"><h3>Review console</h3>Next.js on Vercel, shareable by link. It shows the data, the answer key and every case, but no code, full dataset or model weights.</div>
     <div class="card"><h3>Live streaming</h3>Kafka API and a streaming worker. A suspicious payer is flagged 24 ms after the payment lands.</div>
@@ -402,10 +407,52 @@ h1{font-size:30px}h2{font-size:24px}.big{font-size:54px}.timeline{flex-direction
   <h2>Every decision can be replayed, an open-model agent does the legwork, and anyone can check the answer key.</h2>
   <div class="grid3">
     <div class="card"><h3>Decision record</h3>Each verdict carries fingerprints of its inputs, rules and code. Replaying the demo run gave 120 of 120 identical decisions; change one input and the replay names it.</div>
-    <div class="card"><h3>Investigator agent</h3>After the rules decide, an open model checks the registry, liens, courts, payments and GLEIF with read-only tools and drafts a memo. Code drops any line that cites nothing or states a number its source doesn't contain. It never decides.</div>
+    <div class="card"><h3>Investigator agent</h3>After the rules decide, an open model (Qwen3-8B on a free Kaggle GPU) checks the registry, liens, courts, payments and GLEIF with read-only tools and drafts a memo. Code drops any line that cites nothing, states a number its source doesn't contain, or contradicts the records on disclosures and liens. It never decides.</div>
     <div class="card"><h3>Test it yourself</h3>The public console shows the data, one fraud step by step, the invoice documents, and the answer key next to every verdict, misses included.</div>
   </div>
   <p class="fine mt">Shared: samples, results, the reasoning on every case. Not shared: the code, the full dataset, the rules and the model weights.</p>
+</div></section>
+
+<!-- C1 Market map -->
+<section class="slide"><div class="frame">
+  <div class="kicker">What lenders can already buy · from each vendor's own public pages</div>
+  <h2>Each tool covers one or two of the seven places. None describes joining all seven into one verdict.</h2>
+  <table class="cmp">
+    <tr><th>Tool (row) · place where fraud hides (column)</th><th>S1 Pledged twice</th><th>S2 Loan file vs source</th><th>S3 Who paid</th><th>S4 Invoices</th><th>S5 Hidden debt</th><th>S6 Linked companies</th><th>S7 Financials</th><th>All 7 → verdict + fix</th></tr>
+    <tr><td>Setpoint PledgeCheck <span class="pill ok">WF-backed</span></td><td class="y">✓</td><td class="p">◐</td><td class="p">◐</td><td class="x">–</td><td class="x">–</td><td class="x">–</td><td class="x">–</td><td class="x">–</td></tr>
+    <tr><td>Finley Verification Suite</td><td class="x">–</td><td class="y">✓</td><td class="x">–</td><td class="p">◐</td><td class="x">–</td><td class="x">–</td><td class="p">◐</td><td class="x">–</td></tr>
+    <tr><td>Cardo AI</td><td class="x">–</td><td class="p">◐</td><td class="x">–</td><td class="x">–</td><td class="x">–</td><td class="x">–</td><td class="y">✓</td><td class="x">–</td></tr>
+    <tr><td>MonetaGo</td><td class="y">✓</td><td class="x">–</td><td class="x">–</td><td class="y">✓</td><td class="x">–</td><td class="x">–</td><td class="x">–</td><td class="x">–</td></tr>
+    <tr><td>Quantexa</td><td class="x">–</td><td class="x">–</td><td class="x">–</td><td class="x">–</td><td class="x">–</td><td class="y">✓</td><td class="p">◐</td><td class="p">◐</td></tr>
+    <tr><td>Ocrolus Detect</td><td class="x">–</td><td class="x">–</td><td class="p">◐</td><td class="x">–</td><td class="x">–</td><td class="x">–</td><td class="x">–</td><td class="p">◐</td></tr>
+    <tr><td>Wolters Kluwer iLien <span class="pill warn">verify</span></td><td class="x">–</td><td class="x">–</td><td class="x">–</td><td class="x">–</td><td class="y">✓</td><td class="x">–</td><td class="x">–</td><td class="x">–</td></tr>
+    <tr><td>Field-exam firms (Guidehouse, CBIZ)</td><td class="p">◐</td><td class="p">◐</td><td class="p">◐</td><td class="p">◐</td><td class="x">–</td><td class="x">–</td><td class="x">–</td><td class="p">◐</td></tr>
+    <tr class="us"><td>Borrower Truth <span class="pill warn">synthetic data</span></td><td class="p">◐</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td></tr>
+  </table>
+  <p class="fine mt"><b style="color:var(--ok)">✓</b> their public page says it does this · <b style="color:var(--warn)">◐</b> partly (e.g. Setpoint checks the <i>amount</i> collected, not <i>who</i> paid; field exams check a sample, by hand) · – not described publicly (not proof they can't). Sources: research/COMPETITORS.md, 12 Sep 2026. Wolters Kluwer row from search text. Not part of the 57 verified claims.</p>
+</div></section>
+
+<!-- C2 Where we fit -->
+<section class="slide"><div class="frame">
+  <div class="kicker">Honest read of the market</div>
+  <h2>They go deeper in their one place. We connect the places, so we plug into them instead of fighting them.</h2>
+  <div class="grid2">
+    <div class="card"><h3>Where they beat us</h3><ul>
+      <li><b>Setpoint</b> sees other lenders' facilities. We can't. 250+ lenders use it.</li>
+      <li><b>Quantexa</b> matches "billions of data points". We match names and addresses.</li>
+      <li><b>Ocrolus</b> spots edited PDFs and AI-made documents. We only read the invoice total.</li>
+      <li><b>MonetaGo</b> is a registry shared by banks over SWIFT.</li>
+      <li><b>All of them</b> have real customers and real data. We have synthetic data.</li></ul></div>
+    <div class="card hl"><h3>Where we fit: the layer on top</h3><ul>
+      <li>PledgeCheck result → S1 <span class="pill ok">already wired in</span></li>
+      <li>Lien data (e.g. Wolters Kluwer) → S5</li>
+      <li>Entity matching (e.g. Quantexa) → S6</li>
+      <li>Document forensics (e.g. Ocrolus-style) → S4</li>
+      <li>The combiner joins them for one borrower → verdict, proof, fix, approval</li></ul>
+      <p class="fine" style="margin:8px 0 0">Why joining matters: in the alleged First Brands and Tricolor schemes each trick sat in a different place, so a check that watches one place can pass each trick on its own.</p></div>
+  </div>
+  <blockquote class="mt">The pitch: "More value from tools Wells Fargo already backs, by connecting what each one sees about a single borrower. Let me test it on real data."</blockquote>
+  <p class="fine">Not checked yet: private or enterprise features, pricing, and Moody's, S&amp;P, dv01, Sayari.</p>
 </div></section>
 
 <!-- 19 Evidence check -->
