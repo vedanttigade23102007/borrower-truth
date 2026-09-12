@@ -197,7 +197,10 @@ export default function CasePage({ params }: { params: Promise<{ id: string }> }
 }
 
 function AgentMemo({ id, byId }: { id: string; byId: Map<string, Signal> }) {
-  const { data: a } = useStatic<AgentRun>(`/showcase/agent/${encodeURIComponent(id)}.json`, true);
+  // read the index first, so a case without a memo never requests one (no 404s in the console)
+  const { data: idx } = useStatic<{ borrower_id: string }[]>("/showcase/agent/index.json", true);
+  const hasMemo = idx?.some((r) => r.borrower_id === id) ?? false;
+  const { data: a } = useStatic<AgentRun>(hasMemo ? `/showcase/agent/${encodeURIComponent(id)}.json` : null, true);
   const [open, setOpen] = useState(false);
   if (!a) return null; // not every case was investigated for the public demo
   if (a.status !== "ok") {
