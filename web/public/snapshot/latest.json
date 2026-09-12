@@ -1,6 +1,6 @@
 {
  "asOf": 23,
- "receivedAt": "2026-09-12T10:46:58.399828Z",
+ "receivedAt": "2026-09-12T11:05:51.812200Z",
  "runMetrics": {
   "data_quality": {
    "quarantined": {},
@@ -8,37 +8,37 @@
   },
   "S6": {
    "status": "ok",
-   "seconds": 0.011,
+   "seconds": 0.022,
    "signals": 89
   },
   "S1": {
    "status": "ok",
-   "seconds": 0.034,
+   "seconds": 0.035,
    "signals": 63
   },
   "S2": {
    "status": "ok",
-   "seconds": 0.099,
+   "seconds": 0.083,
    "signals": 39
   },
   "S3": {
    "status": "ok",
-   "seconds": 0.413,
+   "seconds": 0.285,
    "signals": 24
   },
   "S4": {
    "status": "ok",
-   "seconds": 0.052,
+   "seconds": 0.043,
    "signals": 29
   },
   "S5": {
    "status": "ok",
-   "seconds": 0.009,
+   "seconds": 0.007,
    "signals": 61
   },
   "S7": {
    "status": "ok",
-   "seconds": 0.005,
+   "seconds": 0.003,
    "signals": 65
   },
   "manifest": {
@@ -62,15 +62,15 @@
     "ucc_filings": "dc69464a1eac5eca"
    },
    "inputs_digest": "d8cd6b338715",
-   "rule_version": "246bf431643e",
-   "code_version": "9f12345+local-changes"
+   "rule_version": "18856c2e1cf6",
+   "code_version": "dcf8b8a"
   },
   "combiner": {
    "status": "ok",
-   "seconds": 0.099,
+   "seconds": 0.08,
    "cases": 120
   },
-  "total_seconds": 1.528,
+  "total_seconds": 1.221,
   "as_of": 23
  },
  "verdicts": {
