@@ -22,7 +22,7 @@ public final class Dto {
 
     public record CaseIn(@NotBlank String borrowerId, @NotBlank String verdict, String headline, double priority,
                          List<FindingIn> findings, List<SignalIn> signals, List<String> explanations,
-                         Map<String, String> coverage) {}
+                         Map<String, String> coverage, Map<String, Object> decision) {}
 
     public record RunIn(int asOf, Map<String, Object> runMetrics, @NotNull @Valid List<CaseIn> cases) {}
 

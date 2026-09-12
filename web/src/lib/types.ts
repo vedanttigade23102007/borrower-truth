@@ -36,6 +36,14 @@ export type CaseData = {
   signals: Signal[];
   explanations: string[];
   coverage: Record<string, string>;
+  decision?: {
+    decisionId: string;
+    resultDigest: string;
+    inputsDigest: string;
+    ruleVersion: string;
+    codeVersion: string;
+    asOf: number;
+  } | null;
 };
 
 export type Step = {

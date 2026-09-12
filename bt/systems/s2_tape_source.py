@@ -49,7 +49,8 @@ WITH a AS (
     JOIN a prev ON prev.asset_id = cur.asset_id AND prev.month = cur.month - 1
     WHERE prev.r >= 2 AND cur.r = 0 AND cur.month >= ?
 ), p AS (SELECT DISTINCT ref AS asset_id, month FROM payments WHERE ref LIKE 'A-%')
-SELECT j.borrower_id, count(DISTINCT j.asset_id) AS n, min(j.month) AS first_m, list(DISTINCT j.asset_id)[1:3] AS ex
+SELECT j.borrower_id, count(DISTINCT j.asset_id) AS n, min(j.month) AS first_m,
+       list(DISTINCT j.asset_id ORDER BY j.asset_id)[1:3] AS ex
 FROM jump j LEFT JOIN p ON p.asset_id = j.asset_id AND p.month BETWEEN j.month AND j.month + 1
 WHERE p.asset_id IS NULL
 GROUP BY 1
@@ -63,7 +64,7 @@ WITH elig AS (
 )
 SELECT e.borrower_id, count(*) AS sampled,
        count(*) FILTER (WHERE s.asset_id IS NULL OR s.dpd_bucket_true >= 2) AS mismatches,
-       list(e.asset_id) FILTER (WHERE s.asset_id IS NULL OR s.dpd_bucket_true >= 2)[1:3] AS ex
+       list(e.asset_id ORDER BY e.asset_id) FILTER (WHERE s.asset_id IS NULL OR s.dpd_bucket_true >= 2)[1:3] AS ex
 FROM elig e LEFT JOIN source_truth s ON s.asset_id = e.asset_id AND s.month = e.month
 WHERE e.k <= ?
 GROUP BY 1

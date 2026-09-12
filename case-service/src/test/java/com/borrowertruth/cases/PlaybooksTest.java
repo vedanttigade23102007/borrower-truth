@@ -25,7 +25,7 @@ class PlaybooksTest {
                 List.of("ucc:TX-UCC-000001"), "'Northgate Capital Partners LLC' holds a lien on the borrower", 11, List.of());
         FindingIn f = new FindingIn("HIDDEN_DEBT", "medium", "the borrower has debt it has not disclosed",
                 List.of(s.signalId()), List.of(), List.of("ucc"), List.of("S5"), 11);
-        return new CaseIn("B0001", "LIKELY_FRAUD", "Likely: hidden debt", 0.7, List.of(f), List.of(s), List.of(), Map.of("S5", "ok"));
+        return new CaseIn("B0001", "LIKELY_FRAUD", "Likely: hidden debt", 0.7, List.of(f), List.of(s), List.of(), Map.of("S5", "ok"), null);
     }
 
     @Test

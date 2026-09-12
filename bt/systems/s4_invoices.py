@@ -14,7 +14,7 @@ images; these rule checks run first so the model only reads what they flag.
 from bt.systems.base import Ctx, sig
 
 ALTERED = """
-SELECT borrower_id, count(*) AS n, min(first_m) AS first_m, list(invoice_number)[1:3] AS ex,
+SELECT borrower_id, count(*) AS n, min(first_m) AS first_m, list(invoice_number ORDER BY invoice_number)[1:3] AS ex,
        max(ratio) AS max_ratio
 FROM (SELECT borrower_id, invoice_number, max(pledged_month) AS first_m, max(amount) / min(amount) AS ratio
       FROM invoices GROUP BY 1, 2 HAVING count(DISTINCT amount) > 1)
@@ -29,7 +29,7 @@ WITH first AS (
     SELECT * FROM first WHERE im + CAST(ceil(due / 30.0) AS INTEGER) + 1 <= ? AND im >= ?
 ), paid AS (SELECT DISTINCT borrower_id, ref FROM payments WHERE ref <> '')
 SELECT d.borrower_id, count(*) AS n, count(*) FILTER (WHERE p.ref IS NULL) AS unpaid,
-       list(d.invoice_number) FILTER (WHERE p.ref IS NULL)[1:3] AS ex
+       list(d.invoice_number ORDER BY d.invoice_number) FILTER (WHERE p.ref IS NULL)[1:3] AS ex
 FROM due d LEFT JOIN paid p ON p.borrower_id = d.borrower_id AND p.ref = d.invoice_number
 GROUP BY 1
 """
@@ -38,7 +38,7 @@ IMPLAUSIBLE = """
 WITH paid AS (SELECT DISTINCT ref FROM payments WHERE ref <> ''),
      med AS (SELECT i.debtor_id, median(i.amount) AS md FROM invoices i JOIN paid ON paid.ref = i.invoice_number
              GROUP BY 1 HAVING count(*) >= 5)
-SELECT i.borrower_id, count(*) AS n, min(i.pledged_month) AS first_m, list(i.invoice_id)[1:3] AS ex
+SELECT i.borrower_id, count(*) AS n, min(i.pledged_month) AS first_m, list(i.invoice_id ORDER BY i.invoice_id)[1:3] AS ex
 FROM invoices i JOIN med USING (debtor_id)
 WHERE i.amount > 5 * med.md AND i.pledged_month >= ?
 GROUP BY 1
@@ -61,7 +61,7 @@ def document_check(ctx: Ctx) -> list:
     rows = ctx.rows(f"""
         SELECT d.borrower_id, count(*) AS n, count(*) FILTER (WHERE d.doc_mismatch) AS bad,
                count(*) FILTER (WHERE d.doc_mismatch AND d.reads_agree) AS bad_agree,
-               list(d.invoice_id) FILTER (WHERE d.doc_mismatch)[1:3] AS ex, min(i.pledged_month) AS first_m
+               list(d.invoice_id ORDER BY d.invoice_id) FILTER (WHERE d.doc_mismatch)[1:3] AS ex, min(i.pledged_month) AS first_m
         FROM read_parquet('{path}') d JOIN invoices i USING (invoice_id)
         GROUP BY 1""")
     ctx.shared["documents"] = f"ok ({sum(r['n'] for r in rows)} documents read)"

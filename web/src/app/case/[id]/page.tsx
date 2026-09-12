@@ -5,7 +5,8 @@ import { use, useCallback, useEffect, useMemo, useState } from "react";
 import { Badge, Button, Card, ConfidencePill, ErrorState, Skeleton, StatusPill, VerdictBadge } from "@/components/ui";
 import { allowed, decide, fetchCase, isDemo } from "@/lib/api";
 import { MECHANISM, SOURCE, SYSTEM, fmtDate, signalLabel } from "@/lib/labels";
-import type { CaseDetail, Decision, Finding, Signal, Step } from "@/lib/types";
+import { useStatic, type AgentRun, type Replay } from "@/lib/showcase";
+import type { CaseData, CaseDetail, Decision, Finding, Signal, Step } from "@/lib/types";
 
 const USER_KEY = "bt-user";
 
@@ -132,6 +133,8 @@ export default function CasePage({ params }: { params: Promise<{ id: string }> }
         </Card>
       )}
 
+      <AgentMemo id={c.borrowerId} byId={byId} />
+
       <FixSteps id={c.borrowerId} steps={data.steps} user={user} setUser={setUser} onChange={() => void load()} />
 
       <Card className="overflow-hidden">
@@ -143,7 +146,7 @@ export default function CasePage({ params }: { params: Promise<{ id: string }> }
         ) : (
           <ul className="divide-y divide-zinc-100">
             {c.signals.map((s) => (
-              <li key={s.signalId} className="px-4 py-3 text-sm">
+              <li key={s.signalId} id={`sig-${s.signalId}`} className="scroll-mt-6 px-4 py-3 text-sm target:bg-blue-50/60">
                 <div className="flex flex-wrap items-center gap-2">
                   <Badge tone="blue">
                     {s.system} {SYSTEM[s.system]}
@@ -160,6 +163,8 @@ export default function CasePage({ params }: { params: Promise<{ id: string }> }
           </ul>
         )}
       </Card>
+
+      <DecisionRecord d={c.decision} />
 
       <Card className="overflow-hidden">
         <h2 className="border-b border-zinc-200 px-4 py-3 text-sm font-medium text-zinc-900">Audit log</h2>
@@ -179,6 +184,126 @@ export default function CasePage({ params }: { params: Promise<{ id: string }> }
         )}
       </Card>
     </div>
+  );
+}
+
+function AgentMemo({ id, byId }: { id: string; byId: Map<string, Signal> }) {
+  const { data: a } = useStatic<AgentRun>(`/showcase/agent/${encodeURIComponent(id)}.json`, true);
+  const [open, setOpen] = useState(false);
+  if (!a) return null; // not every case was investigated for the public demo
+  if (a.status !== "ok") {
+    return (
+      <Card className="p-4 text-sm text-zinc-600">
+        Investigator agent unavailable for this case. The verdict and the suggested fix come from the rules and stand on their own.
+      </Card>
+    );
+  }
+  const steps = new Map(a.steps.map((s) => [s.id, s]));
+  const stepAnchor = (cid: string) => `step-${id}-${cid}`;
+  return (
+    <Card className="overflow-hidden">
+      <div className="flex flex-wrap items-center gap-2 border-b border-zinc-200 px-4 py-3">
+        <h2 className="text-sm font-medium text-zinc-900">Investigator agent memo</h2>
+        <Badge tone="blue">open model · {a.model}</Badge>
+        <span className="text-xs text-zinc-500">investigates, never decides</span>
+      </div>
+      <p className="border-b border-zinc-100 bg-zinc-50 px-4 py-2 text-xs text-zinc-500">
+        After the rules decided, the agent looked up {a.steps.length} records with read-only tools and wrote this memo for
+        the credit officer. Every line cites its source. A code check dropped {a.dropped.length} line
+        {a.dropped.length === 1 ? "" : "s"} that cited nothing or used a number not in its source. Run on {a.generated_at}{" "}
+        and saved for this public page.
+      </p>
+      <ul className="space-y-2 px-4 py-3 text-sm">
+        {a.memo.map((m, i) => (
+          <li key={i} className="text-zinc-800">
+            {m.text}.
+            {m.cites.map((cid) => {
+              const sig = byId.get(cid);
+              const st = steps.get(cid);
+              return (
+                <a
+                  key={cid}
+                  href={sig ? `#sig-${cid}` : `#${stepAnchor(cid)}`}
+                  title={sig?.explanation ?? st?.result}
+                  onClick={(e) => {
+                    if (sig) return;
+                    e.preventDefault();
+                    setOpen(true);
+                    setTimeout(() => document.getElementById(stepAnchor(cid))?.scrollIntoView({ block: "center" }), 0);
+                  }}
+                  className="ml-1.5 inline-flex rounded bg-zinc-100 px-1.5 py-0.5 align-middle font-mono text-[11px] text-zinc-700 hover:bg-zinc-200 focus-visible:outline-2 focus-visible:outline-blue-600"
+                >
+                  {sig ? `${sig.system} ${signalLabel(sig.type).toLowerCase()}` : `${cid} ${st?.tool.replace(/_/g, " ") ?? ""}`}
+                </a>
+              );
+            })}
+          </li>
+        ))}
+      </ul>
+      <details open={open} onToggle={(e) => setOpen((e.target as HTMLDetailsElement).open)} className="border-t border-zinc-100 px-4 py-2 text-sm">
+        <summary className="cursor-pointer rounded text-blue-700 hover:underline focus-visible:outline-2 focus-visible:outline-blue-600">
+          What it looked up ({a.steps.length} tool calls)
+        </summary>
+        <ol className="mt-2 space-y-2 pb-2">
+          {a.steps.map((s) => (
+            <li key={s.id} id={stepAnchor(s.id)} className="scroll-mt-6">
+              <span className="font-mono text-xs font-medium text-zinc-900">
+                {s.id} {s.tool}
+              </span>{" "}
+              <span className="font-mono text-xs text-zinc-500">({Object.values(s.args).join(", ")})</span>
+              <pre className="mt-1 max-h-40 overflow-auto whitespace-pre-wrap break-all rounded bg-zinc-50 p-2 font-mono text-[11px] text-zinc-600">
+                {s.result}
+              </pre>
+            </li>
+          ))}
+        </ol>
+      </details>
+      {a.dropped.length > 0 && (
+        <details className="border-t border-zinc-100 px-4 py-2 text-sm">
+          <summary className="cursor-pointer rounded text-blue-700 hover:underline focus-visible:outline-2 focus-visible:outline-blue-600">
+            Dropped by the check ({a.dropped.length})
+          </summary>
+          <ul className="mt-2 space-y-1 pb-2 text-zinc-600">
+            {a.dropped.map((d, i) => (
+              <li key={i}>
+                <span className="line-through decoration-zinc-400">{d.text}</span> <span className="text-xs text-red-800">({d.reason})</span>
+              </li>
+            ))}
+          </ul>
+        </details>
+      )}
+    </Card>
+  );
+}
+
+function DecisionRecord({ d }: { d: CaseData["decision"] }) {
+  const { data: r } = useStatic<Replay>("/showcase/replay.json", true);
+  if (!d) return null;
+  const rows: [string, string][] = [
+    ["Decision ID", d.decisionId],
+    ["Result fingerprint", d.resultDigest],
+    ["Inputs fingerprint", d.inputsDigest],
+    ["Rules version", d.ruleVersion],
+    ["Code version", d.codeVersion],
+    ["As of", `month ${d.asOf + 1}`],
+  ];
+  return (
+    <Card className="overflow-hidden">
+      <h2 className="border-b border-zinc-200 px-4 py-3 text-sm font-medium text-zinc-900">Decision record</h2>
+      <dl className="grid gap-x-6 gap-y-1 px-4 py-3 text-sm sm:grid-cols-2 lg:grid-cols-3">
+        {rows.map(([k, v]) => (
+          <div key={k} className="flex gap-2">
+            <dt className="shrink-0 text-zinc-500">{k}</dt>
+            <dd className="break-all font-mono text-xs leading-5 text-zinc-900">{v}</dd>
+          </div>
+        ))}
+      </dl>
+      <p className="border-t border-zinc-100 bg-zinc-50 px-4 py-2 text-xs text-zinc-600">
+        The verdict is computed by fixed rules from fingerprinted inputs. No model is in the decision path. Anyone can
+        recompute it: the same inputs and rules give the same result fingerprint
+        {r ? `. Replaying this whole run gave ${r.identical} of ${r.replayed} identical decisions` : ""}.
+      </p>
+    </Card>
   );
 }
 

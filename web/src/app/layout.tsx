@@ -17,6 +17,7 @@ export const metadata: Metadata = {
   title: "Borrower Truth · review console",
   description:
     "Seven connected checks that answer one question: is this borrower's picture of itself true? Synthetic demo data.",
+  robots: { index: false, follow: false }, // shared by link, not listed in search engines
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
@@ -29,8 +30,12 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         </div>
         <Header />
         <main className="mx-auto w-full max-w-7xl flex-1 px-4 py-8 sm:px-6">{children}</main>
-        <footer className="border-t border-zinc-200 py-6 text-center text-xs text-zinc-500">
-          Borrower Truth · every finding links to its evidence · a human approves every action
+        <footer className="space-y-1 border-t border-zinc-200 px-4 py-6 text-center text-xs text-zinc-500">
+          <p>Borrower Truth · every finding links to its evidence · a human approves every action</p>
+          <p>
+            © 2026 Vedant Tigade. A demonstration only, not for reuse. The code, the full dataset, the rules and the model
+            weights are private and not part of this site.
+          </p>
         </footer>
       </body>
     </html>

@@ -6,6 +6,8 @@ import { isDemo } from "@/lib/api";
 
 const NAV = [
   { href: "/", label: "Review queue" },
+  { href: "/data", label: "The data" },
+  { href: "/test", label: "Test it yourself" },
   { href: "/ops", label: "Operations" },
   { href: "/about", label: "How it works" },
 ];

@@ -25,8 +25,8 @@ LEFT JOIN kd ON kd.borrower_id = p.borrower_id AND kd.dn = norm(p.payer_name)
 """
 
 UNKNOWN = """
-SELECT borrower_id, pn, any_value(payer_name) AS name, sum(amount) AS amt, count(*) AS n,
-       min(month) AS first_m, list(txn_id)[1:3] AS ex
+SELECT borrower_id, pn, min(payer_name) AS name, sum(amount) AS amt, count(*) AS n,
+       min(month) AS first_m, list(txn_id ORDER BY txn_id)[1:3] AS ex
 FROM pay_class WHERE NOT known GROUP BY 1, 2
 """
 

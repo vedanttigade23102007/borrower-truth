@@ -22,7 +22,7 @@ import pyarrow as pa
 import pyarrow.parquet as pq
 
 from bt.combiner.combine import build_cases
-from bt.pipeline import dq
+from bt.pipeline import dq, record
 from bt.common.metrics import pipeline_samples, push
 from bt.systems import (s1_collateral, s2_tape_source, s3_cash, s4_invoices, s5_hidden_debt,
                         s6_relationships, s7_financial)
@@ -84,6 +84,9 @@ def run(data_dir: str, as_of: int = 23, simulate_fail: set[str] | None = None, m
     borrowers = [r["borrower_id"] for r in ctx.rows("SELECT borrower_id FROM borrowers ORDER BY 1")]
     t1 = time.perf_counter()
     cases = build_cases(signals, coverage, ctx.explanations, borrowers)
+    man = record.manifest(data_dir, overrides, as_of)  # replay record: inputs, rules, code
+    record.stamp(cases, man)
+    metrics["manifest"] = man
     metrics["combiner"] = dict(status="ok", seconds=round(time.perf_counter() - t1, 3), cases=len(cases))
     metrics["total_seconds"] = round(time.perf_counter() - t0, 3)
     metrics["as_of"] = as_of
@@ -100,6 +103,13 @@ def write(out_dir, signals, cases, metrics):
         json.dump(cases, f, indent=1, default=str)
     with open(os.path.join(out_dir, "run_metrics.json"), "w") as f:
         json.dump(metrics, f, indent=1)
+    if "manifest" in metrics:
+        with open(os.path.join(out_dir, "manifest.json"), "w") as f:
+            json.dump(metrics["manifest"], f, indent=1)
+        with open(os.path.join(out_dir, "decision_records.jsonl"), "w") as f:
+            for c in cases:
+                f.write(json.dumps(dict(c["decision"], borrower_id=c["borrower_id"], verdict=c["verdict"],
+                                        findings=sorted(x["mechanism"] for x in c["findings"]))) + "\n")
 
 
 def main(argv=None):

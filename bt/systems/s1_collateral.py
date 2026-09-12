@@ -20,7 +20,7 @@ FROM pledgecheck GROUP BY 1
 """
 
 TAPE_DUP = """
-SELECT borrower_id, count(DISTINCT vin) AS n_dup, min(month) AS first_m, list(DISTINCT vin)[1:3] AS ex
+SELECT borrower_id, count(DISTINCT vin) AS n_dup, min(month) AS first_m, list(DISTINCT vin ORDER BY vin)[1:3] AS ex
 FROM (SELECT borrower_id, month, vin FROM tape
       WHERE month BETWEEN ? AND ?
       GROUP BY 1, 2, 3 HAVING count(DISTINCT facility_id) > 1)
@@ -28,7 +28,7 @@ GROUP BY 1
 """
 
 INV_DUP = """
-SELECT borrower_id, count(*) AS n_dup, min(first_m) AS first_m, list(invoice_number)[1:3] AS ex
+SELECT borrower_id, count(*) AS n_dup, min(first_m) AS first_m, list(invoice_number ORDER BY invoice_number)[1:3] AS ex
 FROM (SELECT borrower_id, invoice_number, max(pledged_month) AS first_m FROM invoices
       GROUP BY 1, 2 HAVING count(DISTINCT facility_id) > 1 AND count(DISTINCT amount) = 1)
 GROUP BY 1
