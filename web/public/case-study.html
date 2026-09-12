@@ -7,29 +7,29 @@
 <style>
   :root { --ink:#0b1220; --muted:#5b6678; --line:#dce4ef; --accent:#1d4ed8; --soft:#eef3fb; --ok:#047857; }
   * { box-sizing: border-box; }
-  body { margin:0; background:#eef1f5; color:var(--ink); font:12.5px/1.4 -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Helvetica, Arial, sans-serif; }
-  .page { width:210mm; min-height:297mm; margin:12px auto; background:#fff; padding:11mm 14mm; }
-  h1 { font-size:21px; margin:0; letter-spacing:-.01em; }
-  h2 { font-size:11.5px; letter-spacing:.08em; text-transform:uppercase; color:var(--accent); margin:11px 0 5px; }
+  body { margin:0; background:#eef1f5; color:var(--ink); font:12px/1.38 -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Helvetica, Arial, sans-serif; }
+  .page { width:210mm; min-height:297mm; margin:12px auto; background:#fff; padding:9mm 13mm; }
+  h1 { font-size:18px; margin:0; letter-spacing:-.01em; }
+  h2 { font-size:11.5px; letter-spacing:.08em; text-transform:uppercase; color:var(--accent); margin:9px 0 4px; }
   p { margin:0 0 4px; }
   .sub { color:var(--muted); margin:4px 0 0; }
   .grid { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin-top:8px; }
-  .m { background:var(--soft); border-radius:8px; padding:8px 10px; }
-  .m b { display:block; font-size:19px; font-variant-numeric:tabular-nums; }
+  .m { background:var(--soft); border-radius:8px; padding:6px 9px; }
+  .m b { display:block; font-size:17px; font-variant-numeric:tabular-nums; }
   .m span { color:var(--muted); font-size:11px; }
   .two { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
   ul { margin:0; padding-left:17px; } li { margin:2px 0; }
   table { width:100%; border-collapse:collapse; font-size:12px; }
   td { padding:3px 4px; border-bottom:1px solid var(--line); vertical-align:top; }
   td:first-child { font-weight:600; white-space:nowrap; }
-  .fine { color:var(--muted); font-size:10.5px; margin-top:10px; }
+  .fine { color:var(--muted); font-size:10.5px; margin-top:6px; }
   @media print { body { background:#fff; } .page { margin:0; } @page { size:A4; margin:0; } }
 </style>
 </head>
 <body>
 <div class="page">
-  <h1>Borrower Truth: seven connected fraud checks for bank loans to non-bank lenders</h1>
-  <p class="sub">[Your name] · Wells Fargo 2027 Technology Program Intern application · all data synthetic · live demo with the answer key: borrower-truth.vercel.app · private repo and video on request</p>
+  <h1>Borrower Truth: seven connected fraud checks for non-bank lending</h1>
+  <p class="sub">Vedant Tigade · B.Tech, Manipal University Jaipur (2028) · Wells Fargo 2027 Technology Program Intern application · synthetic data · live demo and answer key: borrower-truth.vercel.app · code walkthrough on request</p>
 
   <h2>The problem, from Wells Fargo's own filings</h2>
   <p>Loans to non-bank financial firms are Wells Fargo's largest commercial category: <b>$208.8B, 20% of all loans</b> (10-Q, June 2026), with "a single fraud-related loss" there in Q1 2026. In 2025–26, borrowers of this type (Tricolor, First Brands, per the DOJ and SEC) used several tricks at once: collateral pledged twice, bad loans reported as good, lender money disguised as customer payments, fake invoices, hidden debt, shells, rigged financials. Each hides in a different place; one check reads one place.</p>
@@ -40,11 +40,13 @@
       <li><b>Seven checks</b> (Python, DuckDB), one per documented trick, feeding each other: a shell found by S6 widens the lien search (S5) and the payer check (S3).</li>
       <li><b>Combiner</b>: confidence comes from <i>independent</i> sources; verdicts come from auditable rules, not a model.</li>
       <li><b>Case service</b> (Java 21, Spring Boot): playbook fixes, drafted letters, one-click approval, audit log.</li>
+      <li><b>Decision replay</b>: every verdict carries fingerprints of its inputs, rules and code; replaying the run gave 120 of 120 identical decisions.</li>
     </ul>
     <ul>
       <li><b>Streaming</b> (Kafka): a suspicious payer is flagged 24 ms after the payment lands, then bridged into the case.</li>
       <li><b>Document model</b>: Donut, fine-tuned on a free Kaggle GPU, reads invoices so S4 can compare the document with the data.</li>
       <li><b>Operations</b>: Airflow nightly job, Prometheus and Grafana, isolated checks, file quarantine, stale-cache fallback.</li>
+      <li><b>Investigator agent</b> (Qwen3-8B, open model): read-only tools, drafts a memo; code drops lines that cite nothing, invent numbers or contradict the records. It never decides.</li>
     </ul>
   </div>
 
@@ -66,10 +68,11 @@
   <h2>Honest limits</h2>
   <table>
     <tr><td>Data</td><td>All synthetic. It proves coverage of the documented tricks, not real-world rates. Real accuracy needs Wells Fargo data and model-risk review.</td></tr>
-    <tr><td>Workload</td><td>31 in every 100 honest borrowers land in "worth a look" (the document check's ~3% false flags add about 2 of those). That is the real review cost, reported rather than hidden.</td></tr>
+    <tr><td>Workload</td><td>31 in every 100 honest borrowers land in "worth a look": the real review cost, reported rather than hidden.</td></tr>
     <tr><td>Weakest check</td><td>Dressed-up loan tapes: 73% caught.</td></tr>
     <tr><td>Model</td><td>Compared only with its untrained base; no large-model benchmark yet. The second read cut false flags only from 17 to 15.</td></tr>
-    <tr><td>Not built</td><td>Incremental processing, partitioned storage, the circular-flow check, the learning loop. Line-by-line status in <code>proof/AUDIT.md</code>.</td></tr>
+    <tr><td>Market</td><td>Vendors each cover one place (Setpoint, Quantexa, Wolters Kluwer); none publicly joins all seven, so this uses them rather than replacing them (<code>research/COMPETITORS.md</code>).</td></tr>
+    <tr><td>Not built</td><td>Incremental processing, partitioned storage, the circular-flow check, the learning loop, officer sign-in through a bank login. Line-by-line status in <code>proof/AUDIT.md</code>.</td></tr>
   </table>
 
   <p class="fine">Sources: Wells Fargo 10-Q (Q1 and Q2 2026); DOJ SDNY releases 25-271 (Tricolor) and 26-012 (First Brands), which are allegations; SEC release 2026-77; Setpoint PledgeCheck release (Oct 2025). 57 claims checked against saved sources (<code>research/VERIFY.md</code>). Not affiliated with Wells Fargo.</p>
