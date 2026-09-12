@@ -9,8 +9,8 @@ A line-by-line check of `design/SYSTEM-DESIGN.md` against the code. It was start
 - **corrected** — the doc described something we changed
 
 **Verification at close (12 Sep 2026):**
-- 31 Python tests, 11 Java tests, the TypeScript check and lint pass.
-- Held-out proof run once on 5 fresh books (seeds 301–305) after all changes, and on the original 5 for before/after.
+- 33 Python tests, 11 Java tests, the TypeScript check and lint pass.
+- Held-out proof run once on 5 fresh books (seeds 301–305) after all detection changes, and on the original 5 for before/after. The one miss led to an S5 fix, which was then scored once on 5 more fresh books (306–310).
 - Full stack re-run live in Codespaces: the Grafana dashboard rendered to an image, and payment-to-case latency measured.
 
 ## The seven systems
@@ -31,6 +31,7 @@ A line-by-line check of `design/SYSTEM-DESIGN.md` against the code. It was start
 | S4: altered, unpaid, implausible invoices | built ✓ | REPORT.md (fake invoices 32/32) |
 | S4: document model reads invoices; document-vs-data check with a second look | **built ✓** (was not wired) | MODEL.md (held-out book: 24/24 tampered caught, 2.9% false flags); falls back to rules without reads |
 | S5: name + address lien matching, undisclosed/competing liens, judgments | built ✓ | REPORT.md (hidden debt 40/40) |
+| S5: filer abbreviations and a registered-address fallback | **built ✓** (new) | the one miss on fresh books 301–305: a second lender's lien filed as "Ironwood Inds Grp L.L.C." at the borrower's own address. Abbreviations are now expanded and a filing at a company's exact registered address matches if the names broadly agree. Dev books unchanged (0 false alarms). Then scored once on new fresh books 306–310: 190/190 caught, audit 38%, 0 honest flagged at the end (2 of 410 flagged in an earlier month, then cleared). REPORT_seeds306-310_after_s5_fix.md; test_s5_matching.py |
 | S6: officer/address graph, shell indicators | built ✓ | REPORT.md (shells 62/62) |
 | S6: real GLEIF data | **built ✓** (adapter) | `bt/adapters/gleif.py`, run live: Wells Fargo & Company, LEI PBLD0EJDB5FWOLXP3B76, plus a subsidiary's parent chain. The synthetic book itself still uses a GLEIF-like table |
 | S6: phone numbers, registered agents | **built ✓** (new) | nominee shells, registered to someone else at another address, are linked by the borrower's phone or the owner acting as registered agent; commercial agent services are ignored. Honest look-alikes (shared virtual office, owner as agent for an unrelated business) stay context. Dev nominee shells 20/20, 0 honest flagged. test_variants.py |

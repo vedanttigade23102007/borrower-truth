@@ -362,9 +362,7 @@ The switch-off test shows every system contributes.
 - Compare the document model against a zero-shot general VLM.
 - Incremental processing and partitioned storage (deliberately deferred: no gain on one machine).
 - Obligor confirmations, a single-counterparty check, SEC ABS-EE calibration (needs a contact email for EDGAR).
-- `CIRCULAR_FLOW`.
-- Model-written sentences and a faithfulness check.
-- The learning loop.
+- Model-written letters and finding sentences (the agent's memo is model-written and checked; letters stay templates).
 - Test on real documents and data, which needs bank access.
 
 ## 11. Interview story, in 30 seconds

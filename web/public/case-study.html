@@ -50,12 +50,12 @@
     </ul>
   </div>
 
-  <h2>Proof: 5 synthetic books never used while tuning (600 borrowers)</h2>
+  <h2>Proof: 5 fresh synthetic books, scored once after every change (600 borrowers, 190 frauds)</h2>
   <div class="grid">
-    <div class="m"><b>95%</b><span>frauds caught (143/150). A quarterly audit caught 47%.</span></div>
-    <div class="m"><b>120 days</b><span>earlier than the audit (median)</span></div>
+    <div class="m"><b>99%</b><span>frauds caught (189/190). A quarterly audit caught 41%.</span></div>
+    <div class="m"><b>150 days</b><span>earlier than the audit (median)</span></div>
     <div class="m"><b>0 / 100</b><span>honest borrowers marked "likely fraud"</span></div>
-    <div class="m"><b>111</b><span>caught frauds never flagged by PledgeCheck's four checks</span></div>
+    <div class="m"><b>146</b><span>caught frauds never flagged by PledgeCheck's four checks</span></div>
     <div class="m"><b>24 / 24</b><span>tampered invoices caught by the document model (2.9% false flags)</span></div>
     <div class="m"><b>96.5%</b><span>invoice totals read correctly (unseen borrowers)</span></div>
     <div class="m"><b>24 ms</b><span>payment to alert, median (Kafka)</span></div>
@@ -63,19 +63,19 @@
   </div>
 
   <h2>What a credit officer gets</h2>
-  <p>Not a score but a solved case: <b>what's wrong</b>, <b>the evidence chain</b>, a <b>verdict with confidence</b>, a <b>playbook fix</b> and a <b>drafted letter that asks and doesn't accuse</b>. Nothing is sent until a person approves; "done" is refused before "approved". 98% of the highest-priority tenth of the queue are real frauds, and 294 of 294 suggested fixes target a planted trick.</p>
+  <p>Not a score but a solved case: <b>what's wrong</b>, <b>the evidence chain</b>, a <b>verdict with confidence</b>, a <b>playbook fix</b> and a <b>drafted letter that asks and doesn't accuse</b>. Nothing is sent until a person approves; "done" is refused before "approved". All 60 of the highest-priority tenth of the queue are real frauds, and 365 of 366 suggested fixes target a planted trick.</p>
 
   <h2>Honest limits</h2>
   <table>
     <tr><td>Data</td><td>All synthetic. It proves coverage of the documented tricks, not real-world rates. Real accuracy needs Wells Fargo data and model-risk review.</td></tr>
-    <tr><td>Workload</td><td>31 in every 100 honest borrowers land in "worth a look": the real review cost, reported rather than hidden.</td></tr>
-    <tr><td>Weakest check</td><td>Dressed-up loan tapes: 73% caught.</td></tr>
+    <tr><td>Workload</td><td>About 30 in every 100 honest borrowers land in "worth a look": the real review cost, reported rather than hidden.</td></tr>
+    <tr><td>Weakest check</td><td>Financials that don't fit: 62 of 65. One miss: a lien filed under an abbreviated name; matching since fixed.</td></tr>
     <tr><td>Model</td><td>Compared only with its untrained base; no large-model benchmark yet. The second read cut false flags only from 17 to 15.</td></tr>
     <tr><td>Market</td><td>Vendors each cover one place (Setpoint, Quantexa, Wolters Kluwer); none publicly joins all seven, so this uses them rather than replacing them (<code>research/COMPETITORS.md</code>).</td></tr>
-    <tr><td>Not built</td><td>Incremental processing, partitioned storage, the circular-flow check, the learning loop, officer sign-in through a bank login. Line-by-line status in <code>proof/AUDIT.md</code>.</td></tr>
+    <tr><td>Not built</td><td>Partitioned storage (no gain at this scale), obligor confirmations, officer sign-in through a bank login. Line-by-line status in <code>proof/AUDIT.md</code>.</td></tr>
   </table>
 
-  <p class="fine">Sources: Wells Fargo 10-Q (Q1 and Q2 2026); DOJ SDNY releases 25-271 (Tricolor) and 26-012 (First Brands), which are allegations; SEC release 2026-77; Setpoint PledgeCheck release (Oct 2025). 57 claims checked against saved sources (<code>research/VERIFY.md</code>). Not affiliated with Wells Fargo.</p>
+  <p class="fine">Sources: WF 10-Q (Q1, Q2 2026); DOJ SDNY 25-271, 26-012 (allegations); SEC 2026-77; Setpoint release (Oct 2025). 57 of 57 claims checked (<code>research/VERIFY.md</code>). Not affiliated with Wells Fargo.</p>
 </div>
 </body>
 </html>

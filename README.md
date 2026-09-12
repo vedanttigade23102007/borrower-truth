@@ -48,22 +48,26 @@ Around the decision:
 
 ## Proof: data it never saw
 
-Rules were tuned on one synthetic book (seed 7). The numbers below come from five fresh books (seeds 201–205: 600 borrowers, 150 with planted fraud, 450 honest, including realistic honest look-alikes). Full report: `proof/REPORT.md`.
+Rules were built on development books (seed 7 and seeds 101–105). The numbers below come from five fresh books generated and scored once, after every change was final (seeds 301–305: 600 borrowers, 190 with planted fraud, including 40 of two harder types, 410 honest with realistic look-alikes). Full report: `proof/REPORT.md`.
 
 | Measure | Borrower Truth | Quarterly sample audit |
 |---|---|---|
-| Frauds caught | **95%** (143/150) | 47% (71/150) |
-| Honest borrowers flagged "likely fraud" | 0 per 100 | 2.4 per 100 |
-| Honest borrowers sent to "worth a look" | 31 per 100 (the real review workload) | – |
-| Highest-priority 10% of the queue that are real frauds | 98% (59/60) | – |
-| Suggested fixes that target a planted trick | 100% (294/294) | – |
-| Detection vs the audit (median) | **120 days earlier** | – |
-| Frauds PledgeCheck's four checks never flagged | **111** | – |
-| One monthly run, 120 borrowers | 0.67 s | – |
+| Frauds caught | **99%** (189/190) | 41% (78/190) |
+| Honest borrowers flagged "likely fraud" | 0 per 100 | 1.5 per 100 |
+| Honest borrowers sent to "worth a look" | 30 per 100 (the real review workload) | – |
+| Highest-priority 10% of the queue that are real frauds | 100% (60/60) | – |
+| Suggested fixes that target a planted trick | 365 of 366 | – |
+| Detection vs the audit (median) | **150 days earlier** | – |
+| Frauds PledgeCheck's four checks never flagged | **146** | – |
+| One monthly run, 120 borrowers | 0.86 s | – |
 
 Every system loses detections when it is switched off, so each one earns its place.
 
-**Weakest mechanism:** dressed-up loan tapes, caught 73% of the time.
+**Before and after, same books:** the first version caught 143 of 150 on seeds 201–205; the current checks catch 146 of 150 on those same books (`proof/REPORT_v1_seeds201-205.md`, `proof/REPORT_seeds201-205_new_checks.md`). The old weakest check, dressed-up loan tapes (73%), is now 100% on the fresh books because the servicer pull is aimed by the cash.
+
+**Weakest now:** financials that don't fit, 62 of 65. **The one miss** on 301–305: collateral pledged to a second lender, whose lien was filed under an abbreviated name ("Inds Grp L.L.C.") at the borrower's own address. S5 now expands filer abbreviations and falls back to the registered address. Because that fix came after seeing 301–305, it was tested on another five fresh books, scored once (seeds 306–310, `proof/REPORT_seeds306-310_after_s5_fix.md`): **190 of 190 caught**, audit 38%, 0 honest borrowers flagged at the end (2 of 410 were flagged in an earlier month and cleared), review load 25 per 100.
+
+**A warning about near-perfect scores:** the frauds are ones I planted, so these numbers prove the checks cover the documented tricks. They don't predict a real-world catch rate.
 
 **Honesty notes:**
 - This is synthetic data, so the numbers prove *coverage of documented mechanisms*, not real-world catch rates.
@@ -132,7 +136,7 @@ uv run python -m bt.datagen.generate --out data/out/demo      # synthetic book
 uv run python -m bt.pipeline.run --data data/out/demo          # all seven checks + combiner
 uv run python -m bt.eval.evaluate --seeds 201 202 203 204 205  # the proof
 uv run python -m bt.pipeline.replay --data data/out/demo       # recompute every decision
-uv run pytest -q                                               # 25 tests
+uv run pytest -q                                               # 33 tests
 ```
 
 **Case service:**
