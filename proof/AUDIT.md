@@ -63,7 +63,7 @@ A line-by-line check of `design/SYSTEM-DESIGN.md` against the code. It was start
 | Public-data cache with "stale since" | **built ✓** | test_fallbacks.py (source down → stale cache; no cache → clear error) |
 | Isolated checks, time budget, break-it test | built ✓ | test_pipeline; STACK-DEMO break-it |
 | Model fallback | partial | S4 falls back to rules; drafts fall back to templates; no base-model tier |
-| Incremental processing, partitioned Parquet, autoscaled worker pools | not built (deliberate) | a full monthly run of 12.4M rows takes 2.3 s on one laptop; partitioning pays off beyond one machine and would complicate the data-quality gate for no gain here |
+| Incremental processing, partitioned Parquet, autoscaled worker pools | not built (deliberate) | a full monthly run of 12.4M rows takes 3.2 s on one laptop; partitioning pays off beyond one machine and would complicate the data-quality gate for no gain here |
 | Model reads flagged docs only; 4-bit quantization | not built | the demo reads a per-borrower sample in fp16 |
 | promptfoo faithfulness check; dbt | not built | promptfoo would be a new install (not approved). Its job, checking model-written text against sources, is done in code by the agent's memo checks; dbt optional |
 | Grafana dashboard | **built ✓** | rendered to an image by Grafana's own image renderer in Codespaces: [grafana-dashboard.png](grafana-dashboard.png); every panel draws data (STACK-DEMO.md, 12 Sep) |

@@ -289,25 +289,27 @@ A great tool can still fail to fit a bank. This design plans for that from day o
 
 **Not everything in §1–§13 is built.** `proof/AUDIT.md` checks every claim line by line: built, partial, not built, or corrected. An earlier version of this section said "everything is implemented"; that was wrong, and the audit exists because of it. Measured on synthetic data:
 
-**Held-out proof** (seeds 201–205, never used while tuning; `proof/REPORT.md`):
+**Held-out proof** (fresh seeds 301–305, generated and scored once after every change; `proof/REPORT.md`):
 
 | Measure | Result |
 |---|---|
-| Catch rate | 95% (143/150) vs 47% for a quarterly sample audit |
+| Catch rate | 99% (189/190) vs 41% for a quarterly sample audit |
 | Honest borrowers flagged "likely fraud" | 0 per 100 |
-| Honest borrowers routed to "worth a look" | 31 per 100 (the document check's false flags add about 2) |
-| Top-decile precision (highest-priority 10% that are real frauds) | 98% (59/60) |
-| Suggested fixes that target a planted mechanism | 100% (294/294) |
-| Detection vs the audit (median) | 120 days earlier |
-| Frauds never flagged by PledgeCheck | 111 |
-| Weakest mechanism | dressed-up tapes, 73% |
+| Honest borrowers routed to "worth a look" | 30 per 100 (the document check's false flags add about 2) |
+| Top-decile precision (highest-priority 10% that are real frauds) | 100% (60/60) |
+| Suggested fixes that target a planted mechanism | 365 of 366 |
+| Detection vs the audit (median) | 150 days earlier |
+| Frauds never flagged by PledgeCheck | 146 |
+| Weakest mechanism | financials that don't fit, 62 of 65 |
+
+The first version scored 143/150 on seeds 201–205 (kept as `proof/REPORT_v1_seeds201-205.md`); the current checks score 146/150 on those same books. The one miss on 301–305 led to an S5 matching fix, tested once on fresh seeds 306–310: 190/190.
 
 The switch-off test shows every system contributes.
 
 **Scale** (`proof/scale.json`, one 8 GB laptop):
-- 1.25M rows in 0.51 s
-- 5.0M rows in 1.31 s
-- 12.4M rows in 2.30 s (5.4M rows/s)
+- 1.27M rows in 0.90 s
+- 5.1M rows in 1.98 s
+- 12.4M rows in 3.20 s (3.9M rows/s)
 
 **Break-it:**
 - With S4 crashed, all 120 cases still build and are marked "S4 unavailable"; 3 fraud cases drop to a lower verdict.

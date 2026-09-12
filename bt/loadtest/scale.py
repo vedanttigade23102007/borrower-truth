@@ -25,7 +25,7 @@ from bt.pipeline.run import run as pipeline
 def rows_in(data):
     con = duckdb.connect()
     total = 0
-    for t in ("tape", "source_truth", "payments", "invoices"):
+    for t in ("tape", "source_truth", "payments", "invoices", "outflows"):
         f = os.path.join(data, f"{t}.parquet")
         if os.path.exists(f):
             total += con.execute(f"SELECT count(*) FROM read_parquet('{f}')").fetchone()[0]

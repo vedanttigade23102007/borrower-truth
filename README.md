@@ -77,9 +77,9 @@ Every system loses detections when it is switched off, so each one earns its pla
 
 | Rows | Seconds (one laptop, 8 GB) | Rows per second |
 |---|---|---|
-| 1.25M | 0.51 | 2.5M |
-| 5.0M | 1.31 | 3.9M |
-| 12.4M | 2.30 | 5.4M |
+| 1.27M | 0.90 | 1.4M |
+| 5.1M | 1.98 | 2.6M |
+| 12.4M | 3.20 | 3.9M |
 
 - **Partitioning:** work splits by borrower. Kafka is keyed by borrower, and the same SQL runs on DuckDB here or on Spark / BigQuery at bank scale.
 - **Fault isolation:** every system runs isolated with a time budget. If one crashes, the case still builds and says which check was unavailable (`--fail S4` demonstrates this).
