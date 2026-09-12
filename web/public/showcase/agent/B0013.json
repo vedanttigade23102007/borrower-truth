@@ -8,7 +8,7 @@
    "args": {
     "borrower_id": "B0013"
    },
-   "result": "{\"verdict_by_rules\": \"LIKELY_FRAUD\", \"headline\": \"Likely: invoices are fake, inflated or altered\", \"findings\": [{\"mechanism\": \"FAKE_INVOICES\", \"confidence\": \"high\", \"plain\": \"invoices are fake, inflated or altered\", \"signals\": [\"S4-B0013-ALTERED_INVOICE-ac0c6a2c\", \"S4-B0013-DOC_DATA_MISMATCH-f0a7e85d\", \"S4-B0013-IMPLAUSIBLE_AMOUNT-8266f05f\", \"S4-B0013-UNPAID_BY_DEBTOR-53808a72\", \"S7-B0013-RECEIVABLES_QUALITY-dd08cb08\"], \"corroborated_by\": []}], \"signals\": [{\"id\": \"S4-B0013-ALTERED_INVOICE-ac0c6a2c\", \"system\": \"S4\", \"type\": \"ALTERED_INVOICE\", \"explanation\": \"108 invoice numbers were submitted more than once with different amounts (up to 25.0x the original)\", \"evidence\": [\"invoice:B0013-10711\""
+   "result": "{\"verdict_by_rules\": \"LIKELY_FRAUD\", \"headline\": \"Likely: invoices are fake, inflated or altered\", \"findings\": [{\"mechanism\": \"FAKE_INVOICES\", \"confidence\": \"high\", \"plain\": \"invoices are fake, inflated or altered\", \"signals\": [\"S4-B0013-ALTERED_INVOICE-ac0c6a2c\", \"S7-B0013-RECEIVABLES_OUTPACE_REVENUE-fea1bfc7\", \"S4-B0013-DOC_DATA_MISMATCH-f0a7e85d\", \"S4-B0013-IMPLAUSIBLE_AMOUNT-8266f05f\", \"S4-B0013-UNPAID_BY_DEBTOR-53808a72\", \"S7-B0013-RECEIVABLES_QUALITY-dd08cb08\"], \"corroborated_by\": []}], \"signals\": [{\"id\": \"S4-B0013-ALTERED_INVOICE-ac0c6a2c\", \"system\": \"S4\", \"type\": \"ALTERED_INVOICE\", \"explanation\": \"108 invoice numbers were submitted more than once with different amounts (up to 25.0x t"
   },
   {
    "id": "T2",
@@ -44,12 +44,12 @@
   }
  ],
  "errors": [],
- "generated_at": "2026-09-11",
+ "generated_at": "2026-09-12",
  "status": "ok",
  "model": "Qwen/Qwen3-8B",
  "memo": [
   {
-   "text": "The borrower's case shows high confidence in fake, inflated, or altered invoices with 108 invoice numbers submitted more than once with different amounts",
+   "text": "The borrower, B0013, has a high confidence LIKELY_FRAUD verdict with signals indicating fake, inflated, or altered invoices",
    "cites": [
     "T1"
    ]
@@ -61,7 +61,7 @@
    ]
   },
   {
-   "text": "A UCC lien was filed against Bluebonnet Lending LLC by Wells Fargo Bank, N.A., securing all assets, including receivables",
+   "text": "A UCC lien was filed against Bluebonnet Lending LLC by Wells Fargo Bank, N.A., securing all assets including receivables",
    "cites": [
     "T3"
    ]
@@ -79,21 +79,26 @@
    ]
   },
   {
-   "text": "Ask the borrower: to clarify the relationship between Bluebonnet Lending LLC and Bluebonnet Holdings Group LLC and the source of the receivables",
+   "text": "Could not confirm if the receivables mentioned in the fraud signals are covered by the UCC lien",
    "cites": [
-    "T2",
-    "T5"
+    "T3"
+   ]
+  },
+  {
+   "text": "Ask the borrower: to clarify the relationship between Bluebonnet Lending LLC and Bluebonnet Holdings Group LLC and provide details on the receivables secured by the UCC lien",
+   "cites": [
+    "T3"
    ]
   }
  ],
  "dropped": [
   {
-   "text": "The borrower's disclosures do not mention any debts or affiliations that could explain the inflated invoices.",
+   "text": "The borrower's disclosures do not mention any debts or affiliations that could corroborate the fraud signals.",
    "reason": "cites no source"
   }
  ],
  "rounds": 2,
- "tokens": 3833,
- "seconds": 41.9,
+ "tokens": 4430,
+ "seconds": 49.5,
  "checks_reapplied": "2026-09-12"
 }

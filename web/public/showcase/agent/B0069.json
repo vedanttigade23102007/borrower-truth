@@ -44,54 +44,51 @@
   }
  ],
  "errors": [],
- "generated_at": "2026-09-11",
+ "generated_at": "2026-09-12",
  "status": "ok",
  "model": "Qwen/Qwen3-8B",
  "memo": [
   {
-   "text": "The borrower's financial statements show a 36% gap between reported revenue and verified customer cash inflows over two quarters",
+   "text": "The borrower's financial statements show a 36% gap between reported revenue and verified customer cash (S7-B0069-CASH_REVENUE_GAP-9b276b8d)",
    "cites": [
-    "S7-B0069-CASH_REVENUE_GAP-9b276b8d"
+    "T1"
    ]
   },
   {
-   "text": "The borrower's covenant metric has consistently hovered near the threshold, with values at 1.0061 and 1.0275 over two quarters",
-   "cites": [
-    "S7-B0069-COVENANT_EDGE_PATTERN-c4c9a3e1"
-   ]
-  },
-  {
-   "text": "The borrower is linked to Summit Holdings Group LLC, a holding company with the same officer and address",
+   "text": "The borrower is linked to Summit Holdings Group LLC, a holding company with the same officer and address (S1-B0069-RELATED_PARTY-29b56853)",
    "cites": [
     "T2"
    ]
   },
   {
-   "text": "There are multiple UCC liens against Summit Lending Inc and Summit Lending Corp, including collateral on receivables and equipment",
-   "cites": [
-    "T3"
-   ]
-  },
-  {
-   "text": "The borrower disclosed a related party, Summit Holdings Group LLC, and a debt with Canyon Specialty Finance LP",
+   "text": "The borrower disclosed a debt to Canyon Specialty Finance LP for equipment lease (S1-B0069-DEBT-29b56853)",
    "cites": [
     "T5"
    ]
   },
   {
-   "text": "No court records were found for the borrower or linked entities",
+   "text": "The borrower is not enrolled in Setpoint PledgeCheck, making collateral verification difficult (S1-B0069-PLEDGECHECK_ABSENT-29b56853)",
    "cites": [
-    "T4"
+    "T1"
    ]
   },
   {
-   "text": "Ask the borrower: clarify the source of the revenue gap and explain the covenant metrics",
+   "text": "Ask the borrower: clarify the relationship between Summit Lending Inc and Summit Holdings Group LLC",
    "cites": []
   }
  ],
- "dropped": [],
+ "dropped": [
+  {
+   "text": "There are multiple UCC liens on Summit Lending Inc, including collateral pledged to Wells Fargo Bank, N.A. (T3).",
+   "reason": "cites no source"
+  },
+  {
+   "text": "No court records were found for Summit Lending Inc (T4).",
+   "reason": "cites no source"
+  }
+ ],
  "rounds": 2,
- "tokens": 3670,
- "seconds": 43.3,
+ "tokens": 4070,
+ "seconds": 48.8,
  "checks_reapplied": "2026-09-12"
 }

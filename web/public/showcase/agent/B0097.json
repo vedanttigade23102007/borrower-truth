@@ -8,7 +8,7 @@
    "args": {
     "borrower_id": "B0097"
    },
-   "result": "{\"verdict_by_rules\": \"LIKELY_FRAUD\", \"headline\": \"Likely: bad loans are being reported as good ones\", \"findings\": [{\"mechanism\": \"TAPE_DRESSUP\", \"confidence\": \"high\", \"plain\": \"bad loans are being reported as good ones\", \"signals\": [\"S2-B0097-SOURCE_MISMATCH-07b952e4\", \"S2-B0097-CURRENT_WITHOUT_PAYMENT-92cdc358\"], \"corroborated_by\": []}, {\"mechanism\": \"DOUBLE_PLEDGE\", \"confidence\": \"medium\", \"plain\": \"the same collateral is pledged to more than one lender\", \"signals\": [\"S5-B0097-COMPETING_LIEN-762da725\", \"S7-B0097-DEBT_GAP-6b525801\"], \"corroborated_by\": [\"S5-B0097-COMPETING_LIEN-e1fa3ed7\", \"S5-B0097-COMPETING_LIEN-c845362f\"]}, {\"mechanism\": \"FIN_MANIPULATION\", \"confidence\": \"medium\", \"plain\""
+   "result": "{\"verdict_by_rules\": \"LIKELY_FRAUD\", \"headline\": \"Likely: bad loans are being reported as good ones\", \"findings\": [{\"mechanism\": \"TAPE_DRESSUP\", \"confidence\": \"high\", \"plain\": \"bad loans are being reported as good ones\", \"signals\": [\"S2-B0097-SOURCE_MISMATCH-07b952e4\", \"S2-B0097-TARGETED_SOURCE_MISMATCH-87cccbe0\", \"S2-B0097-ATTRIBUTE_REWRITE-99f91386\", \"S2-B0097-ELIGIBILITY_EDGE_CLUSTER-7d8301ca\", \"S2-B0097-CURRENT_WITHOUT_PAYMENT-92cdc358\"], \"corroborated_by\": []}, {\"mechanism\": \"DOUBLE_PLEDGE\", \"confidence\": \"medium\", \"plain\": \"the same collateral is pledged to more than one lender\", \"signals\": [\"S5-B0097-COMPETING_LIEN-762da725\", \"S7-B0097-DEBT_GAP-6b525801\"], \"corroborated_by\": [\"S5-B009"
   },
   {
    "id": "T2",
@@ -44,56 +44,54 @@
   }
  ],
  "errors": [],
- "generated_at": "2026-09-11",
+ "generated_at": "2026-09-12",
  "status": "ok",
  "model": "Qwen/Qwen3-8B",
  "memo": [
   {
-   "text": "The borrower's financials show a 32% cash revenue gap compared to verified collections",
+   "text": "The borrower has a second-priority lien on all assets from Silverline Credit Fund LP",
    "cites": [
-    "S7-B0097-CASH_REVENUE_GAP-8a9c8af4"
+    "T3"
    ]
   },
   {
-   "text": "The borrower's related company, Prairie Holdings Group LLC, shares the same officer and address",
-   "cites": [
-    "T2"
-   ]
-  },
-  {
-   "text": "The borrower's reported covenant metrics consistently hover near thresholds",
-   "cites": [
-    "S7-B0097-COVENANT_EDGE_PATTERN-50705b34"
-   ]
-  },
-  {
-   "text": "The borrower disclosed a subordinated facility with Silverline Credit Fund LP but not other liens",
+   "text": "The borrower's disclosed debt includes a subordinated facility from Silverline Credit Fund LP",
    "cites": [
     "T5"
    ]
   },
   {
-   "text": "Court records show no judgments against Prairie Credit LP",
+   "text": "The borrower's financials show reported revenue 32% above verified customer cash",
    "cites": [
-    "T4"
+    "S7-B0097-CASH_REVENUE_GAP-8a9c8af4"
    ]
   },
   {
-   "text": "Ask the borrower: clarify the status of undisclosed liens and the source of reported revenue",
+   "text": "The borrower's disclosures omit one secured lender found in public lien filings",
    "cites": [
-    "S7-B0097-CASH_REVENUE_GAP-8a9c8af4",
-    "T3"
+    "S7-B0097-DEBT_GAP-6b525801"
    ]
-  }
- ],
- "dropped": [
+  },
   {
-   "text": "The borrower has undisclosed liens, including a second-priority lien from Silverline Credit Fund LP [T3].",
-   "reason": "says 'silverline credit fund' was not disclosed, but the disclosures list it"
+   "text": "The borrower's related company, Prairie Holdings Group LLC, shares an officer and address",
+   "cites": [
+    "T2"
+   ]
+  },
+  {
+   "text": "Could not confirm if the borrower's reported financials align with the collateral pledged",
+   "cites": [
+    "S7-B0097-COVENANT_EDGE_PATTERN-50705b34"
+   ]
+  },
+  {
+   "text": "Ask the borrower: clarify the source of the reported revenue and the status of the collateral pledged",
+   "cites": []
   }
  ],
+ "dropped": [],
  "rounds": 2,
- "tokens": 4614,
- "seconds": 49.6,
+ "tokens": 4949,
+ "seconds": 51.1,
  "checks_reapplied": "2026-09-12"
 }

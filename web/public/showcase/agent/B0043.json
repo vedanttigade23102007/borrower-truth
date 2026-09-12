@@ -8,7 +8,7 @@
    "args": {
     "borrower_id": "B0043"
    },
-   "result": "{\"verdict_by_rules\": \"LIKELY_FRAUD\", \"headline\": \"Likely: money from lenders or linked companies is arriving dressed up as customer payments\", \"findings\": [{\"mechanism\": \"DISGUISED_RECEIPTS\", \"confidence\": \"high\", \"plain\": \"money from lenders or linked companies is arriving dressed up as customer payments\", \"signals\": [\"S3-B0043-RELATED_PARTY_INFLOW-aa9e89fc\"], \"corroborated_by\": [\"S5-B0043-COMPETING_LIEN-6ff168f5\", \"S6-B0043-SHELL_INDICATORS-580e3cec\", \"S6-B0043-RELATED_ENTITY-332bb44e\"]}, {\"mechanism\": \"FAKE_INVOICES\", \"confidence\": \"high\", \"plain\": \"invoices are fake, inflated or altered\", \"signals\": [\"S4-B0043-ALTERED_INVOICE-b3b04ec8\", \"S4-B0043-DOC_DATA_MISMATCH-c863910a\", \"S1-B0043-PL"
+   "result": "{\"verdict_by_rules\": \"LIKELY_FRAUD\", \"headline\": \"Likely: money from lenders or linked companies is arriving dressed up as customer payments\", \"findings\": [{\"mechanism\": \"DISGUISED_RECEIPTS\", \"confidence\": \"high\", \"plain\": \"money from lenders or linked companies is arriving dressed up as customer payments\", \"signals\": [\"S3-B0043-RELATED_PARTY_INFLOW-aa9e89fc\"], \"corroborated_by\": [\"S5-B0043-COMPETING_LIEN-6ff168f5\", \"S6-B0043-SHELL_INDICATORS-86cd4718\", \"S6-B0043-RELATED_ENTITY-2ef47058\"]}, {\"mechanism\": \"FAKE_INVOICES\", \"confidence\": \"high\", \"plain\": \"invoices are fake, inflated or altered\", \"signals\": [\"S4-B0043-ALTERED_INVOICE-b3b04ec8\", \"S7-B0043-RECEIVABLES_OUTPACE_REVENUE-da22ac59\", \"S"
   },
   {
    "id": "T2",
@@ -44,55 +44,60 @@
   }
  ],
  "errors": [],
- "generated_at": "2026-09-11",
+ "generated_at": "2026-09-12",
  "status": "ok",
  "model": "Qwen/Qwen3-8B",
  "memo": [
   {
-   "text": "The borrower's related companies, such as \"Sterling Customer Collections LLC,\" have no operations and are likely shells",
+   "text": "The borrower is linked to multiple shell companies, including \"Sterling Customer Collections LLC,\" which received $13,740,260 in undisclosed inflows",
+   "cites": [
+    "S3-B0043-RELATED_PARTY_INFLOW-aa9e89fc"
+   ]
+  },
+  {
+   "text": "The borrower's receivables are 17.1 times their usual size relative to revenue, indicating potential overstatement of assets",
+   "cites": [
+    "S7-B0043-RECEIVABLES_OUTPACE_REVENUE-da22ac59"
+   ]
+  },
+  {
+   "text": "The borrower disclosed a debt to Harbor Credit Fund LP but not the liens on related entities",
+   "cites": [
+    "S5-B0043-COMPETING_LIEN-6ff168f5",
+    "T5"
+   ]
+  },
+  {
+   "text": "\"Sterling Customer Collections LLC\" has no operations, suggesting it is a shell company used to funnel funds",
    "cites": [
     "T2"
    ]
   },
   {
-   "text": "The borrower is linked to multiple shell companies, including \"Sterling Customer Collections LLC,\" which received $13,740,260 in payments disguised as customer cash",
-   "cites": [
-    "S3-B0043-RELATED_PARTY_INFLOW-aa9e89fc"
-   ]
-  },
-  {
-   "text": "The borrower disclosed a debt to \"Harbor Credit Fund LP,\" but not the lien on its related company",
-   "cites": [
-    "T5"
-   ]
-  },
-  {
-   "text": "The borrower's financial statements show discrepancies, with a cash revenue gap and covenant edge patterns",
+   "text": "The borrower's financial statements show a cash revenue gap, raising concerns about financial manipulation",
    "cites": [
     "S7-B0043-CASH_REVENUE_GAP-adf60ce7"
    ]
   },
   {
-   "text": "The borrower's disclosures do not mention the lien on \"Sterling Customer Collections LLC\"",
+   "text": "The borrower did not disclose all related entities, including \"Sterling Trade Services LLC\" and \"Sterling Services LLC\"",
    "cites": [
-    "S5-B0043-COMPETING_LIEN-6ff168f5"
-   ]
-  },
-  {
-   "text": "Ask the borrower: to clarify the relationship between the borrower and \"Sterling Customer Collections LLC\" and the source of the $13,740,260 in payments",
-   "cites": [
-    "S3-B0043-RELATED_PARTY_INFLOW-aa9e89fc"
+    "S6-B0043-RELATED_ENTITY-2ef47058"
    ]
   }
  ],
  "dropped": [
   {
-   "text": "\"Sterling Capital Group LLC\" has a competing lien from \"Harbor Credit Fund LP\" on its assets, which the borrower did not disclose [T1-S5-B0043-COMPETING_LIEN-6ff168f5].",
+   "text": "\"Sterling Capital Group LLC\" has liens from Harbor Credit Fund LP and Wells Fargo Bank, N.A., which the borrower did not disclose [T1-S5-B0043-COMPETING_LIEN-6ff168f5, T3].",
    "reason": "says 'harbor credit fund' was not disclosed, but the disclosures list it"
+  },
+  {
+   "text": "Ask the borrower: to clarify the relationship with \"Sterling Customer Collections LLC\" and provide documentation for the disclosed debt to Harbor Credit Fund LP [T1-S5-B0043-COMPETING_LIEN-6ff168f5, T5].",
+   "reason": "says 'sterling customer collections' was disclosed, but the disclosures don't list it"
   }
  ],
  "rounds": 2,
- "tokens": 4846,
- "seconds": 67.0,
+ "tokens": 5201,
+ "seconds": 80.9,
  "checks_reapplied": "2026-09-12"
 }

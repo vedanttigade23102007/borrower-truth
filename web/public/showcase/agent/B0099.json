@@ -8,7 +8,7 @@
    "args": {
     "borrower_id": "B0099"
    },
-   "result": "{\"verdict_by_rules\": \"LIKELY_FRAUD\", \"headline\": \"Likely: money from lenders or linked companies is arriving dressed up as customer payments\", \"findings\": [{\"mechanism\": \"DISGUISED_RECEIPTS\", \"confidence\": \"high\", \"plain\": \"money from lenders or linked companies is arriving dressed up as customer payments\", \"signals\": [\"S3-B0099-RELATED_PARTY_INFLOW-d0204232\"], \"corroborated_by\": [\"S6-B0099-SHELL_INDICATORS-828c1486\", \"S6-B0099-RELATED_ENTITY-b174c853\"]}, {\"mechanism\": \"RELATED_SHELLS\", \"confidence\": \"medium\", \"plain\": \"the borrower is connected to undisclosed shell companies\", \"signals\": [\"S6-B0099-SHELL_INDICATORS-828c1486\", \"S6-B0099-SHELL_INDICATORS-7470798a\", \"S6-B0099-RELATED_ENTITY-b1"
+   "result": "{\"verdict_by_rules\": \"LIKELY_FRAUD\", \"headline\": \"Likely: money from lenders or linked companies is arriving dressed up as customer payments\", \"findings\": [{\"mechanism\": \"DISGUISED_RECEIPTS\", \"confidence\": \"high\", \"plain\": \"money from lenders or linked companies is arriving dressed up as customer payments\", \"signals\": [\"S3-B0099-RELATED_PARTY_INFLOW-d0204232\"], \"corroborated_by\": [\"S6-B0099-SHELL_INDICATORS-828c1486\", \"S6-B0099-RELATED_ENTITY-b174c853\"]}, {\"mechanism\": \"RELATED_SHELLS\", \"confidence\": \"medium\", \"plain\": \"the borrower is connected to undisclosed shell companies\", \"signals\": [\"S6-B0099-SHELL_INDICATORS-828c1486\", \"S6-B0099-SHELL_INDICATORS-d3dc7eb0\", \"S6-B0099-RELATED_ENTITY-b1"
   },
   {
    "id": "T2",
@@ -44,42 +44,36 @@
   }
  ],
  "errors": [],
- "generated_at": "2026-09-11",
+ "generated_at": "2026-09-12",
  "status": "ok",
  "model": "Qwen/Qwen3-8B",
  "memo": [
   {
-   "text": "The borrower received $139,846 from \"Granite Customer Collections LLC,\" an undisclosed company linked to the borrower",
+   "text": "The borrower received $139,846 from Granite Customer Collections LLC, an undisclosed company linked to the borrower",
    "cites": [
     "S3-B0099-RELATED_PARTY_INFLOW-d0204232"
    ]
   },
   {
-   "text": "\"Granite Customer Collections LLC\" is a shell company with no operations, same address as the borrower, and was formed 12 months ago",
+   "text": "Granite Customer Collections LLC is a shell company with no operations, same address as the borrower, and formed 12 months ago",
    "cites": [
     "S6-B0099-SHELL_INDICATORS-828c1486"
    ]
   },
   {
-   "text": "A UCC lien was filed against \"Granite Auto Corp\" by Wells Fargo Bank, N.A., securing all assets including receivables",
+   "text": "A UCC lien was filed against Granite Auto Corp, which shares the borrower's officer and address",
    "cites": [
     "T3"
    ]
   },
   {
-   "text": "The borrower disclosed nothing about debts, affiliates, or programs",
-   "cites": [
-    "T5"
-   ]
-  },
-  {
-   "text": "Could not confirm if \"Granite Auto Corp\" has any court judgments or additional liens",
+   "text": "No court records were found for the borrower or linked companies",
    "cites": [
     "T4"
    ]
   },
   {
-   "text": "Ask the borrower: to clarify the relationship with \"Granite Customer Collections LLC\" and provide documentation for the $139,846 inflow",
+   "text": "Ask the borrower: clarify the relationship between Granite Customer Collections LLC and the borrower, and provide documentation of the $139,846 inflow",
    "cites": [
     "S3-B0099-RELATED_PARTY_INFLOW-d0204232"
    ]
@@ -87,12 +81,12 @@
  ],
  "dropped": [
   {
-   "text": "The borrower is connected to two other shell companies, \"Granite Trade Services LLC\" and \"Granite Auto Corp,\" which share the same officer and address [S6-B0099-SHELL_INDICATORS-7470798a, S6-B0099-RELATED_ENTITY-b174c853]",
-   "reason": "cites an unknown source: S6-B0099-SHELL_INDICATORS-7470798a"
+   "text": "The borrower disclosed nothing about debts, affiliates, or programs [S5-B0099-DISCLOSURES-00000000].",
+   "reason": "cites an unknown source: S5-B0099-DISCLOSURES-00000000"
   }
  ],
  "rounds": 2,
- "tokens": 4009,
- "seconds": 56.1,
+ "tokens": 4242,
+ "seconds": 48.5,
  "checks_reapplied": "2026-09-12"
 }

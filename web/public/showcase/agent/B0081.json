@@ -44,47 +44,54 @@
   }
  ],
  "errors": [],
- "generated_at": "2026-09-11",
+ "generated_at": "2026-09-12",
  "status": "ok",
  "model": "Qwen/Qwen3-8B",
  "memo": [
   {
-   "text": "The borrower's receivables include invoices flagged as altered or implausible, raising concerns about their validity",
+   "text": "The borrower, Crescent Parts LP, has a lien from Prairie Capital Partners LLC on all its assets, which was filed before onboarding and may be stale",
+   "cites": [
+    "S5-B0081-COMPETING_LIEN-4826f9df"
+   ]
+  },
+  {
+   "text": "Related companies include Crescent Holdings Group LLC, a holding company with the same officer and address",
+   "cites": [
+    "T2"
+   ]
+  },
+  {
+   "text": "There is a court judgment against Crescent Partners Corp for $160,024.07, filed in month 21",
+   "cites": [
+    "T4"
+   ]
+  },
+  {
+   "text": "The borrower disclosed a debt to Sterling Capital Partners LLC for an equipment lease and a parent holding company",
+   "cites": [
+    "T5"
+   ]
+  },
+  {
+   "text": "Two invoice documents show discrepancies between the borrower's data and the invoice totals, indicating possible alterations",
+   "cites": [
+    "S4-B0081-DOC_DATA_MISMATCH-0a348e31"
+   ]
+  },
+  {
+   "text": "The borrower's receivables include invoices flagged as altered, unpaid, or implausible",
    "cites": [
     "S7-B0081-RECEIVABLES_QUALITY-25689edd"
    ]
   },
   {
-   "text": "The borrower, Crescent Parts LP, has a lien from Prairie Capital Partners LLC on all its assets, which was filed before onboarding",
-   "cites": [
-    "S5-B0081-COMPETING_LIEN-4826f9df"
-   ]
+   "text": "Ask the borrower: to clarify the status of the lien from Prairie Capital Partners LLC and provide additional documentation for the disputed invoices",
+   "cites": []
   }
  ],
- "dropped": [
-  {
-   "text": "The borrower's related company, Crescent Holdings Group LLC, shares the same officer and address, indicating potential control or affiliation [T2-B0081-RELATED_COMPANY-E000480].",
-   "reason": "cites an unknown source: T2-B0081-RELATED_COMPANY-E000480"
-  },
-  {
-   "text": "A court judgment against Crescent Partners Corp, a related entity, amounts to $160,024.07, suggesting financial distress or legal issues [T4-CV-00010-JUDGMENT-21].",
-   "reason": "cites an unknown source: T4-CV-00010-JUDGMENT-21"
-  },
-  {
-   "text": "The borrower disclosed a debt to Sterling Capital Partners LLC for an equipment lease, but no details on the terms or status [T5-B0081-DEBT-E000009].",
-   "reason": "cites an unknown source: T5-B0081-DEBT-E000009"
-  },
-  {
-   "text": "The borrower's disclosed affiliate, Crescent Holdings Group LLC, is not linked to any liens or court cases [T5-B0081-RELATED_PARTY-E000480].",
-   "reason": "cites an unknown source: T5-B0081-RELATED_PARTY-E000480"
-  },
-  {
-   "text": "Ask the borrower: to clarify the status of the lien from Prairie Capital Partners LLC and provide documentation for the disclosed debt to Sterling Capital Partners LLC",
-   "reason": "says 'prairie capital partners' was disclosed, but the disclosures don't list it"
-  }
- ],
+ "dropped": [],
  "rounds": 2,
- "tokens": 4078,
- "seconds": 57.0,
+ "tokens": 4297,
+ "seconds": 51.1,
  "checks_reapplied": "2026-09-12"
 }

@@ -44,54 +44,57 @@
   }
  ],
  "errors": [],
- "generated_at": "2026-09-11",
+ "generated_at": "2026-09-12",
  "status": "ok",
  "model": "Qwen/Qwen3-8B",
  "memo": [
   {
-   "text": "The borrower disclosed a 3-month hardship deferment program from months 13-15",
-   "cites": [
-    "T5"
-   ]
-  },
-  {
-   "text": "A lien was filed by Silverline Specialty Finance LLC on Granite Funding Inc's collateral, which was not disclosed",
+   "text": "The borrower, Granite Funding Inc, has a lien with Silverline Specialty Finance LLC on its receivables and chattel paper, which was not disclosed",
    "cites": [
     "S5-B0101-COMPETING_LIEN-0b5557a1"
    ]
   },
   {
-   "text": "Another lien by Wells Fargo Bank, N.A. was found, but the borrower omitted this in debt reports",
+   "text": "A second lien with Wells Fargo Bank, N.A. exists on the same collateral, but the borrower omitted this in debt reports",
    "cites": [
     "S7-B0101-DEBT_GAP-5a3fb11c"
    ]
   },
   {
-   "text": "No court records were found for Granite Funding Inc",
+   "text": "The borrower is not enrolled in Setpoint PledgeCheck, preventing verification of collateral pledges at other lenders",
    "cites": [
-    "T4"
+    "S1-B0101-PLEDGECHECK_ABSENT-abb30b49"
    ]
   },
   {
-   "text": "The borrower's related company, Granite Funding Inc, shares an officer and address with the borrower",
+   "text": "Related companies share the same officer and address, indicating potential affiliate activity",
    "cites": [
     "T2"
    ]
   },
   {
-   "text": "The collateral pledged to multiple lenders suggests potential double pledging",
+   "text": "The borrower disclosed a 3-month hardship deferment program but no other debts or affiliates",
    "cites": [
-    "S5-B0101-COMPETING_LIEN-0b5557a1"
+    "T5"
    ]
   },
   {
-   "text": "Ask the borrower: clarify the relationship between Granite Funding Inc and the borrower, and why the lien by Silverline Specialty Finance LLC was not disclosed",
-   "cites": []
+   "text": "Could not confirm court judgments against Granite Funding Inc",
+   "cites": [
+    "T4"
+   ]
+  },
+  {
+   "text": "Ask the borrower: clarify the status of the collateral pledged to Silverline Specialty Finance LLC and Wells Fargo Bank, N.A",
+   "cites": [
+    "S5-B0101-COMPETING_LIEN-0b5557a1",
+    "S7-B0101-DEBT_GAP-5a3fb11c"
+   ]
   }
  ],
  "dropped": [],
  "rounds": 2,
- "tokens": 3338,
- "seconds": 40.3,
+ "tokens": 3768,
+ "seconds": 49.5,
  "checks_reapplied": "2026-09-12"
 }

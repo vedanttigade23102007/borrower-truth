@@ -44,56 +44,51 @@
   }
  ],
  "errors": [],
- "generated_at": "2026-09-11",
+ "generated_at": "2026-09-12",
  "status": "ok",
  "model": "Qwen/Qwen3-8B",
  "memo": [
   {
-   "text": "Related-party inflows of $154,682 from Apex Inventory Holdings LLC, an undisclosed shell company, were disguised as customer payments",
+   "text": "Related party inflows show $154,682 from Apex Inventory Holdings LLC, an undisclosed shell company",
    "cites": [
     "S3-B0110-RELATED_PARTY_INFLOW-16ad2d93"
    ]
   },
   {
-   "text": "The borrower is linked to multiple shell companies, including Apex Inventory Holdings LLC, which has no operations and shares the same address as the borrower",
+   "text": "The borrower is linked to multiple shell companies with no operations and shared addresses",
    "cites": [
     "S6-B0110-SHELL_INDICATORS-7df46d81"
    ]
   },
   {
-   "text": "The borrower's financial statements show a debt gap, omitting two secured lenders identified in public lien filings",
+   "text": "The borrower's financial statements show a debt gap, omitting two secured lenders",
    "cites": [
     "S7-B0110-DEBT_GAP-7fcc33cd"
    ]
   },
   {
-   "text": "Court records show a judgment against the borrower, indicating potential legal risks",
+   "text": "The borrower's disclosures do not mention all affiliated companies or debts",
    "cites": [
-    "S5-B0110-JUDGMENT-5eb6941a"
-   ]
-  },
-  {
-   "text": "The borrower disclosed a parent holding company, Apex Holdings Group LLC, but not all related entities",
-   "cites": [
-    "S6-B0110-RELATED_ENTITY-7b3baf04"
-   ]
-  },
-  {
-   "text": "Ask the borrower: clarify the source of the $154,682 inflow from Apex Inventory Holdings LLC and provide documentation for all disclosed and undisclosed debts",
-   "cites": [
-    "S3-B0110-RELATED_PARTY_INFLOW-16ad2d93",
     "S5-B0110-UNDISCLOSED_SECURED_PARTY-adabe5ac"
    ]
+  },
+  {
+   "text": "Ask the borrower: to clarify the source of payments from Apex Inventory Holdings LLC and provide details on all affiliated companies and debts",
+   "cites": []
   }
  ],
  "dropped": [
   {
    "text": "The borrower has undisclosed debt, including a lien from Prairie Capital Partners LLC on specific equipment [S5-B0110-UNDISCLOSED_SECURED_PARTY-adabe5ac].",
    "reason": "says 'prairie capital partners' was not disclosed, but the disclosures list it"
+  },
+  {
+   "text": "A lien from Silverline Specialty Finance LLC was not disclosed, indicating potential hidden debt [S5-B0110-COMPETING_LIEN-dbc6236f].",
+   "reason": "says 'silverline specialty finance' was not disclosed, but the disclosures list it"
   }
  ],
  "rounds": 2,
- "tokens": 5097,
- "seconds": 72.6,
+ "tokens": 5296,
+ "seconds": 63.1,
  "checks_reapplied": "2026-09-12"
 }

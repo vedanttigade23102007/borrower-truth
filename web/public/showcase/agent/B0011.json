@@ -8,7 +8,7 @@
    "args": {
     "borrower_id": "B0011"
    },
-   "result": "{\"verdict_by_rules\": \"LIKELY_FRAUD\", \"headline\": \"Likely: bad loans are being reported as good ones\", \"findings\": [{\"mechanism\": \"TAPE_DRESSUP\", \"confidence\": \"high\", \"plain\": \"bad loans are being reported as good ones\", \"signals\": [\"S2-B0011-SOURCE_MISMATCH-f7009adf\", \"S1-B0011-PLEDGECHECK_COMPLETENESS_FAIL-c1464b80\", \"S2-B0011-DEFERMENT_WITHOUT_PROGRAM-da636e1d\", \"S2-B0011-CURRENT_WITHOUT_PAYMENT-a4c84661\"], \"corroborated_by\": []}], \"signals\": [{\"id\": \"S2-B0011-SOURCE_MISMATCH-f7009adf\", \"system\": \"S2\", \"type\": \"SOURCE_MISMATCH\", \"explanation\": \"Servicer-system pull: 5 of 60 sampled 'eligible' loans are actually 60+ days late or no longer active\", \"evidence\": [\"source_pull:B0011:month=23\","
+   "result": "{\"verdict_by_rules\": \"LIKELY_FRAUD\", \"headline\": \"Likely: bad loans are being reported as good ones\", \"findings\": [{\"mechanism\": \"TAPE_DRESSUP\", \"confidence\": \"high\", \"plain\": \"bad loans are being reported as good ones\", \"signals\": [\"S2-B0011-SOURCE_MISMATCH-f7009adf\", \"S2-B0011-TARGETED_SOURCE_MISMATCH-c89e794a\", \"S2-B0011-ATTRIBUTE_REWRITE-9e6411c1\", \"S1-B0011-PLEDGECHECK_COMPLETENESS_FAIL-c1464b80\", \"S2-B0011-DEFERMENT_WITHOUT_PROGRAM-da636e1d\", \"S2-B0011-CURRENT_WITHOUT_PAYMENT-a4c84661\"], \"corroborated_by\": []}], \"signals\": [{\"id\": \"S2-B0011-SOURCE_MISMATCH-f7009adf\", \"system\": \"S2\", \"type\": \"SOURCE_MISMATCH\", \"explanation\": \"Servicer-system pull: 5 of 60 sampled 'eligible' loans are ac"
   },
   {
    "id": "T2",
@@ -44,18 +44,18 @@
   }
  ],
  "errors": [],
- "generated_at": "2026-09-11",
+ "generated_at": "2026-09-12",
  "status": "ok",
  "model": "Qwen/Qwen3-8B",
  "memo": [
   {
-   "text": "The borrower's case shows a LIKELY_FRAUD verdict with high confidence, citing issues like source mismatches and pledge check failures",
+   "text": "The borrower's case shows high confidence in \"TAPE_DRESSUP\" with 8 loans having rewritten credit scores",
    "cites": [
     "T1"
    ]
   },
   {
-   "text": "Related companies, including Prairie Services LLC, share the same officer but different addresses",
+   "text": "Related companies like Prairie Services LLC share the same officer but different addresses",
    "cites": [
     "T2"
    ]
@@ -67,7 +67,7 @@
    ]
   },
   {
-   "text": "No court records were found for Prairie Holdings LLC",
+   "text": "No court records found for Prairie Holdings LLC",
    "cites": [
     "T4"
    ]
@@ -77,20 +77,20 @@
    "cites": [
     "T5"
    ]
+  },
+  {
+   "text": "Ask the borrower: to clarify the relationship with Prairie Services LLC and the purpose of the UCC liens",
+   "cites": []
   }
  ],
  "dropped": [
   {
-   "text": "Could not confirm if the related entities are fully disclosed or if they have additional liabilities.",
+   "text": "Could not confirm if the borrower's disclosed related parties have claims on the borrower's assets.",
    "reason": "cites no source"
-  },
-  {
-   "text": "Ask the borrower: to clarify the relationship with Prairie Services LLC and provide details on the disclosed subordinated facility",
-   "reason": "says 'prairie services' was disclosed, but the disclosures don't list it"
   }
  ],
  "rounds": 2,
- "tokens": 3877,
- "seconds": 37.2,
+ "tokens": 4512,
+ "seconds": 41.7,
  "checks_reapplied": "2026-09-12"
 }

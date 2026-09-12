@@ -8,7 +8,7 @@
    "args": {
     "borrower_id": "B0003"
    },
-   "result": "{\"verdict_by_rules\": \"LIKELY_FRAUD\", \"headline\": \"Likely: bad loans are being reported as good ones\", \"findings\": [{\"mechanism\": \"TAPE_DRESSUP\", \"confidence\": \"medium\", \"plain\": \"bad loans are being reported as good ones\", \"signals\": [\"S2-B0003-SOURCE_MISMATCH-e7a6ae62\", \"S2-B0003-CURRENT_WITHOUT_PAYMENT-1e944760\"], \"corroborated_by\": []}, {\"mechanism\": \"RELATED_SHELLS\", \"confidence\": \"low\", \"plain\": \"the borrower is connected to undisclosed shell companies\", \"signals\": [\"S6-B0003-SHELL_INDICATORS-b3ac1674\", \"S6-B0003-RELATED_ENTITY-ca32ac67\"], \"corroborated_by\": []}], \"signals\": [{\"id\": \"S2-B0003-SOURCE_MISMATCH-e7a6ae62\", \"system\": \"S2\", \"type\": \"SOURCE_MISMATCH\", \"explanation\": \"Servicer-"
+   "result": "{\"verdict_by_rules\": \"LIKELY_FRAUD\", \"headline\": \"Likely: bad loans are being reported as good ones\", \"findings\": [{\"mechanism\": \"TAPE_DRESSUP\", \"confidence\": \"high\", \"plain\": \"bad loans are being reported as good ones\", \"signals\": [\"S2-B0003-SOURCE_MISMATCH-e7a6ae62\", \"S2-B0003-TARGETED_SOURCE_MISMATCH-87e2c75b\", \"S2-B0003-ATTRIBUTE_REWRITE-1efe8693\", \"S2-B0003-CURRENT_WITHOUT_PAYMENT-1e944760\"], \"corroborated_by\": []}, {\"mechanism\": \"RELATED_SHELLS\", \"confidence\": \"low\", \"plain\": \"the borrower is connected to undisclosed shell companies\", \"signals\": [\"S6-B0003-SHELL_INDICATORS-b3ac1674\", \"S6-B0003-RELATED_ENTITY-ca32ac67\"], \"corroborated_by\": []}], \"signals\": [{\"id\": \"S2-B0003-SOURCE_MISMA"
   },
   {
    "id": "T2",
@@ -44,24 +44,25 @@
   }
  ],
  "errors": [],
- "generated_at": "2026-09-11",
+ "generated_at": "2026-09-12",
  "status": "ok",
  "model": "Qwen/Qwen3-8B",
  "memo": [
   {
-   "text": "The borrower's case shows a LIKELY_FRAUD verdict with evidence of bad loans reported as good and undisclosed shell companies",
+   "text": "The borrower's case shows 4 of 60 sampled loans are 60+ days late or inactive, with 5 loans having rewritten credit scores",
    "cites": [
     "T1"
    ]
   },
   {
-   "text": "Meridian Logistics LLC, a related company, shares the same officer and address as the borrower and was formed 9 months ago",
+   "text": "Meridian Logistics LLC, a related entity, shares the borrower's officer and address but lacks a LEI and has no operations",
    "cites": [
+    "T1",
     "T2"
    ]
   },
   {
-   "text": "Meridian Motor LLC has two UCC liens, including a second-priority lien on all assets filed 10 months ago",
+   "text": "Meridian Motor LLC has two UCC liens, including a second-priority lien on all assets",
    "cites": [
     "T3"
    ]
@@ -79,20 +80,19 @@
    ]
   },
   {
-   "text": "The borrower did not disclose Meridian Logistics LLC, which may indicate hidden connections",
+   "text": "Could not confirm if Meridian Logistics LLC is a shell company due to lack of operational data",
    "cites": [
-    "T1"
+    "T2"
    ]
-  }
- ],
- "dropped": [
+  },
   {
-   "text": "Ask the borrower: to clarify the relationship with Meridian Logistics LLC and provide documentation for the disclosed subordinated facility",
-   "reason": "says 'meridian logistics' was disclosed, but the disclosures don't list it"
+   "text": "Ask the borrower: to clarify the relationship between Meridian Logistics LLC and the borrower's operations",
+   "cites": []
   }
  ],
+ "dropped": [],
  "rounds": 2,
- "tokens": 3728,
- "seconds": 38.6,
+ "tokens": 4370,
+ "seconds": 43.6,
  "checks_reapplied": "2026-09-12"
 }

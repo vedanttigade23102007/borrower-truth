@@ -44,18 +44,18 @@
   }
  ],
  "errors": [],
- "generated_at": "2026-09-11",
+ "generated_at": "2026-09-12",
  "status": "ok",
  "model": "Qwen/Qwen3-8B",
  "memo": [
   {
-   "text": "Payments totaling $835,699 from Lakeshore Property Partners LLC, a non-obligor, were recorded as customer payments",
+   "text": "$835,699 in payments from Lakeshore Property Partners LLC, a non-obligor, were recorded as customer payments",
    "cites": [
     "S3-B0055-NON_OBLIGOR_PAYER-436485f1"
    ]
   },
   {
-   "text": "One invoice document shows a mismatch between the borrower's data and the invoice total, indicating potential discrepancies",
+   "text": "One invoice document shows a mismatch between the total amount and the borrower's data, indicating potential discrepancies",
    "cites": [
     "S4-B0055-DOC_DATA_MISMATCH-958add99"
    ]
@@ -67,36 +67,30 @@
    ]
   },
   {
-   "text": "A lien from Wells Fargo Bank, N.A. was filed against the borrower's assets",
-   "cites": [
-    "T3"
-   ]
-  },
-  {
-   "text": "The borrower has a related company, Lakeshore Property Partners LLC, which is not a known customer",
-   "cites": [
-    "T2"
-   ]
-  },
-  {
-   "text": "Court records show no judgments against the borrower or linked companies",
+   "text": "No court records were found for Lakeshore Auto LLC",
    "cites": [
     "T4"
    ]
   },
   {
-   "text": "Ask the borrower: clarify the source of payments from Lakeshore Property Partners LLC and the status of the disclosed subordinated facility",
+   "text": "The borrower has a related party, Lakeshore Property Partners LLC, which generates sublease income",
+   "cites": [
+    "T5"
+   ]
+  },
+  {
+   "text": "Ask the borrower: clarify the nature of payments from Lakeshore Property Partners LLC and the disclosed lien with Prairie Capital Partners LLC",
    "cites": []
   }
  ],
  "dropped": [
   {
-   "text": "The borrower, B0055, has a lien from Prairie Capital Partners LLC on all assets, which was not disclosed [S5-B0055-COMPETING_LIEN-b15d34c6].",
+   "text": "The borrower, Lakeshore Auto LLC, has a second-priority lien from Prairie Capital Partners LLC on all assets, which was not disclosed [S5-B0055-COMPETING_LIEN-b15d34c6].",
    "reason": "says 'prairie capital partners' was not disclosed, but the disclosures list it"
   }
  ],
  "rounds": 2,
- "tokens": 4144,
- "seconds": 52.0,
+ "tokens": 4403,
+ "seconds": 51.4,
  "checks_reapplied": "2026-09-12"
 }

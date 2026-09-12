@@ -44,28 +44,10 @@
   }
  ],
  "errors": [],
- "generated_at": "2026-09-11",
+ "generated_at": "2026-09-12",
  "status": "ok",
  "model": "Qwen/Qwen3-8B",
  "memo": [
-  {
-   "text": "The borrower's receivables include invoices flagged as altered or implausible, raising concerns about their validity",
-   "cites": [
-    "S7-B0054-RECEIVABLES_QUALITY-0596ec53"
-   ]
-  },
-  {
-   "text": "One invoice document shows a mismatch between the total amount and the borrower's data, indicating potential discrepancies",
-   "cites": [
-    "S4-B0054-DOC_DATA_MISMATCH-eff54d76"
-   ]
-  },
-  {
-   "text": "The borrower's linked company, Granite Trade LLC, has a second-priority lien from Silverline Credit Fund LP, filed before onboarding",
-   "cites": [
-    "T3"
-   ]
-  },
   {
    "text": "The borrower has a disclosed debt to Silverline Credit Fund LP, a subordinated facility",
    "cites": [
@@ -73,22 +55,38 @@
    ]
   },
   {
-   "text": "Ask the borrower: clarify the status of the Silverline Credit Fund LP lien and provide additional documentation for the flagged invoices",
-   "cites": []
+   "text": "One invoice document shows a mismatch between the borrower's data and the invoice total",
+   "cites": [
+    "S4-B0054-DOC_DATA_MISMATCH-eff54d76"
+   ]
+  },
+  {
+   "text": "The borrower's receivables include invoices flagged as altered or implausible",
+   "cites": [
+    "S7-B0054-RECEIVABLES_QUALITY-0596ec53"
+   ]
+  },
+  {
+   "text": "No court records were found for the borrower or linked companies",
+   "cites": [
+    "T4"
+   ]
+  },
+  {
+   "text": "Ask the borrower: clarify the source of the receivables and confirm the status of the Silverline Credit Fund LP lien",
+   "cites": [
+    "S5-B0054-COMPETING_LIEN-b6d9cbb9"
+   ]
   }
  ],
  "dropped": [
-  {
-   "text": "The borrower disclosed a debt to Silverline Credit Fund LP, but the lien was not mentioned in the disclosures [T5]",
-   "reason": "says 'silverline credit fund' was not disclosed, but the disclosures list it"
-  },
   {
    "text": "A lien from Silverline Credit Fund LP exists on the borrower's assets, not disclosed in the application [S5-B0054-COMPETING_LIEN-b6d9cbb9].",
    "reason": "says 'silverline credit fund' was not disclosed, but the disclosures list it"
   }
  ],
  "rounds": 2,
- "tokens": 3511,
- "seconds": 43.4,
+ "tokens": 3760,
+ "seconds": 41.9,
  "checks_reapplied": "2026-09-12"
 }

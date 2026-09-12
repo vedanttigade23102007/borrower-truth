@@ -44,53 +44,59 @@
   }
  ],
  "errors": [],
- "generated_at": "2026-09-11",
+ "generated_at": "2026-09-12",
  "status": "ok",
  "model": "Qwen/Qwen3-8B",
  "memo": [
   {
-   "text": "Cobalt Partners Inc has a related company, Cobalt Holdings Group LLC, which shares the same officer and address",
+   "text": "The borrower has a debt gap, omitting 1 secured lender found in public lien filings",
    "cites": [
-    "T2"
+    "S7-B0006-DEBT_GAP-a6e7d76c"
    ]
   },
   {
-   "text": "There are four UCC lien filings against Cobalt Partners Inc, with the most recent being a lien from Silverline Credit Fund LP on specific equipment",
-   "cites": [
-    "T3"
-   ]
-  },
-  {
-   "text": "Could not confirm if the liens from Harbor Capital Partners LP and Prairie Capital Partners LLC are still active",
-   "cites": [
-    "T3"
-   ]
-  },
-  {
-   "text": "No court judgments were found against Cobalt Partners Inc",
-   "cites": [
-    "T4"
-   ]
-  },
-  {
-   "text": "The borrower disclosed a subordinated facility with Prairie Capital Partners LLC and an equipment lease with Silverline Credit Fund LP, but not the other liens",
+   "text": "The borrower disclosed a subordinated facility with Prairie Capital Partners LLC and an equipment lease with Silverline Credit Fund LP",
    "cites": [
     "T5"
    ]
   },
   {
-   "text": "Ask the borrower: to clarify the status of the undisclosed liens and provide documentation for the disclosed debts",
+   "text": "The borrower's disclosures do not mention Harbor Capital Partners LP, which holds a lien on all assets",
+   "cites": [
+    "S5-B0006-COMPETING_LIEN-6c5b7e7a"
+   ]
+  },
+  {
+   "text": "The borrower is linked to Cobalt Holdings Group LLC, a holding company with the same officer and address",
+   "cites": [
+    "T2"
+   ]
+  },
+  {
+   "text": "Court records show no judgments against Cobalt Partners Inc",
+   "cites": [
+    "T4"
+   ]
+  },
+  {
+   "text": "The borrower is not enrolled in Setpoint PledgeCheck, limiting verification of collateral pledges",
+   "cites": [
+    "S1-B0006-PLEDGECHECK_ABSENT-ac31f694"
+   ]
+  },
+  {
+   "text": "Ask the borrower: to clarify the status of the undisclosed secured parties and the lien filings",
    "cites": []
   }
  ],
  "dropped": [
   {
-   "text": "The borrower, Cobalt Partners Inc, has undisclosed secured parties including Prairie Capital Partners LLC, Silverline Credit Fund LP, and Harbor Capital Partners LP [T1].",
+   "text": "The borrower, Cobalt Partners Inc, has undisclosed secured parties including Prairie Capital Partners LLC and Silverline Credit Fund LP with liens on its assets [T1-S5-B0006-UNDISCLOSED_SECURED_PARTY-2fa1210e, T1-S5-B0006-COMPETING_LIEN-6c5b7e7a, T1-S5-B0006-COMPETING_LIEN-ceb8e8d0].",
    "reason": "says 'prairie capital partners' was not disclosed, but the disclosures list it"
   }
  ],
  "rounds": 2,
- "tokens": 3998,
- "seconds": 42.6,
+ "tokens": 4507,
+ "seconds": 63.7,
  "checks_reapplied": "2026-09-12"
 }

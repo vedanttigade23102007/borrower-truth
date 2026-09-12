@@ -1,0 +1,99 @@
+{
+ "borrower_id": "B0068",
+ "verdict_by_rules": "LIKELY_FRAUD",
+ "steps": [
+  {
+   "id": "T1",
+   "tool": "case_evidence",
+   "args": {
+    "borrower_id": "B0068"
+   },
+   "result": "{\"verdict_by_rules\": \"LIKELY_FRAUD\", \"headline\": \"Likely: money from lenders or linked companies is arriving dressed up as customer payments\", \"findings\": [{\"mechanism\": \"DISGUISED_RECEIPTS\", \"confidence\": \"high\", \"plain\": \"money from lenders or linked companies is arriving dressed up as customer payments\", \"signals\": [\"S3-B0068-RELATED_PARTY_INFLOW-810b4ed0\"], \"corroborated_by\": [\"S6-B0068-SHELL_INDICATORS-2f09cbb6\", \"S6-B0068-RELATED_ENTITY-42025aeb\"]}, {\"mechanism\": \"RELATED_SHELLS\", \"confidence\": \"medium\", \"plain\": \"the borrower is connected to undisclosed shell companies\", \"signals\": [\"S6-B0068-SHELL_INDICATORS-2f09cbb6\", \"S6-B0068-RELATED_ENTITY-42025aeb\"], \"corroborated_by\": [\"S3-B006"
+  },
+  {
+   "id": "T2",
+   "tool": "related_companies",
+   "args": {
+    "borrower_id": "B0068"
+   },
+   "result": "[{\"entity_id\": \"E000455\", \"name\": \"Lakeshore Realty Corp\", \"kind\": \"borrower\", \"officer\": \"Sofia Smith\", \"address\": \"5101 Harbor Rd, Suite 404\", \"formed_month\": -61, \"has_operations\": true, \"same_officer\": true, \"same_address\": true, \"is_borrower\": true}, {\"entity_id\": \"E000456\", \"name\": \"Lakeshore Holdings Group LLC\", \"kind\": \"holding\", \"officer\": \"Sofia Smith\", \"address\": \"5101 Harbor Rd, Suite 404\", \"formed_month\": -200, \"has_operations\": true, \"same_officer\": true, \"same_address\": true, \"is_borrower\": false}]"
+  },
+  {
+   "id": "T3",
+   "tool": "lien_search",
+   "args": {
+    "name": "B0068"
+   },
+   "result": "[{\"filing_id\": \"UCC-000133\", \"debtor_name\": \"Lakeshore Realty Corp\", \"debtor_address\": \"5101 Harbor Rd, Suite 404\", \"secured_party_name\": \"Wells Fargo Bank, N.A.\", \"collateral_desc\": \"all assets, including receivables and chattel paper\", \"filed_month\": -12, \"match_score\": 100}]"
+  },
+  {
+   "id": "T4",
+   "tool": "court_search",
+   "args": {
+    "name": "B0068"
+   },
+   "result": "{\"result\": \"no records matching 'Lakeshore Realty Corp'\"}"
+  },
+  {
+   "id": "T5",
+   "tool": "disclosures",
+   "args": {
+    "borrower_id": "B0068"
+   },
+   "result": "[{\"kind\": \"related_party\", \"counterparty_entity_id\": \"E000456\", \"counterparty\": \"Lakeshore Holdings Group LLC\", \"note\": \"parent holding company\"}]"
+  }
+ ],
+ "errors": [],
+ "generated_at": "2026-09-12",
+ "status": "ok",
+ "model": "Qwen/Qwen3-8B",
+ "memo": [
+  {
+   "text": "The borrower, B0068, has $478,216 in inflows from \"Granite Trade Services Inc,\" an undisclosed company linked to the borrower",
+   "cites": [
+    "S3-B0068-RELATED_PARTY_INFLOW-810b4ed0"
+   ]
+  },
+  {
+   "text": "\"Granite Trade Services Inc\" appears to be a shell company with no operations, no LEI, and registered to a different person and address",
+   "cites": [
+    "S6-B0068-SHELL_INDICATORS-2f09cbb6"
+   ]
+  },
+  {
+   "text": "The borrower is connected to two related companies, \"Lakeshore Realty Corp\" and \"Lakeshore Holdings Group LLC,\" which share the same officer and address",
+   "cites": [
+    "T2"
+   ]
+  },
+  {
+   "text": "\"Lakeshore Realty Corp\" has a UCC lien filed by Wells Fargo Bank, N.A., securing all assets, including receivables",
+   "cites": [
+    "T3"
+   ]
+  },
+  {
+   "text": "The borrower disclosed a related entity, \"Lakeshore Holdings Group LLC,\" as a parent holding company",
+   "cites": [
+    "T5"
+   ]
+  },
+  {
+   "text": "No court records were found for \"Lakeshore Realty Corp\"",
+   "cites": [
+    "T4"
+   ]
+  },
+  {
+   "text": "Ask the borrower: to clarify the relationship between \"Granite Trade Services Inc\" and the borrower, and provide documentation for the UCC lien on \"Lakeshore Realty Corp\"",
+   "cites": [
+    "T3"
+   ]
+  }
+ ],
+ "dropped": [],
+ "rounds": 2,
+ "tokens": 3990,
+ "seconds": 51.8,
+ "checks_reapplied": "2026-09-12"
+}

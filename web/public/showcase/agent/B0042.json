@@ -8,7 +8,7 @@
    "args": {
     "borrower_id": "B0042"
    },
-   "result": "{\"verdict_by_rules\": \"LIKELY_FRAUD\", \"headline\": \"Likely: the same collateral is pledged to more than one lender\", \"findings\": [{\"mechanism\": \"DOUBLE_PLEDGE\", \"confidence\": \"medium\", \"plain\": \"the same collateral is pledged to more than one lender\", \"signals\": [\"S5-B0042-COMPETING_LIEN-2511f217\", \"S7-B0042-DEBT_GAP-2d313b02\"], \"corroborated_by\": [\"S5-B0042-COMPETING_LIEN-804366ca\"]}, {\"mechanism\": \"FIN_MANIPULATION\", \"confidence\": \"medium\", \"plain\": \"the reported financial statements don't fit the evidence\", \"signals\": [\"S7-B0042-CASH_REVENUE_GAP-24038f3c\", \"S7-B0042-COVENANT_EDGE_PATTERN-b0d2bac5\"], \"corroborated_by\": []}, {\"mechanism\": \"TAPE_DRESSUP\", \"confidence\": \"medium\", \"plain\": \"bad "
+   "result": "{\"verdict_by_rules\": \"LIKELY_FRAUD\", \"headline\": \"Likely: bad loans are being reported as good ones\", \"findings\": [{\"mechanism\": \"TAPE_DRESSUP\", \"confidence\": \"high\", \"plain\": \"bad loans are being reported as good ones\", \"signals\": [\"S2-B0042-TARGETED_SOURCE_MISMATCH-43f2887c\", \"S2-B0042-ATTRIBUTE_REWRITE-ead7701d\", \"S2-B0042-SOURCE_MISMATCH-9986e666\"], \"corroborated_by\": []}, {\"mechanism\": \"DOUBLE_PLEDGE\", \"confidence\": \"medium\", \"plain\": \"the same collateral is pledged to more than one lender\", \"signals\": [\"S5-B0042-COMPETING_LIEN-2511f217\", \"S7-B0042-DEBT_GAP-2d313b02\"], \"corroborated_by\": [\"S5-B0042-COMPETING_LIEN-804366ca\"]}, {\"mechanism\": \"FIN_MANIPULATION\", \"confidence\": \"medium\", \"pl"
   },
   {
    "id": "T2",
@@ -44,55 +44,54 @@
   }
  ],
  "errors": [],
- "generated_at": "2026-09-11",
+ "generated_at": "2026-09-12",
  "status": "ok",
  "model": "Qwen/Qwen3-8B",
  "memo": [
   {
-   "text": "The borrower's related company, Crescent Credit LP, shares the same officer and address",
+   "text": "The borrower's case evidence shows LIKELY_FRAUD with mechanisms like TAPE_DRESSUP and DOUBLE_PLEDGE",
+   "cites": [
+    "T1"
+   ]
+  },
+  {
+   "text": "Related companies include Crescent Credit LP, sharing the same officer and address",
    "cites": [
     "T2"
    ]
   },
   {
-   "text": "There are no court records against the borrower or its related companies",
+   "text": "Three UCC liens exist on Crescent Credit LP, including undisclosed liens by Prairie Capital Partners LLC and Redwood Specialty Finance LP",
+   "cites": [
+    "T3"
+   ]
+  },
+  {
+   "text": "No court records found for Crescent Credit LP",
    "cites": [
     "T4"
    ]
   },
   {
-   "text": "The borrower did not disclose any debts or affiliates",
+   "text": "The borrower disclosed nothing about debts, affiliates, or programs",
    "cites": [
     "T5"
    ]
   },
   {
-   "text": "The borrower, B0042, has undisclosed liens from Prairie Capital Partners LLC and Redwood Specialty Finance LP on its assets",
+   "text": "The reported revenue is 19% higher than verified cash inflows",
    "cites": [
-    "S5-B0042-COMPETING_LIEN-2511f217",
-    "S5-B0042-COMPETING_LIEN-804366ca"
+    "T1"
    ]
   },
   {
-   "text": "The borrower's financials show a 19% cash revenue gap compared to reported revenue",
-   "cites": [
-    "S7-B0042-CASH_REVENUE_GAP-24038f3c"
-   ]
-  },
-  {
-   "text": "The collateral pledged by the borrower is also pledged to at least two other lenders, indicating potential double pledging",
-   "cites": [
-    "S5-B0042-COMPETING_LIEN-2511f217"
-   ]
-  },
-  {
-   "text": "Ask the borrower: to clarify the status of the undisclosed liens and provide documentation of the collateral's ownership and usage",
+   "text": "Ask the borrower: clarify the undisclosed liens and the source of the reported revenue",
    "cites": []
   }
  ],
  "dropped": [],
  "rounds": 2,
- "tokens": 4203,
- "seconds": 51.3,
+ "tokens": 4580,
+ "seconds": 41.0,
  "checks_reapplied": "2026-09-12"
 }

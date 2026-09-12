@@ -44,51 +44,53 @@
   }
  ],
  "errors": [],
- "generated_at": "2026-09-11",
+ "generated_at": "2026-09-12",
  "status": "ok",
  "model": "Qwen/Qwen3-8B",
  "memo": [
   {
-   "text": "The borrower's disclosed debt omits 1 secured lender found in public lien filings, indicating a potential debt gap",
+   "text": "The borrower's disclosed debt omits 1 secured lender found in public lien filings",
    "cites": [
-    "T1"
+    "S7-B0012-DEBT_GAP-3298dec4"
    ]
   },
   {
-   "text": "A related company, Northstar Supply Group LLC, shares the same officer and address as the borrower",
+   "text": "An undisclosed related company, Crescent Services LLC, shares the borrower's phone number",
    "cites": [
-    "T2"
+    "S6-B0012-RELATED_ENTITY-6e0ebf83"
    ]
   },
   {
-   "text": "The borrower disclosed a debt to Prairie Capital Partners LLC for equipment lease purposes",
+   "text": "The borrower is not enrolled in Setpoint PledgeCheck, limiting verification of collateral pledges",
    "cites": [
-    "T5"
+    "S1-B0012-PLEDGECHECK_ABSENT-96c58858"
    ]
   },
   {
-   "text": "No court judgments were found against Northstar Supply Group LLC or its related entities",
+   "text": "No court records were found for the borrower or linked companies",
    "cites": [
     "T4"
    ]
   },
   {
-   "text": "Ask the borrower: to clarify the nature and extent of the undisclosed debt and any other secured parties",
+   "text": "The borrower disclosed a debt to Prairie Capital Partners LLC for equipment lease",
+   "cites": [
+    "T5"
+   ]
+  },
+  {
+   "text": "Ask the borrower: to clarify the undisclosed related company and verify the secured party's details",
    "cites": []
   }
  ],
  "dropped": [
   {
-   "text": "The borrower, Northstar Supply Group LLC, has an undisclosed secured party, Prairie Capital Partners LLC, with a lien on specific equipment [T3].",
+   "text": "The borrower has an undisclosed secured party, Prairie Capital Partners LLC, with a lien on specific equipment [S5-B0012-UNDISCLOSED_SECURED_PARTY-a164bb14].",
    "reason": "says 'prairie capital partners' was not disclosed, but the disclosures list it"
-  },
-  {
-   "text": "Could not confirm if the undisclosed secured party has other claims on the borrower or linked companies.",
-   "reason": "cites no source"
   }
  ],
  "rounds": 2,
- "tokens": 3302,
- "seconds": 34.0,
+ "tokens": 3838,
+ "seconds": 43.7,
  "checks_reapplied": "2026-09-12"
 }

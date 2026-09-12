@@ -8,7 +8,7 @@
    "args": {
     "borrower_id": "B0041"
    },
-   "result": "{\"verdict_by_rules\": \"LIKELY_FRAUD\", \"headline\": \"Likely: the borrower has debt it has not disclosed\", \"findings\": [{\"mechanism\": \"HIDDEN_DEBT\", \"confidence\": \"high\", \"plain\": \"the borrower has debt it has not disclosed\", \"signals\": [\"S5-B0041-COMPETING_LIEN-eada8f04\", \"S7-B0041-DEBT_GAP-ad849207\", \"S5-B0041-JUDGMENT-92e93db8\"], \"corroborated_by\": [\"S6-B0041-SHELL_INDICATORS-de69d832\", \"S6-B0041-RELATED_ENTITY-e2f5eb7e\"]}, {\"mechanism\": \"RELATED_SHELLS\", \"confidence\": \"high\", \"plain\": \"the borrower is connected to undisclosed shell companies\", \"signals\": [\"S6-B0041-SHELL_INDICATORS-de69d832\", \"S6-B0041-SHELL_INDICATORS-5a323f86\", \"S6-B0041-SHELL_INDICATORS-7a4358b2\", \"S6-B0041-RELATED_ENTITY"
+   "result": "{\"verdict_by_rules\": \"LIKELY_FRAUD\", \"headline\": \"Likely: the borrower has debt it has not disclosed\", \"findings\": [{\"mechanism\": \"HIDDEN_DEBT\", \"confidence\": \"high\", \"plain\": \"the borrower has debt it has not disclosed\", \"signals\": [\"S5-B0041-COMPETING_LIEN-eada8f04\", \"S7-B0041-DEBT_GAP-ad849207\", \"S5-B0041-JUDGMENT-92e93db8\"], \"corroborated_by\": [\"S6-B0041-SHELL_INDICATORS-de69d832\", \"S6-B0041-RELATED_ENTITY-e2f5eb7e\"]}, {\"mechanism\": \"RELATED_SHELLS\", \"confidence\": \"high\", \"plain\": \"the borrower is connected to undisclosed shell companies\", \"signals\": [\"S6-B0041-SHELL_INDICATORS-de69d832\", \"S6-B0041-SHELL_INDICATORS-0ec078d7\", \"S6-B0041-SHELL_INDICATORS-7a4358b2\", \"S6-B0041-RELATED_ENTITY"
   },
   {
    "id": "T2",
@@ -44,20 +44,35 @@
   }
  ],
  "errors": [],
- "generated_at": "2026-09-11",
+ "generated_at": "2026-09-12",
  "status": "ok",
  "model": "Qwen/Qwen3-8B",
  "memo": [
   {
-   "text": "The borrower has undisclosed debt, including a $5,161,476 judgment against a related shell company",
+   "text": "The borrower has undisclosed debt, including a $5,161,476 judgment against a related company",
    "cites": [
     "S5-B0041-JUDGMENT-92e93db8"
    ]
   },
   {
-   "text": "A lien exists on a related company by Bluebonnet Asset Finance LP, which the borrower did not disclose",
+   "text": "The borrower is linked to three shell companies with no operations and shared addresses",
+   "cites": [
+    "S6-B0041-SHELL_INDICATORS-de69d832",
+    "S6-B0041-SHELL_INDICATORS-0ec078d7",
+    "S6-B0041-SHELL_INDICATORS-7a4358b2"
+   ]
+  },
+  {
+   "text": "A lien exists on a related company by Bluebonnet Asset Finance LP, not disclosed by the borrower",
    "cites": [
     "S5-B0041-COMPETING_LIEN-eada8f04"
+   ]
+  },
+  {
+   "text": "The borrower disclosed a parent holding company but not the shell companies",
+   "cites": [
+    "S6-B0041-RELATED_ENTITY-e2f5eb7e",
+    "S7-B0041-DEBT_GAP-ad849207"
    ]
   },
   {
@@ -71,18 +86,9 @@
    "cites": []
   }
  ],
- "dropped": [
-  {
-   "text": "The borrower is linked to three shell companies with no operations, same address, and shared officers [S6-B0041-SHELL_INDICATORS-de69d832, S6-B0041-SHELL_INDICATORS-5a323f86, S6-B0041-SHELL_INDICATORS-7a4358b2]",
-   "reason": "cites an unknown source: S6-B0041-SHELL_INDICATORS-5a323f86"
-  },
-  {
-   "text": "The borrower disclosed a parent holding company but not the shell companies [S6-B0041-RELATED_ENTITY-e2f5eb7e, S6-B0041-RELATED_ENTITY-2e56d0e3, S6-B0041-RELATED_ENTITY-7863d2ff]",
-   "reason": "cites an unknown source: S6-B0041-RELATED_ENTITY-2e56d0e3"
-  }
- ],
+ "dropped": [],
  "rounds": 2,
- "tokens": 4714,
- "seconds": 60.3,
+ "tokens": 4964,
+ "seconds": 58.2,
  "checks_reapplied": "2026-09-12"
 }

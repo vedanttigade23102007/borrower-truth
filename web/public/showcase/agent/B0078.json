@@ -44,14 +44,20 @@
   }
  ],
  "errors": [],
- "generated_at": "2026-09-11",
+ "generated_at": "2026-09-12",
  "status": "ok",
  "model": "Qwen/Qwen3-8B",
  "memo": [
   {
-   "text": "The borrower's disclosed debt omits this secured lender, indicating a potential debt gap",
+   "text": "The borrower's disclosed debt omits 1 secured lender found in public lien filings",
    "cites": [
-    "T1"
+    "S7-B0078-DEBT_GAP-a7b6d1a6"
+   ]
+  },
+  {
+   "text": "The borrower is not enrolled in Setpoint PledgeCheck, preventing verification of collateral pledges",
+   "cites": [
+    "S1-B0078-PLEDGECHECK_ABSENT-c83df803"
    ]
   },
   {
@@ -61,36 +67,30 @@
    ]
   },
   {
-   "text": "No court records were found for the borrower or related companies",
-   "cites": [
-    "T4"
-   ]
-  },
-  {
-   "text": "The undisclosed lien on equipment may not be fully reflected in the borrower's financials",
-   "cites": [
-    "T1"
-   ]
-  },
-  {
    "text": "The borrower disclosed a debt to Silverline Credit Fund LP for equipment lease",
    "cites": [
     "T5"
    ]
   },
   {
-   "text": "Ask the borrower: to clarify the status of the undisclosed secured party and any other potential liabilities",
+   "text": "No court records were found for the borrower or related companies",
+   "cites": [
+    "T4"
+   ]
+  },
+  {
+   "text": "Ask the borrower: clarify the undisclosed secured party and verify collateral pledges",
    "cites": []
   }
  ],
  "dropped": [
   {
-   "text": "The borrower, Tidewater Realty LLC, has an undisclosed secured party, Silverline Credit Fund LP, with a lien on specific equipment [T3].",
+   "text": "The borrower has an undisclosed secured party, Silverline Credit Fund LP, with a lien on specific equipment [T1-S5-B0078-UNDISCLOSED_SECURED_PARTY-e579d49d].",
    "reason": "says 'silverline credit fund' was not disclosed, but the disclosures list it"
   }
  ],
  "rounds": 2,
- "tokens": 3288,
- "seconds": 33.2,
+ "tokens": 3717,
+ "seconds": 42.0,
  "checks_reapplied": "2026-09-12"
 }

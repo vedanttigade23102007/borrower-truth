@@ -8,7 +8,7 @@
    "args": {
     "borrower_id": "B0004"
    },
-   "result": "{\"verdict_by_rules\": \"LIKELY_FRAUD\", \"headline\": \"Likely: bad loans are being reported as good ones\", \"findings\": [{\"mechanism\": \"TAPE_DRESSUP\", \"confidence\": \"medium\", \"plain\": \"bad loans are being reported as good ones\", \"signals\": [\"S2-B0004-SOURCE_MISMATCH-faca5bff\", \"S2-B0004-CURRENT_WITHOUT_PAYMENT-2e056945\"], \"corroborated_by\": []}], \"signals\": [{\"id\": \"S2-B0004-SOURCE_MISMATCH-faca5bff\", \"system\": \"S2\", \"type\": \"SOURCE_MISMATCH\", \"explanation\": \"Servicer-system pull: 2 of 60 sampled 'eligible' loans are actually 60+ days late or no longer active\", \"evidence\": [\"source_pull:B0004:month=23\", \"tape:asset:A-B0004-000398\", \"tape:asset:A-B0004-000457\"], \"month\": 23}, {\"id\": \"S2-B0004-CURRE"
+   "result": "{\"verdict_by_rules\": \"LIKELY_FRAUD\", \"headline\": \"Likely: bad loans are being reported as good ones\", \"findings\": [{\"mechanism\": \"TAPE_DRESSUP\", \"confidence\": \"high\", \"plain\": \"bad loans are being reported as good ones\", \"signals\": [\"S2-B0004-TARGETED_SOURCE_MISMATCH-6d4d5c55\", \"S2-B0004-ATTRIBUTE_REWRITE-859a35d7\", \"S2-B0004-SOURCE_MISMATCH-faca5bff\", \"S2-B0004-CURRENT_WITHOUT_PAYMENT-2e056945\"], \"corroborated_by\": []}], \"signals\": [{\"id\": \"S2-B0004-TARGETED_SOURCE_MISMATCH-6d4d5c55\", \"system\": \"S2\", \"type\": \"TARGETED_SOURCE_MISMATCH\", \"explanation\": \"Loans reported current but with no payment for two months were pulled from the servicer system: 14 of 14 are actually 60+ days late or no lon"
   },
   {
    "id": "T2",
@@ -44,30 +44,30 @@
   }
  ],
  "errors": [],
- "generated_at": "2026-09-11",
+ "generated_at": "2026-09-12",
  "status": "ok",
  "model": "Qwen/Qwen3-8B",
  "memo": [
   {
-   "text": "The borrower's case shows a LIKELY_FRAUD verdict with signals of source mismatch and current loans without payment",
+   "text": "The borrower, B0004, has a verdict of LIKELY_FRAUD due to evidence of bad loans being reported as good ones",
    "cites": [
     "T1"
    ]
   },
   {
-   "text": "Related companies include Sterling Funding LP, sharing an officer and address with the borrower",
+   "text": "Related companies include Sterling Funding LP and Sterling Holdings Group LLC, both linked by the same officer and address",
    "cites": [
     "T2"
    ]
   },
   {
-   "text": "A lien was filed against Sterling Funding LP by Wells Fargo Bank, securing all assets",
+   "text": "A lien was filed against Sterling Funding LP by Wells Fargo Bank, N.A., securing all assets including receivables",
    "cites": [
     "T3"
    ]
   },
   {
-   "text": "No court records were found for the borrower or related entities",
+   "text": "No court records were found for Sterling Funding LP",
    "cites": [
     "T4"
    ]
@@ -79,21 +79,19 @@
    ]
   },
   {
-   "text": "Could not confirm if the lien affects the borrower's ability to repay",
+   "text": "Could not confirm if the borrower's disclosed related parties have any claims or liabilities",
    "cites": [
-    "T3"
+    "T5"
    ]
   },
   {
-   "text": "Ask the borrower: Provide details on the relationship between Sterling Funding LP and the collateral described in the lien",
-   "cites": [
-    "T3"
-   ]
+   "text": "Ask the borrower: to clarify the relationship between Sterling Funding LP and Sterling Holdings Group LLC",
+   "cites": []
   }
  ],
  "dropped": [],
  "rounds": 2,
- "tokens": 3264,
- "seconds": 32.9,
+ "tokens": 4018,
+ "seconds": 38.9,
  "checks_reapplied": "2026-09-12"
 }

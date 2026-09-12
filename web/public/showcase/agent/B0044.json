@@ -44,7 +44,7 @@
   }
  ],
  "errors": [],
- "generated_at": "2026-09-11",
+ "generated_at": "2026-09-12",
  "status": "ok",
  "model": "Qwen/Qwen3-8B",
  "memo": [
@@ -55,7 +55,7 @@
    ]
   },
   {
-   "text": "Harbor Capital Group LLC has a UCC lien with Wells Fargo Bank, N.A., securing all assets",
+   "text": "Harbor Capital Group LLC has a UCC lien with Wells Fargo Bank, N.A. securing all assets",
    "cites": [
     "T3"
    ]
@@ -65,26 +65,24 @@
    "cites": [
     "T5"
    ]
-  },
-  {
-   "text": "Could not confirm if the judgment relates to the borrower's operations",
-   "cites": [
-    "T4"
-   ]
-  },
-  {
-   "text": "Ask the borrower: clarify the relationship between Harbor Capital Group LLC and the business",
-   "cites": []
   }
  ],
  "dropped": [
   {
    "text": "Harbor Capital Group LLC, a related company, has a judgment of $198,811 against it [T1-S5].",
    "reason": "cites an unknown source: T1-S5"
+  },
+  {
+   "text": "Could not confirm if the judgment relates to the borrower's operations [T1-S5].",
+   "reason": "cites an unknown source: T1-S5"
+  },
+  {
+   "text": "Ask the borrower: clarify the relationship between Harbor Capital Group LLC and the disclosed receivables [T1-S5].",
+   "reason": "cites an unknown source: T1-S5"
   }
  ],
  "rounds": 2,
- "tokens": 3243,
- "seconds": 29.9,
+ "tokens": 3533,
+ "seconds": 32.7,
  "checks_reapplied": "2026-09-12"
 }

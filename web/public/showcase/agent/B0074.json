@@ -1,0 +1,103 @@
+{
+ "borrower_id": "B0074",
+ "verdict_by_rules": "LIKELY_FRAUD",
+ "steps": [
+  {
+   "id": "T1",
+   "tool": "case_evidence",
+   "args": {
+    "borrower_id": "B0074"
+   },
+   "result": "{\"verdict_by_rules\": \"LIKELY_FRAUD\", \"headline\": \"Likely: money from lenders or linked companies is arriving dressed up as customer payments\", \"findings\": [{\"mechanism\": \"DISGUISED_RECEIPTS\", \"confidence\": \"high\", \"plain\": \"money from lenders or linked companies is arriving dressed up as customer payments\", \"signals\": [\"S3-B0074-RELATED_PARTY_INFLOW-9bb80cd5\"], \"corroborated_by\": [\"S6-B0074-SHELL_INDICATORS-7cf2ca08\", \"S6-B0074-RELATED_ENTITY-2cdff8a0\"]}, {\"mechanism\": \"RELATED_SHELLS\", \"confidence\": \"medium\", \"plain\": \"the borrower is connected to undisclosed shell companies\", \"signals\": [\"S6-B0074-SHELL_INDICATORS-7cf2ca08\", \"S6-B0074-RELATED_ENTITY-2cdff8a0\"], \"corroborated_by\": [\"S3-B007"
+  },
+  {
+   "id": "T2",
+   "tool": "related_companies",
+   "args": {
+    "borrower_id": "B0074"
+   },
+   "result": "[{\"entity_id\": \"E000465\", \"name\": \"Canyon Motor Inc\", \"kind\": \"borrower\", \"officer\": \"Mei Wilson\", \"address\": \"7365 Oak Blvd, Suite 410\", \"formed_month\": -114, \"has_operations\": true, \"same_officer\": true, \"same_address\": true, \"is_borrower\": true}]"
+  },
+  {
+   "id": "T3",
+   "tool": "lien_search",
+   "args": {
+    "name": "B0074"
+   },
+   "result": "[{\"filing_id\": \"UCC-000144\", \"debtor_name\": \"Canyon Motor Inc\", \"debtor_address\": \"7365 Oak Blvd, Suite 410\", \"secured_party_name\": \"Silverline Credit Fund LLC\", \"collateral_desc\": \"second-priority lien on all assets\", \"filed_month\": -10, \"match_score\": 100}, {\"filing_id\": \"UCC-000143\", \"debtor_name\": \"Canyon Motor Inc\", \"debtor_address\": \"7365 Oak Blvd, Suite 410\", \"secured_party_name\": \"Wells Fargo Bank, N.A.\", \"collateral_desc\": \"all assets, including receivables and chattel paper\", \"filed_month\": -12, \"match_score\": 100}]"
+  },
+  {
+   "id": "T4",
+   "tool": "court_search",
+   "args": {
+    "name": "B0074"
+   },
+   "result": "{\"result\": \"no records matching 'Canyon Motor Inc'\"}"
+  },
+  {
+   "id": "T5",
+   "tool": "disclosures",
+   "args": {
+    "borrower_id": "B0074"
+   },
+   "result": "[{\"kind\": \"debt\", \"counterparty_entity_id\": \"E000013\", \"counterparty\": \"Silverline Credit Fund LLC\", \"note\": \"disclosed subordinated facility\"}]"
+  }
+ ],
+ "errors": [],
+ "generated_at": "2026-09-12",
+ "status": "ok",
+ "model": "Qwen/Qwen3-8B",
+ "memo": [
+  {
+   "text": "The borrower's case evidence indicates $238,878 (8.5% of inflows) from Meridian Customer Collections Inc, linked to the borrower",
+   "cites": [
+    "S3-B0074-RELATED_PARTY_INFLOW-9bb80cd5"
+   ]
+  },
+  {
+   "text": "Meridian Customer Collections Inc appears to be a shell company with no operations, no LEI, and registered to a different person and address",
+   "cites": [
+    "S6-B0074-SHELL_INDICATORS-7cf2ca08"
+   ]
+  },
+  {
+   "text": "The borrower is connected to Canyon Motor Inc, which has a second-priority lien on all assets from Silverline Credit Fund LLC",
+   "cites": [
+    "T3"
+   ]
+  },
+  {
+   "text": "The borrower disclosed a subordinated facility with Silverline Credit Fund LLC",
+   "cites": [
+    "T5"
+   ]
+  },
+  {
+   "text": "No court records were found for Canyon Motor Inc",
+   "cites": [
+    "T4"
+   ]
+  },
+  {
+   "text": "The borrower's related company, Canyon Motor Inc, has a lien from Wells Fargo Bank, N.A",
+   "cites": [
+    "T3"
+   ]
+  },
+  {
+   "text": "Could not confirm if Meridian Customer Collections Inc is a related entity beyond sharing a phone number",
+   "cites": [
+    "S6-B0074-RELATED_ENTITY-2cdff8a0"
+   ]
+  },
+  {
+   "text": "Ask the borrower: to clarify the relationship between Meridian Customer Collections Inc and the borrower",
+   "cites": []
+  }
+ ],
+ "dropped": [],
+ "rounds": 2,
+ "tokens": 3950,
+ "seconds": 48.9,
+ "checks_reapplied": "2026-09-12"
+}

@@ -44,57 +44,54 @@
   }
  ],
  "errors": [],
- "generated_at": "2026-09-11",
+ "generated_at": "2026-09-12",
  "status": "ok",
  "model": "Qwen/Qwen3-8B",
  "memo": [
   {
-   "text": "The borrower is linked to \"Magnolia Inventory Holdings LLC\" and \"Magnolia Trade Services LLC,\" both of which appear to be shell companies with no operations and the same address as the borrower",
-   "cites": [
-    "T2"
-   ]
-  },
-  {
-   "text": "$221,944 (14.5% of inflows) arrived as \"customer\" cash from \"Magnolia Inventory Holdings LLC,\" an undisclosed company linked to the borrower",
+   "text": "$221,944 in payments from \"Magnolia Inventory Holdings LLC\" were classified as customer cash, despite being a linked company",
    "cites": [
     "S3-B0067-RELATED_PARTY_INFLOW-9937e9d1"
    ]
   },
   {
-   "text": "\"Magnolia Inventory Holdings LLC\" lacks a LEI and is not listed in GLEIF, indicating it may not be a legitimate entity",
+   "text": "\"Magnolia Inventory Holdings LLC\" and \"Magnolia Trade Services LLC\" are shell companies with no operations and share the borrower's address",
    "cites": [
-    "S6-B0067-SHELL_INDICATORS-46191db2"
+    "S6-B0067-SHELL_INDICATORS-46191db2",
+    "S6-B0067-SHELL_INDICATORS-38f6fa03"
    ]
   },
   {
-   "text": "The borrower has not disclosed a secured lender, \"Canyon Specialty Finance LP,\" which holds a lien on a related company",
-   "cites": [
-    "S5-B0067-COMPETING_LIEN-0b7defd6"
-   ]
-  },
-  {
-   "text": "Reported revenue is 19% higher than what verified customer cash supports, suggesting potential financial manipulation",
+   "text": "The borrower's reported revenue exceeds verified customer cash by 19% over two quarters",
    "cites": [
     "S7-B0067-CASH_REVENUE_GAP-04cff04f"
    ]
   },
   {
-   "text": "Could not confirm the existence of court judgments against the borrower or linked companies",
+   "text": "No court records were found for \"Magnolia Industries Corp\"",
    "cites": [
     "T4"
    ]
   },
   {
-   "text": "Ask the borrower: to clarify the source of the $221,944 inflow and provide documentation for the undisclosed related company \"Magnolia Inventory Holdings LLC\"",
+   "text": "The borrower disclosed a parent holding company \"Magnolia Holdings Group LLC\" and a sublease income from \"Magnolia Property Partners LLC\"",
    "cites": [
-    "S3-B0067-RELATED_PARTY_INFLOW-9937e9d1",
-    "S5-B0067-COMPETING_LIEN-0b7defd6"
+    "T5"
    ]
+  },
+  {
+   "text": "Ask the borrower: clarify the relationship and purpose of payments from \"Magnolia Inventory Holdings LLC\" and confirm the status of \"Magnolia Trade Services LLC\"",
+   "cites": []
   }
  ],
- "dropped": [],
+ "dropped": [
+  {
+   "text": "The borrower has undisclosed debt from \"Canyon Capital Partners LLC\" and \"Silverline Credit Fund LLC\" [S5-B0067-COMPETING_LIEN-0b7defd6].",
+   "reason": "says 'canyon capital partners' was not disclosed, but the disclosures list it"
+  }
+ ],
  "rounds": 2,
- "tokens": 5024,
- "seconds": 73.3,
+ "tokens": 5242,
+ "seconds": 67.1,
  "checks_reapplied": "2026-09-12"
 }

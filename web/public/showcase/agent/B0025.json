@@ -44,20 +44,14 @@
   }
  ],
  "errors": [],
- "generated_at": "2026-09-11",
+ "generated_at": "2026-09-12",
  "status": "ok",
  "model": "Qwen/Qwen3-8B",
  "memo": [
   {
-   "text": "The borrower's financial statements show a 18% gap between reported revenue and verified customer cash for two quarters",
+   "text": "The borrower's financial statements show a 18% gap between reported revenue and verified customer cash",
    "cites": [
     "S7-B0025-CASH_REVENUE_GAP-bafe407a"
-   ]
-  },
-  {
-   "text": "The borrower has a disclosed debt to Redwood Specialty Finance LP and Prairie Capital Partners LP",
-   "cites": [
-    "T5"
    ]
   },
   {
@@ -67,32 +61,36 @@
    ]
   },
   {
-   "text": "No court records were found for Keystone Parts Inc",
+   "text": "The borrower is not enrolled in Setpoint PledgeCheck, making collateral verification difficult",
    "cites": [
-    "T4"
+    "S1-B0025-PLEDGECHECK_ABSENT-47ab1df3"
    ]
   },
   {
-   "text": "The borrower's related company, Keystone Parts Inc, has multiple liens, including a second-priority lien from Redwood Specialty Finance LP",
+   "text": "The borrower's disclosed debts include a subordinated facility with Redwood Specialty Finance LP and an equipment lease with Prairie Capital Partners LP",
    "cites": [
-    "T3"
+    "T5"
    ]
   },
   {
-   "text": "Ask the borrower: clarify the source of the revenue gap and explain the unreported lien from Harbor Credit Fund LP",
+   "text": "Could not confirm if the lien from Harbor Credit Fund LP is still active or if it was a stale filing",
    "cites": [
     "S5-B0025-COMPETING_LIEN-a371c677"
    ]
+  },
+  {
+   "text": "Ask the borrower: to clarify the status of the Harbor Credit Fund LP lien and provide additional documentation on the revenue gap",
+   "cites": []
   }
  ],
  "dropped": [
   {
-   "text": "A lien from Harbor Credit Fund LP on Keystone Parts Inc was filed 21 months ago and not disclosed [S5-B0025-COMPETING_LIEN-a371c677].",
-   "reason": "states a number not in its sources: 21"
+   "text": "The borrower has a disclosed debt to Redwood Specialty Finance LP, but a competing lien from Harbor Credit Fund LP was not disclosed [S5-B0025-COMPETING_LIEN-a371c677].",
+   "reason": "says 'redwood specialty finance' was not disclosed, but the disclosures list it"
   }
  ],
  "rounds": 2,
- "tokens": 3770,
- "seconds": 46.8,
+ "tokens": 4173,
+ "seconds": 53.6,
  "checks_reapplied": "2026-09-12"
 }

@@ -1,0 +1,104 @@
+{
+ "borrower_id": "B0065",
+ "verdict_by_rules": "LIKELY_FRAUD",
+ "steps": [
+  {
+   "id": "T1",
+   "tool": "case_evidence",
+   "args": {
+    "borrower_id": "B0065"
+   },
+   "result": "{\"verdict_by_rules\": \"LIKELY_FRAUD\", \"headline\": \"Likely: money from lenders or linked companies is arriving dressed up as customer payments\", \"findings\": [{\"mechanism\": \"DISGUISED_RECEIPTS\", \"confidence\": \"high\", \"plain\": \"money from lenders or linked companies is arriving dressed up as customer payments\", \"signals\": [\"S3-B0065-CIRCULAR_FLOW-0a126048\", \"S3-B0065-NON_OBLIGOR_PAYER-fe2dd772\"], \"corroborated_by\": []}, {\"mechanism\": \"FIN_MANIPULATION\", \"confidence\": \"low\", \"plain\": \"the reported financial statements don't fit the evidence\", \"signals\": [\"S7-B0065-COVENANT_EDGE_PATTERN-f39588d6\"], \"corroborated_by\": []}], \"signals\": [{\"id\": \"S3-B0065-CIRCULAR_FLOW-0a126048\", \"system\": \"S3\", \"type"
+  },
+  {
+   "id": "T2",
+   "tool": "related_companies",
+   "args": {
+    "borrower_id": "B0065"
+   },
+   "result": "[{\"entity_id\": \"E000447\", \"name\": \"Meridian Finance Corp\", \"kind\": \"borrower\", \"officer\": \"Carlos Moore\", \"address\": \"2501 Elm St, Suite 399\", \"formed_month\": -55, \"has_operations\": true, \"same_officer\": true, \"same_address\": true, \"is_borrower\": true}]"
+  },
+  {
+   "id": "T3",
+   "tool": "lien_search",
+   "args": {
+    "name": "B0065"
+   },
+   "result": "[{\"filing_id\": \"UCC-000125\", \"debtor_name\": \"Meridian Finance Corp\", \"debtor_address\": \"2501 Elm St, Suite 399\", \"secured_party_name\": \"Harbor Credit Fund LP\", \"collateral_desc\": \"second-priority lien on all assets\", \"filed_month\": -10, \"match_score\": 100}, {\"filing_id\": \"UCC-000124\", \"debtor_name\": \"Meridian Finance Corp\", \"debtor_address\": \"2501 Elm St, Suite 399\", \"secured_party_name\": \"Wells Fargo Bank, N.A.\", \"collateral_desc\": \"all assets, including receivables and chattel paper\", \"filed_month\": -12, \"match_score\": 100}]"
+  },
+  {
+   "id": "T4",
+   "tool": "court_search",
+   "args": {
+    "name": "B0065"
+   },
+   "result": "{\"result\": \"no records matching 'Meridian Finance Corp'\"}"
+  },
+  {
+   "id": "T5",
+   "tool": "disclosures",
+   "args": {
+    "borrower_id": "B0065"
+   },
+   "result": "[{\"kind\": \"debt\", \"counterparty_entity_id\": \"E000004\", \"counterparty\": \"Harbor Credit Fund LP\", \"note\": \"disclosed subordinated facility\"}]"
+  }
+ ],
+ "errors": [],
+ "generated_at": "2026-09-12",
+ "status": "ok",
+ "model": "Qwen/Qwen3-8B",
+ "memo": [
+  {
+   "text": "The borrower, B0065, has a verdict of LIKELY_FRAUD due to disguised receipts and financial manipulation",
+   "cites": [
+    "T1"
+   ]
+  },
+  {
+   "text": "Related companies include Meridian Finance Corp, which shares an officer and address with the borrower",
+   "cites": [
+    "T2"
+   ]
+  },
+  {
+   "text": "Meridian Finance Corp has two UCC liens: one from Harbor Credit Fund LP and another from Wells Fargo Bank, N.A",
+   "cites": [
+    "T3"
+   ]
+  },
+  {
+   "text": "No court records were found for Meridian Finance Corp",
+   "cites": [
+    "T4"
+   ]
+  },
+  {
+   "text": "The borrower disclosed a debt to Harbor Credit Fund LP as a subordinated facility",
+   "cites": [
+    "T5"
+   ]
+  },
+  {
+   "text": "The circular flow signal shows $108,418 in payments from Keystone Distributors LLC that looped back as customer payments",
+   "cites": [
+    "T1"
+   ]
+  },
+  {
+   "text": "The borrower did not enroll in Setpoint PledgeCheck, making collateral verification difficult",
+   "cites": [
+    "T1"
+   ]
+  }
+ ],
+ "dropped": [
+  {
+   "text": "Ask the borrower: clarify the relationship with Keystone Distributors LLC and the nature of the disclosed debt to Harbor Credit Fund LP.",
+   "reason": "says 'keystone distributors' was disclosed, but the disclosures don't list it"
+  }
+ ],
+ "rounds": 2,
+ "tokens": 3989,
+ "seconds": 43.1,
+ "checks_reapplied": "2026-09-12"
+}

@@ -8,7 +8,7 @@
    "args": {
     "borrower_id": "B0072"
    },
-   "result": "{\"verdict_by_rules\": \"LIKELY_FRAUD\", \"headline\": \"Likely: bad loans are being reported as good ones\", \"findings\": [{\"mechanism\": \"TAPE_DRESSUP\", \"confidence\": \"high\", \"plain\": \"bad loans are being reported as good ones\", \"signals\": [\"S2-B0072-SOURCE_MISMATCH-7df876f5\", \"S2-B0072-DEFERMENT_WITHOUT_PROGRAM-6f3cd571\", \"S2-B0072-CURRENT_WITHOUT_PAYMENT-e94f4794\"], \"corroborated_by\": []}, {\"mechanism\": \"DOUBLE_PLEDGE\", \"confidence\": \"medium\", \"plain\": \"the same collateral is pledged to more than one lender\", \"signals\": [\"S5-B0072-COMPETING_LIEN-bc479923\", \"S7-B0072-DEBT_GAP-ac362fd7\"], \"corroborated_by\": []}, {\"mechanism\": \"FIN_MANIPULATION\", \"confidence\": \"medium\", \"plain\": \"the reported financi"
+   "result": "{\"verdict_by_rules\": \"LIKELY_FRAUD\", \"headline\": \"Likely: bad loans are being reported as good ones\", \"findings\": [{\"mechanism\": \"TAPE_DRESSUP\", \"confidence\": \"high\", \"plain\": \"bad loans are being reported as good ones\", \"signals\": [\"S2-B0072-SOURCE_MISMATCH-7df876f5\", \"S2-B0072-TARGETED_SOURCE_MISMATCH-ffbe08b5\", \"S2-B0072-ATTRIBUTE_REWRITE-51d9a656\", \"S2-B0072-DEFERMENT_WITHOUT_PROGRAM-6f3cd571\", \"S2-B0072-CURRENT_WITHOUT_PAYMENT-e94f4794\"], \"corroborated_by\": []}, {\"mechanism\": \"DOUBLE_PLEDGE\", \"confidence\": \"medium\", \"plain\": \"the same collateral is pledged to more than one lender\", \"signals\": [\"S5-B0072-COMPETING_LIEN-bc479923\", \"S7-B0072-DEBT_GAP-ac362fd7\"], \"corroborated_by\": []}, {\"m"
   },
   {
    "id": "T2",
@@ -44,7 +44,7 @@
   }
  ],
  "errors": [],
- "generated_at": "2026-09-11",
+ "generated_at": "2026-09-12",
  "status": "ok",
  "model": "Qwen/Qwen3-8B",
  "memo": [
@@ -55,43 +55,43 @@
    ]
   },
   {
-   "text": "A lien from Silverline Specialty Finance LLC on Tidewater Capital Inc's assets was not disclosed",
+   "text": "A lien exists on Tidewater Capital Inc by Silverline Specialty Finance LLC, undisclosed by the borrower",
    "cites": [
     "S5-B0072-COMPETING_LIEN-bc479923"
    ]
   },
   {
-   "text": "The borrower's financials show a 27% cash revenue gap compared to reported revenue",
+   "text": "The borrower's financials show a 27% cash revenue gap compared to verified collections",
    "cites": [
     "S7-B0072-CASH_REVENUE_GAP-923c5f6f"
    ]
   },
   {
-   "text": "Six of 60 sampled loans are 60+ days late or inactive, suggesting source mismatch",
+   "text": "The borrower's related companies share the same officer and address as the borrower",
    "cites": [
-    "S2-B0072-SOURCE_MISMATCH-7df876f5"
+    "T2"
    ]
   },
   {
-   "text": "The borrower's covenant metrics consistently hover near thresholds, indicating potential manipulation",
+   "text": "The borrower's reported revenue is inconsistent with verified customer cash inflows",
    "cites": [
-    "S7-B0072-COVENANT_EDGE_PATTERN-a54781a3"
+    "S7-B0072-CASH_REVENUE_GAP-923c5f6f"
    ]
   },
   {
-   "text": "Could not confirm if the lien from Silverline Specialty Finance LLC is resolved or if it affects the borrower's creditworthiness",
+   "text": "The borrower's disclosures do not mention any affiliated companies or debts",
    "cites": [
-    "T3"
+    "T5"
    ]
   },
   {
-   "text": "Ask the borrower: to clarify the lien from Silverline Specialty Finance LLC and provide additional financial documentation",
+   "text": "Ask the borrower: clarify the undisclosed lien and explain the revenue discrepancy",
    "cites": []
   }
  ],
  "dropped": [],
  "rounds": 2,
- "tokens": 4217,
- "seconds": 49.2,
+ "tokens": 4641,
+ "seconds": 47.5,
  "checks_reapplied": "2026-09-12"
 }

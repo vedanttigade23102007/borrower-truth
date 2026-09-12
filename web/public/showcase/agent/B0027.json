@@ -44,59 +44,53 @@
   }
  ],
  "errors": [],
- "generated_at": "2026-09-11",
+ "generated_at": "2026-09-12",
  "status": "ok",
  "model": "Qwen/Qwen3-8B",
  "memo": [
   {
-   "text": "The borrower, Meridian Holdings Corp, has a lien on all receivables and chattel paper from Sterling Capital Partners LLC, which was not disclosed",
+   "text": "The borrower pledged the same collateral to multiple lenders, including Prairie Capital Partners LLC and Sterling Capital Partners LLC",
    "cites": [
-    "S5-B0027-COMPETING_LIEN-f26ec5b2"
+    "T1"
    ]
   },
   {
-   "text": "The borrower disclosed a subordinated facility with Prairie Capital Partners LLC",
+   "text": "A lien from Sterling Capital Partners LLC was filed after the borrower's onboarding, indicating potential hidden debt",
    "cites": [
-    "T5"
+    "T1"
    ]
   },
   {
-   "text": "A court judgment against Meridian Holdings Corp was not found",
+   "text": "No court judgments were found against Meridian Holdings Corp",
    "cites": [
     "T4"
    ]
   },
   {
-   "text": "The borrower's related company, Meridian Property Partners LLC, is a separate entity with a different address",
+   "text": "The borrower has a related company, Meridian Property Partners LLC, which shares an officer but not an address",
    "cites": [
     "T2"
    ]
   },
   {
-   "text": "The borrower's disclosures do not mention the lien from Sterling Capital Partners LLC",
+   "text": "Could not confirm if the borrower's disclosed debts fully account for all liabilities",
    "cites": [
-    "T5"
+    "T1"
    ]
   },
   {
-   "text": "The borrower's disclosed debts do not include the lien from Sterling Capital Partners LLC",
-   "cites": [
-    "S7-B0027-DEBT_GAP-bd52f995"
-   ]
-  },
-  {
-   "text": "Ask the borrower: to clarify the status of the undisclosed lien from Sterling Capital Partners LLC",
+   "text": "Ask the borrower: to clarify the status of the lien from Sterling Capital Partners LLC and any other undisclosed debts",
    "cites": []
   }
  ],
  "dropped": [
   {
-   "text": "The borrower also has a second-priority lien on all assets from Prairie Capital Partners LLC, which was not disclosed [S5-B0027-COMPETING_LIEN-4f5325cf].",
-   "reason": "says 'prairie capital partners' was not disclosed, but the disclosures list it"
+   "text": "The borrower disclosed a subordinated facility with Prairie Capital Partners LLC but not the lien from Sterling Capital Partners LLC [T1, T5].",
+   "reason": "says 'sterling capital partners' was disclosed, but the disclosures don't list it"
   }
  ],
  "rounds": 2,
- "tokens": 3863,
- "seconds": 46.4,
+ "tokens": 4072,
+ "seconds": 39.5,
  "checks_reapplied": "2026-09-12"
 }

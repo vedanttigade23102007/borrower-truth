@@ -44,24 +44,36 @@
   }
  ],
  "errors": [],
- "generated_at": "2026-09-11",
+ "generated_at": "2026-09-12",
  "status": "ok",
  "model": "Qwen/Qwen3-8B",
  "memo": [
   {
-   "text": "The borrower's financial statements show a 23% gap between reported revenue and verified customer cash for two consecutive quarters",
+   "text": "The borrower's financial statements show a 23% gap between reported revenue and verified customer cash for two quarters",
    "cites": [
     "S7-B0080-CASH_REVENUE_GAP-59b49fdd"
    ]
   },
   {
-   "text": "The covenant metric has consistently hovered within 5% above the threshold for two quarters",
+   "text": "The covenant metric has been within 5% above the threshold for two consecutive quarters",
    "cites": [
     "S7-B0080-COVENANT_EDGE_PATTERN-89f03603"
    ]
   },
   {
-   "text": "Beacon Credit Corp, a related company, has a UCC lien with Wells Fargo Bank, N.A., securing all assets including receivables",
+   "text": "The borrower is not enrolled in Setpoint PledgeCheck, making collateral verification at other lenders uncertain",
+   "cites": [
+    "S1-B0080-PLEDGECHECK_ABSENT-879d29e3"
+   ]
+  },
+  {
+   "text": "The borrower is linked to Beacon Holdings Group LLC, a parent holding company, and Beacon Property Partners LLC, which generates sublease income",
+   "cites": [
+    "T5"
+   ]
+  },
+  {
+   "text": "A UCC lien was filed against Beacon Credit Corp by Wells Fargo Bank, N.A., securing all assets including receivables",
    "cites": [
     "T3"
    ]
@@ -73,25 +85,19 @@
    ]
   },
   {
-   "text": "Could not confirm the source of the cash inflows supporting the reported revenue",
-   "cites": [
-    "S7-B0080-CASH_REVENUE_GAP-59b49fdd"
-   ]
-  },
-  {
-   "text": "The borrower disclosed related parties, including Beacon Holdings Group LLC (parent holding company) and Beacon Property Partners LLC (sublease income from affiliated property company)",
+   "text": "The borrower disclosed related parties but did not provide additional financial details or explanations",
    "cites": [
     "T5"
    ]
   },
   {
-   "text": "Ask the borrower: Provide documentation supporting the reported revenue and explain the covenant metric's proximity to the threshold",
+   "text": "Ask the borrower: to clarify the relationship with Beacon Holdings Group LLC and Beacon Property Partners LLC",
    "cites": []
   }
  ],
  "dropped": [],
  "rounds": 2,
- "tokens": 3486,
- "seconds": 42.8,
+ "tokens": 3881,
+ "seconds": 47.8,
  "checks_reapplied": "2026-09-12"
 }

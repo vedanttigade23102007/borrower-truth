@@ -8,7 +8,7 @@
    "args": {
     "borrower_id": "B0062"
    },
-   "result": "{\"verdict_by_rules\": \"LIKELY_FRAUD\", \"headline\": \"Likely: the borrower has debt it has not disclosed\", \"findings\": [{\"mechanism\": \"HIDDEN_DEBT\", \"confidence\": \"high\", \"plain\": \"the borrower has debt it has not disclosed\", \"signals\": [\"S5-B0062-COMPETING_LIEN-a39fbd57\", \"S7-B0062-DEBT_GAP-bc5ca1ff\", \"S5-B0062-JUDGMENT-adab8f53\"], \"corroborated_by\": [\"S6-B0062-SHELL_INDICATORS-64344dfa\", \"S6-B0062-RELATED_ENTITY-6f49ebe3\"]}, {\"mechanism\": \"RELATED_SHELLS\", \"confidence\": \"high\", \"plain\": \"the borrower is connected to undisclosed shell companies\", \"signals\": [\"S6-B0062-SHELL_INDICATORS-64344dfa\", \"S6-B0062-RELATED_ENTITY-6f49ebe3\"], \"corroborated_by\": [\"S5-B0062-COMPETING_LIEN-a39fbd57\", \"S5-B00"
+   "result": "{\"verdict_by_rules\": \"LIKELY_FRAUD\", \"headline\": \"Likely: the borrower has debt it has not disclosed\", \"findings\": [{\"mechanism\": \"HIDDEN_DEBT\", \"confidence\": \"high\", \"plain\": \"the borrower has debt it has not disclosed\", \"signals\": [\"S5-B0062-COMPETING_LIEN-a39fbd57\", \"S7-B0062-DEBT_GAP-bc5ca1ff\", \"S5-B0062-JUDGMENT-adab8f53\"], \"corroborated_by\": [\"S6-B0062-SHELL_INDICATORS-be228bf3\", \"S6-B0062-RELATED_ENTITY-05459667\"]}, {\"mechanism\": \"RELATED_SHELLS\", \"confidence\": \"high\", \"plain\": \"the borrower is connected to undisclosed shell companies\", \"signals\": [\"S6-B0062-SHELL_INDICATORS-be228bf3\", \"S6-B0062-RELATED_ENTITY-05459667\"], \"corroborated_by\": [\"S5-B0062-COMPETING_LIEN-a39fbd57\", \"S5-B00"
   },
   {
    "id": "T2",
@@ -44,7 +44,7 @@
   }
  ],
  "errors": [],
- "generated_at": "2026-09-11",
+ "generated_at": "2026-09-12",
  "status": "ok",
  "model": "Qwen/Qwen3-8B",
  "memo": [
@@ -52,6 +52,12 @@
    "text": "The borrower has undisclosed debt, including a $10,621,442 judgment against a related company",
    "cites": [
     "S5-B0062-JUDGMENT-adab8f53"
+   ]
+  },
+  {
+   "text": "The borrower is linked to \"Ironwood Receivables LLC,\" a shell company with no operations and shared address and officer",
+   "cites": [
+    "S6-B0062-SHELL_INDICATORS-be228bf3"
    ]
   },
   {
@@ -67,30 +73,25 @@
    ]
   },
   {
-   "text": "One invoice document shows a data mismatch, suggesting possible invoice alterations",
+   "text": "One invoice document shows a data mismatch, raising concerns about invoice accuracy",
    "cites": [
     "S4-B0062-DOC_DATA_MISMATCH-266161ac"
    ]
   },
   {
-   "text": "No court records were found for \"Ironwood Supply Group LLC\"",
+   "text": "Could not confirm if \"Ironwood Receivables LLC\" has any court records or liens",
    "cites": [
     "T4"
    ]
   },
   {
-   "text": "Ask the borrower: to clarify the relationship with \"Ironwood Receivables LLC\" and provide details on the undisclosed lien and judgment",
+   "text": "Ask the borrower: to clarify the relationship with \"Ironwood Receivables LLC\" and provide details on the $10,621,442 judgment",
    "cites": []
   }
  ],
- "dropped": [
-  {
-   "text": "The borrower is linked to \"Ironwood Receivables LLC,\" a shell company with no operations and the same address as the borrower [S6-B0062-SHELL_INDICATORS-64344dfa]",
-   "reason": "cites an unknown source: S6-B0062-SHELL_INDICATORS-64344dfa"
-  }
- ],
+ "dropped": [],
  "rounds": 2,
- "tokens": 4417,
- "seconds": 53.1,
+ "tokens": 4738,
+ "seconds": 57.4,
  "checks_reapplied": "2026-09-12"
 }

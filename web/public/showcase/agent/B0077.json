@@ -8,7 +8,7 @@
    "args": {
     "borrower_id": "B0077"
    },
-   "result": "{\"verdict_by_rules\": \"LIKELY_FRAUD\", \"headline\": \"Likely: invoices are fake, inflated or altered\", \"findings\": [{\"mechanism\": \"FAKE_INVOICES\", \"confidence\": \"high\", \"plain\": \"invoices are fake, inflated or altered\", \"signals\": [\"S4-B0077-ALTERED_INVOICE-855d6699\", \"S4-B0077-DOC_DATA_MISMATCH-8e2e2b89\", \"S1-B0077-PLEDGECHECK_COMPLETENESS_FAIL_RECEIVABLES-b02c22a0\", \"S4-B0077-IMPLAUSIBLE_AMOUNT-d2f3f1f6\", \"S4-B0077-UNPAID_BY_DEBTOR-df8ac652\", \"S7-B0077-RECEIVABLES_QUALITY-5d99585f\"], \"corroborated_by\": []}, {\"mechanism\": \"HIDDEN_DEBT\", \"confidence\": \"low\", \"plain\": \"the borrower has debt it has not disclosed\", \"signals\": [\"S5-B0077-COMPETING_LIEN-81e9d3d8\"], \"corroborated_by\": []}], \"signals\":"
+   "result": "{\"verdict_by_rules\": \"LIKELY_FRAUD\", \"headline\": \"Likely: invoices are fake, inflated or altered\", \"findings\": [{\"mechanism\": \"FAKE_INVOICES\", \"confidence\": \"high\", \"plain\": \"invoices are fake, inflated or altered\", \"signals\": [\"S4-B0077-ALTERED_INVOICE-855d6699\", \"S7-B0077-RECEIVABLES_OUTPACE_REVENUE-b98895de\", \"S4-B0077-DOC_DATA_MISMATCH-8e2e2b89\", \"S1-B0077-PLEDGECHECK_COMPLETENESS_FAIL_RECEIVABLES-b02c22a0\", \"S4-B0077-IMPLAUSIBLE_AMOUNT-d2f3f1f6\", \"S4-B0077-UNPAID_BY_DEBTOR-df8ac652\", \"S7-B0077-RECEIVABLES_QUALITY-5d99585f\"], \"corroborated_by\": []}, {\"mechanism\": \"HIDDEN_DEBT\", \"confidence\": \"low\", \"plain\": \"the borrower has debt it has not disclosed\", \"signals\": [\"S5-B0077-COMPETING_LIE"
   },
   {
    "id": "T2",
@@ -44,14 +44,14 @@
   }
  ],
  "errors": [],
- "generated_at": "2026-09-11",
+ "generated_at": "2026-09-12",
  "status": "ok",
  "model": "Qwen/Qwen3-8B",
  "memo": [
   {
    "text": "The borrower, Crescent Funding LLC, has a lien from Redwood Specialty Finance LP on all its assets, which was filed before onboarding",
    "cites": [
-    "T3"
+    "S5-B0077-COMPETING_LIEN-81e9d3d8"
    ]
   },
   {
@@ -61,37 +61,30 @@
    ]
   },
   {
-   "text": "The borrower's disclosures do not mention any other significant liabilities",
-   "cites": [
-    "T5"
-   ]
-  },
-  {
-   "text": "The borrower's receivables include invoices flagged as altered, unpaid, or implausible",
-   "cites": [
-    "T1"
-   ]
-  },
-  {
-   "text": "The borrower disclosed a debt to Harbor Capital Partners LP but not the Redwood lien",
-   "cites": [
-    "T5"
-   ]
-  },
-  {
-   "text": "There are no court judgments against Crescent Funding LLC",
+   "text": "No court judgments were found against Crescent Funding LLC",
    "cites": [
     "T4"
    ]
   },
   {
-   "text": "Ask the borrower: to clarify the Redwood lien and provide details on the disclosed debt to Harbor Capital Partners LP",
+   "text": "The borrower's receivables are 14.6x their usual size relative to revenue, indicating potential overstatement",
+   "cites": [
+    "S7-B0077-RECEIVABLES_OUTPACE_REVENUE-b98895de"
+   ]
+  },
+  {
+   "text": "Ask the borrower: to clarify the lien from Redwood Specialty Finance LP and provide additional documentation on receivables",
    "cites": []
   }
  ],
- "dropped": [],
+ "dropped": [
+  {
+   "text": "The borrower disclosed a debt to Harbor Capital Partners LP but not the lien from Redwood Specialty Finance LP [T5].",
+   "reason": "says 'redwood specialty finance' was disclosed, but the disclosures don't list it"
+  }
+ ],
  "rounds": 2,
- "tokens": 4338,
- "seconds": 39.9,
+ "tokens": 4848,
+ "seconds": 49.0,
  "checks_reapplied": "2026-09-12"
 }

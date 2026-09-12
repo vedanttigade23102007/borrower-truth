@@ -8,7 +8,7 @@
    "args": {
     "borrower_id": "B0103"
    },
-   "result": "{\"verdict_by_rules\": \"LIKELY_FRAUD\", \"headline\": \"Likely: the same collateral is pledged to more than one lender\", \"findings\": [{\"mechanism\": \"DOUBLE_PLEDGE\", \"confidence\": \"high\", \"plain\": \"the same collateral is pledged to more than one lender\", \"signals\": [\"S1-B0103-DUPLICATE_ASSET-9df690ed\", \"S1-B0103-PLEDGECHECK_UNIQUENESS_FAIL-552dcb71\"], \"corroborated_by\": []}, {\"mechanism\": \"TAPE_DRESSUP\", \"confidence\": \"high\", \"plain\": \"bad loans are being reported as good ones\", \"signals\": [\"S2-B0103-SOURCE_MISMATCH-de845e81\", \"S1-B0103-PLEDGECHECK_COMPLETENESS_FAIL-63085971\", \"S2-B0103-CURRENT_WITHOUT_PAYMENT-7a2f09d4\"], \"corroborated_by\": []}, {\"mechanism\": \"FIN_MANIPULATION\", \"confidence\": \"medi"
+   "result": "{\"verdict_by_rules\": \"LIKELY_FRAUD\", \"headline\": \"Likely: the same collateral is pledged to more than one lender\", \"findings\": [{\"mechanism\": \"DOUBLE_PLEDGE\", \"confidence\": \"high\", \"plain\": \"the same collateral is pledged to more than one lender\", \"signals\": [\"S1-B0103-DUPLICATE_ASSET-9df690ed\", \"S1-B0103-PLEDGECHECK_UNIQUENESS_FAIL-552dcb71\"], \"corroborated_by\": []}, {\"mechanism\": \"TAPE_DRESSUP\", \"confidence\": \"high\", \"plain\": \"bad loans are being reported as good ones\", \"signals\": [\"S2-B0103-TARGETED_SOURCE_MISMATCH-75ebd9f2\", \"S2-B0103-ATTRIBUTE_REWRITE-10512cdf\", \"S2-B0103-SOURCE_MISMATCH-de845e81\", \"S1-B0103-PLEDGECHECK_COMPLETENESS_FAIL-63085971\", \"S2-B0103-CURRENT_WITHOUT_PAYMENT-7a2f"
   },
   {
    "id": "T2",
@@ -44,59 +44,56 @@
   }
  ],
  "errors": [],
- "generated_at": "2026-09-11",
+ "generated_at": "2026-09-12",
  "status": "ok",
  "model": "Qwen/Qwen3-8B",
  "memo": [
   {
-   "text": "The borrower, B0103, has a high-confidence LIKELY_FRAUD verdict due to duplicate collateral pledges and source mismatches",
+   "text": "The borrower pledged 47 vehicles to two Wells Fargo facilities simultaneously",
    "cites": [
-    "T1"
+    "S1-B0103-DUPLICATE_ASSET-9df690ed"
    ]
   },
   {
-   "text": "Related companies include Silverline Trade Inc and Silverline Property Partners LLC, both linked via Robert Lee",
+   "text": "Related companies include Silverline Trade Inc and Silverline Property Partners LLC, both with Robert Lee as an officer",
    "cites": [
     "T2"
    ]
   },
   {
-   "text": "UCC filings show Silverline Trade Inc has a second-priority lien with Redwood Specialty Finance LP and a primary lien with Wells Fargo Bank, N.A",
+   "text": "Silverline Trade Inc has two UCC liens: one with Redwood Specialty Finance LP and another with Wells Fargo Bank, N.A",
    "cites": [
     "T3"
    ]
   },
   {
-   "text": "No court records were found for Silverline Trade Inc",
-   "cites": [
-    "T4"
-   ]
-  },
-  {
-   "text": "Disclosures reveal a subordinated facility with Redwood Specialty Finance LP and income from Silverline Property Partners LLC",
+   "text": "The borrower disclosed a subordinated facility with Redwood Specialty Finance LP and income from Silverline Property Partners LLC",
    "cites": [
     "T5"
    ]
   },
   {
-   "text": "The borrower's financials show a 12% cash revenue gap and covenant metrics near thresholds",
+   "text": "Court records show no judgments against Silverline Trade Inc or related entities",
    "cites": [
-    "T1"
+    "T4"
    ]
   },
   {
-   "text": "Ask the borrower: to clarify the ownership and usage of the collateral and provide additional documentation on related parties",
-   "cites": []
-  }
- ],
- "dropped": [
+   "text": "The borrower's financials show a 12% cash revenue gap, suggesting potential misreporting",
+   "cites": [
+    "S7-B0103-CASH_REVENUE_GAP-0cc57f27"
+   ]
+  },
   {
-   "text": "Could not confirm if the collateral pledged is unique to the borrower or shared with other entities.",
-   "reason": "cites no source"
+   "text": "Ask the borrower: clarify the relationship between Silverline Trade Inc and the disclosed subordinated facility",
+   "cites": [
+    "T5"
+   ]
   }
  ],
+ "dropped": [],
  "rounds": 2,
- "tokens": 4252,
- "seconds": 46.2,
+ "tokens": 4721,
+ "seconds": 50.3,
  "checks_reapplied": "2026-09-12"
 }

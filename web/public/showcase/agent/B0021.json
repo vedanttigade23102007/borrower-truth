@@ -8,7 +8,7 @@
    "args": {
     "borrower_id": "B0021"
    },
-   "result": "{\"verdict_by_rules\": \"LIKELY_FRAUD\", \"headline\": \"Likely: money from lenders or linked companies is arriving dressed up as customer payments\", \"findings\": [{\"mechanism\": \"DISGUISED_RECEIPTS\", \"confidence\": \"high\", \"plain\": \"money from lenders or linked companies is arriving dressed up as customer payments\", \"signals\": [\"S3-B0021-RELATED_PARTY_INFLOW-0e333425\"], \"corroborated_by\": [\"S6-B0021-SHELL_INDICATORS-1eda5f97\", \"S6-B0021-RELATED_ENTITY-73cec962\"]}, {\"mechanism\": \"RELATED_SHELLS\", \"confidence\": \"medium\", \"plain\": \"the borrower is connected to undisclosed shell companies\", \"signals\": [\"S6-B0021-SHELL_INDICATORS-1eda5f97\", \"S6-B0021-RELATED_ENTITY-73cec962\", \"S6-B0021-RELATED_ENTITY-7dae"
+   "result": "{\"verdict_by_rules\": \"LIKELY_FRAUD\", \"headline\": \"Likely: money from lenders or linked companies is arriving dressed up as customer payments\", \"findings\": [{\"mechanism\": \"DISGUISED_RECEIPTS\", \"confidence\": \"high\", \"plain\": \"money from lenders or linked companies is arriving dressed up as customer payments\", \"signals\": [\"S3-B0021-RELATED_PARTY_INFLOW-0e333425\"], \"corroborated_by\": [\"S6-B0021-SHELL_INDICATORS-72d43ed7\", \"S6-B0021-RELATED_ENTITY-639065e7\"]}, {\"mechanism\": \"RELATED_SHELLS\", \"confidence\": \"medium\", \"plain\": \"the borrower is connected to undisclosed shell companies\", \"signals\": [\"S6-B0021-SHELL_INDICATORS-72d43ed7\", \"S6-B0021-RELATED_ENTITY-639065e7\", \"S6-B0021-RELATED_ENTITY-7dae"
   },
   {
    "id": "T2",
@@ -44,51 +44,51 @@
   }
  ],
  "errors": [],
- "generated_at": "2026-09-11",
+ "generated_at": "2026-09-12",
  "status": "ok",
  "model": "Qwen/Qwen3-8B",
  "memo": [
   {
-   "text": "$415,009 (8.9% of inflows) arrived as 'customer' cash from 'Canyon Trade Services LLC', an undisclosed company linked to the borrower",
+   "text": "$415,009 from \"Canyon Trade Services LLC,\" an undisclosed company linked to the borrower, arrived as \"customer\" cash",
    "cites": [
     "S3-B0021-RELATED_PARTY_INFLOW-0e333425"
    ]
   },
   {
-   "text": "14 loans were flagged 'deferred' with no disclosed deferment programme",
+   "text": "\"Canyon Trade Services LLC\" shares the borrower's officer, address, and phone number, indicating a potential shell company",
    "cites": [
-    "S2-B0021-DEFERMENT_WITHOUT_PROGRAM-5f5587f2"
+    "S6-B0021-RELATED_ENTITY-639065e7"
    ]
   },
   {
-   "text": "Could not confirm if 'Canyon Funding Corp' has any court judgments",
+   "text": "The borrower disclosed a debt to Silverline Specialty Finance LLC for an equipment lease",
    "cites": [
-    "T4"
+    "S6-B0021-RELATED_ENTITY-7dae4c1c"
    ]
   },
   {
-   "text": "Ask the borrower: clarify the relationship between the borrower and 'Canyon Trade Services LLC' and the source of the $415,009 inflow",
+   "text": "Could not confirm if the borrower's collateral is pledged at other lenders due to not being enrolled in Setpoint PledgeCheck",
    "cites": [
-    "S3-B0021-RELATED_PARTY_INFLOW-0e333425"
+    "S1-B0021-PLEDGECHECK_ABSENT-0ca33325"
    ]
+  },
+  {
+   "text": "Ask the borrower: to clarify the relationship with \"Canyon Trade Services LLC\" and confirm if the collateral is pledged at other lenders",
+   "cites": []
   }
  ],
  "dropped": [
   {
-   "text": "The borrower is connected to undisclosed shell companies, including 'Canyon Trade Services LLC', which shares the same officer and address [S6-B0021-SHELL_INDICATORS-1eda5f97]",
-   "reason": "cites an unknown source: S6-B0021-SHELL_INDICATORS-1eda5f97"
+   "text": "The borrower has a second-priority lien on all assets from Ironwood Capital Partners LP [UCC-000168].",
+   "reason": "cites an unknown source: UCC-000168"
   },
   {
-   "text": "'Canyon Trade Services LLC' has no operations and is not registered in the GLEIF database [S6-B0021-SHELL_INDICATORS-1eda5f97]",
-   "reason": "cites an unknown source: S6-B0021-SHELL_INDICATORS-1eda5f97"
-  },
-  {
-   "text": "The borrower disclosed a debt to 'Silverline Specialty Finance LLC' for an equipment lease [S6-B0021-RELATED_ENTITY-73cec962]",
-   "reason": "cites an unknown source: S6-B0021-RELATED_ENTITY-73cec962"
+   "text": "The borrower has a lien on all assets, including receivables, from Wells Fargo Bank, N.A. [UCC-000040].",
+   "reason": "cites an unknown source: UCC-000040"
   }
  ],
  "rounds": 2,
- "tokens": 4566,
- "seconds": 62.4,
+ "tokens": 4963,
+ "seconds": 62.1,
  "checks_reapplied": "2026-09-12"
 }

@@ -37,7 +37,7 @@ RESULT_CHARS = 3500
 
 SYSTEM = """You are an investigator on a bank's credit-risk team. Rule-based checks have already reached a verdict on a borrower. You cannot change it: do not state your own verdict and do not recommend lending decisions.
 Your job: use the tools to check the case from other angles (who the linked companies are, who else has claims on them, where the money really came from, what the borrower disclosed), then write a short memo for the credit officer.
-Start with case_evidence. Then make 3 to 6 more tool calls. Search liens and courts by company name (the borrower's and each linked company's), never by ID. Then write the memo.
+Start with case_evidence. Then make 3 to 6 more tool calls. Search liens and courts by company name (the borrower's and each linked company's), never by ID. If the case mentions money coming back or a payer who is not a customer, check outgoing_payments for that payer. Then write the memo.
 Memo format, strictly: 4 to 8 lines, each starting with "- ", each one sentence, each ending with its sources in square brackets: tool call IDs like [T3] or signal IDs like [S3-B0028-RELATED_PARTY_INFLOW-3a0eb607]. Copy signal IDs exactly and never join a tool call ID to a signal ID.Only state facts and numbers that appear in the sources you cite, and copy amounts exactly as written there. Include at least one line on what you could not confirm or what cuts against the finding. The last line starts with "- Ask the borrower:". No headings and no other text."""
 
 TOOLS = [

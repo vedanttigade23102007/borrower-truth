@@ -44,48 +44,47 @@
   }
  ],
  "errors": [],
- "generated_at": "2026-09-11",
+ "generated_at": "2026-09-12",
  "status": "ok",
  "model": "Qwen/Qwen3-8B",
  "memo": [
   {
-   "text": "The borrower, Harbor Realty LP, has a lien from Redwood Specialty Finance LP on all accounts receivable, which was not disclosed",
+   "text": "The borrower has a lien from Redwood Specialty Finance LP on all accounts receivable, which was not disclosed",
    "cites": [
     "S5-B0088-COMPETING_LIEN-dd310934"
    ]
   },
   {
-   "text": "A second-priority lien from Harbor Capital Partners LP and a lien from Wells Fargo Bank, N.A. were also found on the borrower",
+   "text": "The borrower shares officers and addresses with Harbor Holdings Group LLC, a holding company",
    "cites": [
-    "T3"
+    "T2"
    ]
   },
   {
-   "text": "The borrower's debt report omits one secured lender, Redwood Specialty Finance LP, identified in public lien filings",
-   "cites": [
-    "S7-B0088-DEBT_GAP-d9b088f2"
-   ]
-  },
-  {
-   "text": "The borrower's disclosures include a subordinated facility with Harbor Capital Partners LP and a parent holding company, Harbor Holdings Group LLC",
-   "cites": [
-    "T5"
-   ]
-  },
-  {
-   "text": "No court judgments were found against Harbor Realty LP or related entities",
+   "text": "No court records were found for the borrower or linked companies",
    "cites": [
     "T4"
    ]
   },
   {
-   "text": "Ask the borrower: to clarify the status of the undisclosed lien from Redwood Specialty Finance LP and any other potential debts",
+   "text": "The borrower's disclosed debts do not include the lien from Redwood Specialty Finance LP",
+   "cites": [
+    "S7-B0088-DEBT_GAP-d9b088f2"
+   ]
+  },
+  {
+   "text": "Ask the borrower: to clarify the status of the lien from Redwood Specialty Finance LP and any other undisclosed debts",
    "cites": []
   }
  ],
- "dropped": [],
+ "dropped": [
+  {
+   "text": "The borrower's disclosures include a subordinated facility with Harbor Capital Partners LP but omit other secured lenders [S7-B0088-DEBT_GAP-d9b088f2].",
+   "reason": "says 'harbor capital partners' was not disclosed, but the disclosures list it"
+  }
+ ],
  "rounds": 2,
- "tokens": 3512,
- "seconds": 39.2,
+ "tokens": 3779,
+ "seconds": 39.7,
  "checks_reapplied": "2026-09-12"
 }

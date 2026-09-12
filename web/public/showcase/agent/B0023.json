@@ -44,22 +44,10 @@
   }
  ],
  "errors": [],
- "generated_at": "2026-09-11",
+ "generated_at": "2026-09-12",
  "status": "ok",
  "model": "Qwen/Qwen3-8B",
  "memo": [
-  {
-   "text": "Related companies include Summit Holdings Group LLC and Summit Property Partners LLC, both sharing the same officer and address",
-   "cites": [
-    "T2"
-   ]
-  },
-  {
-   "text": "The borrower disclosed related parties, including a parent holding company and a sublease income source",
-   "cites": [
-    "T5"
-   ]
-  },
   {
    "text": "The borrower, Summit Lending Corp, has a lien on its assets pledged to both Wells Fargo Bank, N.A. and Silverline Specialty Finance LLC",
    "cites": [
@@ -67,31 +55,44 @@
    ]
   },
   {
-   "text": "A total of $774,996 was received from Summit Property Partners LLC, which is not a known customer or obligor",
+   "text": "Related companies include Summit Holdings Group LLC and Summit Property Partners LLC, both sharing the same officer and address",
+   "cites": [
+    "T2"
+   ]
+  },
+  {
+   "text": "A non-obligor payer, Summit Property Partners LLC, contributed $774,996 to the borrower's account, which is not a known customer or obligor",
    "cites": [
     "S3-B0023-NON_OBLIGOR_PAYER-8f1ececb"
    ]
   },
   {
-   "text": "The borrower disclosed debts but omitted secured lenders found in public lien filings",
+   "text": "The borrower disclosed related parties, including a parent holding company and a sublease income provider",
    "cites": [
-    "S7-B0023-DEBT_GAP-6909b39c"
+    "T5"
    ]
   },
   {
-   "text": "No court judgments were found against Summit Lending Corp",
+   "text": "No court records were found for Summit Lending Corp",
    "cites": [
     "T4"
    ]
   },
   {
-   "text": "Ask the borrower: clarify the relationship between Summit Property Partners LLC and the borrower, and explain the omitted secured lenders",
-   "cites": []
+   "text": "The borrower did not disclose the lien with Silverline Specialty Finance LLC, which may indicate hidden collateral",
+   "cites": [
+    "S5-B0023-COMPETING_LIEN-25b5da5b"
+   ]
   }
  ],
- "dropped": [],
+ "dropped": [
+  {
+   "text": "Ask the borrower: clarify the relationship with Summit Property Partners LLC and the undisclosed lien with Silverline Specialty Finance LLC.",
+   "reason": "says 'summit property partners' was not disclosed, but the disclosures list it"
+  }
+ ],
  "rounds": 2,
- "tokens": 4011,
- "seconds": 47.5,
+ "tokens": 4306,
+ "seconds": 51.8,
  "checks_reapplied": "2026-09-12"
 }

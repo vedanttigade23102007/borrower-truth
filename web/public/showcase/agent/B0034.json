@@ -8,7 +8,7 @@
    "args": {
     "borrower_id": "B0034"
    },
-   "result": "{\"verdict_by_rules\": \"LIKELY_FRAUD\", \"headline\": \"Likely: invoices are fake, inflated or altered\", \"findings\": [{\"mechanism\": \"FAKE_INVOICES\", \"confidence\": \"high\", \"plain\": \"invoices are fake, inflated or altered\", \"signals\": [\"S4-B0034-ALTERED_INVOICE-39995c5b\", \"S4-B0034-DOC_DATA_MISMATCH-398e5f1a\", \"S4-B0034-IMPLAUSIBLE_AMOUNT-17a582fe\", \"S7-B0034-RECEIVABLES_QUALITY-16ef8af9\", \"S4-B0034-UNPAID_BY_DEBTOR-770d4e68\"], \"corroborated_by\": []}], \"signals\": [{\"id\": \"S4-B0034-ALTERED_INVOICE-39995c5b\", \"system\": \"S4\", \"type\": \"ALTERED_INVOICE\", \"explanation\": \"63 invoice numbers were submitted more than once with different amounts (up to 25.0x the original)\", \"evidence\": [\"invoice:B0034-11319\","
+   "result": "{\"verdict_by_rules\": \"LIKELY_FRAUD\", \"headline\": \"Likely: invoices are fake, inflated or altered\", \"findings\": [{\"mechanism\": \"FAKE_INVOICES\", \"confidence\": \"high\", \"plain\": \"invoices are fake, inflated or altered\", \"signals\": [\"S4-B0034-ALTERED_INVOICE-39995c5b\", \"S7-B0034-RECEIVABLES_OUTPACE_REVENUE-d680edb1\", \"S4-B0034-DOC_DATA_MISMATCH-398e5f1a\", \"S4-B0034-IMPLAUSIBLE_AMOUNT-17a582fe\", \"S7-B0034-RECEIVABLES_QUALITY-16ef8af9\", \"S4-B0034-UNPAID_BY_DEBTOR-770d4e68\"], \"corroborated_by\": []}], \"signals\": [{\"id\": \"S4-B0034-ALTERED_INVOICE-39995c5b\", \"system\": \"S4\", \"type\": \"ALTERED_INVOICE\", \"explanation\": \"63 invoice numbers were submitted more than once with different amounts (up to 25.0x th"
   },
   {
    "id": "T2",
@@ -44,54 +44,57 @@
   }
  ],
  "errors": [],
- "generated_at": "2026-09-11",
+ "generated_at": "2026-09-12",
  "status": "ok",
  "model": "Qwen/Qwen3-8B",
  "memo": [
   {
-   "text": "No court records found for Summit Credit Group LLC",
+   "text": "The borrower's case evidence shows 63 altered invoices with amounts up to 25.0x the original",
+   "cites": [
+    "T1"
+   ]
+  },
+  {
+   "text": "Related companies include Summit Credit Group LLC, sharing an officer and address with the borrower",
+   "cites": [
+    "T2"
+   ]
+  },
+  {
+   "text": "A UCC lien exists on Summit Credit Group LLC's assets, including receivables, secured by Wells Fargo Bank",
+   "cites": [
+    "T3"
+   ]
+  },
+  {
+   "text": "No court records were found for Summit Credit Group LLC",
    "cites": [
     "T4"
    ]
   },
   {
-   "text": "The borrower disclosed nothing",
+   "text": "The borrower disclosed nothing about debts, affiliates, or programs",
    "cites": [
     "T5"
    ]
   },
   {
-   "text": "The borrower's case shows 63 altered invoices with amounts up to 25.0x the original",
+   "text": "The borrower's receivables are 15.5x their usual size relative to revenue, indicating potential uncollectible invoices",
    "cites": [
-    "S4-B0034-ALTERED_INVOICE-39995c5b"
+    "T1"
    ]
   },
   {
-   "text": "6 of 15 invoice documents show a mismatch in totals",
+   "text": "Ask the borrower: clarify the relationship with Summit Credit Group LLC and the source of the receivables",
    "cites": [
-    "S4-B0034-DOC_DATA_MISMATCH-398e5f1a"
+    "T2",
+    "T1"
    ]
-  },
-  {
-   "text": "98 invoices are over 5x the customer's usual payment",
-   "cites": [
-    "S4-B0034-IMPLAUSIBLE_AMOUNT-17a582fe"
-   ]
-  },
-  {
-   "text": "13.9% of invoices past due were unpaid by the named customer",
-   "cites": [
-    "S4-B0034-UNPAID_BY_DEBTOR-770d4e68"
-   ]
-  },
-  {
-   "text": "Ask the borrower: provide details on the 63 altered invoices and the 98 implausible amounts",
-   "cites": []
   }
  ],
  "dropped": [],
  "rounds": 2,
- "tokens": 3727,
- "seconds": 43.6,
+ "tokens": 4243,
+ "seconds": 41.2,
  "checks_reapplied": "2026-09-12"
 }

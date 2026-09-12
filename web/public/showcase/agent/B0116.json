@@ -8,7 +8,7 @@
    "args": {
     "borrower_id": "B0116"
    },
-   "result": "{\"verdict_by_rules\": \"LIKELY_FRAUD\", \"headline\": \"Likely: the same collateral is pledged to more than one lender\", \"findings\": [{\"mechanism\": \"DOUBLE_PLEDGE\", \"confidence\": \"high\", \"plain\": \"the same collateral is pledged to more than one lender\", \"signals\": [\"S1-B0116-PLEDGECHECK_UNIQUENESS_FAIL-29c3cdd0\", \"S5-B0116-COMPETING_LIEN-17e2b85d\", \"S7-B0116-DEBT_GAP-51323773\"], \"corroborated_by\": []}, {\"mechanism\": \"TAPE_DRESSUP\", \"confidence\": \"high\", \"plain\": \"bad loans are being reported as good ones\", \"signals\": [\"S2-B0116-SOURCE_MISMATCH-d9a8ecbf\", \"S1-B0116-PLEDGECHECK_COMPLETENESS_FAIL-240f2fb8\", \"S2-B0116-DEFERMENT_WITHOUT_PROGRAM-4f7a2bea\", \"S2-B0116-CURRENT_WITHOUT_PAYMENT-0ac124ef\"], \""
+   "result": "{\"verdict_by_rules\": \"LIKELY_FRAUD\", \"headline\": \"Likely: the same collateral is pledged to more than one lender\", \"findings\": [{\"mechanism\": \"DOUBLE_PLEDGE\", \"confidence\": \"high\", \"plain\": \"the same collateral is pledged to more than one lender\", \"signals\": [\"S1-B0116-PLEDGECHECK_UNIQUENESS_FAIL-29c3cdd0\", \"S5-B0116-COMPETING_LIEN-17e2b85d\", \"S7-B0116-DEBT_GAP-51323773\"], \"corroborated_by\": []}, {\"mechanism\": \"TAPE_DRESSUP\", \"confidence\": \"high\", \"plain\": \"bad loans are being reported as good ones\", \"signals\": [\"S2-B0116-TARGETED_SOURCE_MISMATCH-ed206250\", \"S2-B0116-ATTRIBUTE_REWRITE-75744775\", \"S2-B0116-SOURCE_MISMATCH-d9a8ecbf\", \"S1-B0116-PLEDGECHECK_COMPLETENESS_FAIL-240f2fb8\", \"S2-B0116"
   },
   {
    "id": "T2",
@@ -44,7 +44,7 @@
   }
  ],
  "errors": [],
- "generated_at": "2026-09-11",
+ "generated_at": "2026-09-12",
  "status": "ok",
  "model": "Qwen/Qwen3-8B",
  "memo": [
@@ -55,51 +55,39 @@
    ]
   },
   {
-   "text": "A lien from Silverline Specialty Finance LLC on Prairie Distribution LLC's assets was not disclosed by the borrower",
+   "text": "A UCC lien filed in month 11 shows Silverline Specialty Finance LLC holds a lien on the borrower's collateral, which was not disclosed in the borrower's disclosures",
    "cites": [
+    "T3",
     "S5-B0116-COMPETING_LIEN-17e2b85d"
    ]
   },
   {
-   "text": "The borrower's financials show a 30% discrepancy between reported revenue and verified customer cash",
+   "text": "The borrower's disclosures do not mention the lien held by Silverline Specialty Finance LLC, raising concerns about transparency",
+   "cites": [
+    "T5",
+    "S5-B0116-COMPETING_LIEN-17e2b85d"
+   ]
+  },
+  {
+   "text": "The borrower's financial statements show a cash revenue gap, suggesting potential discrepancies in reported financials",
    "cites": [
     "S7-B0116-CASH_REVENUE_GAP-5cc076ae"
    ]
   },
   {
-   "text": "The borrower's covenant metrics have consistently hovered near the threshold, indicating potential manipulation",
+   "text": "Some loans reported as current have no payment for two months, indicating possible misreporting",
    "cites": [
-    "S7-B0116-COVENANT_EDGE_PATTERN-3f675d8d"
+    "S2-B0116-TARGETED_SOURCE_MISMATCH-ed206250"
    ]
   },
   {
-   "text": "The borrower's disclosures do not mention any deferment program despite 7 loans being flagged as deferred",
-   "cites": [
-    "S2-B0116-DEFERMENT_WITHOUT_PROGRAM-4f7a2bea"
-   ]
-  },
-  {
-   "text": "The borrower's collateral is pledged to more than one lender, including Silverline Specialty Finance LLC",
-   "cites": [
-    "S1-B0116-PLEDGECHECK_UNIQUENESS_FAIL-29c3cdd0"
-   ]
-  },
-  {
-   "text": "Ask the borrower: clarify the ownership structure and provide documentation for all collateral pledges",
-   "cites": [
-    "T5",
-    "S5-B0116-COMPETING_LIEN-17e2b85d"
-   ]
+   "text": "Ask the borrower: clarify the ownership structure and provide documentation for the collateral pledged to Silverline Specialty Finance LLC",
+   "cites": []
   }
  ],
- "dropped": [
-  {
-   "text": "A lien from Wells Fargo Bank, N.A. on Prairie Distribution LLC's assets is already in place [UCC-000228].",
-   "reason": "cites an unknown source: UCC-000228"
-  }
- ],
+ "dropped": [],
  "rounds": 2,
- "tokens": 4689,
- "seconds": 66.3,
+ "tokens": 4907,
+ "seconds": 56.9,
  "checks_reapplied": "2026-09-12"
 }

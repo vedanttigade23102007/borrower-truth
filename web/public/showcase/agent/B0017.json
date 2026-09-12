@@ -44,14 +44,14 @@
   }
  ],
  "errors": [],
- "generated_at": "2026-09-11",
+ "generated_at": "2026-09-12",
  "status": "ok",
  "model": "Qwen/Qwen3-8B",
  "memo": [
   {
-   "text": "The borrower's disclosed debt omits 1 secured lender found in public lien filings, indicating a potential debt gap",
+   "text": "The borrower's disclosed debt omits this secured lender, indicating a potential debt gap",
    "cites": [
-    "S7-B0017-DEBT_GAP-00d6c999"
+    "T1"
    ]
   },
   {
@@ -61,36 +61,36 @@
    ]
   },
   {
-   "text": "The borrower disclosed a debt to Silverline Credit Fund LP for equipment lease",
-   "cites": [
-    "T5"
-   ]
-  },
-  {
    "text": "No court judgments were found against Summit Trade Corp",
    "cites": [
     "T4"
    ]
   },
   {
-   "text": "Could not confirm if the undisclosed secured party is linked to other entities or if there are additional liens",
+   "text": "The borrower disclosed a debt to Silverline Credit Fund LP for equipment lease",
+   "cites": [
+    "T5"
+   ]
+  },
+  {
+   "text": "Could not confirm if the disclosed debt matches the lien details",
    "cites": [
     "T3"
    ]
   },
   {
-   "text": "Ask the borrower: to clarify the undisclosed secured party and provide details on the debt gap",
+   "text": "Ask the borrower: to clarify the undisclosed secured party and its collateral",
    "cites": []
   }
  ],
  "dropped": [
   {
-   "text": "The borrower, Summit Trade Corp, has an undisclosed secured party, Silverline Credit Fund LP, with a lien on specific equipment [T3-B0017-UNDISCLOSED_SECURED_PARTY-23490e08].",
+   "text": "The borrower, Summit Trade Corp, has an undisclosed secured party, Silverline Credit Fund LP, with a lien on specific equipment [T3].",
    "reason": "says 'silverline credit fund' was not disclosed, but the disclosures list it"
   }
  ],
  "rounds": 2,
- "tokens": 3334,
- "seconds": 38.1,
+ "tokens": 3554,
+ "seconds": 33.1,
  "checks_reapplied": "2026-09-12"
 }

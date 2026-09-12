@@ -44,7 +44,7 @@
   }
  ],
  "errors": [],
- "generated_at": "2026-09-11",
+ "generated_at": "2026-09-12",
  "status": "ok",
  "model": "Qwen/Qwen3-8B",
  "memo": [
@@ -55,45 +55,44 @@
    ]
   },
   {
-   "text": "Apex Customer Collections LLC is a shell company with no operations, same address as the borrower, and no LEI",
+   "text": "Apex Customer Collections LLC shares the borrower's officer and address and appears to be a shell company with no operations",
    "cites": [
     "S6-B0113-SHELL_INDICATORS-568b98ea"
    ]
   },
   {
-   "text": "The borrower is connected to other shell companies like Apex Trade Services III LLC, which also share the same officer and address",
+   "text": "The borrower is connected to other undisclosed shell companies like Apex Trade Services III LLC, which also share the borrower's officer and address",
    "cites": [
-    "S6-B0113-SHELL_INDICATORS-40311109"
+    "S6-B0113-RELATED_ENTITY-7c14460f"
    ]
   },
   {
-   "text": "There are UCC liens on Apex Partners Group LLC, including a second-priority lien from Redwood Specialty Finance LP",
+   "text": "There are UCC liens on Apex Partners Group LLC, the borrower's related company, including a second-priority lien on all assets",
    "cites": [
     "T3"
    ]
   },
   {
-   "text": "The borrower disclosed a subordinated facility with Redwood Specialty Finance LP",
+   "text": "The borrower disclosed a subordinated facility with Redwood Specialty Finance LP, which is also linked to the borrower",
    "cites": [
     "T5"
    ]
   },
   {
-   "text": "Court records show no judgments against the borrower or linked companies",
+   "text": "The court search for the borrower's name returned no records",
    "cites": [
     "T4"
    ]
-  },
-  {
-   "text": "Ask the borrower: clarify the relationship between Apex Customer Collections LLC and the borrower, and provide documentation for the $199,026 inflow",
-   "cites": [
-    "S3-B0113-RELATED_PARTY_INFLOW-5f478f1d"
-   ]
   }
  ],
- "dropped": [],
+ "dropped": [
+  {
+   "text": "Ask the borrower: to clarify the relationship with Apex Customer Collections LLC and provide documentation for the disclosed subordinated facility.",
+   "reason": "says 'apex customer collections' was disclosed, but the disclosures don't list it"
+  }
+ ],
  "rounds": 2,
- "tokens": 4297,
- "seconds": 53.9,
+ "tokens": 4559,
+ "seconds": 53.1,
  "checks_reapplied": "2026-09-12"
 }

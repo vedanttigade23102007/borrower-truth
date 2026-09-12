@@ -8,7 +8,7 @@
    "args": {
     "borrower_id": "B0063"
    },
-   "result": "{\"verdict_by_rules\": \"LIKELY_FRAUD\", \"headline\": \"Likely: money from lenders or linked companies is arriving dressed up as customer payments\", \"findings\": [{\"mechanism\": \"DISGUISED_RECEIPTS\", \"confidence\": \"high\", \"plain\": \"money from lenders or linked companies is arriving dressed up as customer payments\", \"signals\": [\"S3-B0063-RELATED_PARTY_INFLOW-d9befb55\"], \"corroborated_by\": [\"S5-B0063-COMPETING_LIEN-5ca9b8cf\", \"S6-B0063-SHELL_INDICATORS-42301a81\", \"S6-B0063-RELATED_ENTITY-a76d7bea\"]}, {\"mechanism\": \"FAKE_INVOICES\", \"confidence\": \"high\", \"plain\": \"invoices are fake, inflated or altered\", \"signals\": [\"S4-B0063-ALTERED_INVOICE-b7180850\", \"S4-B0063-DOC_DATA_MISMATCH-e96977a7\", \"S1-B0063-PL"
+   "result": "{\"verdict_by_rules\": \"LIKELY_FRAUD\", \"headline\": \"Likely: money from lenders or linked companies is arriving dressed up as customer payments\", \"findings\": [{\"mechanism\": \"DISGUISED_RECEIPTS\", \"confidence\": \"high\", \"plain\": \"money from lenders or linked companies is arriving dressed up as customer payments\", \"signals\": [\"S3-B0063-RELATED_PARTY_INFLOW-d9befb55\"], \"corroborated_by\": [\"S5-B0063-COMPETING_LIEN-5ca9b8cf\", \"S6-B0063-SHELL_INDICATORS-42301a81\", \"S6-B0063-RELATED_ENTITY-a76d7bea\"]}, {\"mechanism\": \"FAKE_INVOICES\", \"confidence\": \"high\", \"plain\": \"invoices are fake, inflated or altered\", \"signals\": [\"S4-B0063-ALTERED_INVOICE-b7180850\", \"S7-B0063-RECEIVABLES_OUTPACE_REVENUE-4ec756f5\", \"S"
   },
   {
    "id": "T2",
@@ -44,55 +44,53 @@
   }
  ],
  "errors": [],
- "generated_at": "2026-09-11",
+ "generated_at": "2026-09-12",
  "status": "ok",
  "model": "Qwen/Qwen3-8B",
  "memo": [
   {
-   "text": "$10,388,351 in payments from Tidewater Receivables LLC, a linked company, were classified as customer cash",
+   "text": "Related companies like Tidewater Receivables LLC are linked to the borrower through shared officers and addresses",
+   "cites": [
+    "T2"
+   ]
+  },
+  {
+   "text": "$10,388,351 in payments from Tidewater Receivables LLC were classified as customer cash, raising concerns about disguised receipts",
    "cites": [
     "S3-B0063-RELATED_PARTY_INFLOW-d9befb55"
    ]
   },
   {
-   "text": "Six invoice numbers were submitted multiple times with different amounts, indicating potential invoice manipulation",
+   "text": "The borrower's receivables are 30.1x their usual size relative to revenue, indicating potential revenue misrepresentation",
    "cites": [
-    "S4-B0063-ALTERED_INVOICE-b7180850"
+    "S7-B0063-RECEIVABLES_OUTPACE_REVENUE-4ec756f5"
    ]
   },
   {
-   "text": "No court records were found for Tidewater Lending LLC",
+   "text": "Court records show no judgments against the borrower or related entities",
    "cites": [
     "T4"
    ]
   },
   {
-   "text": "The borrower's financial statements show a cash revenue gap, suggesting possible financial manipulation",
+   "text": "The borrower disclosed a parent holding company and sublease income from an affiliated property company",
    "cites": [
-    "S7-B0063-CASH_REVENUE_GAP-6d6e466f"
-   ]
-  },
-  {
-   "text": "The borrower disclosed a parent holding company, Tidewater Holdings Group LLC, and a sublease income from Tidewater Property Partners LLC",
-   "cites": [
-    "S7-B0063-DEBT_GAP-5150e4ed"
-   ]
-  },
-  {
-   "text": "Ask the borrower: clarify the relationship with Tidewater Receivables LLC and the source of the $10,388,351 in payments",
-   "cites": [
-    "S3-B0063-RELATED_PARTY_INFLOW-d9befb55"
+    "T5"
    ]
   }
  ],
  "dropped": [
   {
-   "text": "The borrower has undisclosed debt to Beacon Credit Fund LLC, which holds a lien on Tidewater Receivables LLC [S5-B0063-COMPETING_LIEN-5ca9b8cf].",
+   "text": "The borrower has undisclosed debt with Beacon Credit Fund LLC, which holds a lien on related companies [S5-B0063-COMPETING_LIEN-5ca9b8cf].",
    "reason": "says 'beacon credit fund' was not disclosed, but the disclosures list it"
+  },
+  {
+   "text": "Ask the borrower: clarify the nature of payments from Tidewater Receivables LLC and the purpose of the disclosed related entities.",
+   "reason": "says 'tidewater receivables' was disclosed, but the disclosures don't list it"
   }
  ],
  "rounds": 2,
- "tokens": 5016,
- "seconds": 66.3,
+ "tokens": 5258,
+ "seconds": 59.4,
  "checks_reapplied": "2026-09-12"
 }
