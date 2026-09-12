@@ -41,6 +41,8 @@ A line-by-line check of `design/SYSTEM-DESIGN.md` against the code. It was start
 | Cases, playbooks, drafts, approvals, 409 before approval, audit, Prometheus | built ✓ | CaseFlowTest; browser approval stored server-side |
 | Real-time alerts reach the case | **built ✓** (was not built) | signal bridge, `/api/live-alerts`, case page; CaseFlowTest; live run: 48 alerts forwarded |
 | Finding sentences and drafts written by an open model | not built | template sentences and drafts; model hook with fallback exists |
+| Every decision replayable | **built ✓** (new) | `bt/pipeline/record.py`: each verdict carries input, rule and code fingerprints; `bt.pipeline.replay` on the demo run: 120 of 120 identical; test_replay.py (an edited input is named) |
+| Investigator agent on an open model | **built ✓** (new) | `bt/agent/`: read-only tools, memo lines must cite a signal or tool call and every number must be in the cited source; the agent never decides; test_agent.py. Memos precomputed for the public site (see below) |
 | "Learn" loop from decisions | not built | doc corrected |
 | Hard escalations jump the queue | partial | facts force medium or higher |
 
@@ -59,7 +61,7 @@ A line-by-line check of `design/SYSTEM-DESIGN.md` against the code. It was start
 | promptfoo faithfulness check; dbt | not built | no model-written text to check; dbt optional |
 | Grafana dashboard | partial | provisioned; the data path is verified through Grafana's own query API. Visual rendering was not confirmed by me (the preview pane was hidden, so Grafana didn't draw) |
 | Console live mode against the Java service | **built ✓** | browser: live alerts shown; Approve stored server-side with audit |
-| Console private deployment | built ✓ | Vercel preview; logged-out requests to 6 paths → 302 to sign-in |
+| Console public deployment, data section, answer key | **built ✓** (new) | /data (dictionary + 10 sample rows per input, one fraud step by step, invoice documents), /test (answer key with misses, held-out results); samples only, no code, full data, rules or weights published |
 
 ## Proof
 

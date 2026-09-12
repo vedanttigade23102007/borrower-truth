@@ -358,9 +358,9 @@ h1{font-size:30px}h2{font-size:24px}.big{font-size:54px}.timeline{flex-direction
   <div class="kicker">Status · built and running, not a plan any more</div>
   <h2>Every part in this deck now exists and has been tested end to end.</h2>
   <div class="grid3">
-    <div class="card"><h3>Seven checks + combiner</h3>Python and DuckDB. 13 tests. One monthly run of 120 borrowers takes under 1.4 s.</div>
+    <div class="card"><h3>Seven checks + combiner</h3>Python and DuckDB. 25 tests. One monthly run of 120 borrowers takes under 1.4 s.</div>
     <div class="card"><h3>Case, verdict and fix service</h3>Java 21 and Spring Boot. Playbooks, drafted letters, one-click approval, audit log. It refuses "done" before "approved".</div>
-    <div class="card"><h3>Review console</h3>Next.js. Deployed privately on Vercel, visible only to your Vercel account.</div>
+    <div class="card"><h3>Review console</h3>Next.js on Vercel, shareable by link. It shows the data, the answer key and every case, but no code, full dataset or model weights.</div>
     <div class="card"><h3>Live streaming</h3>Kafka API and a streaming worker. A suspicious payer is flagged 24 ms after the payment lands.</div>
     <div class="card"><h3>Document model</h3>Fine-tuned on a free Kaggle GPU. It reads invoice totals with 96.5% accuracy.</div>
     <div class="card"><h3>Operations</h3>Airflow nightly job, Prometheus and Grafana, dead-letter replay, break-it test.</div>
@@ -394,6 +394,18 @@ h1{font-size:30px}h2{font-size:24px}.big{font-size:54px}.timeline{flex-direction
     <div class="card metric"><div class="v">11 / 11</div><div class="l">tampered invoices caught; 3.3% false flags, each checked by a person</div></div>
   </div>
   <p class="fine mt">Model compared only with its untrained base (0%): a weak baseline, labelled as such. Scale test: 12.4M rows in 2.3 s on one 8 GB laptop.</p>
+</div></section>
+
+<!-- B4 Around the decision -->
+<section class="slide"><div class="frame">
+  <div class="kicker">Around the decision · what a bank's model-risk team asks for</div>
+  <h2>Every decision can be replayed, an open-model agent does the legwork, and anyone can check the answer key.</h2>
+  <div class="grid3">
+    <div class="card"><h3>Decision record</h3>Each verdict carries fingerprints of its inputs, rules and code. Replaying the demo run gave 120 of 120 identical decisions; change one input and the replay names it.</div>
+    <div class="card"><h3>Investigator agent</h3>After the rules decide, an open model checks the registry, liens, courts, payments and GLEIF with read-only tools and drafts a memo. Code drops any line that cites nothing or states a number its source doesn't contain. It never decides.</div>
+    <div class="card"><h3>Test it yourself</h3>The public console shows the data, one fraud step by step, the invoice documents, and the answer key next to every verdict, misses included.</div>
+  </div>
+  <p class="fine mt">Shared: samples, results, the reasoning on every case. Not shared: the code, the full dataset, the rules and the model weights.</p>
 </div></section>
 
 <!-- 19 Evidence check -->

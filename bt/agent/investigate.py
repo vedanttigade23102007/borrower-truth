@@ -187,7 +187,7 @@ def validate(text: str, signals: dict[str, dict], calls: dict[str, dict]) -> tup
     kept, dropped = [], []
     for line in lines:
         ids = [x.strip() for g in BRACKETS.findall(line) for x in re.split(r"[,;]\s*", g) if x.strip()]
-        body = BRACKETS.sub("", line).strip()
+        body = re.sub(r"\s*\[[^\[\]]*\]", "", line).strip()  # also drops empty "[]"
         if not ids:
             # a question for the borrower asserts nothing, so it may go uncited, as long as it states no numbers
             if body.lower().startswith("ask the borrower") and not _values(body):
@@ -221,7 +221,7 @@ def chat(model: str, messages: list[dict], tools: list[dict] | None, token: str,
         return json.loads(r.read())
 
 
-def _loop(model, borrower_id, tools: Tools, token, router):
+def _loop(model, borrower_id, tools: Tools, ask):
     c = tools.cases[borrower_id]
     msgs = [{"role": "system", "content": SYSTEM},
             {"role": "user", "content": f"Investigate borrower {borrower_id}. The rules' verdict is {c['verdict']}: "
@@ -231,7 +231,7 @@ def _loop(model, borrower_id, tools: Tools, token, router):
         last = rnd == MAX_ROUNDS - 1
         if last:
             msgs.append({"role": "user", "content": "Write the memo now, in the required format."})
-        r = chat(model, msgs, None if last else schema(), token, router)
+        r = ask(model, msgs, None if last else schema())
         used += (r.get("usage") or {}).get("total_tokens", 0)
         m = r["choices"][0]["message"]
         calls = m.get("tool_calls") or []
@@ -254,14 +254,16 @@ def _loop(model, borrower_id, tools: Tools, token, router):
     raise ValueError("no memo within the round limit")
 
 
-def investigate(borrower_id: str, tools: Tools, token: str, models=MODELS, router: str = ROUTER) -> dict:
+def investigate(borrower_id: str, tools: Tools, token: str | None, models=MODELS, router: str = ROUTER, ask=None) -> dict:
+    """`ask(model, messages, tools)` returns an OpenAI-shaped response; default: the Hugging Face router."""
+    ask = ask or (lambda m, msgs, t: chat(m, msgs, t, token, router))
     errors = []
     for model in models:
         tools.calls.clear()
         try:
-            res = _loop(model, borrower_id, tools, token, router)
+            res = _loop(model, borrower_id, tools, ask)
             break
-        except (urllib.error.URLError, TimeoutError, KeyError, ValueError, json.JSONDecodeError) as e:
+        except (urllib.error.URLError, TimeoutError, KeyError, ValueError, RuntimeError, json.JSONDecodeError) as e:
             code = getattr(e, "code", None)
             errors.append(f"{model}: {type(e).__name__}{f' {code}' if code else ''} {getattr(e, 'reason', '') or e}"[:200])
     else:
@@ -280,9 +282,15 @@ def main(argv=None):
     ap.add_argument("--borrower", nargs="*", default=None)
     ap.add_argument("--top-review", type=int, default=8, help="also investigate this many 'needs more evidence' cases")
     ap.add_argument("--no-gleif", action="store_true")
+    ap.add_argument("--backend", choices=["hf", "local"], default="hf",
+                    help="hf: hosted open models via the Hugging Face router; local: run the model on this machine's GPU")
+    ap.add_argument("--local-model", default="Qwen/Qwen3-8B")
     a = ap.parse_args(argv)
-    token = os.environ.get("HF_TOKEN")
-    if not token:
+    token, ask, models = os.environ.get("HF_TOKEN"), None, MODELS
+    if a.backend == "local":
+        from bt.agent.local_model import LocalChat
+        ask, models = LocalChat(a.local_model), [a.local_model]
+    elif not token:
         sys.exit("HF_TOKEN is not set: put it in .env and run through scripts/with-env.sh")
     cases = json.load(open(os.path.join(a.data, "run", "cases.json")))
     tools = Tools(a.data, cases, live_gleif=not a.no_gleif)
@@ -296,7 +304,7 @@ def main(argv=None):
     index_path = os.path.join(a.out, "index.json")
     index = {r["borrower_id"]: r for r in (json.load(open(index_path)) if os.path.exists(index_path) else [])}
     for b in targets:
-        res = investigate(b, tools, token)
+        res = investigate(b, tools, token, models=models, ask=ask)
         json.dump(res, open(os.path.join(a.out, f"{b}.json"), "w"), indent=1)
         index[b] = dict(borrower_id=b, status=res["status"], model=res["model"], lines=len(res["memo"]),
                         dropped=len(res["dropped"]), tool_calls=len(res["steps"]))

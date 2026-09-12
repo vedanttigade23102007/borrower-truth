@@ -1,0 +1,14 @@
+{
+  "id": "vedanttigade5/borrower-truth-investigator-agent",
+  "title": "borrower-truth-investigator-agent",
+  "code_file": "run_agent.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": true,
+  "enable_gpu": true,
+  "machine_shape": "NvidiaTeslaT4",
+  "enable_internet": true,
+  "dataset_sources": ["vedanttigade5/borrower-truth-agent-input"],
+  "competition_sources": [],
+  "kernel_sources": []
+}

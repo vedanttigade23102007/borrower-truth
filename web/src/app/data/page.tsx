@@ -304,11 +304,14 @@ function StoryView({ s }: { s: Story }) {
                 <span className="font-medium text-zinc-900">{MECHANISM[f.mechanism] ?? f.mechanism}</span>{" "}
                 <Badge tone={f.confidence === "high" ? "red" : "amber"}>{f.confidence}</Badge>
                 <span className="ml-2 text-zinc-600">
-                  {f.signals
-                    .map((id) => byId.get(id))
-                    .filter(Boolean)
-                    .map((x) => `${x!.system} ${SYSTEM[x!.system] ?? ""}: ${signalLabel(x!.type).toLowerCase()}`)
-                    .join(" · ")}
+                  {[
+                    ...new Set(
+                      f.signals
+                        .map((id) => byId.get(id))
+                        .filter(Boolean)
+                        .map((x) => `${x!.system} ${SYSTEM[x!.system] ?? ""}: ${signalLabel(x!.type).toLowerCase()}`),
+                    ),
+                  ].join(" · ")}
                 </span>
               </li>
             ))}
@@ -335,6 +338,12 @@ function StoryView({ s }: { s: Story }) {
   );
 }
 
+function amount(read: string | null): string {
+  if (!read) return "—";
+  const n = Number(read.replace(/[$,]/g, ""));
+  return Number.isFinite(n) ? `$${n.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}` : read;
+}
+
 function DocCard({ d }: { d: Doc }) {
   const tone = d.outcome.startsWith("tampered") ? "red" : d.flagged ? "amber" : "emerald";
   return (
@@ -348,13 +357,13 @@ function DocCard({ d }: { d: Doc }) {
         </div>
         <dl className="grid grid-cols-2 gap-x-3 gap-y-0.5">
           <dt className="text-zinc-500">model read</dt>
-          <dd className="tabular-nums text-zinc-900">{d.read_total ? `$${d.read_total}` : "—"}</dd>
+          <dd className="tabular-nums text-zinc-900">{amount(d.read_total)}</dd>
           <dt className="text-zinc-500">recorded</dt>
           <dd className="tabular-nums text-zinc-900">${d.record_amount.toLocaleString(undefined, { minimumFractionDigits: 2 })}</dd>
           {d.second_look && (
             <>
               <dt className="text-zinc-500">first read</dt>
-              <dd className="tabular-nums text-zinc-600">{d.first_read ? `$${d.first_read}` : "—"} (second look taken)</dd>
+              <dd className="tabular-nums text-zinc-600">{amount(d.first_read)} (second look taken)</dd>
             </>
           )}
         </dl>
