@@ -1,0 +1,97 @@
+{
+ "borrower_id": "B0101",
+ "verdict_by_rules": "LIKELY_FRAUD",
+ "steps": [
+  {
+   "id": "T1",
+   "tool": "case_evidence",
+   "args": {
+    "borrower_id": "B0101"
+   },
+   "result": "{\"verdict_by_rules\": \"LIKELY_FRAUD\", \"headline\": \"Likely: the same collateral is pledged to more than one lender\", \"findings\": [{\"mechanism\": \"DOUBLE_PLEDGE\", \"confidence\": \"medium\", \"plain\": \"the same collateral is pledged to more than one lender\", \"signals\": [\"S5-B0101-COMPETING_LIEN-0b5557a1\", \"S7-B0101-DEBT_GAP-5a3fb11c\"], \"corroborated_by\": []}], \"signals\": [{\"id\": \"S5-B0101-COMPETING_LIEN-0b5557a1\", \"system\": \"S5\", \"type\": \"COMPETING_LIEN\", \"explanation\": \"'Silverline Specialty Finance LLC' holds a lien on the borrower ('Granite Funding Inc': all receivables and chattel paper (loan collateral)) that the borrower never disclosed\", \"evidence\": [\"ucc:NC-UCC-000200\", \"disclosures:B0101#deb"
+  },
+  {
+   "id": "T2",
+   "tool": "related_companies",
+   "args": {
+    "borrower_id": "B0101"
+   },
+   "result": "[{\"entity_id\": \"E000516\", \"name\": \"Granite Funding Inc\", \"kind\": \"borrower\", \"officer\": \"Maria Chen\", \"address\": \"5651 Park Ave, Suite 443\", \"formed_month\": -91, \"has_operations\": true, \"same_officer\": true, \"same_address\": true, \"is_borrower\": true}]"
+  },
+  {
+   "id": "T3",
+   "tool": "lien_search",
+   "args": {
+    "name": "B0101"
+   },
+   "result": "[{\"filing_id\": \"UCC-000199\", \"debtor_name\": \"Granite Funding Inc\", \"debtor_address\": \"5651 Park Ave, Suite 443\", \"secured_party_name\": \"Wells Fargo Bank, N.A.\", \"collateral_desc\": \"all assets, including receivables and chattel paper\", \"filed_month\": -12, \"match_score\": 100}, {\"filing_id\": \"UCC-000200\", \"debtor_name\": \"Granite Funding Inc\", \"debtor_address\": \"5651 Park Ave, Suite 443\", \"secured_party_name\": \"Silverline Specialty Finance LLC\", \"collateral_desc\": \"all receivables and chattel paper (loan collateral)\", \"filed_month\": 8, \"match_score\": 100}]"
+  },
+  {
+   "id": "T4",
+   "tool": "court_search",
+   "args": {
+    "name": "B0101"
+   },
+   "result": "{\"result\": \"no records matching 'Granite Funding Inc'\"}"
+  },
+  {
+   "id": "T5",
+   "tool": "disclosures",
+   "args": {
+    "borrower_id": "B0101"
+   },
+   "result": "[{\"kind\": \"deferment_program\", \"counterparty_entity_id\": null, \"counterparty\": null, \"note\": \"disclosed 3-month hardship deferment, months 13-15\"}]"
+  }
+ ],
+ "errors": [],
+ "generated_at": "2026-09-11",
+ "status": "ok",
+ "model": "Qwen/Qwen3-8B",
+ "memo": [
+  {
+   "text": "The borrower disclosed a 3-month hardship deferment program from months 13-15",
+   "cites": [
+    "T5"
+   ]
+  },
+  {
+   "text": "A lien was filed by Silverline Specialty Finance LLC on Granite Funding Inc's collateral, which was not disclosed",
+   "cites": [
+    "S5-B0101-COMPETING_LIEN-0b5557a1"
+   ]
+  },
+  {
+   "text": "Another lien by Wells Fargo Bank, N.A. was found, but the borrower omitted this in debt reports",
+   "cites": [
+    "S7-B0101-DEBT_GAP-5a3fb11c"
+   ]
+  },
+  {
+   "text": "No court records were found for Granite Funding Inc",
+   "cites": [
+    "T4"
+   ]
+  },
+  {
+   "text": "The borrower's related company, Granite Funding Inc, shares an officer and address with the borrower",
+   "cites": [
+    "T2"
+   ]
+  },
+  {
+   "text": "The collateral pledged to multiple lenders suggests potential double pledging",
+   "cites": [
+    "S5-B0101-COMPETING_LIEN-0b5557a1"
+   ]
+  },
+  {
+   "text": "Ask the borrower: clarify the relationship between Granite Funding Inc and the borrower, and why the lien by Silverline Specialty Finance LLC was not disclosed",
+   "cites": []
+  }
+ ],
+ "dropped": [],
+ "rounds": 2,
+ "tokens": 3338,
+ "seconds": 40.3,
+ "checks_reapplied": "2026-09-12"
+}

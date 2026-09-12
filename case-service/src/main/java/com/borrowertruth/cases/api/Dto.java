@@ -8,6 +8,7 @@ import java.util.Map;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 /** Wire formats. The Python pipeline posts {@link RunIn}; the console reads the views. */
 public final class Dto {
@@ -28,7 +29,8 @@ public final class Dto {
 
     public record RunAck(int asOf, int cases, int stepsCreated, Instant receivedAt) {}
 
-    public record DecisionIn(@NotBlank String decision, @NotBlank String user, String note) {}
+    public record DecisionIn(@NotBlank @Size(max = 16) String decision, @NotBlank @Size(max = 80) String user,
+                             @Size(max = 500) String note) {}
 
     public record StepView(String mechanism, String code, String title, String kind, String status, String draft,
                            String draftSource, String owner, LocalDate dueDate, String decidedBy, Instant decidedAt,
@@ -41,7 +43,8 @@ public final class Dto {
                              List<String> unavailableSystems, List<LiveAlertView> liveAlerts) {}
 
     /** A real-time S3 signal from the streaming worker, forwarded by the signal bridge. */
-    public record LiveAlertIn(@NotBlank String borrowerId, @NotBlank String type, String txnId, String payerName,
+    public record LiveAlertIn(@NotBlank @Size(max = 32) String borrowerId, @NotBlank @Size(max = 64) String type,
+                              @Size(max = 64) String txnId, @Size(max = 200) String payerName,
                               double amount, String entityId, double detectedAt) {}
 
     public record LiveAlertView(String type, String txnId, String payerName, double amount, Instant detectedAt) {}

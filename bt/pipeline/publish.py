@@ -39,7 +39,10 @@ def post(url: str, body: dict, attempts: int = 4) -> dict:
     delay = 0.5
     for i in range(attempts):
         try:
-            req = urllib.request.Request(url, data=data, headers={"Content-Type": "application/json"}, method="POST")
+            headers = {"Content-Type": "application/json"}
+            if os.environ.get("BT_API_KEY"):  # the case service accepts writes from other machines only with the key
+                headers["X-BT-Key"] = os.environ["BT_API_KEY"]
+            req = urllib.request.Request(url, data=data, headers=headers, method="POST")
             with urllib.request.urlopen(req, timeout=30) as r:
                 return json.loads(r.read())
         except Exception as e:

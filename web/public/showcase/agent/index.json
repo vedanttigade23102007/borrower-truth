@@ -1,0 +1,298 @@
+[
+ {
+  "borrower_id": "B0003",
+  "status": "ok",
+  "model": "Qwen/Qwen3-8B",
+  "lines": 6,
+  "dropped": 1,
+  "tool_calls": 5
+ },
+ {
+  "borrower_id": "B0004",
+  "status": "ok",
+  "model": "Qwen/Qwen3-8B",
+  "lines": 7,
+  "dropped": 0,
+  "tool_calls": 5
+ },
+ {
+  "borrower_id": "B0005",
+  "status": "ok",
+  "model": "Qwen/Qwen3-8B",
+  "lines": 7,
+  "dropped": 0,
+  "tool_calls": 5
+ },
+ {
+  "borrower_id": "B0006",
+  "status": "ok",
+  "model": "Qwen/Qwen3-8B",
+  "lines": 6,
+  "dropped": 1,
+  "tool_calls": 5
+ },
+ {
+  "borrower_id": "B0011",
+  "status": "ok",
+  "model": "Qwen/Qwen3-8B",
+  "lines": 5,
+  "dropped": 2,
+  "tool_calls": 5
+ },
+ {
+  "borrower_id": "B0012",
+  "status": "ok",
+  "model": "Qwen/Qwen3-8B",
+  "lines": 5,
+  "dropped": 2,
+  "tool_calls": 5
+ },
+ {
+  "borrower_id": "B0013",
+  "status": "ok",
+  "model": "Qwen/Qwen3-8B",
+  "lines": 6,
+  "dropped": 1,
+  "tool_calls": 5
+ },
+ {
+  "borrower_id": "B0017",
+  "status": "ok",
+  "model": "Qwen/Qwen3-8B",
+  "lines": 6,
+  "dropped": 1,
+  "tool_calls": 5
+ },
+ {
+  "borrower_id": "B0021",
+  "status": "ok",
+  "model": "Qwen/Qwen3-8B",
+  "lines": 7,
+  "dropped": 0,
+  "tool_calls": 5
+ },
+ {
+  "borrower_id": "B0023",
+  "status": "ok",
+  "model": "Qwen/Qwen3-8B",
+  "lines": 7,
+  "dropped": 0,
+  "tool_calls": 5
+ },
+ {
+  "borrower_id": "B0025",
+  "status": "ok",
+  "model": "Qwen/Qwen3-8B",
+  "lines": 6,
+  "dropped": 1,
+  "tool_calls": 5
+ },
+ {
+  "borrower_id": "B0027",
+  "status": "ok",
+  "model": "Qwen/Qwen3-8B",
+  "lines": 7,
+  "dropped": 1,
+  "tool_calls": 5
+ },
+ {
+  "borrower_id": "B0028",
+  "status": "ok",
+  "model": "Qwen/Qwen3-8B",
+  "lines": 6,
+  "dropped": 1,
+  "tool_calls": 5
+ },
+ {
+  "borrower_id": "B0034",
+  "status": "ok",
+  "model": "Qwen/Qwen3-8B",
+  "lines": 7,
+  "dropped": 0,
+  "tool_calls": 5
+ },
+ {
+  "borrower_id": "B0041",
+  "status": "ok",
+  "model": "Qwen/Qwen3-8B",
+  "lines": 6,
+  "dropped": 0,
+  "tool_calls": 5
+ },
+ {
+  "borrower_id": "B0042",
+  "status": "ok",
+  "model": "Qwen/Qwen3-8B",
+  "lines": 7,
+  "dropped": 0,
+  "tool_calls": 5
+ },
+ {
+  "borrower_id": "B0043",
+  "status": "ok",
+  "model": "Qwen/Qwen3-8B",
+  "lines": 6,
+  "dropped": 1,
+  "tool_calls": 5
+ },
+ {
+  "borrower_id": "B0044",
+  "status": "ok",
+  "model": "Qwen/Qwen3-8B",
+  "lines": 5,
+  "dropped": 1,
+  "tool_calls": 5
+ },
+ {
+  "borrower_id": "B0054",
+  "status": "ok",
+  "model": "Qwen/Qwen3-8B",
+  "lines": 5,
+  "dropped": 2,
+  "tool_calls": 5
+ },
+ {
+  "borrower_id": "B0055",
+  "status": "ok",
+  "model": "Qwen/Qwen3-8B",
+  "lines": 7,
+  "dropped": 1,
+  "tool_calls": 5
+ },
+ {
+  "borrower_id": "B0062",
+  "status": "ok",
+  "model": "Qwen/Qwen3-8B",
+  "lines": 7,
+  "dropped": 0,
+  "tool_calls": 5
+ },
+ {
+  "borrower_id": "B0063",
+  "status": "ok",
+  "model": "Qwen/Qwen3-8B",
+  "lines": 6,
+  "dropped": 1,
+  "tool_calls": 5
+ },
+ {
+  "borrower_id": "B0067",
+  "status": "ok",
+  "model": "Qwen/Qwen3-8B",
+  "lines": 7,
+  "dropped": 0,
+  "tool_calls": 5
+ },
+ {
+  "borrower_id": "B0069",
+  "status": "ok",
+  "model": "Qwen/Qwen3-8B",
+  "lines": 7,
+  "dropped": 0,
+  "tool_calls": 5
+ },
+ {
+  "borrower_id": "B0072",
+  "status": "ok",
+  "model": "Qwen/Qwen3-8B",
+  "lines": 7,
+  "dropped": 0,
+  "tool_calls": 5
+ },
+ {
+  "borrower_id": "B0077",
+  "status": "ok",
+  "model": "Qwen/Qwen3-8B",
+  "lines": 7,
+  "dropped": 0,
+  "tool_calls": 5
+ },
+ {
+  "borrower_id": "B0078",
+  "status": "ok",
+  "model": "Qwen/Qwen3-8B",
+  "lines": 6,
+  "dropped": 1,
+  "tool_calls": 5
+ },
+ {
+  "borrower_id": "B0080",
+  "status": "ok",
+  "model": "Qwen/Qwen3-8B",
+  "lines": 7,
+  "dropped": 0,
+  "tool_calls": 5
+ },
+ {
+  "borrower_id": "B0081",
+  "status": "ok",
+  "model": "Qwen/Qwen3-8B",
+  "lines": 2,
+  "dropped": 5,
+  "tool_calls": 5
+ },
+ {
+  "borrower_id": "B0088",
+  "status": "ok",
+  "model": "Qwen/Qwen3-8B",
+  "lines": 6,
+  "dropped": 0,
+  "tool_calls": 5
+ },
+ {
+  "borrower_id": "B0097",
+  "status": "ok",
+  "model": "Qwen/Qwen3-8B",
+  "lines": 6,
+  "dropped": 1,
+  "tool_calls": 5
+ },
+ {
+  "borrower_id": "B0099",
+  "status": "ok",
+  "model": "Qwen/Qwen3-8B",
+  "lines": 7,
+  "dropped": 0,
+  "tool_calls": 5
+ },
+ {
+  "borrower_id": "B0101",
+  "status": "ok",
+  "model": "Qwen/Qwen3-8B",
+  "lines": 7,
+  "dropped": 0,
+  "tool_calls": 5
+ },
+ {
+  "borrower_id": "B0103",
+  "status": "ok",
+  "model": "Qwen/Qwen3-8B",
+  "lines": 7,
+  "dropped": 1,
+  "tool_calls": 5
+ },
+ {
+  "borrower_id": "B0110",
+  "status": "ok",
+  "model": "Qwen/Qwen3-8B",
+  "lines": 6,
+  "dropped": 1,
+  "tool_calls": 5
+ },
+ {
+  "borrower_id": "B0113",
+  "status": "ok",
+  "model": "Qwen/Qwen3-8B",
+  "lines": 7,
+  "dropped": 0,
+  "tool_calls": 5
+ },
+ {
+  "borrower_id": "B0116",
+  "status": "ok",
+  "model": "Qwen/Qwen3-8B",
+  "lines": 7,
+  "dropped": 1,
+  "tool_calls": 5
+ }
+]

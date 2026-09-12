@@ -1,6 +1,6 @@
 {
  "asOf": 23,
- "receivedAt": "2026-09-11T17:49:13.891958Z",
+ "receivedAt": "2026-09-11T19:06:27.542173Z",
  "runMetrics": {
   "data_quality": {
    "quarantined": {},
@@ -8,37 +8,37 @@
   },
   "S6": {
    "status": "ok",
-   "seconds": 0.009,
+   "seconds": 0.017,
    "signals": 76
   },
   "S1": {
    "status": "ok",
-   "seconds": 0.032,
+   "seconds": 0.036,
    "signals": 10
   },
   "S2": {
    "status": "ok",
-   "seconds": 0.058,
+   "seconds": 0.061,
    "signals": 20
   },
   "S3": {
    "status": "ok",
-   "seconds": 0.251,
+   "seconds": 0.282,
    "signals": 12
   },
   "S4": {
    "status": "ok",
-   "seconds": 0.041,
+   "seconds": 0.054,
    "signals": 29
   },
   "S5": {
    "status": "ok",
-   "seconds": 0.006,
+   "seconds": 0.009,
    "signals": 61
   },
   "S7": {
    "status": "ok",
-   "seconds": 0.002,
+   "seconds": 0.003,
    "signals": 60
   },
   "manifest": {
@@ -62,14 +62,14 @@
    },
    "inputs_digest": "1baafa7cb6dd",
    "rule_version": "c5261f73b139",
-   "code_version": "bdffa8f"
+   "code_version": "ffebdfd+local-changes"
   },
   "combiner": {
    "status": "ok",
-   "seconds": 0.079,
+   "seconds": 0.125,
    "cases": 120
   },
-  "total_seconds": 1.077,
+  "total_seconds": 1.348,
   "as_of": 23
  },
  "verdicts": {

@@ -16,6 +16,7 @@ Guardrails, enforced in code rather than by asking the model nicely:
 from __future__ import annotations
 
 import argparse
+import glob
 import json
 import os
 import re
@@ -36,8 +37,8 @@ RESULT_CHARS = 3500
 
 SYSTEM = """You are an investigator on a bank's credit-risk team. Rule-based checks have already reached a verdict on a borrower. You cannot change it: do not state your own verdict and do not recommend lending decisions.
 Your job: use the tools to check the case from other angles (who the linked companies are, who else has claims on them, where the money really came from, what the borrower disclosed), then write a short memo for the credit officer.
-Start with case_evidence. Then make 3 to 6 more tool calls. Then write the memo.
-Memo format, strictly: 4 to 8 lines, each starting with "- ", each one sentence, each ending with its sources in square brackets: tool call IDs like [T3] or signal IDs like [S3-B0028-RELATED_PARTY_INFLOW-3a0eb607]. Only state facts and numbers that appear in the sources you cite, and copy amounts exactly as written there. Include at least one line on what you could not confirm or what cuts against the finding. The last line starts with "- Ask the borrower:". No headings and no other text."""
+Start with case_evidence. Then make 3 to 6 more tool calls. Search liens and courts by company name (the borrower's and each linked company's), never by ID. Then write the memo.
+Memo format, strictly: 4 to 8 lines, each starting with "- ", each one sentence, each ending with its sources in square brackets: tool call IDs like [T3] or signal IDs like [S3-B0028-RELATED_PARTY_INFLOW-3a0eb607]. Copy signal IDs exactly and never join a tool call ID to a signal ID.Only state facts and numbers that appear in the sources you cite, and copy amounts exactly as written there. Include at least one line on what you could not confirm or what cuts against the finding. The last line starts with "- Ask the borrower:". No headings and no other text."""
 
 TOOLS = [
     ("case_evidence", "The rules' verdict, findings and every signal (with IDs) for a borrower.", {"borrower_id": "e.g. B0028"}),
@@ -80,6 +81,10 @@ class Tools:
         self._ucc = self.rows("SELECT filing_id, debtor_name, debtor_address, secured_party_name, collateral_desc, "
                               "filed_month FROM ucc_filings")
         self._court = self.rows("SELECT case_id, defendant_name, plaintiff, kind, amount, month FROM court_records")
+        # every company name the memo might mention, for the claim checks
+        self._names = sorted({norm(n) for n in [r["name"] for r in self.rows("SELECT name FROM entities")]
+                              + [r["secured_party_name"] for r in self._ucc] + [r["plaintiff"] for r in self._court]
+                              if len(norm(n)) >= 6}, key=len, reverse=True)
 
     def rows(self, sql: str, *args) -> list[dict]:
         cur = self.con.execute(sql, list(args))
@@ -128,11 +133,32 @@ class Tools:
         return sorted(hits, key=lambda h: (-h["match_score"], str(h.get("filed_month", h.get("month")))))[:10] or \
             {"result": f"no records matching '{name}'"}
 
+    def _resolve(self, q: str) -> str:
+        """Public records carry names, not IDs: a borrower or entity ID is turned into its legal name."""
+        q = q.strip()
+        if re.fullmatch(r"B\d{4}", q):
+            r = self.rows("SELECT e.name FROM borrowers b JOIN entities e USING (entity_id) WHERE b.borrower_id = ?", q)
+        elif re.fullmatch(r"E\d{6}", q):
+            r = self.rows("SELECT name FROM entities WHERE entity_id = ?", q)
+        else:
+            return q
+        return r[0]["name"] if r else q
+
     def t_lien_search(self, name):
-        return self._fuzzy(self._ucc, "debtor_name", name)
+        return self._fuzzy(self._ucc, "debtor_name", self._resolve(name))
 
     def t_court_search(self, name):
-        return self._fuzzy(self._court, "defendant_name", name)
+        return self._fuzzy(self._court, "defendant_name", self._resolve(name))
+
+    def facts(self, borrower_id: str) -> dict:
+        """What the records say, for checking the memo's claims. Never shown to the model."""
+        name = self._resolve(borrower_id)
+        disclosed = {norm(r["name"]) for r in self.rows(
+            "SELECT e.name FROM disclosures d JOIN entities e ON e.entity_id = d.counterparty_entity_id "
+            "WHERE d.borrower_id = ?", borrower_id)}
+        return dict(borrower=norm(name), disclosed=disclosed, names=self._names,
+                    borrower_liens=isinstance(self._fuzzy(self._ucc, "debtor_name", name), list),
+                    borrower_judgments=isinstance(self._fuzzy(self._court, "defendant_name", name), list))
 
     def t_payer_summary(self, borrower_id, payer_name):
         r = self.rows("""SELECT count(*) AS payments, sum(amount) AS total, min(month) AS first_month, max(month) AS last_month,
@@ -182,29 +208,90 @@ def _values(text: str) -> list[tuple[float, bool, float]]:
     return out
 
 
-def validate(text: str, signals: dict[str, dict], calls: dict[str, dict]) -> tuple[list[dict], list[dict]]:
+NEG_DISCLOSED = re.compile(r"undisclosed|not\s+(?:been\s+)?disclosed|never\s+disclosed|"
+                           r"(?:did\s+not|didn't|does\s+not|doesn't|failed\s+to)\s+disclose|without\s+disclos|"
+                           r"(?:do|does|did)\s*(?:not|n't)\s+(?:mention|include|list|show|report)|omit(?:s|ted)?\b|"
+                           r"not\s+(?:mentioned|included|listed)", re.I)
+ABSENT = re.compile(
+    r"\bno\s+(?:public\s+|ucc\s+|court\s+|lien\s+)*(?:liens?|judg(?:e)?ments?|ucc\s+filings?|court\s+records?)\b"
+    r"|\b(?:did\s+not|could\s*n[o']t|couldn't|didn't|failed\s+to)\s+(?:find|locate|identify|confirm\s+(?:any|the\s+existence\s+of))"
+    r"\b[^.]{0,40}?\b(?:liens?|judg(?:e)?ments?|court\s+records?)\b"
+    r"|\b(?:liens?|judg(?:e)?ments?)\b[^.]{0,30}\b(?:were|was)\s+(?:not|never)\s+(?:found|filed|recorded)", re.I)
+
+
+def _mentions(body: str, names: list[str]) -> list[str]:
+    """Company names in the text, longest first; a matched name is consumed so 'Silverline Credit' can't
+    also match inside 'Silverline Credit Fund'."""
+    ln, found = f" {norm(body)} ", []
+    for n in names:  # sorted longest first
+        if f" {n} " in ln:
+            found.append(n)
+            ln = ln.replace(f" {n} ", " | ")
+    return found
+
+
+def _claim_problem(body: str, facts: dict | None) -> str | None:
+    """Checks two kinds of claim against the records: what was disclosed, and whether liens or judgments exist."""
+    if not facts:
+        return None
+    others = [n for n in _mentions(body, facts["names"]) if n != facts["borrower"]]
+    if "disclos" in body.lower():
+        negative = bool(NEG_DISCLOSED.search(body))
+        for n in others:
+            listed = any(fuzz.token_sort_ratio(n, d) >= 90 for d in facts["disclosed"])
+            if negative and listed:
+                return f"says '{n}' was not disclosed, but the disclosures list it"
+            if not negative and not listed:
+                return f"says '{n}' was disclosed, but the disclosures don't list it"
+    if not others and ABSENT.search(body):  # a claim that something is absent, about the borrower itself
+        low = body.lower()
+        if ("lien" in low or "ucc" in low) and facts["borrower_liens"]:
+            return "says there are no liens, but the lien records show some against the borrower"
+        if ("judg" in low or "court" in low) and facts["borrower_judgments"]:
+            return "says there are no judgments, but the court records show some against the borrower"
+    return None
+
+
+def _canon(cid: str, signals: dict, calls: dict) -> str:
+    """Models sometimes glue IDs together ('T1-S3-B0043-...') or garble the type; the 8-hex suffix is unique."""
+    if cid in signals or cid in calls:
+        return cid
+    m = re.match(r"T\d+-(.+)$", cid)
+    if m and m.group(1) in signals:
+        return m.group(1)
+    tail = cid.rsplit("-", 1)[-1]
+    hits = [s for s in signals if s.endswith("-" + tail)] if re.fullmatch(r"[0-9a-f]{8}", tail) else []
+    return hits[0] if len(hits) == 1 else cid
+
+
+def validate(text: str, signals: dict[str, dict], calls: dict[str, dict],
+             facts: dict | None = None) -> tuple[list[dict], list[dict]]:
     lines = [l.strip()[2:].strip() for l in text.splitlines() if l.strip()[:2] in ("- ", "* ", "• ")]
     kept, dropped = [], []
     for line in lines:
         ids = [x.strip() for g in BRACKETS.findall(line) for x in re.split(r"[,;]\s*", g) if x.strip()]
         body = re.sub(r"\s*\[[^\[\]]*\]", "", line).strip()  # also drops empty "[]"
-        if not ids:
-            # a question for the borrower asserts nothing, so it may go uncited, as long as it states no numbers
-            if body.lower().startswith("ask the borrower") and not _values(body):
-                kept.append(dict(text=body.rstrip(" ."), cites=[]))
-            else:
-                dropped.append(dict(text=line, reason="cites no source"))
+        ask = body.lower().startswith("ask the borrower")
+        if not ids and not ask:
+            dropped.append(dict(text=line, reason="cites no source"))
             continue
+        ids = list(dict.fromkeys(_canon(i, signals, calls) for i in ids))
         unknown = [i for i in ids if i not in signals and i not in calls]
         if unknown:
             dropped.append(dict(text=line, reason=f"cites an unknown source: {unknown[0]}"))
             continue
-        source_text = " ".join(json.dumps(signals.get(i) or calls[i]["result"], default=str) for i in ids)
+        # a question for the borrower asserts nothing and may go uncited; its numbers must still be in the evidence
+        cited = ids or list(signals) + list(calls)
+        source_text = " ".join(json.dumps(signals.get(i) or calls[i]["result"], default=str) for i in cited)
         have = [v for v, _, _ in _values(source_text)]
         bad = [v for v, strong, tol in _values(body) if (strong or v >= 13)  # small bare counts and months are allowed
                and not any(abs(v - h) <= max(1.0, tol) for h in have)]
         if bad:
             dropped.append(dict(text=line, reason=f"states a number not in its sources: {bad[0]:g}"))
+            continue
+        problem = _claim_problem(body, facts)
+        if problem:
+            dropped.append(dict(text=line, reason=problem))
             continue
         kept.append(dict(text=body.rstrip(" ."), cites=ids))
     return kept, dropped
@@ -237,7 +324,8 @@ def _loop(model, borrower_id, tools: Tools, ask):
         calls = m.get("tool_calls") or []
         if not calls:
             signals = {s["signal_id"]: s for s in c["signals"]}
-            kept, dropped = validate(m.get("content") or "", signals, {x["id"]: x for x in tools.calls})
+            kept, dropped = validate(m.get("content") or "", signals, {x["id"]: x for x in tools.calls},
+                                     tools.facts(borrower_id))
             if not kept:
                 raise ValueError("memo had no line that passed validation")
             return dict(status="ok", model=model, memo=kept, dropped=dropped, rounds=rnd + 1, tokens=used,
@@ -275,6 +363,24 @@ def investigate(borrower_id: str, tools: Tools, token: str | None, models=MODELS
                 generated_at=time.strftime("%Y-%m-%d"), **res)
 
 
+def revalidate(res: dict, tools: Tools) -> dict:
+    """Re-apply the current checks to a saved memo without calling the model again. The tools are
+    deterministic, so replaying the agent's calls in order rebuilds the same T1, T2, ... sources."""
+    if res["status"] != "ok":
+        return res
+    b = res["borrower_id"]
+    tools.calls.clear()
+    for s in res["steps"]:
+        tools.run(s["tool"], s["args"])
+    lines = [m["text"] + (f" [{', '.join(m['cites'])}]" if m["cites"] else "") for m in res["memo"]] + \
+            [d["text"] for d in res["dropped"]]
+    lines.sort(key=lambda l: l.lower().startswith("ask the borrower"))  # the question stays last
+    signals = {s["signal_id"]: s for s in tools.cases[b]["signals"]}
+    kept, dropped = validate("\n".join("- " + l for l in lines), signals, {x["id"]: x for x in tools.calls},
+                             tools.facts(b))
+    return dict(res, memo=kept, dropped=dropped, checks_reapplied=time.strftime("%Y-%m-%d"))
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser()
     ap.add_argument("--data", default="data/out/demo")
@@ -285,7 +391,21 @@ def main(argv=None):
     ap.add_argument("--backend", choices=["hf", "local"], default="hf",
                     help="hf: hosted open models via the Hugging Face router; local: run the model on this machine's GPU")
     ap.add_argument("--local-model", default="Qwen/Qwen3-8B")
+    ap.add_argument("--revalidate", action="store_true",
+                    help="re-apply the current checks to the memos already in --out; no model is called")
     a = ap.parse_args(argv)
+    if a.revalidate:
+        tools = Tools(a.data, json.load(open(os.path.join(a.data, "run", "cases.json"))), live_gleif=not a.no_gleif)
+        index = []
+        for f in sorted(glob.glob(os.path.join(a.out, "B*.json"))):
+            res = revalidate(json.load(open(f)), tools)
+            json.dump(res, open(f, "w"), indent=1)
+            index.append(dict(borrower_id=res["borrower_id"], status=res["status"], model=res["model"],
+                              lines=len(res["memo"]), dropped=len(res["dropped"]), tool_calls=len(res["steps"])))
+        json.dump(index, open(os.path.join(a.out, "index.json"), "w"), indent=1)
+        print(f"re-checked {len(index)} memos: {sum(r['lines'] for r in index)} lines kept, "
+              f"{sum(r['dropped'] for r in index)} dropped")
+        return
     token, ask, models = os.environ.get("HF_TOKEN"), None, MODELS
     if a.backend == "local":
         from bt.agent.local_model import LocalChat

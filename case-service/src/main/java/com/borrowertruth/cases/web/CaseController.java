@@ -3,6 +3,7 @@ package com.borrowertruth.cases.web;
 import com.borrowertruth.cases.api.Dto.*;
 import com.borrowertruth.cases.service.CaseService;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Size;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,7 +30,7 @@ public class CaseController {
 
     /** Adapter boundary for streaming: the signal bridge posts batches of real-time S3 alerts here. */
     @PostMapping("/live-alerts")
-    public Map<String, Integer> liveAlerts(@RequestBody List<LiveAlertIn> alerts) {
+    public Map<String, Integer> liveAlerts(@RequestBody @Size(max = 5000) List<@Valid LiveAlertIn> alerts) {
         return Map.of("accepted", service.addLive(alerts));
     }
 

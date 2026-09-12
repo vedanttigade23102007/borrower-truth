@@ -1,0 +1,97 @@
+{
+ "borrower_id": "B0077",
+ "verdict_by_rules": "LIKELY_FRAUD",
+ "steps": [
+  {
+   "id": "T1",
+   "tool": "case_evidence",
+   "args": {
+    "borrower_id": "B0077"
+   },
+   "result": "{\"verdict_by_rules\": \"LIKELY_FRAUD\", \"headline\": \"Likely: invoices are fake, inflated or altered\", \"findings\": [{\"mechanism\": \"FAKE_INVOICES\", \"confidence\": \"high\", \"plain\": \"invoices are fake, inflated or altered\", \"signals\": [\"S4-B0077-ALTERED_INVOICE-855d6699\", \"S4-B0077-DOC_DATA_MISMATCH-8e2e2b89\", \"S1-B0077-PLEDGECHECK_COMPLETENESS_FAIL_RECEIVABLES-b02c22a0\", \"S4-B0077-IMPLAUSIBLE_AMOUNT-d2f3f1f6\", \"S4-B0077-UNPAID_BY_DEBTOR-df8ac652\", \"S7-B0077-RECEIVABLES_QUALITY-5d99585f\"], \"corroborated_by\": []}, {\"mechanism\": \"HIDDEN_DEBT\", \"confidence\": \"low\", \"plain\": \"the borrower has debt it has not disclosed\", \"signals\": [\"S5-B0077-COMPETING_LIEN-81e9d3d8\"], \"corroborated_by\": []}], \"signals\":"
+  },
+  {
+   "id": "T2",
+   "tool": "related_companies",
+   "args": {
+    "borrower_id": "B0077"
+   },
+   "result": "[{\"entity_id\": \"E000471\", \"name\": \"Crescent Funding LLC\", \"kind\": \"borrower\", \"officer\": \"David Davis\", \"address\": \"9851 Market Ave, Suite 415\", \"formed_month\": -86, \"has_operations\": true, \"same_officer\": true, \"same_address\": true, \"is_borrower\": true}, {\"entity_id\": \"E000472\", \"name\": \"Crescent Holdings Group LLC\", \"kind\": \"holding\", \"officer\": \"David Davis\", \"address\": \"9851 Market Ave, Suite 415\", \"formed_month\": -200, \"has_operations\": true, \"same_officer\": true, \"same_address\": true, \"is_borrower\": false}]"
+  },
+  {
+   "id": "T3",
+   "tool": "lien_search",
+   "args": {
+    "name": "B0077"
+   },
+   "result": "[{\"filing_id\": \"UCC-000150\", \"debtor_name\": \"Crescent Funding LLC\", \"debtor_address\": \"9851 Market Ave, Suite 415\", \"secured_party_name\": \"Harbor Capital Partners LP\", \"collateral_desc\": \"second-priority lien on all assets\", \"filed_month\": -10, \"match_score\": 100}, {\"filing_id\": \"UCC-000149\", \"debtor_name\": \"Crescent Funding LLC\", \"debtor_address\": \"9851 Market Ave, Suite 415\", \"secured_party_name\": \"Wells Fargo Bank, N.A.\", \"collateral_desc\": \"all assets, including receivables and chattel paper\", \"filed_month\": -12, \"match_score\": 100}, {\"filing_id\": \"UCC-000151\", \"debtor_name\": \"Crescent Funding LLC\", \"debtor_address\": \"9851 Market Ave, Suite 415\", \"secured_party_name\": \"Redwood Specialty "
+  },
+  {
+   "id": "T4",
+   "tool": "court_search",
+   "args": {
+    "name": "B0077"
+   },
+   "result": "{\"result\": \"no records matching 'Crescent Funding LLC'\"}"
+  },
+  {
+   "id": "T5",
+   "tool": "disclosures",
+   "args": {
+    "borrower_id": "B0077"
+   },
+   "result": "[{\"kind\": \"debt\", \"counterparty_entity_id\": \"E000012\", \"counterparty\": \"Harbor Capital Partners LP\", \"note\": \"disclosed subordinated facility\"}, {\"kind\": \"related_party\", \"counterparty_entity_id\": \"E000472\", \"counterparty\": \"Crescent Holdings Group LLC\", \"note\": \"parent holding company\"}]"
+  }
+ ],
+ "errors": [],
+ "generated_at": "2026-09-11",
+ "status": "ok",
+ "model": "Qwen/Qwen3-8B",
+ "memo": [
+  {
+   "text": "The borrower, Crescent Funding LLC, has a lien from Redwood Specialty Finance LP on all its assets, which was filed before onboarding",
+   "cites": [
+    "T3"
+   ]
+  },
+  {
+   "text": "Related companies include Crescent Holdings Group LLC, which shares the same officer and address",
+   "cites": [
+    "T2"
+   ]
+  },
+  {
+   "text": "The borrower's disclosures do not mention any other significant liabilities",
+   "cites": [
+    "T5"
+   ]
+  },
+  {
+   "text": "The borrower's receivables include invoices flagged as altered, unpaid, or implausible",
+   "cites": [
+    "T1"
+   ]
+  },
+  {
+   "text": "The borrower disclosed a debt to Harbor Capital Partners LP but not the Redwood lien",
+   "cites": [
+    "T5"
+   ]
+  },
+  {
+   "text": "There are no court judgments against Crescent Funding LLC",
+   "cites": [
+    "T4"
+   ]
+  },
+  {
+   "text": "Ask the borrower: to clarify the Redwood lien and provide details on the disclosed debt to Harbor Capital Partners LP",
+   "cites": []
+  }
+ ],
+ "dropped": [],
+ "rounds": 2,
+ "tokens": 4338,
+ "seconds": 39.9,
+ "checks_reapplied": "2026-09-12"
+}

@@ -1,0 +1,96 @@
+{
+ "borrower_id": "B0011",
+ "verdict_by_rules": "LIKELY_FRAUD",
+ "steps": [
+  {
+   "id": "T1",
+   "tool": "case_evidence",
+   "args": {
+    "borrower_id": "B0011"
+   },
+   "result": "{\"verdict_by_rules\": \"LIKELY_FRAUD\", \"headline\": \"Likely: bad loans are being reported as good ones\", \"findings\": [{\"mechanism\": \"TAPE_DRESSUP\", \"confidence\": \"high\", \"plain\": \"bad loans are being reported as good ones\", \"signals\": [\"S2-B0011-SOURCE_MISMATCH-f7009adf\", \"S1-B0011-PLEDGECHECK_COMPLETENESS_FAIL-c1464b80\", \"S2-B0011-DEFERMENT_WITHOUT_PROGRAM-da636e1d\", \"S2-B0011-CURRENT_WITHOUT_PAYMENT-a4c84661\"], \"corroborated_by\": []}], \"signals\": [{\"id\": \"S2-B0011-SOURCE_MISMATCH-f7009adf\", \"system\": \"S2\", \"type\": \"SOURCE_MISMATCH\", \"explanation\": \"Servicer-system pull: 5 of 60 sampled 'eligible' loans are actually 60+ days late or no longer active\", \"evidence\": [\"source_pull:B0011:month=23\","
+  },
+  {
+   "id": "T2",
+   "tool": "related_companies",
+   "args": {
+    "borrower_id": "B0011"
+   },
+   "result": "[{\"entity_id\": \"E000335\", \"name\": \"Prairie Holdings LLC\", \"kind\": \"borrower\", \"officer\": \"Sofia Davis\", \"address\": \"5059 Oak Blvd, Suite 326\", \"formed_month\": -120, \"has_operations\": true, \"same_officer\": true, \"same_address\": true, \"is_borrower\": true}, {\"entity_id\": \"E000336\", \"name\": \"Prairie Holdings Group LLC\", \"kind\": \"holding\", \"officer\": \"Sofia Davis\", \"address\": \"5059 Oak Blvd, Suite 326\", \"formed_month\": -200, \"has_operations\": true, \"same_officer\": true, \"same_address\": true, \"is_borrower\": false}, {\"entity_id\": \"E000337\", \"name\": \"Prairie Services LLC\", \"kind\": \"company\", \"officer\": \"Sofia Davis\", \"address\": \"1639 Market Ave, Suite 327\", \"formed_month\": 15, \"has_operations\": true"
+  },
+  {
+   "id": "T3",
+   "tool": "lien_search",
+   "args": {
+    "name": "B0011"
+   },
+   "result": "[{\"filing_id\": \"UCC-000023\", \"debtor_name\": \"Prairie Holdings LLC\", \"debtor_address\": \"5059 Oak Blvd, Suite 326\", \"secured_party_name\": \"Beacon Credit Fund LLC\", \"collateral_desc\": \"second-priority lien on all assets\", \"filed_month\": -10, \"match_score\": 100}, {\"filing_id\": \"UCC-000022\", \"debtor_name\": \"Prairie Holdings LLC\", \"debtor_address\": \"5059 Oak Blvd, Suite 326\", \"secured_party_name\": \"Wells Fargo Bank, N.A.\", \"collateral_desc\": \"all assets, including receivables and chattel paper\", \"filed_month\": -12, \"match_score\": 100}]"
+  },
+  {
+   "id": "T4",
+   "tool": "court_search",
+   "args": {
+    "name": "B0011"
+   },
+   "result": "{\"result\": \"no records matching 'Prairie Holdings LLC'\"}"
+  },
+  {
+   "id": "T5",
+   "tool": "disclosures",
+   "args": {
+    "borrower_id": "B0011"
+   },
+   "result": "[{\"kind\": \"debt\", \"counterparty_entity_id\": \"E000011\", \"counterparty\": \"Beacon Credit Fund LLC\", \"note\": \"disclosed subordinated facility\"}, {\"kind\": \"related_party\", \"counterparty_entity_id\": \"E000336\", \"counterparty\": \"Prairie Holdings Group LLC\", \"note\": \"parent holding company\"}]"
+  }
+ ],
+ "errors": [],
+ "generated_at": "2026-09-11",
+ "status": "ok",
+ "model": "Qwen/Qwen3-8B",
+ "memo": [
+  {
+   "text": "The borrower's case shows a LIKELY_FRAUD verdict with high confidence, citing issues like source mismatches and pledge check failures",
+   "cites": [
+    "T1"
+   ]
+  },
+  {
+   "text": "Related companies, including Prairie Services LLC, share the same officer but different addresses",
+   "cites": [
+    "T2"
+   ]
+  },
+  {
+   "text": "Prairie Holdings LLC has two UCC liens, including a second-priority lien on all assets",
+   "cites": [
+    "T3"
+   ]
+  },
+  {
+   "text": "No court records were found for Prairie Holdings LLC",
+   "cites": [
+    "T4"
+   ]
+  },
+  {
+   "text": "The borrower disclosed a subordinated facility with Beacon Credit Fund LLC and a parent holding company",
+   "cites": [
+    "T5"
+   ]
+  }
+ ],
+ "dropped": [
+  {
+   "text": "Could not confirm if the related entities are fully disclosed or if they have additional liabilities.",
+   "reason": "cites no source"
+  },
+  {
+   "text": "Ask the borrower: to clarify the relationship with Prairie Services LLC and provide details on the disclosed subordinated facility",
+   "reason": "says 'prairie services' was disclosed, but the disclosures don't list it"
+  }
+ ],
+ "rounds": 2,
+ "tokens": 3877,
+ "seconds": 37.2,
+ "checks_reapplied": "2026-09-12"
+}

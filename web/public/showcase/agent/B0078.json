@@ -1,0 +1,96 @@
+{
+ "borrower_id": "B0078",
+ "verdict_by_rules": "NEEDS_MORE_EVIDENCE",
+ "steps": [
+  {
+   "id": "T1",
+   "tool": "case_evidence",
+   "args": {
+    "borrower_id": "B0078"
+   },
+   "result": "{\"verdict_by_rules\": \"NEEDS_MORE_EVIDENCE\", \"headline\": \"Worth a look: the borrower has debt it has not disclosed\", \"findings\": [{\"mechanism\": \"HIDDEN_DEBT\", \"confidence\": \"low\", \"plain\": \"the borrower has debt it has not disclosed\", \"signals\": [\"S5-B0078-UNDISCLOSED_SECURED_PARTY-e579d49d\", \"S7-B0078-DEBT_GAP-a7b6d1a6\"], \"corroborated_by\": []}], \"signals\": [{\"id\": \"S5-B0078-UNDISCLOSED_SECURED_PARTY-e579d49d\", \"system\": \"S5\", \"type\": \"UNDISCLOSED_SECURED_PARTY\", \"explanation\": \"'Silverline Credit Fund LP' holds a lien on the borrower ('Tidewater Realty LLC': specific equipment: servers, forklifts and related leases) that the borrower never disclosed\", \"evidence\": [\"ucc:TX-UCC-000153\", \"disc"
+  },
+  {
+   "id": "T2",
+   "tool": "related_companies",
+   "args": {
+    "borrower_id": "B0078"
+   },
+   "result": "[{\"entity_id\": \"E000473\", \"name\": \"Tidewater Realty LLC\", \"kind\": \"borrower\", \"officer\": \"Mei Moore\", \"address\": \"815 Center Dr, Suite 416\", \"formed_month\": -114, \"has_operations\": true, \"same_officer\": true, \"same_address\": true, \"is_borrower\": true}]"
+  },
+  {
+   "id": "T3",
+   "tool": "lien_search",
+   "args": {
+    "name": "B0078"
+   },
+   "result": "[{\"filing_id\": \"UCC-000152\", \"debtor_name\": \"Tidewater Realty LLC\", \"debtor_address\": \"815 Center Dr, Suite 416\", \"secured_party_name\": \"Wells Fargo Bank, N.A.\", \"collateral_desc\": \"all assets, including receivables and chattel paper\", \"filed_month\": -12, \"match_score\": 100}, {\"filing_id\": \"UCC-000153\", \"debtor_name\": \"Tidewater Realty LLC\", \"debtor_address\": \"815 Center Dr, Suite 416\", \"secured_party_name\": \"Silverline Credit Fund LP\", \"collateral_desc\": \"specific equipment: servers, forklifts and related leases\", \"filed_month\": 4, \"match_score\": 100}]"
+  },
+  {
+   "id": "T4",
+   "tool": "court_search",
+   "args": {
+    "name": "B0078"
+   },
+   "result": "{\"result\": \"no records matching 'Tidewater Realty LLC'\"}"
+  },
+  {
+   "id": "T5",
+   "tool": "disclosures",
+   "args": {
+    "borrower_id": "B0078"
+   },
+   "result": "[{\"kind\": \"debt\", \"counterparty_entity_id\": \"E000005\", \"counterparty\": \"Silverline Credit Fund LP\", \"note\": \"equipment lease\"}]"
+  }
+ ],
+ "errors": [],
+ "generated_at": "2026-09-11",
+ "status": "ok",
+ "model": "Qwen/Qwen3-8B",
+ "memo": [
+  {
+   "text": "The borrower's disclosed debt omits this secured lender, indicating a potential debt gap",
+   "cites": [
+    "T1"
+   ]
+  },
+  {
+   "text": "A related company, Tidewater Realty LLC, shares the same officer and address as the borrower",
+   "cites": [
+    "T2"
+   ]
+  },
+  {
+   "text": "No court records were found for the borrower or related companies",
+   "cites": [
+    "T4"
+   ]
+  },
+  {
+   "text": "The undisclosed lien on equipment may not be fully reflected in the borrower's financials",
+   "cites": [
+    "T1"
+   ]
+  },
+  {
+   "text": "The borrower disclosed a debt to Silverline Credit Fund LP for equipment lease",
+   "cites": [
+    "T5"
+   ]
+  },
+  {
+   "text": "Ask the borrower: to clarify the status of the undisclosed secured party and any other potential liabilities",
+   "cites": []
+  }
+ ],
+ "dropped": [
+  {
+   "text": "The borrower, Tidewater Realty LLC, has an undisclosed secured party, Silverline Credit Fund LP, with a lien on specific equipment [T3].",
+   "reason": "says 'silverline credit fund' was not disclosed, but the disclosures list it"
+  }
+ ],
+ "rounds": 2,
+ "tokens": 3288,
+ "seconds": 33.2,
+ "checks_reapplied": "2026-09-12"
+}

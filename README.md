@@ -42,7 +42,7 @@ A person approves every step. Nothing is sent or changed without approval.
 
 Around the decision:
 - **Decision record.** Every verdict carries fingerprints of its inputs, the rule code and the git commit. `bt.pipeline.replay` recomputes a run and either shows every decision is identical (120 of 120 on the demo run) or names the input or rule that changed.
-- **Investigator agent** (`bt/agent/`). After the rules decide, an open model (Qwen3-8B / gpt-oss, open weights) investigates with read-only tools: registry, liens, courts, payments, disclosures, live GLEIF. It drafts a memo for the credit officer. Code enforces the guardrails: every line must cite a signal or a tool call, and every number must appear in what it cites. Lines that fail are dropped and counted. The agent never decides.
+- **Investigator agent** (`bt/agent/`). After the rules decide, an open model (Qwen3-8B / gpt-oss, open weights) investigates with read-only tools: registry, liens, courts, payments, disclosures, live GLEIF. It drafts a memo for the credit officer. Code enforces the guardrails: every line must cite a signal or a tool call, every number must appear in what it cites, and claims about what was disclosed or whether liens and judgments exist are checked against the records. Lines that fail are dropped and counted. The agent never decides.
 - **Public console** (`web/`): the review queue, each case with its fix, memo and decision record, a data section (dictionary, sample rows, one fraud step by step, invoice documents), and "Test it yourself", the answer key including misses.
 
 ## Proof: data it never saw

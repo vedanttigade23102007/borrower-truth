@@ -1,0 +1,97 @@
+{
+ "borrower_id": "B0072",
+ "verdict_by_rules": "LIKELY_FRAUD",
+ "steps": [
+  {
+   "id": "T1",
+   "tool": "case_evidence",
+   "args": {
+    "borrower_id": "B0072"
+   },
+   "result": "{\"verdict_by_rules\": \"LIKELY_FRAUD\", \"headline\": \"Likely: bad loans are being reported as good ones\", \"findings\": [{\"mechanism\": \"TAPE_DRESSUP\", \"confidence\": \"high\", \"plain\": \"bad loans are being reported as good ones\", \"signals\": [\"S2-B0072-SOURCE_MISMATCH-7df876f5\", \"S2-B0072-DEFERMENT_WITHOUT_PROGRAM-6f3cd571\", \"S2-B0072-CURRENT_WITHOUT_PAYMENT-e94f4794\"], \"corroborated_by\": []}, {\"mechanism\": \"DOUBLE_PLEDGE\", \"confidence\": \"medium\", \"plain\": \"the same collateral is pledged to more than one lender\", \"signals\": [\"S5-B0072-COMPETING_LIEN-bc479923\", \"S7-B0072-DEBT_GAP-ac362fd7\"], \"corroborated_by\": []}, {\"mechanism\": \"FIN_MANIPULATION\", \"confidence\": \"medium\", \"plain\": \"the reported financi"
+  },
+  {
+   "id": "T2",
+   "tool": "related_companies",
+   "args": {
+    "borrower_id": "B0072"
+   },
+   "result": "[{\"entity_id\": \"E000462\", \"name\": \"Tidewater Capital Inc\", \"kind\": \"borrower\", \"officer\": \"Nora Patel\", \"address\": \"5888 Commerce St, Suite 408\", \"formed_month\": -144, \"has_operations\": true, \"same_officer\": true, \"same_address\": true, \"is_borrower\": true}]"
+  },
+  {
+   "id": "T3",
+   "tool": "lien_search",
+   "args": {
+    "name": "B0072"
+   },
+   "result": "[{\"filing_id\": \"UCC-000065\", \"debtor_name\": \"Tidewater Capital LP\", \"debtor_address\": \"6695 Main St, Suite 356\", \"secured_party_name\": \"Wells Fargo Bank, N.A.\", \"collateral_desc\": \"all assets, including receivables and chattel paper\", \"filed_month\": -12, \"match_score\": 100}, {\"filing_id\": \"UCC-000140\", \"debtor_name\": \"Tidewater Capital Inc\", \"debtor_address\": \"5888 Commerce St, Suite 408\", \"secured_party_name\": \"Wells Fargo Bank, N.A.\", \"collateral_desc\": \"all assets, including receivables and chattel paper\", \"filed_month\": -12, \"match_score\": 100}, {\"filing_id\": \"UCC-000141\", \"debtor_name\": \"Tidewater Capital Inc\", \"debtor_address\": \"5888 Commerce St, Suite 408\", \"secured_party_name\": \"Silv"
+  },
+  {
+   "id": "T4",
+   "tool": "court_search",
+   "args": {
+    "name": "B0072"
+   },
+   "result": "{\"result\": \"no records matching 'Tidewater Capital Inc'\"}"
+  },
+  {
+   "id": "T5",
+   "tool": "disclosures",
+   "args": {
+    "borrower_id": "B0072"
+   },
+   "result": "{\"result\": \"the borrower disclosed nothing\"}"
+  }
+ ],
+ "errors": [],
+ "generated_at": "2026-09-11",
+ "status": "ok",
+ "model": "Qwen/Qwen3-8B",
+ "memo": [
+  {
+   "text": "The borrower's disclosures indicate no debts or affiliates",
+   "cites": [
+    "T5"
+   ]
+  },
+  {
+   "text": "A lien from Silverline Specialty Finance LLC on Tidewater Capital Inc's assets was not disclosed",
+   "cites": [
+    "S5-B0072-COMPETING_LIEN-bc479923"
+   ]
+  },
+  {
+   "text": "The borrower's financials show a 27% cash revenue gap compared to reported revenue",
+   "cites": [
+    "S7-B0072-CASH_REVENUE_GAP-923c5f6f"
+   ]
+  },
+  {
+   "text": "Six of 60 sampled loans are 60+ days late or inactive, suggesting source mismatch",
+   "cites": [
+    "S2-B0072-SOURCE_MISMATCH-7df876f5"
+   ]
+  },
+  {
+   "text": "The borrower's covenant metrics consistently hover near thresholds, indicating potential manipulation",
+   "cites": [
+    "S7-B0072-COVENANT_EDGE_PATTERN-a54781a3"
+   ]
+  },
+  {
+   "text": "Could not confirm if the lien from Silverline Specialty Finance LLC is resolved or if it affects the borrower's creditworthiness",
+   "cites": [
+    "T3"
+   ]
+  },
+  {
+   "text": "Ask the borrower: to clarify the lien from Silverline Specialty Finance LLC and provide additional financial documentation",
+   "cites": []
+  }
+ ],
+ "dropped": [],
+ "rounds": 2,
+ "tokens": 4217,
+ "seconds": 49.2,
+ "checks_reapplied": "2026-09-12"
+}

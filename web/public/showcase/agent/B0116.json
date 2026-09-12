@@ -1,0 +1,105 @@
+{
+ "borrower_id": "B0116",
+ "verdict_by_rules": "LIKELY_FRAUD",
+ "steps": [
+  {
+   "id": "T1",
+   "tool": "case_evidence",
+   "args": {
+    "borrower_id": "B0116"
+   },
+   "result": "{\"verdict_by_rules\": \"LIKELY_FRAUD\", \"headline\": \"Likely: the same collateral is pledged to more than one lender\", \"findings\": [{\"mechanism\": \"DOUBLE_PLEDGE\", \"confidence\": \"high\", \"plain\": \"the same collateral is pledged to more than one lender\", \"signals\": [\"S1-B0116-PLEDGECHECK_UNIQUENESS_FAIL-29c3cdd0\", \"S5-B0116-COMPETING_LIEN-17e2b85d\", \"S7-B0116-DEBT_GAP-51323773\"], \"corroborated_by\": []}, {\"mechanism\": \"TAPE_DRESSUP\", \"confidence\": \"high\", \"plain\": \"bad loans are being reported as good ones\", \"signals\": [\"S2-B0116-SOURCE_MISMATCH-d9a8ecbf\", \"S1-B0116-PLEDGECHECK_COMPLETENESS_FAIL-240f2fb8\", \"S2-B0116-DEFERMENT_WITHOUT_PROGRAM-4f7a2bea\", \"S2-B0116-CURRENT_WITHOUT_PAYMENT-0ac124ef\"], \""
+  },
+  {
+   "id": "T2",
+   "tool": "related_companies",
+   "args": {
+    "borrower_id": "B0116"
+   },
+   "result": "[{\"entity_id\": \"E000546\", \"name\": \"Prairie Distribution LLC\", \"kind\": \"borrower\", \"officer\": \"Daniel Garcia\", \"address\": \"8051 Oak Blvd, Suite 464\", \"formed_month\": -120, \"has_operations\": true, \"same_officer\": true, \"same_address\": true, \"is_borrower\": true}, {\"entity_id\": \"E000547\", \"name\": \"Prairie Holdings Group LLC\", \"kind\": \"holding\", \"officer\": \"Daniel Garcia\", \"address\": \"8051 Oak Blvd, Suite 464\", \"formed_month\": -200, \"has_operations\": true, \"same_officer\": true, \"same_address\": true, \"is_borrower\": false}]"
+  },
+  {
+   "id": "T3",
+   "tool": "lien_search",
+   "args": {
+    "name": "B0116"
+   },
+   "result": "[{\"filing_id\": \"UCC-000148\", \"debtor_name\": \"Prairie Distribution Corp\", \"debtor_address\": \"9335 Harbor Rd, Suite 414\", \"secured_party_name\": \"Sterling Capital Partners LLC\", \"collateral_desc\": \"second-priority lien on all assets\", \"filed_month\": -10, \"match_score\": 100}, {\"filing_id\": \"UCC-000147\", \"debtor_name\": \"Prairie Distribution Corp\", \"debtor_address\": \"9335 Harbor Rd, Suite 414\", \"secured_party_name\": \"Wells Fargo Bank, N.A.\", \"collateral_desc\": \"all assets, including receivables and chattel paper\", \"filed_month\": -12, \"match_score\": 100}, {\"filing_id\": \"UCC-000227\", \"debtor_name\": \"Prairie Distribution LLC\", \"debtor_address\": \"8051 Oak Blvd, Suite 464\", \"secured_party_name\": \"Wells"
+  },
+  {
+   "id": "T4",
+   "tool": "court_search",
+   "args": {
+    "name": "B0116"
+   },
+   "result": "{\"result\": \"no records matching 'Prairie Distribution LLC'\"}"
+  },
+  {
+   "id": "T5",
+   "tool": "disclosures",
+   "args": {
+    "borrower_id": "B0116"
+   },
+   "result": "[{\"kind\": \"related_party\", \"counterparty_entity_id\": \"E000547\", \"counterparty\": \"Prairie Holdings Group LLC\", \"note\": \"parent holding company\"}]"
+  }
+ ],
+ "errors": [],
+ "generated_at": "2026-09-11",
+ "status": "ok",
+ "model": "Qwen/Qwen3-8B",
+ "memo": [
+  {
+   "text": "The borrower, Prairie Distribution LLC, has a related company, Prairie Holdings Group LLC, which is a parent holding company",
+   "cites": [
+    "T5"
+   ]
+  },
+  {
+   "text": "A lien from Silverline Specialty Finance LLC on Prairie Distribution LLC's assets was not disclosed by the borrower",
+   "cites": [
+    "S5-B0116-COMPETING_LIEN-17e2b85d"
+   ]
+  },
+  {
+   "text": "The borrower's financials show a 30% discrepancy between reported revenue and verified customer cash",
+   "cites": [
+    "S7-B0116-CASH_REVENUE_GAP-5cc076ae"
+   ]
+  },
+  {
+   "text": "The borrower's covenant metrics have consistently hovered near the threshold, indicating potential manipulation",
+   "cites": [
+    "S7-B0116-COVENANT_EDGE_PATTERN-3f675d8d"
+   ]
+  },
+  {
+   "text": "The borrower's disclosures do not mention any deferment program despite 7 loans being flagged as deferred",
+   "cites": [
+    "S2-B0116-DEFERMENT_WITHOUT_PROGRAM-4f7a2bea"
+   ]
+  },
+  {
+   "text": "The borrower's collateral is pledged to more than one lender, including Silverline Specialty Finance LLC",
+   "cites": [
+    "S1-B0116-PLEDGECHECK_UNIQUENESS_FAIL-29c3cdd0"
+   ]
+  },
+  {
+   "text": "Ask the borrower: clarify the ownership structure and provide documentation for all collateral pledges",
+   "cites": [
+    "T5",
+    "S5-B0116-COMPETING_LIEN-17e2b85d"
+   ]
+  }
+ ],
+ "dropped": [
+  {
+   "text": "A lien from Wells Fargo Bank, N.A. on Prairie Distribution LLC's assets is already in place [UCC-000228].",
+   "reason": "cites an unknown source: UCC-000228"
+  }
+ ],
+ "rounds": 2,
+ "tokens": 4689,
+ "seconds": 66.3,
+ "checks_reapplied": "2026-09-12"
+}

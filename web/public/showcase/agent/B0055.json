@@ -1,0 +1,102 @@
+{
+ "borrower_id": "B0055",
+ "verdict_by_rules": "NEEDS_MORE_EVIDENCE",
+ "steps": [
+  {
+   "id": "T1",
+   "tool": "case_evidence",
+   "args": {
+    "borrower_id": "B0055"
+   },
+   "result": "{\"verdict_by_rules\": \"NEEDS_MORE_EVIDENCE\", \"headline\": \"Worth a look: money from lenders or linked companies is arriving dressed up as customer payments\", \"findings\": [{\"mechanism\": \"DISGUISED_RECEIPTS\", \"confidence\": \"low\", \"plain\": \"money from lenders or linked companies is arriving dressed up as customer payments\", \"signals\": [\"S3-B0055-NON_OBLIGOR_PAYER-436485f1\"], \"corroborated_by\": []}, {\"mechanism\": \"FAKE_INVOICES\", \"confidence\": \"low\", \"plain\": \"invoices are fake, inflated or altered\", \"signals\": [\"S4-B0055-DOC_DATA_MISMATCH-958add99\", \"S7-B0055-RECEIVABLES_QUALITY-70d7fc6c\"], \"corroborated_by\": []}, {\"mechanism\": \"HIDDEN_DEBT\", \"confidence\": \"low\", \"plain\": \"the borrower has debt i"
+  },
+  {
+   "id": "T2",
+   "tool": "related_companies",
+   "args": {
+    "borrower_id": "B0055"
+   },
+   "result": "[{\"entity_id\": \"E000425\", \"name\": \"Lakeshore Auto LLC\", \"kind\": \"borrower\", \"officer\": \"Omar Brown\", \"address\": \"2880 Gateway Blvd, Suite 384\", \"formed_month\": -97, \"has_operations\": true, \"same_officer\": true, \"same_address\": true, \"is_borrower\": true}, {\"entity_id\": \"E000426\", \"name\": \"Lakeshore Property Partners LLC\", \"kind\": \"company\", \"officer\": \"Omar Brown\", \"address\": \"33 Elm St, Suite 385\", \"formed_month\": -90, \"has_operations\": true, \"same_officer\": true, \"same_address\": false, \"is_borrower\": false}]"
+  },
+  {
+   "id": "T3",
+   "tool": "lien_search",
+   "args": {
+    "name": "B0055"
+   },
+   "result": "[{\"filing_id\": \"UCC-000039\", \"debtor_name\": \"Lakeshore Auto Inc\", \"debtor_address\": \"4342 Industrial Pkwy, Suite 337\", \"secured_party_name\": \"Canyon Specialty Finance LP\", \"collateral_desc\": \"second-priority lien on all assets\", \"filed_month\": -10, \"match_score\": 100}, {\"filing_id\": \"UCC-000105\", \"debtor_name\": \"Lakeshore Auto LLC\", \"debtor_address\": \"2880 Gateway Blvd, Suite 384\", \"secured_party_name\": \"Prairie Capital Partners LLC\", \"collateral_desc\": \"second-priority lien on all assets\", \"filed_month\": -10, \"match_score\": 100}, {\"filing_id\": \"UCC-000038\", \"debtor_name\": \"Lakeshore Auto Inc\", \"debtor_address\": \"4342 Industrial Pkwy, Suite 337\", \"secured_party_name\": \"Wells Fargo Bank, N.A."
+  },
+  {
+   "id": "T4",
+   "tool": "court_search",
+   "args": {
+    "name": "B0055"
+   },
+   "result": "{\"result\": \"no records matching 'Lakeshore Auto LLC'\"}"
+  },
+  {
+   "id": "T5",
+   "tool": "disclosures",
+   "args": {
+    "borrower_id": "B0055"
+   },
+   "result": "[{\"kind\": \"debt\", \"counterparty_entity_id\": \"E000002\", \"counterparty\": \"Prairie Capital Partners LLC\", \"note\": \"disclosed subordinated facility\"}, {\"kind\": \"related_party\", \"counterparty_entity_id\": \"E000426\", \"counterparty\": \"Lakeshore Property Partners LLC\", \"note\": \"sublease income from affiliated property company\"}]"
+  }
+ ],
+ "errors": [],
+ "generated_at": "2026-09-11",
+ "status": "ok",
+ "model": "Qwen/Qwen3-8B",
+ "memo": [
+  {
+   "text": "Payments totaling $835,699 from Lakeshore Property Partners LLC, a non-obligor, were recorded as customer payments",
+   "cites": [
+    "S3-B0055-NON_OBLIGOR_PAYER-436485f1"
+   ]
+  },
+  {
+   "text": "One invoice document shows a mismatch between the borrower's data and the invoice total, indicating potential discrepancies",
+   "cites": [
+    "S4-B0055-DOC_DATA_MISMATCH-958add99"
+   ]
+  },
+  {
+   "text": "The borrower disclosed a subordinated facility with Prairie Capital Partners LLC but not the lien",
+   "cites": [
+    "T5"
+   ]
+  },
+  {
+   "text": "A lien from Wells Fargo Bank, N.A. was filed against the borrower's assets",
+   "cites": [
+    "T3"
+   ]
+  },
+  {
+   "text": "The borrower has a related company, Lakeshore Property Partners LLC, which is not a known customer",
+   "cites": [
+    "T2"
+   ]
+  },
+  {
+   "text": "Court records show no judgments against the borrower or linked companies",
+   "cites": [
+    "T4"
+   ]
+  },
+  {
+   "text": "Ask the borrower: clarify the source of payments from Lakeshore Property Partners LLC and the status of the disclosed subordinated facility",
+   "cites": []
+  }
+ ],
+ "dropped": [
+  {
+   "text": "The borrower, B0055, has a lien from Prairie Capital Partners LLC on all assets, which was not disclosed [S5-B0055-COMPETING_LIEN-b15d34c6].",
+   "reason": "says 'prairie capital partners' was not disclosed, but the disclosures list it"
+  }
+ ],
+ "rounds": 2,
+ "tokens": 4144,
+ "seconds": 52.0,
+ "checks_reapplied": "2026-09-12"
+}

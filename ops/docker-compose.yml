@@ -1,7 +1,8 @@
 # Full stack for the demo. Runs in GitHub Codespaces (4-core / 16 GB), not on the 8 GB Mac.
+#   export BT_API_KEY=$(openssl rand -hex 16)                           # shared key for writes to the case service
 #   docker compose -f ops/docker-compose.yml up -d                      # core stack
 #   docker compose -f ops/docker-compose.yml --profile batch up -d      # + Airflow
-# Ports: case service 8081 · Grafana 3001 · Prometheus 9090 · Pushgateway 9091 · Kafka 9092 · Airflow 8080
+# Ports (bound to localhost only): case service 8081 · Grafana 3001 · Prometheus 9090 · Pushgateway 9091 · Kafka 9092 · Airflow 8080
 name: borrower-truth
 
 services:
@@ -10,7 +11,7 @@ services:
     command: [redpanda, start, --mode, dev-container, --smp, "1", --memory, 1G,
               --kafka-addr, "internal://0.0.0.0:9093,external://0.0.0.0:9092",
               --advertise-kafka-addr, "internal://redpanda:9093,external://localhost:9092"]
-    ports: ["9092:9092"]
+    ports: ["127.0.0.1:9092:9092"]
     healthcheck:
       test: ["CMD", "rpk", "cluster", "health", "--exit-when-healthy"]
       interval: 10s
@@ -26,7 +27,10 @@ services:
 
   case-service:
     build: ../case-service
-    ports: ["8081:8081"]
+    ports: ["127.0.0.1:8081:8081"]
+    environment:
+      SERVER_ADDRESS: 0.0.0.0     # inside the container network; the host port above stays localhost-only
+      BT_API_KEY: ${BT_API_KEY:?export BT_API_KEY first (see the top of this file)}
     volumes: ["casedb:/app/data"]
     healthcheck:
       test: ["CMD-SHELL", "wget -qO- localhost:8081/actuator/health | grep -q UP"]
@@ -44,7 +48,7 @@ services:
   signal-bridge:       # real-time S3 alerts -> case service (live alerts on the case page)
     build: {context: .., dockerfile: ops/worker.Dockerfile}
     command: ["python", "-m", "bt.stream.signal_bridge", "--bootstrap", "redpanda:9093", "--api", "http://case-service:8081"]
-    environment: {PUSHGATEWAY_URL: "http://pushgateway:9091"}
+    environment: {PUSHGATEWAY_URL: "http://pushgateway:9091", BT_API_KEY: "${BT_API_KEY:?}"}
     volumes: ["../data:/app/data"]
     depends_on:
       topics: {condition: service_completed_successfully}
@@ -53,12 +57,12 @@ services:
 
   pushgateway:
     image: prom/pushgateway:v1.9.0
-    ports: ["9091:9091"]
+    ports: ["127.0.0.1:9091:9091"]
 
   prometheus:
     image: prom/prometheus:v2.54.1
     volumes: ["./prometheus.yml:/etc/prometheus/prometheus.yml:ro"]
-    ports: ["9090:9090"]
+    ports: ["127.0.0.1:9090:9090"]
 
   grafana:
     image: grafana/grafana:11.2.0
@@ -67,7 +71,7 @@ services:
       GF_AUTH_ANONYMOUS_ORG_ROLE: Viewer
       GF_DASHBOARDS_DEFAULT_HOME_DASHBOARD_PATH: /etc/grafana/provisioning/dashboards/borrower-truth.json
     volumes: ["./grafana/provisioning:/etc/grafana/provisioning:ro"]
-    ports: ["3001:3000"]
+    ports: ["127.0.0.1:3001:3000"]
 
   airflow:
     profiles: ["batch"]
@@ -79,11 +83,12 @@ services:
       AIRFLOW_VAR_BT_REPO: /workspaces/borrower-truth
       AIRFLOW_VAR_BT_DATA: data/out/demo
       CASE_SERVICE_URL: http://case-service:8081
+      BT_API_KEY: ${BT_API_KEY:?}
       PUSHGATEWAY_URL: http://pushgateway:9091
       UV_PROJECT_ENVIRONMENT: /tmp/bt-venv
       UV_CACHE_DIR: /tmp/uv-cache
     volumes: ["../airflow/dags:/opt/airflow/dags:ro", "..:/workspaces/borrower-truth"]
-    ports: ["8080:8080"]
+    ports: ["127.0.0.1:8080:8080"]
 
 volumes:
   casedb:

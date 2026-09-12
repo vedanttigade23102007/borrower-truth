@@ -1,0 +1,99 @@
+{
+ "borrower_id": "B0021",
+ "verdict_by_rules": "LIKELY_FRAUD",
+ "steps": [
+  {
+   "id": "T1",
+   "tool": "case_evidence",
+   "args": {
+    "borrower_id": "B0021"
+   },
+   "result": "{\"verdict_by_rules\": \"LIKELY_FRAUD\", \"headline\": \"Likely: money from lenders or linked companies is arriving dressed up as customer payments\", \"findings\": [{\"mechanism\": \"DISGUISED_RECEIPTS\", \"confidence\": \"high\", \"plain\": \"money from lenders or linked companies is arriving dressed up as customer payments\", \"signals\": [\"S3-B0021-RELATED_PARTY_INFLOW-0e333425\"], \"corroborated_by\": [\"S6-B0021-SHELL_INDICATORS-1eda5f97\", \"S6-B0021-RELATED_ENTITY-73cec962\"]}, {\"mechanism\": \"RELATED_SHELLS\", \"confidence\": \"medium\", \"plain\": \"the borrower is connected to undisclosed shell companies\", \"signals\": [\"S6-B0021-SHELL_INDICATORS-1eda5f97\", \"S6-B0021-RELATED_ENTITY-73cec962\", \"S6-B0021-RELATED_ENTITY-7dae"
+  },
+  {
+   "id": "T2",
+   "tool": "related_companies",
+   "args": {
+    "borrower_id": "B0021"
+   },
+   "result": "[{\"entity_id\": \"E000353\", \"name\": \"Canyon Funding Corp\", \"kind\": \"borrower\", \"officer\": \"James Thomas\", \"address\": \"9120 Harbor Rd, Suite 338\", \"formed_month\": -34, \"has_operations\": true, \"same_officer\": true, \"same_address\": true, \"is_borrower\": true}, {\"entity_id\": \"E000355\", \"name\": \"Canyon Receivables LLC\", \"kind\": \"company\", \"officer\": \"James Thomas\", \"address\": \"2072 Main St, Suite 339\", \"formed_month\": 6, \"has_operations\": false, \"same_officer\": true, \"same_address\": false, \"is_borrower\": false}, {\"entity_id\": \"E000354\", \"name\": \"Canyon Trade Services LLC\", \"kind\": \"company\", \"officer\": \"James Thomas\", \"address\": \"9120 Harbor Rd, Suite 338\", \"formed_month\": 7, \"has_operations\": false"
+  },
+  {
+   "id": "T3",
+   "tool": "lien_search",
+   "args": {
+    "name": "B0021"
+   },
+   "result": "[{\"filing_id\": \"UCC-000168\", \"debtor_name\": \"Canyon Funding Inc\", \"debtor_address\": \"8954 Main St, Suite 424\", \"secured_party_name\": \"Ironwood Capital Partners LP\", \"collateral_desc\": \"second-priority lien on all assets\", \"filed_month\": -10, \"match_score\": 100}, {\"filing_id\": \"UCC-000040\", \"debtor_name\": \"Canyon Funding Corp\", \"debtor_address\": \"9120 Harbor Rd, Suite 338\", \"secured_party_name\": \"Wells Fargo Bank, N.A.\", \"collateral_desc\": \"all assets, including receivables and chattel paper\", \"filed_month\": -12, \"match_score\": 100}, {\"filing_id\": \"UCC-000167\", \"debtor_name\": \"Canyon Funding Inc\", \"debtor_address\": \"8954 Main St, Suite 424\", \"secured_party_name\": \"Wells Fargo Bank, N.A.\", \"co"
+  },
+  {
+   "id": "T4",
+   "tool": "court_search",
+   "args": {
+    "name": "B0021"
+   },
+   "result": "{\"result\": \"no records matching 'Canyon Funding Corp'\"}"
+  },
+  {
+   "id": "T5",
+   "tool": "disclosures",
+   "args": {
+    "borrower_id": "B0021"
+   },
+   "result": "[{\"kind\": \"debt\", \"counterparty_entity_id\": \"E000007\", \"counterparty\": \"Silverline Specialty Finance LLC\", \"note\": \"equipment lease\"}]"
+  }
+ ],
+ "errors": [],
+ "generated_at": "2026-09-11",
+ "status": "ok",
+ "model": "Qwen/Qwen3-8B",
+ "memo": [
+  {
+   "text": "$415,009 (8.9% of inflows) arrived as 'customer' cash from 'Canyon Trade Services LLC', an undisclosed company linked to the borrower",
+   "cites": [
+    "S3-B0021-RELATED_PARTY_INFLOW-0e333425"
+   ]
+  },
+  {
+   "text": "The borrower is connected to undisclosed shell companies, including 'Canyon Trade Services LLC', which shares the same officer and address",
+   "cites": [
+    "S6-B0021-SHELL_INDICATORS-1eda5f97"
+   ]
+  },
+  {
+   "text": "'Canyon Trade Services LLC' has no operations and is not registered in the GLEIF database",
+   "cites": [
+    "S6-B0021-SHELL_INDICATORS-1eda5f97"
+   ]
+  },
+  {
+   "text": "14 loans were flagged 'deferred' with no disclosed deferment programme",
+   "cites": [
+    "S2-B0021-DEFERMENT_WITHOUT_PROGRAM-5f5587f2"
+   ]
+  },
+  {
+   "text": "The borrower disclosed a debt to 'Silverline Specialty Finance LLC' for an equipment lease",
+   "cites": [
+    "S6-B0021-RELATED_ENTITY-73cec962"
+   ]
+  },
+  {
+   "text": "Could not confirm if 'Canyon Funding Corp' has any court judgments",
+   "cites": [
+    "T4"
+   ]
+  },
+  {
+   "text": "Ask the borrower: clarify the relationship between the borrower and 'Canyon Trade Services LLC' and the source of the $415,009 inflow",
+   "cites": [
+    "S3-B0021-RELATED_PARTY_INFLOW-0e333425"
+   ]
+  }
+ ],
+ "dropped": [],
+ "rounds": 2,
+ "tokens": 4566,
+ "seconds": 62.4,
+ "checks_reapplied": "2026-09-12"
+}

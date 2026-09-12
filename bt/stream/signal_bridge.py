@@ -32,7 +32,9 @@ def deliver(api: str, batch: list[dict], attempts: int = 4) -> bool:
     for i in range(attempts):
         try:
             req = urllib.request.Request(f"{api}/api/live-alerts", data=body, method="POST",
-                                         headers={"Content-Type": "application/json"})
+                                         headers={"Content-Type": "application/json",
+                                                  **({"X-BT-Key": os.environ["BT_API_KEY"]}
+                                                     if os.environ.get("BT_API_KEY") else {})})
             urllib.request.urlopen(req, timeout=15).close()
             return True
         except Exception:

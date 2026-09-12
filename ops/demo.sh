@@ -8,6 +8,8 @@ elif [ -x "$HOME/.local/bin/uv" ]; then UV="$HOME/.local/bin/uv"
 else UV="python3 -m uv"; fi
 export PUSHGATEWAY_URL="${PUSHGATEWAY_URL:-http://localhost:9091}"
 export CASE_SERVICE_URL="${CASE_SERVICE_URL:-http://localhost:8081}"
+: "${BT_API_KEY:?export the same BT_API_KEY the stack was started with}"   # host -> container writes need it
+export BT_API_KEY
 
 echo "== 1) batch: seven checks + combiner"
 $UV run python -m bt.pipeline.run --data data/out/demo

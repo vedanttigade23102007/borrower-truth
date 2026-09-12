@@ -1,0 +1,90 @@
+{
+ "borrower_id": "B0081",
+ "verdict_by_rules": "NEEDS_MORE_EVIDENCE",
+ "steps": [
+  {
+   "id": "T1",
+   "tool": "case_evidence",
+   "args": {
+    "borrower_id": "B0081"
+   },
+   "result": "{\"verdict_by_rules\": \"NEEDS_MORE_EVIDENCE\", \"headline\": \"Worth a look: invoices are fake, inflated or altered\", \"findings\": [{\"mechanism\": \"FAKE_INVOICES\", \"confidence\": \"low\", \"plain\": \"invoices are fake, inflated or altered\", \"signals\": [\"S4-B0081-DOC_DATA_MISMATCH-0a348e31\", \"S7-B0081-RECEIVABLES_QUALITY-25689edd\"], \"corroborated_by\": []}, {\"mechanism\": \"HIDDEN_DEBT\", \"confidence\": \"low\", \"plain\": \"the borrower has debt it has not disclosed\", \"signals\": [\"S5-B0081-COMPETING_LIEN-4826f9df\"], \"corroborated_by\": []}], \"signals\": [{\"id\": \"S4-B0081-DOC_DATA_MISMATCH-0a348e31\", \"system\": \"S4\", \"type\": \"DOC_DATA_MISMATCH\", \"explanation\": \"2 of 15 invoice documents show a different total from the"
+  },
+  {
+   "id": "T2",
+   "tool": "related_companies",
+   "args": {
+    "borrower_id": "B0081"
+   },
+   "result": "[{\"entity_id\": \"E000479\", \"name\": \"Crescent Parts LP\", \"kind\": \"borrower\", \"officer\": \"Mei Lee\", \"address\": \"3376 Elm St, Suite 420\", \"formed_month\": -81, \"has_operations\": true, \"same_officer\": true, \"same_address\": true, \"is_borrower\": true}, {\"entity_id\": \"E000480\", \"name\": \"Crescent Holdings Group LLC\", \"kind\": \"holding\", \"officer\": \"Mei Lee\", \"address\": \"3376 Elm St, Suite 420\", \"formed_month\": -200, \"has_operations\": true, \"same_officer\": true, \"same_address\": true, \"is_borrower\": false}]"
+  },
+  {
+   "id": "T3",
+   "tool": "lien_search",
+   "args": {
+    "name": "B0081"
+   },
+   "result": "[{\"filing_id\": \"UCC-000157\", \"debtor_name\": \"Crescent Parts LP\", \"debtor_address\": \"3376 Elm St, Suite 420\", \"secured_party_name\": \"Wells Fargo Bank, N.A.\", \"collateral_desc\": \"all assets, including receivables and chattel paper\", \"filed_month\": -12, \"match_score\": 100}, {\"filing_id\": \"UCC-000159\", \"debtor_name\": \"Crescent Parts LP\", \"debtor_address\": \"3376 Elm St, Suite 420\", \"secured_party_name\": \"Prairie Capital Partners LLC\", \"collateral_desc\": \"all assets of the debtor\", \"filed_month\": -33, \"match_score\": 100}, {\"filing_id\": \"UCC-000158\", \"debtor_name\": \"Crescent Parts LP\", \"debtor_address\": \"3376 Elm St, Suite 420\", \"secured_party_name\": \"Sterling Capital Partners LLC\", \"collateral_des"
+  },
+  {
+   "id": "T4",
+   "tool": "court_search",
+   "args": {
+    "name": "B0081"
+   },
+   "result": "[{\"case_id\": \"CV-00010\", \"defendant_name\": \"Crescent Partners Corp\", \"plaintiff\": \"(synthetic) former landlord\", \"kind\": \"judgment\", \"amount\": 160024.07, \"month\": 21, \"match_score\": 90}]"
+  },
+  {
+   "id": "T5",
+   "tool": "disclosures",
+   "args": {
+    "borrower_id": "B0081"
+   },
+   "result": "[{\"kind\": \"debt\", \"counterparty_entity_id\": \"E000009\", \"counterparty\": \"Sterling Capital Partners LLC\", \"note\": \"equipment lease\"}, {\"kind\": \"related_party\", \"counterparty_entity_id\": \"E000480\", \"counterparty\": \"Crescent Holdings Group LLC\", \"note\": \"parent holding company\"}]"
+  }
+ ],
+ "errors": [],
+ "generated_at": "2026-09-11",
+ "status": "ok",
+ "model": "Qwen/Qwen3-8B",
+ "memo": [
+  {
+   "text": "The borrower's receivables include invoices flagged as altered or implausible, raising concerns about their validity",
+   "cites": [
+    "S7-B0081-RECEIVABLES_QUALITY-25689edd"
+   ]
+  },
+  {
+   "text": "The borrower, Crescent Parts LP, has a lien from Prairie Capital Partners LLC on all its assets, which was filed before onboarding",
+   "cites": [
+    "S5-B0081-COMPETING_LIEN-4826f9df"
+   ]
+  }
+ ],
+ "dropped": [
+  {
+   "text": "The borrower's related company, Crescent Holdings Group LLC, shares the same officer and address, indicating potential control or affiliation [T2-B0081-RELATED_COMPANY-E000480].",
+   "reason": "cites an unknown source: T2-B0081-RELATED_COMPANY-E000480"
+  },
+  {
+   "text": "A court judgment against Crescent Partners Corp, a related entity, amounts to $160,024.07, suggesting financial distress or legal issues [T4-CV-00010-JUDGMENT-21].",
+   "reason": "cites an unknown source: T4-CV-00010-JUDGMENT-21"
+  },
+  {
+   "text": "The borrower disclosed a debt to Sterling Capital Partners LLC for an equipment lease, but no details on the terms or status [T5-B0081-DEBT-E000009].",
+   "reason": "cites an unknown source: T5-B0081-DEBT-E000009"
+  },
+  {
+   "text": "The borrower's disclosed affiliate, Crescent Holdings Group LLC, is not linked to any liens or court cases [T5-B0081-RELATED_PARTY-E000480].",
+   "reason": "cites an unknown source: T5-B0081-RELATED_PARTY-E000480"
+  },
+  {
+   "text": "Ask the borrower: to clarify the status of the lien from Prairie Capital Partners LLC and provide documentation for the disclosed debt to Sterling Capital Partners LLC",
+   "reason": "says 'prairie capital partners' was disclosed, but the disclosures don't list it"
+  }
+ ],
+ "rounds": 2,
+ "tokens": 4078,
+ "seconds": 57.0,
+ "checks_reapplied": "2026-09-12"
+}

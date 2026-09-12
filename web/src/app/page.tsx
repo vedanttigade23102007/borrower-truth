@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Badge, Card, EmptyState, ErrorState, Skeleton, VerdictBadge } from "@/components/ui";
 import { fetchCases, fetchLatest } from "@/lib/api";
 import { MECHANISM, SYSTEM, VERDICT } from "@/lib/labels";
@@ -21,20 +21,22 @@ export default function QueuePage() {
   const [error, setError] = useState<string | null>(null);
   const [filter, setFilter] = useState<Verdict | "ALL">("LIKELY_FRAUD");
 
-  const load = useCallback(async () => {
-    try {
-      const [c, l] = await Promise.all([fetchCases(), fetchLatest()]);
-      setCases(c);
-      setLatest(l);
-      setError(null);
-    } catch (e) {
-      setError(e instanceof Error ? e.message : String(e));
-    }
-  }, []);
+  const [attempt, setAttempt] = useState(0);
 
   useEffect(() => {
-    void load();
-  }, [load]);
+    let live = true;
+    Promise.all([fetchCases(), fetchLatest()])
+      .then(([c, l]) => {
+        if (!live) return;
+        setCases(c);
+        setLatest(l);
+        setError(null);
+      })
+      .catch((e: unknown) => live && setError(e instanceof Error ? e.message : String(e)));
+    return () => {
+      live = false;
+    };
+  }, [attempt]);
 
   const shown = useMemo(
     () => (cases ?? []).filter((c) => filter === "ALL" || c.verdict === filter),
@@ -47,7 +49,7 @@ export default function QueuePage() {
       )
     : [];
 
-  if (error) return <ErrorState message={error} onRetry={() => void load()} />;
+  if (error) return <ErrorState message={error} onRetry={() => setAttempt((n) => n + 1)} />;
 
   return (
     <div className="space-y-6">

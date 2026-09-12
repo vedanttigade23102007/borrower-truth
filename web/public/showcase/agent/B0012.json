@@ -1,0 +1,94 @@
+{
+ "borrower_id": "B0012",
+ "verdict_by_rules": "NEEDS_MORE_EVIDENCE",
+ "steps": [
+  {
+   "id": "T1",
+   "tool": "case_evidence",
+   "args": {
+    "borrower_id": "B0012"
+   },
+   "result": "{\"verdict_by_rules\": \"NEEDS_MORE_EVIDENCE\", \"headline\": \"Worth a look: the borrower has debt it has not disclosed\", \"findings\": [{\"mechanism\": \"HIDDEN_DEBT\", \"confidence\": \"low\", \"plain\": \"the borrower has debt it has not disclosed\", \"signals\": [\"S5-B0012-UNDISCLOSED_SECURED_PARTY-a164bb14\", \"S7-B0012-DEBT_GAP-3298dec4\"], \"corroborated_by\": []}], \"signals\": [{\"id\": \"S5-B0012-UNDISCLOSED_SECURED_PARTY-a164bb14\", \"system\": \"S5\", \"type\": \"UNDISCLOSED_SECURED_PARTY\", \"explanation\": \"'Prairie Capital Partners LLC' holds a lien on the borrower ('Northstar Supply Group LLC': specific equipment: servers, forklifts and related leases) that the borrower never disclosed\", \"evidence\": [\"ucc:NJ-UCC-00002"
+  },
+  {
+   "id": "T2",
+   "tool": "related_companies",
+   "args": {
+    "borrower_id": "B0012"
+   },
+   "result": "[{\"entity_id\": \"E000338\", \"name\": \"Northstar Supply Group LLC\", \"kind\": \"borrower\", \"officer\": \"Ethan Brown\", \"address\": \"4039 Industrial Pkwy, Suite 328\", \"formed_month\": -86, \"has_operations\": true, \"same_officer\": true, \"same_address\": true, \"is_borrower\": true}]"
+  },
+  {
+   "id": "T3",
+   "tool": "lien_search",
+   "args": {
+    "name": "B0012"
+   },
+   "result": "[{\"filing_id\": \"UCC-000024\", \"debtor_name\": \"Northstar Supply Group LLC\", \"debtor_address\": \"4039 Industrial Pkwy, Suite 328\", \"secured_party_name\": \"Wells Fargo Bank, N.A.\", \"collateral_desc\": \"all assets, including receivables and chattel paper\", \"filed_month\": -12, \"match_score\": 100}, {\"filing_id\": \"UCC-000025\", \"debtor_name\": \"Northstar Supply Group LLC\", \"debtor_address\": \"4039 Industrial Pkwy, Suite 328\", \"secured_party_name\": \"Prairie Capital Partners LLC\", \"collateral_desc\": \"specific equipment: servers, forklifts and related leases\", \"filed_month\": 4, \"match_score\": 100}]"
+  },
+  {
+   "id": "T4",
+   "tool": "court_search",
+   "args": {
+    "name": "B0012"
+   },
+   "result": "{\"result\": \"no records matching 'Northstar Supply Group LLC'\"}"
+  },
+  {
+   "id": "T5",
+   "tool": "disclosures",
+   "args": {
+    "borrower_id": "B0012"
+   },
+   "result": "[{\"kind\": \"debt\", \"counterparty_entity_id\": \"E000002\", \"counterparty\": \"Prairie Capital Partners LLC\", \"note\": \"equipment lease\"}]"
+  }
+ ],
+ "errors": [],
+ "generated_at": "2026-09-11",
+ "status": "ok",
+ "model": "Qwen/Qwen3-8B",
+ "memo": [
+  {
+   "text": "The borrower's disclosed debt omits 1 secured lender found in public lien filings, indicating a potential debt gap",
+   "cites": [
+    "T1"
+   ]
+  },
+  {
+   "text": "A related company, Northstar Supply Group LLC, shares the same officer and address as the borrower",
+   "cites": [
+    "T2"
+   ]
+  },
+  {
+   "text": "The borrower disclosed a debt to Prairie Capital Partners LLC for equipment lease purposes",
+   "cites": [
+    "T5"
+   ]
+  },
+  {
+   "text": "No court judgments were found against Northstar Supply Group LLC or its related entities",
+   "cites": [
+    "T4"
+   ]
+  },
+  {
+   "text": "Ask the borrower: to clarify the nature and extent of the undisclosed debt and any other secured parties",
+   "cites": []
+  }
+ ],
+ "dropped": [
+  {
+   "text": "The borrower, Northstar Supply Group LLC, has an undisclosed secured party, Prairie Capital Partners LLC, with a lien on specific equipment [T3].",
+   "reason": "says 'prairie capital partners' was not disclosed, but the disclosures list it"
+  },
+  {
+   "text": "Could not confirm if the undisclosed secured party has other claims on the borrower or linked companies.",
+   "reason": "cites no source"
+  }
+ ],
+ "rounds": 2,
+ "tokens": 3302,
+ "seconds": 34.0,
+ "checks_reapplied": "2026-09-12"
+}

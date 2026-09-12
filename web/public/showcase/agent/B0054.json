@@ -1,0 +1,94 @@
+{
+ "borrower_id": "B0054",
+ "verdict_by_rules": "NEEDS_MORE_EVIDENCE",
+ "steps": [
+  {
+   "id": "T1",
+   "tool": "case_evidence",
+   "args": {
+    "borrower_id": "B0054"
+   },
+   "result": "{\"verdict_by_rules\": \"NEEDS_MORE_EVIDENCE\", \"headline\": \"Worth a look: invoices are fake, inflated or altered\", \"findings\": [{\"mechanism\": \"FAKE_INVOICES\", \"confidence\": \"low\", \"plain\": \"invoices are fake, inflated or altered\", \"signals\": [\"S4-B0054-DOC_DATA_MISMATCH-eff54d76\", \"S7-B0054-RECEIVABLES_QUALITY-0596ec53\"], \"corroborated_by\": []}, {\"mechanism\": \"HIDDEN_DEBT\", \"confidence\": \"low\", \"plain\": \"the borrower has debt it has not disclosed\", \"signals\": [\"S5-B0054-COMPETING_LIEN-b6d9cbb9\"], \"corroborated_by\": []}], \"signals\": [{\"id\": \"S4-B0054-DOC_DATA_MISMATCH-eff54d76\", \"system\": \"S4\", \"type\": \"DOC_DATA_MISMATCH\", \"explanation\": \"1 of 15 invoice documents show a different total from the"
+  },
+  {
+   "id": "T2",
+   "tool": "related_companies",
+   "args": {
+    "borrower_id": "B0054"
+   },
+   "result": "[{\"entity_id\": \"E000424\", \"name\": \"Granite Trade LLC\", \"kind\": \"borrower\", \"officer\": \"Sofia Clark\", \"address\": \"104 Elm St, Suite 383\", \"formed_month\": -58, \"has_operations\": true, \"same_officer\": true, \"same_address\": true, \"is_borrower\": true}]"
+  },
+  {
+   "id": "T3",
+   "tool": "lien_search",
+   "args": {
+    "name": "B0054"
+   },
+   "result": "[{\"filing_id\": \"UCC-000103\", \"debtor_name\": \"Granite Trade LLC\", \"debtor_address\": \"104 Elm St, Suite 383\", \"secured_party_name\": \"Silverline Credit Fund LP\", \"collateral_desc\": \"second-priority lien on all assets\", \"filed_month\": -10, \"match_score\": 100}, {\"filing_id\": \"UCC-000102\", \"debtor_name\": \"Granite Trade LLC\", \"debtor_address\": \"104 Elm St, Suite 383\", \"secured_party_name\": \"Wells Fargo Bank, N.A.\", \"collateral_desc\": \"all assets, including receivables and chattel paper\", \"filed_month\": -12, \"match_score\": 100}]"
+  },
+  {
+   "id": "T4",
+   "tool": "court_search",
+   "args": {
+    "name": "B0054"
+   },
+   "result": "{\"result\": \"no records matching 'Granite Trade LLC'\"}"
+  },
+  {
+   "id": "T5",
+   "tool": "disclosures",
+   "args": {
+    "borrower_id": "B0054"
+   },
+   "result": "[{\"kind\": \"debt\", \"counterparty_entity_id\": \"E000005\", \"counterparty\": \"Silverline Credit Fund LP\", \"note\": \"disclosed subordinated facility\"}]"
+  }
+ ],
+ "errors": [],
+ "generated_at": "2026-09-11",
+ "status": "ok",
+ "model": "Qwen/Qwen3-8B",
+ "memo": [
+  {
+   "text": "The borrower's receivables include invoices flagged as altered or implausible, raising concerns about their validity",
+   "cites": [
+    "S7-B0054-RECEIVABLES_QUALITY-0596ec53"
+   ]
+  },
+  {
+   "text": "One invoice document shows a mismatch between the total amount and the borrower's data, indicating potential discrepancies",
+   "cites": [
+    "S4-B0054-DOC_DATA_MISMATCH-eff54d76"
+   ]
+  },
+  {
+   "text": "The borrower's linked company, Granite Trade LLC, has a second-priority lien from Silverline Credit Fund LP, filed before onboarding",
+   "cites": [
+    "T3"
+   ]
+  },
+  {
+   "text": "The borrower has a disclosed debt to Silverline Credit Fund LP, a subordinated facility",
+   "cites": [
+    "T5"
+   ]
+  },
+  {
+   "text": "Ask the borrower: clarify the status of the Silverline Credit Fund LP lien and provide additional documentation for the flagged invoices",
+   "cites": []
+  }
+ ],
+ "dropped": [
+  {
+   "text": "The borrower disclosed a debt to Silverline Credit Fund LP, but the lien was not mentioned in the disclosures [T5]",
+   "reason": "says 'silverline credit fund' was not disclosed, but the disclosures list it"
+  },
+  {
+   "text": "A lien from Silverline Credit Fund LP exists on the borrower's assets, not disclosed in the application [S5-B0054-COMPETING_LIEN-b6d9cbb9].",
+   "reason": "says 'silverline credit fund' was not disclosed, but the disclosures list it"
+  }
+ ],
+ "rounds": 2,
+ "tokens": 3511,
+ "seconds": 43.4,
+ "checks_reapplied": "2026-09-12"
+}

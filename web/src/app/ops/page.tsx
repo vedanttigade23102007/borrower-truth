@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Badge, Card, ErrorState, Skeleton } from "@/components/ui";
 import { fetchLatest } from "@/lib/api";
 import { SYSTEM, fmtDate } from "@/lib/labels";
@@ -24,22 +24,27 @@ export default function OpsPage() {
   const [scale, setScale] = useState<Scale[] | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  const load = useCallback(async () => {
-    try {
-      setLatest(await fetchLatest());
-      const r = await fetch("/scale.json", { cache: "no-store" });
-      setScale(r.ok ? ((await r.json()) as Scale[]) : []);
-      setError(null);
-    } catch (e) {
-      setError(e instanceof Error ? e.message : String(e));
-    }
-  }, []);
+  const [attempt, setAttempt] = useState(0);
 
   useEffect(() => {
-    void load();
-  }, [load]);
+    let live = true;
+    Promise.all([
+      fetchLatest(),
+      fetch("/scale.json", { cache: "no-store" }).then((r) => (r.ok ? (r.json() as Promise<Scale[]>) : [])),
+    ])
+      .then(([l, s]) => {
+        if (!live) return;
+        setLatest(l);
+        setScale(s);
+        setError(null);
+      })
+      .catch((e: unknown) => live && setError(e instanceof Error ? e.message : String(e)));
+    return () => {
+      live = false;
+    };
+  }, [attempt]);
 
-  if (error) return <ErrorState message={error} onRetry={() => void load()} />;
+  if (error) return <ErrorState message={error} onRetry={() => setAttempt((n) => n + 1)} />;
 
   // only entries that are checks (they carry a status and a timing); other run metadata is shown separately
   const rows = latest
@@ -68,7 +73,7 @@ export default function OpsPage() {
           <a
             href={GRAFANA}
             target="_blank"
-            rel="noreferrer"
+            rel="noopener noreferrer"
             className="rounded-md bg-blue-700 px-3 py-1.5 text-sm font-medium text-white hover:bg-blue-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
           >
             Open live dashboard

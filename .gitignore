@@ -20,6 +20,7 @@ case-service/data/
 
 # trained model weights (hundreds of MB): published privately on Hugging Face, never in git
 model/kaggle/output/
+model/kaggle*/output/
 
 # generated data and build output
 data/out/

@@ -16,28 +16,37 @@ export default function CasePage({ params }: { params: Promise<{ id: string }> }
   const [error, setError] = useState<string | null>(null);
   const [user, setUser] = useState("demo.officer");
 
-  const load = useCallback(async () => {
-    try {
-      setData(await fetchCase(id));
-      setError(null);
-    } catch (e) {
-      setError(e instanceof Error ? e.message : String(e));
-    }
-  }, [id]);
+  const [attempt, setAttempt] = useState(0);
+  const reload = useCallback(() => setAttempt((n) => n + 1), []);
 
   useEffect(() => {
-    void load();
+    let live = true;
+    fetchCase(id)
+      .then((d) => {
+        if (!live) return;
+        setData(d);
+        setError(null);
+      })
+      .catch((e: unknown) => live && setError(e instanceof Error ? e.message : String(e)));
+    return () => {
+      live = false;
+    };
+  }, [id, attempt]);
+
+  useEffect(() => {
     try {
       const saved = window.localStorage.getItem(USER_KEY);
+      // restoring a browser-only preference after hydration; there is no server value to render instead
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       if (saved) setUser(saved);
     } catch {
-      /* ignore */
+      /* storage unavailable */
     }
-  }, [load]);
+  }, []);
 
   const byId = useMemo(() => new Map((data?.caseData.signals ?? []).map((s) => [s.signalId, s])), [data]);
 
-  if (error) return <ErrorState message={`Case ${id}: ${error}`} onRetry={() => void load()} />;
+  if (error) return <ErrorState message={`Case ${id}: ${error}`} onRetry={reload} />;
   if (!data) {
     return (
       <div className="space-y-4">
@@ -135,7 +144,7 @@ export default function CasePage({ params }: { params: Promise<{ id: string }> }
 
       <AgentMemo id={c.borrowerId} byId={byId} />
 
-      <FixSteps id={c.borrowerId} steps={data.steps} user={user} setUser={setUser} onChange={() => void load()} />
+      <FixSteps id={c.borrowerId} steps={data.steps} user={user} setUser={setUser} onChange={reload} />
 
       <Card className="overflow-hidden">
         <h2 className="border-b border-zinc-200 px-4 py-3 text-sm font-medium text-zinc-900">
@@ -210,7 +219,7 @@ function AgentMemo({ id, byId }: { id: string; byId: Map<string, Signal> }) {
       <p className="border-b border-zinc-100 bg-zinc-50 px-4 py-2 text-xs text-zinc-500">
         After the rules decided, the agent looked up {a.steps.length} records with read-only tools and wrote this memo for
         the credit officer. Every line cites its source. A code check dropped {a.dropped.length} line
-        {a.dropped.length === 1 ? "" : "s"} that cited nothing or used a number not in its source. Run on {a.generated_at}{" "}
+        {a.dropped.length === 1 ? "" : "s"} that cited nothing, used a number not in its source, or contradicted the records. Run on {a.generated_at}{" "}
         and saved for this public page.
       </p>
       <ul className="space-y-2 px-4 py-3 text-sm">
