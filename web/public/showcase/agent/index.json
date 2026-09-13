@@ -19,8 +19,8 @@
   "borrower_id": "B0005",
   "status": "ok",
   "model": "Qwen/Qwen3-8B",
-  "lines": 7,
-  "dropped": 0,
+  "lines": 6,
+  "dropped": 1,
   "tool_calls": 5
  },
  {
@@ -51,8 +51,8 @@
   "borrower_id": "B0013",
   "status": "ok",
   "model": "Qwen/Qwen3-8B",
-  "lines": 7,
-  "dropped": 1,
+  "lines": 6,
+  "dropped": 2,
   "tool_calls": 5
  },
  {
@@ -75,24 +75,24 @@
   "borrower_id": "B0021",
   "status": "ok",
   "model": "Qwen/Qwen3-8B",
-  "lines": 5,
-  "dropped": 2,
+  "lines": 4,
+  "dropped": 3,
   "tool_calls": 5
  },
  {
   "borrower_id": "B0023",
   "status": "ok",
   "model": "Qwen/Qwen3-8B",
-  "lines": 6,
-  "dropped": 1,
+  "lines": 5,
+  "dropped": 2,
   "tool_calls": 5
  },
  {
   "borrower_id": "B0024",
   "status": "ok",
   "model": "Qwen/Qwen3-8B",
-  "lines": 7,
-  "dropped": 0,
+  "lines": 6,
+  "dropped": 1,
   "tool_calls": 5
  },
  {
@@ -115,8 +115,8 @@
   "borrower_id": "B0028",
   "status": "ok",
   "model": "Qwen/Qwen3-8B",
-  "lines": 7,
-  "dropped": 0,
+  "lines": 6,
+  "dropped": 1,
   "tool_calls": 5
  },
  {
@@ -155,8 +155,8 @@
   "borrower_id": "B0043",
   "status": "ok",
   "model": "Qwen/Qwen3-8B",
-  "lines": 6,
-  "dropped": 2,
+  "lines": 5,
+  "dropped": 3,
   "tool_calls": 5
  },
  {
@@ -187,8 +187,8 @@
   "borrower_id": "B0062",
   "status": "ok",
   "model": "Qwen/Qwen3-8B",
-  "lines": 7,
-  "dropped": 0,
+  "lines": 6,
+  "dropped": 1,
   "tool_calls": 5
  },
  {
@@ -219,8 +219,8 @@
   "borrower_id": "B0068",
   "status": "ok",
   "model": "Qwen/Qwen3-8B",
-  "lines": 7,
-  "dropped": 0,
+  "lines": 6,
+  "dropped": 1,
   "tool_calls": 5
  },
  {
@@ -283,8 +283,8 @@
   "borrower_id": "B0088",
   "status": "ok",
   "model": "Qwen/Qwen3-8B",
-  "lines": 5,
-  "dropped": 1,
+  "lines": 4,
+  "dropped": 2,
   "tool_calls": 5
  },
  {
@@ -307,8 +307,8 @@
   "borrower_id": "B0101",
   "status": "ok",
   "model": "Qwen/Qwen3-8B",
-  "lines": 7,
-  "dropped": 0,
+  "lines": 5,
+  "dropped": 2,
   "tool_calls": 5
  },
  {

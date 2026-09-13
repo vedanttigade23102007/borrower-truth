@@ -49,12 +49,6 @@
  "model": "Qwen/Qwen3-8B",
  "memo": [
   {
-   "text": "The borrower pledged the same collateral to multiple lenders, including Canyon Specialty Finance LP and Wells Fargo Bank, N.A",
-   "cites": [
-    "S5-B0005-COMPETING_LIEN-43de8db3"
-   ]
-  },
-  {
    "text": "The borrower's disclosed debts omit at least one secured lender identified in public lien filings",
    "cites": [
     "S7-B0005-DEBT_GAP-b8c1e7eb"
@@ -91,9 +85,14 @@
    ]
   }
  ],
- "dropped": [],
+ "dropped": [
+  {
+   "text": "The borrower pledged the same collateral to multiple lenders, including Canyon Specialty Finance LP and Wells Fargo Bank, N.A [S5-B0005-COMPETING_LIEN-43de8db3]",
+   "reason": "names 'wells fargo bank', which its sources don't mention"
+  }
+ ],
  "rounds": 2,
  "tokens": 3787,
  "seconds": 45.8,
- "checks_reapplied": "2026-09-12"
+ "checks_reapplied": "2026-09-13"
 }

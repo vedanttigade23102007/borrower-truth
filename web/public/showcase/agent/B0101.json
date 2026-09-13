@@ -55,12 +55,6 @@
    ]
   },
   {
-   "text": "A second lien with Wells Fargo Bank, N.A. exists on the same collateral, but the borrower omitted this in debt reports",
-   "cites": [
-    "S7-B0101-DEBT_GAP-5a3fb11c"
-   ]
-  },
-  {
    "text": "The borrower is not enrolled in Setpoint PledgeCheck, preventing verification of collateral pledges at other lenders",
    "cites": [
     "S1-B0101-PLEDGECHECK_ABSENT-abb30b49"
@@ -83,18 +77,20 @@
    "cites": [
     "T4"
    ]
-  },
-  {
-   "text": "Ask the borrower: clarify the status of the collateral pledged to Silverline Specialty Finance LLC and Wells Fargo Bank, N.A",
-   "cites": [
-    "S5-B0101-COMPETING_LIEN-0b5557a1",
-    "S7-B0101-DEBT_GAP-5a3fb11c"
-   ]
   }
  ],
- "dropped": [],
+ "dropped": [
+  {
+   "text": "A second lien with Wells Fargo Bank, N.A. exists on the same collateral, but the borrower omitted this in debt reports [S7-B0101-DEBT_GAP-5a3fb11c]",
+   "reason": "names 'wells fargo bank', which its sources don't mention"
+  },
+  {
+   "text": "Ask the borrower: clarify the status of the collateral pledged to Silverline Specialty Finance LLC and Wells Fargo Bank, N.A [S5-B0101-COMPETING_LIEN-0b5557a1, S7-B0101-DEBT_GAP-5a3fb11c]",
+   "reason": "names 'wells fargo bank', which its sources don't mention"
+  }
+ ],
  "rounds": 2,
  "tokens": 3768,
  "seconds": 49.5,
- "checks_reapplied": "2026-09-12"
+ "checks_reapplied": "2026-09-13"
 }

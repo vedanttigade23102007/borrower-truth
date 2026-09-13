@@ -49,12 +49,6 @@
  "model": "Qwen/Qwen3-8B",
  "memo": [
   {
-   "text": "The borrower, Summit Lending Corp, has a lien on its assets pledged to both Wells Fargo Bank, N.A. and Silverline Specialty Finance LLC",
-   "cites": [
-    "S5-B0023-COMPETING_LIEN-25b5da5b"
-   ]
-  },
-  {
    "text": "Related companies include Summit Holdings Group LLC and Summit Property Partners LLC, both sharing the same officer and address",
    "cites": [
     "T2"
@@ -87,6 +81,10 @@
  ],
  "dropped": [
   {
+   "text": "The borrower, Summit Lending Corp, has a lien on its assets pledged to both Wells Fargo Bank, N.A. and Silverline Specialty Finance LLC [S5-B0023-COMPETING_LIEN-25b5da5b]",
+   "reason": "names 'wells fargo bank', which its sources don't mention"
+  },
+  {
    "text": "Ask the borrower: clarify the relationship with Summit Property Partners LLC and the undisclosed lien with Silverline Specialty Finance LLC.",
    "reason": "says 'summit property partners' was not disclosed, but the disclosures list it"
   }
@@ -94,5 +92,5 @@
  "rounds": 2,
  "tokens": 4306,
  "seconds": 51.8,
- "checks_reapplied": "2026-09-12"
+ "checks_reapplied": "2026-09-13"
 }

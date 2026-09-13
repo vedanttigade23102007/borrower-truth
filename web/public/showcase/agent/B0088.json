@@ -67,17 +67,15 @@
    ]
   },
   {
-   "text": "The borrower's disclosed debts do not include the lien from Redwood Specialty Finance LP",
-   "cites": [
-    "S7-B0088-DEBT_GAP-d9b088f2"
-   ]
-  },
-  {
    "text": "Ask the borrower: to clarify the status of the lien from Redwood Specialty Finance LP and any other undisclosed debts",
    "cites": []
   }
  ],
  "dropped": [
+  {
+   "text": "The borrower's disclosed debts do not include the lien from Redwood Specialty Finance LP [S7-B0088-DEBT_GAP-d9b088f2]",
+   "reason": "names 'redwood specialty finance', which its sources don't mention"
+  },
   {
    "text": "The borrower's disclosures include a subordinated facility with Harbor Capital Partners LP but omit other secured lenders [S7-B0088-DEBT_GAP-d9b088f2].",
    "reason": "says 'harbor capital partners' was not disclosed, but the disclosures list it"
@@ -86,5 +84,5 @@
  "rounds": 2,
  "tokens": 3779,
  "seconds": 39.7,
- "checks_reapplied": "2026-09-12"
+ "checks_reapplied": "2026-09-13"
 }

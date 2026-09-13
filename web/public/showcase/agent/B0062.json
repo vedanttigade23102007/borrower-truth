@@ -79,19 +79,18 @@
    ]
   },
   {
-   "text": "Could not confirm if \"Ironwood Receivables LLC\" has any court records or liens",
-   "cites": [
-    "T4"
-   ]
-  },
-  {
    "text": "Ask the borrower: to clarify the relationship with \"Ironwood Receivables LLC\" and provide details on the $10,621,442 judgment",
    "cites": []
   }
  ],
- "dropped": [],
+ "dropped": [
+  {
+   "text": "Could not confirm if \"Ironwood Receivables LLC\" has any court records or liens [T4]",
+   "reason": "names 'ironwood receivables', which its sources don't mention"
+  }
+ ],
  "rounds": 2,
  "tokens": 4738,
  "seconds": 57.4,
- "checks_reapplied": "2026-09-12"
+ "checks_reapplied": "2026-09-13"
 }

@@ -47,7 +47,8 @@ def test_claims_are_checked_against_the_records():
         "- Could not confirm whether the lien affects repayment [T2].",                  # not a claim of absence: kept
         "- The disclosures do not mention Lakeshore Receivables LLC [T2].",              # a negative claim, true: kept
     ])
-    kept, dropped = validate(memo, SIG, CALLS, FACTS)
+    calls = {"T2": {"id": "T2", "result": [{"name": n} for n in ("Lakeshore Receivables LLC", "Silverline Credit Fund LLC")]}}
+    kept, dropped = validate(memo, SIG, calls, FACTS)
     assert [k["text"] for k in kept] == ["Lakeshore Receivables LLC was never disclosed to the bank",
                                          "The borrower disclosed a facility with Silverline Credit Fund LLC",
                                          "No court judgments were found against the borrower",
@@ -56,6 +57,16 @@ def test_claims_are_checked_against_the_records():
     assert [d["reason"].split(",")[0] for d in dropped] == [
         "says 'silverline credit fund' was not disclosed", "says 'lakeshore receivables' was disclosed",
         "says there are no liens"]
+
+
+def test_a_line_may_only_name_companies_its_sources_mention():
+    sig = {"S5-B1-JUDGMENT-aa": {"signal_id": "S5-B1-JUDGMENT-aa",
+                                 "explanation": "Judgment against 'Lakeshore Receivables LLC' in favour of Silverline Credit Fund LP"}}
+    memo = ("- Silverline Credit Fund holds a judgment against Lakeshore Receivables LLC [S5-B1-JUDGMENT-aa].\n"
+            "- The borrower owes Beacon Credit Fund and Silverline Credit Fund through the shells [S5-B1-JUDGMENT-aa].")
+    facts = dict(FACTS, names=FACTS["names"] + ["beacon credit fund"])
+    kept, dropped = validate(memo, sig, {}, facts)
+    assert len(kept) == 1 and dropped[0]["reason"].startswith("names 'beacon credit fund'")
 
 
 def test_glued_or_garbled_citations_resolve_to_the_real_signal():

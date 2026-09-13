@@ -306,6 +306,11 @@ def validate(text: str, signals: dict[str, dict], calls: dict[str, dict],
             dropped.append(dict(text=line, reason=f"states a number not in its sources: {bad[0]:g}"))
             continue
         problem = _claim_problem(body, facts)
+        if not problem and facts and ids:  # every company a line names must appear in what that line cites
+            src = f" {norm(source_text)} "
+            ungrounded = [n for n in _mentions(body, facts["names"]) if n != facts["borrower"] and f" {n} " not in src]
+            if ungrounded:
+                problem = f"names '{ungrounded[0]}', which its sources don't mention"
         if problem:
             dropped.append(dict(text=line, reason=problem))
             continue

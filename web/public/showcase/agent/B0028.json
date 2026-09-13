@@ -67,12 +67,6 @@
    ]
   },
   {
-   "text": "The borrower has unexplained debt to Beacon Credit Fund LLC and Silverline Credit Fund LLC, which are linked to the shell companies",
-   "cites": [
-    "S5-B0028-JUDGMENT-5c5e0929"
-   ]
-  },
-  {
    "text": "The borrower's reported revenue exceeds verified cash inflows by 24% over two quarters, suggesting financial manipulation",
    "cites": [
     "S7-B0028-CASH_REVENUE_GAP-5fa8e835"
@@ -89,9 +83,14 @@
    "cites": []
   }
  ],
- "dropped": [],
+ "dropped": [
+  {
+   "text": "The borrower has unexplained debt to Beacon Credit Fund LLC and Silverline Credit Fund LLC, which are linked to the shell companies [S5-B0028-JUDGMENT-5c5e0929]",
+   "reason": "names 'beacon credit fund', which its sources don't mention"
+  }
+ ],
  "rounds": 2,
  "tokens": 5144,
  "seconds": 69.6,
- "checks_reapplied": "2026-09-12"
+ "checks_reapplied": "2026-09-13"
 }

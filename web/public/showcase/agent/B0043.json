@@ -78,15 +78,13 @@
    "cites": [
     "S7-B0043-CASH_REVENUE_GAP-adf60ce7"
    ]
-  },
-  {
-   "text": "The borrower did not disclose all related entities, including \"Sterling Trade Services LLC\" and \"Sterling Services LLC\"",
-   "cites": [
-    "S6-B0043-RELATED_ENTITY-2ef47058"
-   ]
   }
  ],
  "dropped": [
+  {
+   "text": "The borrower did not disclose all related entities, including \"Sterling Trade Services LLC\" and \"Sterling Services LLC\" [S6-B0043-RELATED_ENTITY-2ef47058]",
+   "reason": "names 'sterling trade services', which its sources don't mention"
+  },
   {
    "text": "\"Sterling Capital Group LLC\" has liens from Harbor Credit Fund LP and Wells Fargo Bank, N.A., which the borrower did not disclose [T1-S5-B0043-COMPETING_LIEN-6ff168f5, T3].",
    "reason": "says 'harbor credit fund' was not disclosed, but the disclosures list it"
@@ -99,5 +97,5 @@
  "rounds": 2,
  "tokens": 5201,
  "seconds": 80.9,
- "checks_reapplied": "2026-09-12"
+ "checks_reapplied": "2026-09-13"
 }

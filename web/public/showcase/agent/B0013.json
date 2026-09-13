@@ -83,22 +83,20 @@
    "cites": [
     "T3"
    ]
-  },
-  {
-   "text": "Ask the borrower: to clarify the relationship between Bluebonnet Lending LLC and Bluebonnet Holdings Group LLC and provide details on the receivables secured by the UCC lien",
-   "cites": [
-    "T3"
-   ]
   }
  ],
  "dropped": [
   {
    "text": "The borrower's disclosures do not mention any debts or affiliations that could corroborate the fraud signals.",
    "reason": "cites no source"
+  },
+  {
+   "text": "Ask the borrower: to clarify the relationship between Bluebonnet Lending LLC and Bluebonnet Holdings Group LLC and provide details on the receivables secured by the UCC lien [T3]",
+   "reason": "names 'bluebonnet holdings group', which its sources don't mention"
   }
  ],
  "rounds": 2,
  "tokens": 4430,
  "seconds": 49.5,
- "checks_reapplied": "2026-09-12"
+ "checks_reapplied": "2026-09-13"
 }

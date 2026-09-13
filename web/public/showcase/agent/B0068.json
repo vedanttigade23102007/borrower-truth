@@ -83,17 +83,16 @@
    "cites": [
     "T4"
    ]
-  },
-  {
-   "text": "Ask the borrower: to clarify the relationship between \"Granite Trade Services Inc\" and the borrower, and provide documentation for the UCC lien on \"Lakeshore Realty Corp\"",
-   "cites": [
-    "T3"
-   ]
   }
  ],
- "dropped": [],
+ "dropped": [
+  {
+   "text": "Ask the borrower: to clarify the relationship between \"Granite Trade Services Inc\" and the borrower, and provide documentation for the UCC lien on \"Lakeshore Realty Corp\" [T3]",
+   "reason": "names 'granite trade services', which its sources don't mention"
+  }
+ ],
  "rounds": 2,
  "tokens": 3990,
  "seconds": 51.8,
- "checks_reapplied": "2026-09-12"
+ "checks_reapplied": "2026-09-13"
 }

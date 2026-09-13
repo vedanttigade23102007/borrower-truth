@@ -79,19 +79,18 @@
    ]
   },
   {
-   "text": "Could not confirm the exact relationship between Northstar Industrial Supply Inc and the borrower",
-   "cites": [
-    "T2"
-   ]
-  },
-  {
    "text": "Ask the borrower: to clarify the relationship with Northstar Industrial Supply Inc and the source of the $8,971,724",
    "cites": []
   }
  ],
- "dropped": [],
+ "dropped": [
+  {
+   "text": "Could not confirm the exact relationship between Northstar Industrial Supply Inc and the borrower [T2]",
+   "reason": "names 'northstar industrial supply', which its sources don't mention"
+  }
+ ],
  "rounds": 2,
  "tokens": 3940,
  "seconds": 50.5,
- "checks_reapplied": "2026-09-12"
+ "checks_reapplied": "2026-09-13"
 }

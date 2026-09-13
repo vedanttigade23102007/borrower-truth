@@ -61,12 +61,6 @@
    ]
   },
   {
-   "text": "The borrower disclosed a debt to Silverline Specialty Finance LLC for an equipment lease",
-   "cites": [
-    "S6-B0021-RELATED_ENTITY-7dae4c1c"
-   ]
-  },
-  {
    "text": "Could not confirm if the borrower's collateral is pledged at other lenders due to not being enrolled in Setpoint PledgeCheck",
    "cites": [
     "S1-B0021-PLEDGECHECK_ABSENT-0ca33325"
@@ -79,6 +73,10 @@
  ],
  "dropped": [
   {
+   "text": "The borrower disclosed a debt to Silverline Specialty Finance LLC for an equipment lease [S6-B0021-RELATED_ENTITY-7dae4c1c]",
+   "reason": "names 'silverline specialty finance', which its sources don't mention"
+  },
+  {
    "text": "The borrower has a second-priority lien on all assets from Ironwood Capital Partners LP [UCC-000168].",
    "reason": "cites an unknown source: UCC-000168"
   },
@@ -90,5 +88,5 @@
  "rounds": 2,
  "tokens": 4963,
  "seconds": 62.1,
- "checks_reapplied": "2026-09-12"
+ "checks_reapplied": "2026-09-13"
 }
