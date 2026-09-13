@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Borrower Truth · SEC data plan</title>
+<style>
+:root{--bg:#FBFCFE;--card:#FFFFFF;--sunk:#EFF3F9;--ink:#0B1220;--muted:#5B6678;--line:#DCE4EF;
+--accent:#1D4ED8;--accent-soft:#EAF1FF;--ok:#047857;--ok-bg:#E6F6EF;--warn:#B45309;--warn-bg:#FFF1E8;--crit:#C81E1E;--crit-bg:#FDECEC}
+*{box-sizing:border-box}
+html{scroll-snap-type:y mandatory;background:var(--sunk)}
+body{margin:0;color:var(--ink);font:18px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Helvetica,Arial,sans-serif}
+.slide{scroll-snap-align:start;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:4vh 4vw}
+.frame{width:min(1200px,100%);aspect-ratio:16/9;background:var(--card);border:1px solid var(--line);border-radius:18px;
+padding:44px 56px;display:flex;flex-direction:column;gap:16px;position:relative;overflow:hidden}
+.kicker{font-size:13px;letter-spacing:.09em;text-transform:uppercase;color:var(--accent);font-weight:700}
+h1,h2,h3{margin:0;letter-spacing:-.02em;line-height:1.15}
+h1{font-size:42px}h2{font-size:30px}h3{font-size:17px;margin-bottom:6px}
+.sub{color:var(--muted);font-size:18px;margin:0}
+.num{position:absolute;right:28px;bottom:16px;font-size:13px;color:var(--muted)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.card{background:var(--sunk);border-radius:12px;padding:16px 18px;font-size:15px}
+.card.hl{background:var(--accent-soft);outline:2px solid var(--accent)}
+.card.bad{background:var(--crit-bg)}
+.card.good{background:var(--ok-bg)}
+table{border-collapse:collapse;width:100%;font-size:15px}
+th,td{text-align:left;padding:7px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.pill{display:inline-block;padding:2px 9px;border-radius:999px;font-size:12px;font-weight:700;white-space:nowrap}
+.ok{background:var(--ok-bg);color:var(--ok)}.warn{background:var(--warn-bg);color:var(--warn)}
+.crit{background:var(--crit-bg);color:var(--crit)}.info{background:var(--accent-soft);color:var(--accent)}
+.flow{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.flow .box{background:var(--sunk);border:1px solid var(--line);border-radius:10px;padding:10px 14px;font-weight:600;font-size:15px}
+.flow .box.bad{background:var(--crit-bg);border-color:var(--crit);color:var(--crit)}
+.flow .box.good{background:var(--ok-bg);border-color:var(--ok);color:var(--ok)}
+.flow .box.hl{background:var(--accent-soft);border-color:var(--accent);color:#173ea8}
+.flow .arrow{color:var(--muted);font-size:22px}
+blockquote{margin:0;padding:12px 18px;border-left:4px solid var(--accent);background:var(--accent-soft);border-radius:0 10px 10px 0;font-size:17px}
+ul{margin:0;padding-left:22px}li{margin:5px 0}
+.fine{font-size:13px;color:var(--muted)}
+.mt{margin-top:auto}
+/* peer benchmark picture */
+.peer{position:relative;height:74px;margin:6px 8px 0}
+.peer .axis{position:absolute;left:0;right:0;top:34px;height:6px;border-radius:3px;background:var(--line)}
+.peer .band{position:absolute;top:26px;height:22px;border-radius:6px;background:#BFD3FB}
+.peer .dot{position:absolute;top:22px;width:30px;height:30px;border-radius:50%;background:var(--crit);border:3px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.25)}
+.peer .lab{position:absolute;top:0;font-size:13px;font-weight:700;white-space:nowrap}
+.peer .end{position:absolute;top:54px;font-size:12px;color:var(--muted)}
+.step{display:grid;grid-template-columns:34px 1fr;gap:10px;align-items:start;font-size:15px}
+.step b.n{display:flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:var(--accent);color:#fff;font-size:14px}
+@media screen and (max-width:900px){.frame{aspect-ratio:auto;padding:26px}.grid2,.grid3,.grid4{grid-template-columns:1fr}
+h1{font-size:30px}h2{font-size:24px}}
+@media print{@page{size:1280px 720px;margin:0}html{background:#fff;scroll-snap-type:none}
+.slide{min-height:auto;padding:0;break-after:page}.frame{border:0;border-radius:0;width:1280px;height:720px}}
+</style>
+</head>
+<body>
+
+<!-- 1 Cover -->
+<section class="slide"><div class="frame">
+  <div class="kicker">SEC data plan · Borrower Truth · 14 Sep 2026</div>
+  <h1>Public SEC filings can replace my guesses with real loan behaviour, and give the bank a second source of truth.</h1>
+  <p class="sub">Today every threshold in Borrower Truth is set on synthetic data I designed. The SEC publishes, every month, how real auto loans in public securitizations actually pay, and what public companies report about their debt, subsidiaries and financials.</p>
+  <div class="grid4 mt">
+    <div class="card"><h3>1 · Calibrate</h3>Set thresholds from real payment behaviour, not assumptions.</div>
+    <div class="card"><h3>2 · Benchmark</h3>Flag a loan tape that looks better than any public pool.</div>
+    <div class="card"><h3>3 · Cross-check</h3>What a borrower tells the bank vs what it tells the SEC.</div>
+    <div class="card"><h3>4 · Same loans, two reports</h3>Investor reports vs the bank's tape, where both exist.</div>
+  </div>
+</div></section>
+
+<!-- 2 What the SEC has -->
+<section class="slide"><div class="frame">
+  <div class="kicker">What the SEC actually publishes · free, no API key</div>
+  <h2>Five public sources, each feeding a check that already exists.</h2>
+  <table>
+    <tr><th style="width:20%">Source</th><th>What's in it</th><th style="width:13%">How often</th><th style="width:15%">Feeds</th></tr>
+    <tr><td><b>Form ABS-EE</b><br><span class="fine">loan-level data, Schedule AL</span></td><td>One row per loan in every <i>registered</i> auto-loan, auto-lease and mortgage securitization: credit score, payment-to-income, amount due vs amount actually paid, days late, repossession, charge-off, modification</td><td>Each reporting period (monthly for auto)</td><td>Calibration, S2, S1 hints</td></tr>
+    <tr><td><b>XBRL financial data</b><br><span class="fine">data.sec.gov</span></td><td>Every filer's reported financials as JSON; the "frames" API returns one number (say, receivables) for every company in a quarter</td><td>Real time; bulk files nightly</td><td>S7 peer benchmarks</td></tr>
+    <tr><td><b>10-K / 10-Q</b></td><td>Debt footnotes; Exhibit 21, the list of subsidiaries</td><td>Quarterly</td><td>S5 hidden debt, S6 linked companies</td></tr>
+    <tr><td><b>8-K</b></td><td>Item 2.03 new debt · Item 2.04 events that speed up repayment of existing debt</td><td>Within 4 business days of the event</td><td>Early warning, S5</td></tr>
+    <tr><td><b>Enforcement files</b></td><td>SEC complaints and releases (already used for Tricolor)</td><td>As filed</td><td>The fraud playbook</td></tr>
+  </table>
+  <p class="fine mt">Sources: 17 CFR 229.1125 (Schedule AL); SEC EDGAR API and access pages; SEC ABS-EE interpretations. Details: research/SEC-DATA.md.</p>
+</div></section>
+
+<!-- 3 Use 1: calibrate -->
+<section class="slide"><div class="frame">
+  <div class="kicker">Use 1 · Calibrate</div>
+  <h2>Replace my assumptions about "normal" with what real auto loans actually do each month.</h2>
+  <div class="grid2">
+    <div class="card bad"><h3>Today (synthetic)</h3><ul>
+      <li>How often a loan goes 30 days late: <b>my assumption</b></li>
+      <li>How often a late loan catches up again: <b>my assumption</b></li>
+      <li>Credit scores, payment sizes, payoffs: <b>my assumption</b></li>
+      <li>So a model-risk reviewer's first question, "why this threshold?", has a weak answer</li></ul></div>
+    <div class="card good"><h3>With ABS-EE</h3><ul>
+      <li>Month-by-month payment history for every loan in public auto pools (for example CarMax Auto Owner Trusts, which file monthly)</li>
+      <li>Measured: late rates, catch-up rates, charge-offs, by credit-score band and loan age</li>
+      <li>The synthetic "normal" borrowers are rebuilt from those measurements</li>
+      <li>Every threshold traces to a public dataset and a date</li></ul></div>
+  </div>
+  <blockquote class="mt">Decision it improves: fewer honest borrowers sent to "worth a look" (today about 30 of every 100 in the proof run), because "unusual" is judged against real behaviour.</blockquote>
+  <p class="fine">The frauds stay planted. Calibration makes the honest background real; it does not create real frauds. The re-tuned system gets scored once on fresh test books.</p>
+</div></section>
+
+<!-- 4 Use 2: too good to be true -->
+<section class="slide"><div class="frame">
+  <div class="kicker">Use 2 · Benchmark the tape · strengthens S2</div>
+  <h2>A loan tape that performs better than every comparable public pool is a question, not a compliment.</h2>
+  <p class="sub">The SEC alleges Tricolor made non-paying or defaulted loans look current. A tape like that shows unusually few late loans. Public pools give the range that honest lenders with a similar credit mix actually report.</p>
+  <div class="card">
+    <h3>What the credit officer would see in the case (illustration, no numbers measured yet)</h3>
+    <div class="peer">
+      <div class="axis"></div>
+      <div class="band" style="left:38%;width:40%"></div>
+      <div class="lab" style="left:38%;color:#173ea8">Public pools, same credit-score band and loan age</div>
+      <div class="dot" style="left:6%"></div>
+      <div class="lab" style="left:0;top:58px;color:var(--crit)">This borrower</div>
+      <div class="end" style="right:0">more loans late →</div>
+    </div>
+  </div>
+  <div class="grid3">
+    <div class="card"><h3>Measured on</h3>Share of loans 30+ days late, catch-up rate, payments actually received vs due</div>
+    <div class="card"><h3>Compared within</h3>Same credit-score band, same loan age, same kind of vehicle, so a better lender isn't punished for being better</div>
+    <div class="card hl"><h3>Outcome</h3>"Too good to be true" becomes a clue for S2, confirmed only by the servicer's own records, never on its own</div>
+  </div>
+</div></section>
+
+<!-- 5 Use 3: cross-check -->
+<section class="slide"><div class="frame">
+  <div class="kicker">Use 3 · What they tell the bank vs what they tell the SEC</div>
+  <h2>When a borrower, or its parent company, files with the SEC, those filings become an independent source.</h2>
+  <table>
+    <tr><th style="width:27%">In the SEC filing</th><th style="width:27%">In the bank's file</th><th>If they disagree</th><th style="width:12%">Check</th></tr>
+    <tr><td>10-K debt footnote: every loan and facility</td><td>Debts the borrower disclosed to the bank</td><td>Debt the bank wasn't told about: the First Brands pattern, as alleged</td><td>S5</td></tr>
+    <tr><td>Exhibit 21: list of subsidiaries</td><td>Related companies disclosed</td><td>A subsidiary the bank has never heard of is paying the borrower</td><td>S6 → S3</td></tr>
+    <tr><td>XBRL revenue and receivables</td><td>Covenant package and monthly reports</td><td>Different numbers for the same quarter</td><td>S7</td></tr>
+    <tr><td>8-K Item 2.03 / 2.04</td><td>Nothing yet</td><td>New debt or accelerated debt: the officer sees it the day it's filed, not at the next quarterly review</td><td>Alert</td></tr>
+  </table>
+  <blockquote class="mt">Decision it improves: the officer stops relying only on what the borrower chose to send, for every borrower that files.</blockquote>
+  <p class="fine">Only works where someone files: public lenders, public parents, and issuers of public debt or public ABS. Private borrowers file nothing here.</p>
+</div></section>
+
+<!-- 6 Use 4: same loans, two reports -->
+<section class="slide"><div class="frame">
+  <div class="kicker">Use 4 · Same loans, two reports · a hint for S1 and S2</div>
+  <h2>A lender with public securitizations reports its loans to investors every month. The bank can compare that with the tape it's given.</h2>
+  <div class="flow">
+    <div class="box">Bank's loan tape</div><div class="arrow">+</div>
+    <div class="box">ABS-EE file for the lender's public pools</div><div class="arrow">→</div>
+    <div class="box hl">Match loans by fingerprint: origination date, amount, rate, term, make, model, year, state, credit score</div><div class="arrow">→</div>
+    <div class="box bad">Same loan in both? Reported differently?</div>
+  </div>
+  <div class="grid2">
+    <div class="card"><h3>What it can catch</h3><ul>
+      <li>A loan pledged to the bank that also sits in a public pool (possible double pledge)</li>
+      <li>A loan current on the bank's tape but charged off in the investor report</li></ul></div>
+    <div class="card bad"><h3>Why it's only a hint</h3><ul>
+      <li>ABS-EE has <b>no VIN and no borrower ID</b>, by design</li>
+      <li>A fingerprint match is likely, not certain</li>
+      <li>So it opens a question, and the officer asks for the title or VIN to settle it</li></ul></div>
+  </div>
+  <p class="fine mt">Tricolor itself is the counter-example: its deals were private (Rule 144A), so there's no ABS-EE to compare against. Per the bank defendants' court filings, reported by Octus (secondary).</p>
+</div></section>
+
+<!-- 7 Decisions -->
+<section class="slide"><div class="frame">
+  <div class="kicker">How this helps Wells Fargo decide</div>
+  <h2>Each person makes a better call, with a public source they can cite.</h2>
+  <table>
+    <tr><th style="width:19%">Who</th><th style="width:30%">Decision</th><th>What SEC data adds</th></tr>
+    <tr><td><b>Credit officer</b></td><td>Is this borrower's tape believable?</td><td>Where the tape sits against public pools with the same credit mix, shown in the case</td></tr>
+    <tr><td><b>Portfolio manager</b></td><td>Who gets the next field exam?</td><td>Rank borrowers by their gap to public peers, so exam time goes where the story looks least real</td></tr>
+    <tr><td><b>Credit committee</b></td><td>Advance rates, eligibility cut-offs, limits</td><td>Real loss and catch-up curves by credit band, not just the borrower's own history</td></tr>
+    <tr><td><b>Model risk</b></td><td>Approve the thresholds</td><td>Every threshold traced to a public dataset, a date and a reproducible calculation</td></tr>
+    <tr><td><b>Head of the business</b></td><td>Is the market turning?</td><td>A monthly trend of late payments across public auto pools, by credit band, before it shows up in the bank's own book</td></tr>
+  </table>
+</div></section>
+
+<!-- 8 Limits -->
+<section class="slide"><div class="frame">
+  <div class="kicker">Limits, said plainly</div>
+  <h2>SEC data makes the system more real. It doesn't make it see everything.</h2>
+  <div class="grid2">
+    <div class="card"><h3>What it can't do</h3><ul>
+      <li><b>Private deals are invisible.</b> Only registered securitizations file ABS-EE. Tricolor's were private, and many smaller lenders use private deals.</li>
+      <li><b>No exact loan match.</b> No VIN and no borrower ID, so matching loans is probabilistic.</li>
+      <li><b>Private borrowers file nothing.</b> The cross-check covers only filers.</li>
+      <li><b>Public pools come from larger lenders.</b> A small subprime lender is compared within credit bands, and the case says so.</li></ul></div>
+    <div class="card"><h3>What stays the same</h3><ul>
+      <li>Frauds in the test are still planted, so the catch rate is still a design proof, not a real-world rate</li>
+      <li>Rules still decide; SEC data sets the thresholds and adds clues</li>
+      <li>A person still approves every step</li>
+      <li>Any new result is scored once on fresh test books, and every quoted number is updated everywhere</li></ul></div>
+  </div>
+</div></section>
+
+<!-- 9 Plan -->
+<section class="slide"><div class="frame">
+  <div class="kicker">Build plan · what happens after your yes</div>
+  <h2>Seven steps, all on public data, nothing sent anywhere else.</h2>
+  <div class="grid2">
+    <div style="display:flex;flex-direction:column;gap:9px">
+      <div class="step"><b class="n">1</b><div><b>Pull ABS-EE files</b> for several public auto-loan trusts, 24 months each, from EDGAR's index. At most 10 requests a second, per SEC rules. Raw files stay local.</div></div>
+      <div class="step"><b class="n">2</b><div><b>Measure normal:</b> late, catch-up and charge-off rates by credit band and loan age. The small summary tables get committed.</div></div>
+      <div class="step"><b class="n">3</b><div><b>Rebuild honest borrowers</b> in the generator from those measurements.</div></div>
+      <div class="step"><b class="n">4</b><div><b>New S2 clue:</b> a tape that performs outside the public peer range.</div></div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:9px">
+      <div class="step"><b class="n">5</b><div><b>S7 peer benchmarks</b> from XBRL for public non-bank lenders.</div></div>
+      <div class="step"><b class="n">6</b><div><b>8-K watcher</b> for Items 2.03 and 2.04, feeding S5.</div></div>
+      <div class="step"><b class="n">7</b><div><b>Re-score once</b> on fresh test books, then update the site, deck, resume and case study together.</div></div>
+      <div class="card warn" style="background:var(--warn-bg)"><h3>One decision needed from you</h3>The SEC requires every automated request to name a contact email in its header. Which email should go there?</div>
+    </div>
+  </div>
+</div></section>
+
+<script>
+const slides=[...document.querySelectorAll('.slide')];
+slides.forEach((s,i)=>{const n=document.createElement('div');n.className='num';n.textContent=(i+1)+' / '+slides.length;s.querySelector('.frame').appendChild(n)});
+addEventListener('keydown',e=>{
+  const fwd=['ArrowDown','ArrowRight','PageDown',' '],back=['ArrowUp','ArrowLeft','PageUp'];
+  if(!fwd.includes(e.key)&&!back.includes(e.key))return;
+  e.preventDefault();
+  const mid=scrollY+innerHeight/2;
+  let i=slides.findIndex(s=>s.offsetTop+s.offsetHeight>mid);if(i<0)i=slides.length-1;
+  i=Math.min(slides.length-1,Math.max(0,i+(fwd.includes(e.key)?1:-1)));
+  slides[i].scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});
+});
+</script>
+</body>
+</html>
