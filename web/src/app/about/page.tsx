@@ -60,6 +60,33 @@ export default function AboutPage() {
         </a>
       </div>
 
+      <div>
+        <h2 className="text-lg font-semibold tracking-tight text-zinc-900">Two short videos</h2>
+        <div className="mt-3 grid gap-4 sm:grid-cols-2">
+          {[
+            ["overview", "Overview", "The problem, who it's for, what it does, what other tools miss, and the proof."],
+            ["training", "Training walkthrough", "How a credit officer uses it: queue, case, evidence, agent memo, fix, approval."],
+          ].map(([file, title, what]) => (
+            <Card key={file} className="overflow-hidden">
+              <video
+                controls
+                preload="none"
+                poster={`/videos/${file}.jpg`}
+                className="aspect-video w-full bg-zinc-100"
+                aria-label={`${title} video`}
+              >
+                <source src={`/videos/${file}.mp4`} type="video/mp4" />
+              </video>
+              <div className="px-4 py-3">
+                <div className="font-medium text-zinc-900">{title}</div>
+                <p className="text-sm text-zinc-600">{what}</p>
+              </div>
+            </Card>
+          ))}
+        </div>
+        <p className="mt-2 text-xs text-zinc-500">Narrated with a synthetic voice, with captions. All data shown is synthetic.</p>
+      </div>
+
       <Card className="divide-y divide-zinc-100">
         {SYSTEMS.map(([k, name, what]) => (
           <div key={k} className="grid gap-1 px-4 py-3 sm:grid-cols-4">

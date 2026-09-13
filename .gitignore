@@ -48,3 +48,7 @@ case-service/.gradle/
 
 # public-data adapter cache (regenerated on demand)
 data/cache/
+
+# video build intermediates (screenshots, narration, timelines); the final MP4s live in web/public/videos
+application/videos/build/
+application/videos/*.mp4
