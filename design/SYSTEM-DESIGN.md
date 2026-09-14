@@ -289,27 +289,28 @@ A great tool can still fail to fit a bank. This design plans for that from day o
 
 **Not everything in §1–§13 is built.** `proof/AUDIT.md` checks every claim line by line: built, partial, not built, or corrected. An earlier version of this section said "everything is implemented"; that was wrong, and the audit exists because of it. Measured on synthetic data:
 
-**Held-out proof** (fresh seeds 301–305, generated and scored once after every change; `proof/REPORT.md`):
+**Held-out proof** (fresh seeds 406–410, generator v3 calibrated on real SEC data, generated and scored once after every change; `proof/REPORT.md`):
 
 | Measure | Result |
 |---|---|
-| Catch rate | 99% (189/190) vs 41% for a quarterly sample audit |
-| Honest borrowers flagged "likely fraud" | 0 per 100 |
-| Honest borrowers routed to "worth a look" | 30 per 100 (the document check's false flags add about 2) |
+| Catch rate | 99% (248/250) vs 38% for a quarterly sample audit |
+| Honest borrowers flagged "likely fraud" | 0 of 350, in any month |
+| Honest borrowers routed to "worth a look" | 29 per 100 |
 | Top-decile precision (highest-priority 10% that are real frauds) | 100% (60/60) |
-| Suggested fixes that target a planted mechanism | 365 of 366 |
-| Detection vs the audit (median) | 150 days earlier |
-| Frauds never flagged by PledgeCheck | 146 |
-| Weakest mechanism | financials that don't fit, 62 of 65 |
+| Suggested fixes that target a planted mechanism | 430 of 430 |
+| Detection vs the audit (median) | 90 days earlier |
+| Frauds never flagged by PledgeCheck | 205 |
+| Lost when every SEC-based check is switched off | 41 frauds |
+| Weakest mechanism | bad loans reported as good, 63 of 65 |
 
-The first version scored 143/150 on seeds 201–205 (kept as `proof/REPORT_v1_seeds201-205.md`); the current checks score 146/150 on those same books. The one miss on 301–305 led to an S5 matching fix, tested once on fresh seeds 306–310: 190/190.
+Real data (`proof/REAL_DATA.md`): 2.23M loan records from 28 public auto-loan pools of 22 lenders (SEC Form ABS-EE) set the honest behaviour and check every threshold; 0 of 28 real pools trip a check. History: v1 scored 143/150 on seeds 201–205; v2 scored 189/190 on 301–305 (`proof/REPORT_v2_seeds301-305.md`) and 190/190 on 306–310 after an S5 fix; v3 before its auto loans got their own random stream scored 247/250 on 401–405 (`proof/REPORT_v3_seeds401-405.md`).
 
 The switch-off test shows every system contributes.
 
 **Scale** (`proof/scale.json`, one 8 GB laptop):
-- 1.27M rows in 0.90 s
-- 5.1M rows in 1.98 s
-- 12.4M rows in 3.20 s (3.9M rows/s)
+- 1.29M rows in 1.05 s
+- 5.3M rows in 2.66 s
+- 13.2M rows in 4.39 s (3.0M rows/s)
 
 **Break-it:**
 - With S4 crashed, all 120 cases still build and are marked "S4 unavailable"; 3 fraud cases drop to a lower verdict.

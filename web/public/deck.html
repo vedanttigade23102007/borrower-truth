@@ -386,18 +386,49 @@ h1{font-size:30px}h2{font-size:24px}.big{font-size:54px}.timeline{flex-direction
 
 <!-- B2 Proof -->
 <section class="slide"><div class="frame">
-  <div class="kicker">The proof · 5 fresh synthetic books, scored once after every change (600 borrowers, 190 frauds)</div>
-  <h2>It caught 189 of 190 planted frauds, more than twice the quarterly audit's rate, a median 150 days sooner.</h2>
+  <div class="kicker">The proof · 5 fresh synthetic books calibrated on real SEC data, scored once after every change (600 borrowers, 250 frauds)</div>
+  <h2>It caught 248 of 250 planted frauds, 2.6 times the quarterly audit's rate, a median 90 days sooner, with no false alarm.</h2>
   <div class="grid4">
-    <div class="card metric"><div class="v">99%</div><div class="l">frauds caught (189/190), including 40 of two harder types. The audit caught 41%.</div></div>
-    <div class="card metric"><div class="v">150 days</div><div class="l">earlier than the audit, median</div></div>
-    <div class="card metric"><div class="v">0 / 100</div><div class="l">honest borrowers marked "likely fraud"</div></div>
-    <div class="card metric"><div class="v">30 / 100</div><div class="l">honest borrowers sent to "worth a look": the real workload</div></div>
+    <div class="card metric"><div class="v">99%</div><div class="l">frauds caught (248/250), including 99 of 100 of five harder types. The audit caught 38%.</div></div>
+    <div class="card metric"><div class="v">90 days</div><div class="l">earlier than the audit, median</div></div>
+    <div class="card metric"><div class="v">0 / 350</div><div class="l">honest borrowers marked "likely fraud", in any month</div></div>
+    <div class="card metric"><div class="v">29 / 100</div><div class="l">honest borrowers sent to "worth a look": the real workload</div></div>
   </div>
   <div class="grid2 mt">
-    <div class="card"><h3>Beyond what already exists</h3>146 caught frauds were never flagged by PledgeCheck's four checks. The old weak spot, bad loans reported as good, went from 73% to 100% once the servicer pull was aimed by the cash.</div>
-    <div class="card"><h3>Weakest spot, said plainly</h3>Financials that don't fit: 62 of 65. The one miss: a second lender's lien filed under an abbreviated name at the borrower's own address; S5 now expands abbreviations and checks the address. All synthetic: near-perfect scores prove coverage of planted tricks, not real-world rates.</div>
+    <div class="card"><h3>Beyond what already exists</h3>205 caught frauds were never flagged by PledgeCheck's four checks. Switching off every check built on SEC data loses 41 of the catches. The highest-priority tenth of the queue: 60 of 60 real frauds.</div>
+    <div class="card"><h3>Weakest spot, said plainly</h3>Bad loans reported as good: 63 of 65. Both missed borrowers hid only a few loans (6 and 71 loan-months), one paying them itself so the cash looked right: too few for a 30-loan servicer pull to hit. All synthetic: near-perfect scores prove coverage of planted tricks, not real-world rates.</div>
   </div>
+</div></section>
+
+<!-- B2b Real data -->
+<section class="slide"><div class="frame">
+  <div class="kicker">Real data · public SEC filings, pulled and measured 14 Sep 2026</div>
+  <h2>2.2 million real loan records from 28 public auto-loan pools of 22 lenders. No honest real pool trips any check.</h2>
+  <div class="grid4">
+    <div class="card metric"><div class="v">809,624</div><div class="l">real month-to-month loan moves: honest test loans now behave like these</div></div>
+    <div class="card metric"><div class="v">0 of 28</div><div class="l">real honest pools trip any threshold; a test fails if one ever does</div></div>
+    <div class="card metric"><div class="v">0 of 774,975</div><div class="l">real loans had their credit score changed: a rewrite has no honest cover</div></div>
+    <div class="card metric"><div class="v">24</div><div class="l">public non-bank lenders' 8-K, Exhibit 21 and XBRL filings read</div></div>
+  </div>
+  <div class="grid2 mt">
+    <div class="card"><h3>What the real data changed</h3>One check tightened (in one real pool, 12% of 60+ day loans turned current without paying). One check redesigned (prime and subprime score curves differ). One new check: in every real pool at least 13.9% of 30-day-late loans are 60+ late a month later; hidden bad loans make late loans vanish.</div>
+    <div class="card bad"><h3>A design the real data rejected</h3>My first peer benchmark, overall late share against lenders with the same credit mix, would have flagged <b>3 of 28 honest real pools</b>. It was dropped before it could reach a credit officer.</div>
+  </div>
+  <p class="fine">SEC Form ABS-EE (Reg AB II loan-level data, no VIN, no borrower identity) and data.sec.gov. Tricolor's deals were private (Rule 144A) and never filed ABS-EE: public data sets the yardstick, it doesn't see every lender. Full tables: proof/REAL_DATA.md.</p>
+</div></section>
+
+<!-- B2c Four SEC uses -->
+<section class="slide"><div class="frame">
+  <div class="kicker">Four uses of SEC data · each is now a check</div>
+  <h2>Public filings give the bank a second source of truth, and a real yardstick for every decision.</h2>
+  <table>
+    <tr><th style="width:22%">Use</th><th>What it checks</th><th style="width:26%">Who decides better</th></tr>
+    <tr><td><b>1 · Calibrate</b></td><td>Thresholds set from how 2.2M real loans behave, not my assumptions</td><td>Model risk: every threshold traced to public data and a date</td></tr>
+    <tr><td><b>2 · Benchmark the tape</b></td><td>Late loans that never get later, far below any real pool, then a servicer pull of the "cured" loans</td><td>Credit officer: is this tape believable?</td></tr>
+    <tr><td><b>3 · Cross-check filings</b></td><td>A lender named in the borrower's own 10-K or 8-K but never disclosed to the bank; revenue that differs from the SEC filing</td><td>Credit officer and committee: hidden debt with no lien filed</td></tr>
+    <tr><td><b>4 · Same loans, two reports</b></td><td>Loans on the bank's tape that also sit in the borrower's own public trust, and whose payments no longer reach the bank</td><td>Portfolio manager: collateral pledged twice</td></tr>
+  </table>
+  <p class="fine mt">Three harder fraud types were added to the test books, each caught only through one of these uses; switching all SEC checks off loses 41 of the 248 held-out catches.</p>
 </div></section>
 
 <!-- B3 Live -->
@@ -410,7 +441,7 @@ h1{font-size:30px}h2{font-size:24px}.big{font-size:54px}.timeline{flex-direction
     <div class="card metric"><div class="v">96.5%</div><div class="l">invoice totals read correctly (unseen borrowers)</div></div>
     <div class="card metric"><div class="v">11 / 11</div><div class="l">tampered invoices caught; 3.3% false flags, each checked by a person</div></div>
   </div>
-  <p class="fine mt">Model compared only with its untrained base (0%): a weak baseline, labelled as such. Scale test: 12.4M rows in 3.2 s on one 8 GB laptop.</p>
+  <p class="fine mt">Model compared only with its untrained base (0%): a weak baseline, labelled as such. Scale test: 13.2M rows in 4.4 s on one 8 GB laptop.</p>
 </div></section>
 
 <!-- B4 Around the decision -->

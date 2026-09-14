@@ -2,7 +2,7 @@
 
 **Seven connected checks that answer one question for a lender: *is this borrower's picture of itself true?***
 
-Built as an internship-application project for the Wells Fargo 2027 Technology Program. Not affiliated with Wells Fargo. **All data in this repository is synthetic.** No real company, person, vehicle or loan is represented.
+Built as an internship-application project for the Wells Fargo 2027 Technology Program. Not affiliated with Wells Fargo. **All borrower data in this repository is synthetic.** No real company, person, vehicle or loan is represented in the test books. The one exception is `data/calibration/`: summaries measured from public SEC filings (loan-level ABS-EE data has no VIN and no borrower identity), used to make the synthetic loans behave like real ones and to check every threshold.
 
 ---
 
@@ -46,26 +46,41 @@ Around the decision:
 - **Feedback loop, kept human.** Officers' approvals and rejections are counted per finding type (`/api/feedback`, Operations page). A type whose fixes keep getting rejected goes to the person who owns the rules; the rules never change themselves.
 - **Public console** (`web/`): the review queue, each case with its fix, memo and decision record, a data section (dictionary, sample rows, one fraud step by step, invoice documents), and "Test it yourself", the answer key including misses.
 
+## Real data: public SEC filings (`bt/sec/`, `proof/REAL_DATA.md`)
+
+The frauds are planted, but the yardstick is real:
+- **2.23M real loan records** from SEC Form ABS-EE: 28 public auto-loan pools of 22 lenders (Santander Drive, Exeter, Bridgecrest, AmeriCredit, Carvana, CarMax, Toyota, Honda and more), two consecutive months each.
+- **Real filings** (8-K items, 10-K Exhibit 21, XBRL financials) of 24 public non-bank lenders.
+- Honest auto loans in the test books move month to month by the measured rates, by credit band and loan age.
+- **Every threshold was checked against every real pool, and 0 of 28 honest pools trip a check.** `tests/test_sec_calibration.py` fails if a threshold moves into the real range.
+- The real data rejected a design: an overall peer benchmark would have flagged 3 of 28 honest pools, so it was replaced.
+- Four uses, each a check:
+  1. **Calibrate:** set thresholds from real behaviour.
+  2. **Benchmark the tape:** late loans that never get later (`ROLL_RATE_TOO_LOW`).
+  3. **Cross-check filings:** debt named in the borrower's own 10-K or 8-K but never disclosed to the bank; revenue that differs from the SEC filing.
+  4. **Same loans, two reports:** loans on the bank's tape that sit in the borrower's own public trust, whose payments no longer reach the bank.
+
 ## Proof: data it never saw
 
-Rules were built on development books (seed 7 and seeds 101–105). The numbers below come from five fresh books generated and scored once, after every change was final (seeds 301–305: 600 borrowers, 190 with planted fraud, including 40 of two harder types, 410 honest with realistic look-alikes). Full report: `proof/REPORT.md`.
+Rules were built on development books (seed 7 and seeds 101–105). The numbers below come from five fresh books generated and scored once, after every change was final (seeds 406–410, generator v3 calibrated on real SEC data: 600 borrowers, 250 with planted fraud, including 100 of five harder types, 350 honest with realistic look-alikes). Full report: `proof/REPORT.md`.
 
 | Measure | Borrower Truth | Quarterly sample audit |
 |---|---|---|
-| Frauds caught | **99%** (189/190) | 41% (78/190) |
-| Honest borrowers flagged "likely fraud" | 0 per 100 | 1.5 per 100 |
-| Honest borrowers sent to "worth a look" | 30 per 100 (the real review workload) | – |
+| Frauds caught | **99%** (248/250) | 38% (94/250) |
+| Honest borrowers flagged "likely fraud" | 0 of 350, in any month | 3.4 per 100 |
+| Honest borrowers sent to "worth a look" | 29 per 100 (the real review workload) | – |
 | Highest-priority 10% of the queue that are real frauds | 100% (60/60) | – |
-| Suggested fixes that target a planted trick | 365 of 366 | – |
-| Detection vs the audit (median) | **150 days earlier** | – |
-| Frauds PledgeCheck's four checks never flagged | **146** | – |
-| One monthly run, 120 borrowers | 0.86 s | – |
+| Suggested fixes that target a planted trick | 430 of 430 | – |
+| Detection vs the audit (median) | **90 days earlier** | – |
+| Frauds PledgeCheck's four checks never flagged | **205** | – |
+| Lost when every SEC-based check is switched off | 41 | – |
+| One monthly run, 120 borrowers | 0.98 s | – |
 
 Every system loses detections when it is switched off, so each one earns its place.
 
-**Before and after, same books:** the first version caught 143 of 150 on seeds 201–205; the current checks catch 146 of 150 on those same books (`proof/REPORT_v1_seeds201-205.md`, `proof/REPORT_seeds201-205_new_checks.md`). The old weakest check, dressed-up loan tapes (73%), is now 100% on the fresh books because the servicer pull is aimed by the cash.
+**History, all reports kept:** v1 caught 143 of 150 on seeds 201–205 (`proof/REPORT_v1_seeds201-205.md`). v2 caught 189 of 190 on 301–305, a median 150 days earlier (`proof/REPORT_v2_seeds301-305.md`), and 190 of 190 on 306–310 after an S5 fix. v3 books are harder (five harder fraud types, and honest loans that miss payments at the real rate), which is why the lead time is shorter. A first v3 run on 401–405 scored 247 of 250 (`proof/REPORT_v3_seeds401-405.md`); the generator then changed (its auto loans got their own random stream), so the headline comes from fresh seeds 406–410.
 
-**Weakest now:** financials that don't fit, 62 of 65. **The one miss** on 301–305: collateral pledged to a second lender, whose lien was filed under an abbreviated name ("Inds Grp L.L.C.") at the borrower's own address. S5 now expands filer abbreviations and falls back to the registered address. Because that fix came after seeing 301–305, it was tested on another five fresh books, scored once (seeds 306–310, `proof/REPORT_seeds306-310_after_s5_fix.md`): **190 of 190 caught**, audit 38%, 0 honest borrowers flagged at the end (2 of 410 were flagged in an earlier month and cleared), review load 25 per 100.
+**Weakest now:** bad loans reported as good, 63 of 65. Both missed borrowers hid only a few loans (6 and 71 loan-months), one paying them itself so the cash looked right: too few for a 30-loan servicer pull to hit.
 
 **A warning about near-perfect scores:** the frauds are ones I planted, so these numbers prove the checks cover the documented tricks. They don't predict a real-world catch rate.
 
@@ -77,9 +92,9 @@ Every system loses detections when it is switched off, so each one earns its pla
 
 | Rows | Seconds (one laptop, 8 GB) | Rows per second |
 |---|---|---|
-| 1.27M | 0.90 | 1.4M |
-| 5.1M | 1.98 | 2.6M |
-| 12.4M | 3.20 | 3.9M |
+| 1.29M | 1.05 | 1.2M |
+| 5.3M | 2.66 | 2.0M |
+| 13.2M | 4.39 | 3.0M |
 
 - **Partitioning:** work splits by borrower. Kafka is keyed by borrower, and the same SQL runs on DuckDB here or on Spark / BigQuery at bank scale.
 - **Fault isolation:** every system runs isolated with a time budget. If one crashes, the case still builds and says which check was unavailable (`--fail S4` demonstrates this).

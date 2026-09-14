@@ -157,7 +157,7 @@
    "confidence": "high",
    "plain": "money from lenders or linked companies is arriving dressed up as customer payments",
    "signals": [
-    "S3-B0028-RELATED_PARTY_INFLOW-3a0eb607"
+    "S3-B0028-RELATED_PARTY_INFLOW-27aa045b"
    ],
    "corroborated_by": [
     "S6-B0028-SHELL_INDICATORS-a80898c9",
@@ -182,7 +182,7 @@
     "S5-B0028-JUDGMENT-5c5e0929"
    ],
    "corroborated_by": [
-    "S3-B0028-RELATED_PARTY_INFLOW-3a0eb607",
+    "S3-B0028-RELATED_PARTY_INFLOW-27aa045b",
     "S6-B0028-SHELL_INDICATORS-a80898c9",
     "S6-B0028-RELATED_ENTITY-f7cb7314"
    ],
@@ -209,7 +209,7 @@
     "S6-B0028-RELATED_ENTITY-26978907"
    ],
    "corroborated_by": [
-    "S3-B0028-RELATED_PARTY_INFLOW-3a0eb607",
+    "S3-B0028-RELATED_PARTY_INFLOW-27aa045b",
     "S5-B0028-JUDGMENT-5c5e0929"
    ],
    "sources": [
@@ -243,16 +243,16 @@
  ],
  "signals": [
   {
-   "signal_id": "S3-B0028-RELATED_PARTY_INFLOW-3a0eb607",
+   "signal_id": "S3-B0028-RELATED_PARTY_INFLOW-27aa045b",
    "entity_id": "B0028",
    "system": "S3",
    "type": "RELATED_PARTY_INFLOW",
    "severity": 0.8,
    "confidence": 0.85,
    "evidence": [
-    "payment:T000101676",
-    "payment:T000101677",
-    "payment:T000101678",
+    "payment:T000100144",
+    "payment:T000100145",
+    "payment:T000100146",
     "payer:Lakeshore Receivables LLC",
     "total:$229,587 in 28 payments"
    ],
@@ -441,11 +441,11 @@
   }
  ],
  "decision": {
-  "decision_id": "B0028-m23-62b0c621c805",
-  "result_digest": "62b0c621c805",
-  "inputs_digest": "d8cd6b338715",
-  "rule_version": "18856c2e1cf6",
-  "code_version": "dcf8b8a",
+  "decision_id": "B0028-m23-63b7034fcf0e",
+  "result_digest": "63b7034fcf0e",
+  "inputs_digest": "ceddf15cfd0b",
+  "rule_version": "ffff5f535c8f",
+  "code_version": "ecbabc3+local-changes",
   "as_of": 23
  }
 }

@@ -1,6 +1,6 @@
 {
  "asOf": 23,
- "receivedAt": "2026-09-12T11:05:51.812200Z",
+ "receivedAt": "2026-09-14T11:43:11.493934Z",
  "runMetrics": {
   "data_quality": {
    "quarantined": {},
@@ -8,75 +8,77 @@
   },
   "S6": {
    "status": "ok",
-   "seconds": 0.022,
-   "signals": 89
+   "seconds": 0.012,
+   "signals": 93
   },
   "S1": {
    "status": "ok",
-   "seconds": 0.035,
-   "signals": 63
+   "seconds": 0.089,
+   "signals": 74
   },
   "S2": {
    "status": "ok",
-   "seconds": 0.083,
-   "signals": 39
+   "seconds": 0.116,
+   "signals": 61
   },
   "S3": {
    "status": "ok",
-   "seconds": 0.285,
+   "seconds": 0.311,
    "signals": 24
   },
   "S4": {
    "status": "ok",
-   "seconds": 0.043,
+   "seconds": 0.05,
    "signals": 29
   },
   "S5": {
    "status": "ok",
-   "seconds": 0.007,
-   "signals": 61
+   "seconds": 0.012,
+   "signals": 67
   },
   "S7": {
    "status": "ok",
-   "seconds": 0.003,
-   "signals": 65
+   "seconds": 0.004,
+   "signals": 73
   },
   "manifest": {
    "as_of": 23,
    "inputs": {
     "borrowers": "01b1832dcf01bff8",
     "court_records": "a79407e3d9e271c7",
-    "disclosures": "069b42daedf69dfe",
+    "disclosures": "0cdaea82b556b55e",
     "doc_reads": "c5c0b7073fb1f912",
-    "entities": "fce842ed930f19c7",
+    "entities": "79858846bd92cf4a",
     "facilities": "ac876e56664fca9d",
-    "financials": "f66adc51cd7b983a",
+    "financials": "bf4f50bccb57d5fa",
     "gleif": "0e84cc4e59000477",
     "invoices": "290ea012da9effd1",
-    "outflows": "6060ead84a2b5f83",
-    "payments": "325fdb80d4a859bc",
-    "persons": "17d86503475efbd6",
+    "outflows": "cbc9c81913ea34da",
+    "payments": "5b5ba4459fc9bfd7",
+    "persons": "6e3700a1a1e24949",
     "pledgecheck": "bb196f91c09eedb3",
-    "source_truth": "4ad3eae6341fd192",
-    "tape": "3de0a0e8d0de92db",
+    "public_abs": "5b21da6149dc8d0d",
+    "sec_filings": "4a8fa9b5fd415fbf",
+    "source_truth": "ca03b67746cae412",
+    "tape": "5022d2804c4bc776",
     "ucc_filings": "dc69464a1eac5eca"
    },
-   "inputs_digest": "d8cd6b338715",
-   "rule_version": "18856c2e1cf6",
-   "code_version": "dcf8b8a"
+   "inputs_digest": "ceddf15cfd0b",
+   "rule_version": "ffff5f535c8f",
+   "code_version": "ecbabc3+local-changes"
   },
   "combiner": {
    "status": "ok",
-   "seconds": 0.08,
+   "seconds": 0.099,
    "cases": 120
   },
-  "total_seconds": 1.221,
+  "total_seconds": 1.425,
   "as_of": 23
  },
  "verdicts": {
   "EXPLAINED": 6,
-  "LIKELY_FRAUD": 38,
-  "NEEDS_MORE_EVIDENCE": 35,
-  "NO_ISSUE": 41
+  "LIKELY_FRAUD": 50,
+  "NEEDS_MORE_EVIDENCE": 32,
+  "NO_ISSUE": 32
  }
 }

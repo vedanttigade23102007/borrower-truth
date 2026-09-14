@@ -8,6 +8,8 @@ A line-by-line check of `design/SYSTEM-DESIGN.md` against the code. It was start
 - **not built** — the design doc now says so
 - **corrected** — the doc described something we changed
 
+**Verification after the real-data build (14 Sep 2026):** 41 Python tests pass; generator v3 calibrated on real SEC data; held-out proof run once on fresh seeds 406–410 (REPORT.md); every S2 threshold checked against 28 real pools (REAL_DATA.md, tests/test_sec_calibration.py).
+
 **Verification at close (12 Sep 2026):**
 - 33 Python tests, 11 Java tests, the TypeScript check and lint pass.
 - Held-out proof run once on 5 fresh books (seeds 301–305) after all detection changes, and on the original 5 for before/after. The one miss led to an S5 fix, which was then scored once on 5 more fresh books (306–310).
@@ -17,7 +19,7 @@ A line-by-line check of `design/SYSTEM-DESIGN.md` against the code. It was start
 
 | Claim | Status | Evidence |
 |---|---|---|
-| S1: PledgeCheck result, VIN-fingerprint uniqueness across WF facilities, identical invoices across facilities | built ✓ | proof/REPORT.md (double pledge 44/45) |
+| S1: PledgeCheck result, VIN-fingerprint uniqueness across WF facilities, identical invoices across facilities | built ✓ | proof/REPORT.md (double pledge 65/65) |
 | S1: `PLEDGECHECK_ABSENT` (coverage note) | **built ✓** (new) | shown on every unenrolled borrower's case as context ("can't verify other lenders"); never moves the verdict or the queue |
 | S1: uniqueness across linked entities' facilities (S6→S1) | not built | the synthetic book has no WF facilities for linked shells |
 | S2: impossible transitions, source-system sampling, current-without-payment, deferment-without-programme | built ✓ | the old weakest check (v1 held-out: 33/45) |
@@ -28,11 +30,11 @@ A line-by-line check of `design/SYSTEM-DESIGN.md` against the code. It was start
 | S3 streaming: real-time payer check, dedupe, dead-letter queue | built ✓ | STACK-DEMO.md (p50 24 ms; 8 of 8 alerted borrowers are frauds) |
 | S3: `CIRCULAR_FLOW` (round trips through a middleman) | **built ✓** (new) | the book now has operating-account outflows. Money out to a company and back from it within 35 days, 3+ times, as payments that settle no invoice or loan. Honest look-alike (a customer that is also a supplier) caused 5 false alarms on the dev books until the check required unsettled payments; now 0. Dev round trips 20/20. test_variants.py |
 | S3: intermediary concentration | not built | |
-| S4: altered, unpaid, implausible invoices | built ✓ | REPORT.md (fake invoices 32/32) |
+| S4: altered, unpaid, implausible invoices | built ✓ | REPORT.md (fake invoices 34/34) |
 | S4: document model reads invoices; document-vs-data check with a second look | **built ✓** (was not wired) | MODEL.md (held-out book: 24/24 tampered caught, 2.9% false flags); falls back to rules without reads |
-| S5: name + address lien matching, undisclosed/competing liens, judgments | built ✓ | REPORT.md (hidden debt 40/40) |
+| S5: name + address lien matching, undisclosed/competing liens, judgments | built ✓ | REPORT.md (hidden debt 60/60) |
 | S5: filer abbreviations and a registered-address fallback | **built ✓** (new) | the one miss on fresh books 301–305: a second lender's lien filed as "Ironwood Inds Grp L.L.C." at the borrower's own address. Abbreviations are now expanded and a filing at a company's exact registered address matches if the names broadly agree. Dev books unchanged (0 false alarms). Then scored once on new fresh books 306–310: 190/190 caught, audit 38%, 0 honest flagged at the end (2 of 410 flagged in an earlier month, then cleared). REPORT_seeds306-310_after_s5_fix.md; test_s5_matching.py |
-| S6: officer/address graph, shell indicators | built ✓ | REPORT.md (shells 62/62) |
+| S6: officer/address graph, shell indicators | built ✓ | REPORT.md (shells 64/65) |
 | S6: real GLEIF data | **built ✓** (adapter) | `bt/adapters/gleif.py`, run live: Wells Fargo & Company, LEI PBLD0EJDB5FWOLXP3B76, plus a subsidiary's parent chain. The synthetic book itself still uses a GLEIF-like table |
 | S6: phone numbers, registered agents | **built ✓** (new) | nominee shells, registered to someone else at another address, are linked by the borrower's phone or the owner acting as registered agent; commercial agent services are ignored. Honest look-alikes (shared virtual office, owner as agent for an unrelated business) stay context. Dev nominee shells 20/20, 0 honest flagged. test_variants.py |
 | S6: "single counterparty" | not built | |
@@ -43,7 +45,7 @@ A line-by-line check of `design/SYSTEM-DESIGN.md` against the code. It was start
 
 | Claim | Status | Evidence |
 |---|---|---|
-| Independent-source confidence, facts, chaining, verdicts, priority | built ✓ | top-decile precision 60/60; fixes on target 365/366 |
+| Independent-source confidence, facts, chaining, verdicts, priority | built ✓ | top-decile precision 60/60; fixes on target 430/430 (fresh v3 books 406–410) |
 | Cases, playbooks, drafts, approvals, 409 before approval, audit, Prometheus | built ✓ | CaseFlowTest; browser approval stored server-side |
 | Real-time alerts reach the case | **built ✓** (was not built) | signal bridge, `/api/live-alerts`, case page; CaseFlowTest; live run: 48 alerts forwarded |
 | Finding sentences and drafts written by an open model | partial | the investigator agent's memo is model-written and checked line by line; letters and finding sentences stay templates (model hook with fallback exists) |
@@ -63,7 +65,7 @@ A line-by-line check of `design/SYSTEM-DESIGN.md` against the code. It was start
 | Public-data cache with "stale since" | **built ✓** | test_fallbacks.py (source down → stale cache; no cache → clear error) |
 | Isolated checks, time budget, break-it test | built ✓ | test_pipeline; STACK-DEMO break-it |
 | Model fallback | partial | S4 falls back to rules; drafts fall back to templates; no base-model tier |
-| Incremental processing, partitioned Parquet, autoscaled worker pools | not built (deliberate) | a full monthly run of 12.4M rows takes 3.2 s on one laptop; partitioning pays off beyond one machine and would complicate the data-quality gate for no gain here |
+| Incremental processing, partitioned Parquet, autoscaled worker pools | not built (deliberate) | a full monthly run of 13.2M rows takes 4.4 s on one laptop; partitioning pays off beyond one machine and would complicate the data-quality gate for no gain here |
 | Model reads flagged docs only; 4-bit quantization | not built | the demo reads a per-borrower sample in fp16 |
 | promptfoo faithfulness check; dbt | not built | promptfoo would be a new install (not approved). Its job, checking model-written text against sources, is done in code by the agent's memo checks; dbt optional |
 | Grafana dashboard | **built ✓** | rendered to an image by Grafana's own image renderer in Codespaces: [grafana-dashboard.png](grafana-dashboard.png); every panel draws data (STACK-DEMO.md, 12 Sep) |
@@ -74,10 +76,12 @@ A line-by-line check of `design/SYSTEM-DESIGN.md` against the code. It was start
 
 | Claim | Status | Evidence |
 |---|---|---|
-| Catch rate, switch-off test, beyond PledgeCheck, audit baseline, false alarms | built ✓ | REPORT.md (fresh books 301–305): 189/190 (99%) vs 41% for the audit; 0 false alarms; review load 30.5/100. Same new code on the original books 201–205: 146/150 (97%, was 95%). v1 report kept as REPORT_v1_seeds201-205.md |
-| Top-decile precision, fix quality | **built ✓** | 60/60; 365/366 |
-| Fresh held-out books | **built ✓** | seeds 301–305 generated and scored after every change was final. Seeds 301 and 302 were first created by the older generator when a run was stopped mid-way; they were regenerated and all five re-scored, with no code change in between |
+| Catch rate, switch-off test, beyond PledgeCheck, audit baseline, false alarms | built ✓ | REPORT.md (fresh v3 books 406–410): 248/250 (99%) vs 38% for the audit; 0 of 350 honest flagged in any month; review load 29.1/100; SEC-based checks off: 41 lost. Earlier reports kept: v1 (201–205), v2 (301–305: 189/190), v3 first run (401–405: 247/250) |
+| Top-decile precision, fix quality | **built ✓** | 60/60; 430/430 |
+| Fresh held-out books | **built ✓** | seeds 406–410 generated and scored once after every change was final (14 Sep). 401–405 were scored once before a generator change (v3 auto loans moved to their own random stream) and are kept as history, not re-used |
 | Alert → ready case file time | **built ✓** | payment into Kafka → alert visible on the officer's case: p50 1.50 s, max 1.54 s over 10 tagged payments (STACK-DEMO.md); batch monthly run in under 1.5 s |
-| Loan tapes calibrated on SEC ABS-EE | not built | SEC's EDGAR requires a contact email in every automated request; I won't send your email without your OK |
+| Loan tapes calibrated on SEC ABS-EE | **built ✓** (14 Sep) | 56 ABS-EE files, 28 public auto pools, 22 lenders, 2.23M loan rows (contact email approved by Vedant). Honest auto loans in generator v3 move by the measured rates; every S2 threshold checked against every real pool: 0 of 28 flagged; a rejected level benchmark flagged 3 of 28 (REAL_DATA.md) |
+| SEC filings cross-check (10-K debt, 8-K 2.03/2.04, Exhibit 21, XBRL revenue) | **built ✓** (14 Sep) | FILED_DEBT_UNDISCLOSED, FILED_VS_REPORTED, Exhibit 21 links, 8-K 2.04 context; real 8-K/Ex21/XBRL pulled for 24 public non-bank lenders (58 new-debt 8-Ks in 12 months, so an 8-K alone is never a clue) |
+| Same loans in a public trust and on the bank's tape | **built ✓** (14 Sep) | PUBLIC_POOL_OVERLAP (no-VIN fingerprint, 99.99% unique on 787,944 real loans) + POOL_LOANS_PAID_ELSEWHERE (fact) |
 | Fine-tuned vs base model | built ✓ | weak baseline, labelled |
 | Model section: LoRA, P100, CORD/FUNSD | corrected | Donut full fine-tune on T4, synthetic invoices |

@@ -1,8 +1,8 @@
 {
  "book": "the demo book shown in the console",
  "borrowers": 120,
- "frauds": 38,
- "total_rows": 1316552,
+ "frauds": 50,
+ "total_rows": 1348019,
  "tables": [
   {
    "table": "borrowers",
@@ -52,7 +52,7 @@
    "table": "entities",
    "title": "Company registry",
    "what": "Every company the system knows about: borrowers, their affiliates, lenders, customers. Like a state business register.",
-   "rows": 569,
+   "rows": 610,
    "columns": [
     {
      "name": "entity_id",
@@ -197,7 +197,7 @@
    "table": "tape",
    "title": "Loan file (tape)",
    "what": "What the borrower reports each month about the loans it pledged as collateral.",
-   "rows": 393934,
+   "rows": 414767,
    "columns": [
     {
      "name": "month",
@@ -243,7 +243,7 @@
      "asset_id": "A-B0028-000001",
      "vin": "SYNR3XLPFVHYATXEM",
      "balance": 13331.61,
-     "credit_score": 638,
+     "credit_score": 650,
      "dpd_bucket_reported": 0,
      "deferred_flag": 0,
      "eligible_reported": true
@@ -254,7 +254,7 @@
      "asset_id": "A-B0028-000002",
      "vin": "SYNMV1DCU3LV6GA1F",
      "balance": 9982.58,
-     "credit_score": 679,
+     "credit_score": 673,
      "dpd_bucket_reported": 0,
      "deferred_flag": 0,
      "eligible_reported": true
@@ -265,7 +265,7 @@
      "asset_id": "A-B0028-000005",
      "vin": "SYNLMVYHHX5JCFRZ9",
      "balance": 5557.38,
-     "credit_score": 685,
+     "credit_score": 728,
      "dpd_bucket_reported": 0,
      "deferred_flag": 0,
      "eligible_reported": true
@@ -276,7 +276,7 @@
      "asset_id": "A-B0028-000008",
      "vin": "SYN3M12VK582TCEJS",
      "balance": 1824.42,
-     "credit_score": 693,
+     "credit_score": 663,
      "dpd_bucket_reported": 0,
      "deferred_flag": 0,
      "eligible_reported": true
@@ -287,7 +287,7 @@
      "asset_id": "A-B0028-000012",
      "vin": "SYNH2PUK718EMLDZ7",
      "balance": 3455.26,
-     "credit_score": 685,
+     "credit_score": 552,
      "dpd_bucket_reported": 1,
      "deferred_flag": 0,
      "eligible_reported": true
@@ -298,7 +298,7 @@
      "asset_id": "A-B0028-000016",
      "vin": "SYN5GWHGUMBRFUG39",
      "balance": 11353.85,
-     "credit_score": 655,
+     "credit_score": 718,
      "dpd_bucket_reported": 0,
      "deferred_flag": 0,
      "eligible_reported": true
@@ -309,7 +309,7 @@
      "asset_id": "A-B0028-000020",
      "vin": "SYNYW83LYN8ZY19GX",
      "balance": 11201.78,
-     "credit_score": 732,
+     "credit_score": 713,
      "dpd_bucket_reported": 0,
      "deferred_flag": 0,
      "eligible_reported": true
@@ -320,7 +320,7 @@
      "asset_id": "A-B0028-000022",
      "vin": "SYNST2K37X2Z5XYJ4",
      "balance": 2557.89,
-     "credit_score": 815,
+     "credit_score": 627,
      "dpd_bucket_reported": 0,
      "deferred_flag": 0,
      "eligible_reported": true
@@ -331,7 +331,7 @@
      "asset_id": "A-B0028-000023",
      "vin": "SYNXFUJ3502USHZD9",
      "balance": 4431.72,
-     "credit_score": 719,
+     "credit_score": 771,
      "dpd_bucket_reported": 0,
      "deferred_flag": 0,
      "eligible_reported": true
@@ -342,7 +342,7 @@
      "asset_id": "A-B0028-000024",
      "vin": "SYNBMK0RXS3EBRN84",
      "balance": 3725.22,
-     "credit_score": 635,
+     "credit_score": 633,
      "dpd_bucket_reported": 0,
      "deferred_flag": 0,
      "eligible_reported": true
@@ -353,7 +353,7 @@
    "table": "source_truth",
    "title": "Servicer system",
    "what": "What the borrower's own loan system really says. The system samples it the way an auditor would.",
-   "rows": 397517,
+   "rows": 419492,
    "columns": [
     {
      "name": "month",
@@ -439,7 +439,7 @@
    "table": "payments",
    "title": "Bank payments",
    "what": "Money arriving in the collection account Wells Fargo controls.",
-   "rows": 430850,
+   "rows": 419318,
    "columns": [
     {
      "name": "txn_id",
@@ -468,7 +468,7 @@
    ],
    "sample": [
     {
-     "txn_id": "T000099544",
+     "txn_id": "T000098012",
      "month": 0,
      "payer_name": "Priya Garcia",
      "amount": 399.95,
@@ -476,7 +476,7 @@
      "ref": "A-B0028-000001"
     },
     {
-     "txn_id": "T000099545",
+     "txn_id": "T000098013",
      "month": 0,
      "payer_name": "Luis Patel",
      "amount": 299.48,
@@ -484,7 +484,7 @@
      "ref": "A-B0028-000002"
     },
     {
-     "txn_id": "T000099546",
+     "txn_id": "T000098014",
      "month": 0,
      "payer_name": "David Davis",
      "amount": 166.72,
@@ -492,7 +492,7 @@
      "ref": "A-B0028-000005"
     },
     {
-     "txn_id": "T000099547",
+     "txn_id": "T000098015",
      "month": 1,
      "payer_name": "Carlos Johnson",
      "amount": 54.73,
@@ -500,7 +500,7 @@
      "ref": "A-B0028-000008"
     },
     {
-     "txn_id": "T000099548",
+     "txn_id": "T000098016",
      "month": 0,
      "payer_name": "Grace Martinez",
      "amount": 340.62,
@@ -508,7 +508,7 @@
      "ref": "A-B0028-000016"
     },
     {
-     "txn_id": "T000099549",
+     "txn_id": "T000098017",
      "month": 0,
      "payer_name": "Linda Moore",
      "amount": 336.05,
@@ -516,7 +516,7 @@
      "ref": "A-B0028-000020"
     },
     {
-     "txn_id": "T000099550",
+     "txn_id": "T000098018",
      "month": 0,
      "payer_name": "Nora Moore",
      "amount": 76.74,
@@ -524,7 +524,7 @@
      "ref": "A-B0028-000022"
     },
     {
-     "txn_id": "T000099551",
+     "txn_id": "T000098019",
      "month": 0,
      "payer_name": "Carlos Brown",
      "amount": 132.95,
@@ -532,7 +532,7 @@
      "ref": "A-B0028-000023"
     },
     {
-     "txn_id": "T000099552",
+     "txn_id": "T000098020",
      "month": 0,
      "payer_name": "Carlos Martinez",
      "amount": 111.76,
@@ -540,7 +540,7 @@
      "ref": "A-B0028-000024"
     },
     {
-     "txn_id": "T000099553",
+     "txn_id": "T000098021",
      "month": 0,
      "payer_name": "Daniel Garcia",
      "amount": 232.35,
@@ -553,7 +553,7 @@
    "table": "outflows",
    "title": "Operating-account payments",
    "what": "Money leaving the borrower's own operating account: payroll, rent, suppliers, debt service.",
-   "rows": 19725,
+   "rows": 19834,
    "columns": [
     {
      "name": "txn_id",
@@ -986,7 +986,7 @@
    "table": "disclosures",
    "title": "Disclosures",
    "what": "What the borrower told Wells Fargo: its debts, affiliates, payment-pause programmes.",
-   "rows": 170,
+   "rows": 211,
    "columns": [
     {
      "name": "kind",

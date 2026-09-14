@@ -132,6 +132,7 @@ class Book:
         self.rng2 = np.random.default_rng([seed, 2026])
         # v3 extras (SEC filers, public pools, three variants) draw from a third stream
         self.rng3 = np.random.default_rng([seed, 2027])
+        self.rng4 = np.random.default_rng([seed, 2028])  # v3 auto loans (the main stream still advances as in v2)
         self.v3 = generator == "v3"
         self.cal = load_calibration() if self.v3 else None
         self._vin_score, self._v3_loans, self._fin_true = {}, {}, {}
@@ -409,10 +410,22 @@ class Book:
 
     # ---------- loan-tape borrowers ----------
     def loans(self, bid, btype, facs, mechs, start, benign, planted):
-        rng = self.rng
+        if not (self.v3 and btype == "auto_finance"):  # consumer and real-estate books keep v2's assumed behaviour
+            return self._loans_impl(bid, btype, facs, mechs, start, benign, planted, self.rng, False)
+        # v3 auto loans come from their own random stream. The main stream first advances exactly as v2 would
+        # (that run's tables are thrown away), so every other table, invoices included, stays identical to v2
+        # and the document-model reads of those invoices stay valid.
+        big, disc, n_txn, keep = self.big, self.small["disclosures"], self._n_txn, dict(planted)
+        self.big, self.small["disclosures"] = {k: [] for k in big}, list(disc)
+        self._loans_impl(bid, btype, facs, mechs, start, benign, planted, self.rng, False)
+        self.big, self.small["disclosures"], self._n_txn = big, disc, n_txn
+        planted.clear()
+        planted.update(keep)
+        return self._loans_impl(bid, btype, facs, mechs, start, benign, planted, self.rng4, True)
+
+    def _loans_impl(self, bid, btype, facs, mechs, start, benign, planted, rng, v3auto):
         M = MONTHS
         n = int(np.clip(rng.lognormal(np.log(260 * self.scale), 0.5), 20, 400_000 * max(self.scale, 1)))
-        v3auto = self.v3 and btype == "auto_finance"  # consumer and real-estate books keep v2's assumed behaviour
         risk = RISK[btype]
         P = np.array([[1 - 0.03 * risk, 0.03 * risk, 0, 0, 0],
                       [0.50, 0, 0.50, 0, 0],
@@ -420,7 +433,7 @@ class Book:
                       [0.10, 0, 0, 0.30, 0.60]])
         cum = P.cumsum(1)
         if v3auto:  # real public auto loans (SEC ABS-EE sample), see _v3_attrs
-            orig, bal, info = self._v3_attrs(n)
+            orig, bal, info = self._v3_attrs(n, rng)
         else:
             orig = rng.integers(-18, M - 3, n)
             bal = rng.lognormal(np.log(BAL[btype]), 0.45, n)
@@ -575,9 +588,9 @@ class Book:
         bal_q = np.array([(balh[3 * q + 2] * (rep[3 * q + 2] >= 0)).sum() for q in range(M // 3)])
         return coll, bal_q
 
-    def _v3_attrs(self, n):
+    def _v3_attrs(self, n, rng):
         """n loans drawn from real public auto loans of one lender tier: amount, term, rate, vehicle, state, score."""
-        rng, cal = self.rng, self.cal
+        cal = self.cal
         tier = str(rng.choice(V3_TIERS, p=V3_TIER_P))
         S = cal["sample"][tier]
         pick = rng.integers(0, len(S["score"]), n)

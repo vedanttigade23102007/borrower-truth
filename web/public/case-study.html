@@ -8,7 +8,7 @@
   :root { --ink:#0b1220; --muted:#5b6678; --line:#dce4ef; --accent:#1d4ed8; --soft:#eef3fb; --ok:#047857; }
   * { box-sizing: border-box; }
   body { margin:0; background:#eef1f5; color:var(--ink); font:12px/1.38 -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Helvetica, Arial, sans-serif; }
-  .page { width:210mm; min-height:297mm; margin:12px auto; background:#fff; padding:9mm 13mm; }
+  .page { width:210mm; min-height:297mm; margin:12px auto; background:#fff; padding:7mm 13mm; }
   h1 { font-size:18px; margin:0; letter-spacing:-.01em; }
   h2 { font-size:11.5px; letter-spacing:.08em; text-transform:uppercase; color:var(--accent); margin:9px 0 4px; }
   p { margin:0 0 4px; }
@@ -50,29 +50,31 @@
     </ul>
   </div>
 
-  <h2>Proof: 5 fresh synthetic books, scored once after every change (600 borrowers, 190 frauds)</h2>
+  <h2>Proof: 5 fresh synthetic books calibrated on real SEC data, scored once (600 borrowers, 250 frauds)</h2>
   <div class="grid">
-    <div class="m"><b>99%</b><span>frauds caught (189/190). A quarterly audit caught 41%.</span></div>
-    <div class="m"><b>150 days</b><span>earlier than the audit (median)</span></div>
-    <div class="m"><b>0 / 100</b><span>honest borrowers marked "likely fraud"</span></div>
-    <div class="m"><b>146</b><span>caught frauds never flagged by PledgeCheck's four checks</span></div>
+    <div class="m"><b>99%</b><span>frauds caught (248/250). A quarterly audit caught 38%.</span></div>
+    <div class="m"><b>90 days</b><span>earlier than the audit (median)</span></div>
+    <div class="m"><b>0 / 350</b><span>honest borrowers marked "likely fraud", in any month</span></div>
+    <div class="m"><b>0 of 28</b><span>real public loan pools (2.2M SEC loan records) trip any check</span></div>
     <div class="m"><b>24 / 24</b><span>tampered invoices caught by the document model (2.9% false flags)</span></div>
     <div class="m"><b>96.5%</b><span>invoice totals read correctly (unseen borrowers)</span></div>
     <div class="m"><b>24 ms</b><span>payment to alert, median (Kafka)</span></div>
-    <div class="m"><b>12.4M rows</b><span>in 3.2 s, one 8 GB laptop</span></div>
+    <div class="m"><b>13.2M rows</b><span>in 4.4 s, one 8 GB laptop</span></div>
   </div>
 
   <h2>What a credit officer gets</h2>
-  <p>Not a score but a solved case: <b>what's wrong</b>, <b>the evidence chain</b>, a <b>verdict with confidence</b>, a <b>playbook fix</b> and a <b>drafted letter that asks and doesn't accuse</b>. Nothing is sent until a person approves; "done" is refused before "approved". All 60 of the highest-priority tenth of the queue are real frauds, and 365 of 366 suggested fixes target a planted trick.</p>
+  <p>Not a score but a solved case: <b>what's wrong</b>, <b>the evidence chain</b>, a <b>verdict with confidence</b>, a <b>playbook fix</b> and a <b>drafted letter that asks and doesn't accuse</b>, sent only after a person approves. The top tenth of the queue is 60 of 60 real frauds; all 430 suggested fixes target a planted trick.</p>
+
+  <p><b>Real data:</b> 2.2M loan records from SEC ABS-EE filings (28 public pools, 22 lenders) set how honest loans behave and check every threshold (0 of 28 real pools flagged; a benchmark that flagged 3 was dropped). SEC-based checks (late loans that never get later, debt named only in the borrower's 10-K or 8-K, loans also in its public trust) account for 41 of the 248 catches.</p>
 
   <h2>Honest limits</h2>
   <table>
-    <tr><td>Data</td><td>All synthetic. It proves coverage of the documented tricks, not real-world rates. Real accuracy needs Wells Fargo data and model-risk review.</td></tr>
-    <tr><td>Workload</td><td>About 30 in every 100 honest borrowers land in "worth a look": the real review cost, reported rather than hidden.</td></tr>
-    <tr><td>Weakest check</td><td>Financials that don't fit: 62 of 65. One miss: a lien filed under an abbreviated name; matching since fixed.</td></tr>
-    <tr><td>Model</td><td>Compared only with its untrained base; no large-model benchmark yet. The second read cut false flags only from 17 to 15.</td></tr>
-    <tr><td>Market</td><td>Vendors each cover one place (Setpoint, Quantexa, Wolters Kluwer); none publicly joins all seven, so this uses them rather than replacing them (<code>research/COMPETITORS.md</code>).</td></tr>
-    <tr><td>Not built</td><td>Partitioned storage (no gain at this scale), obligor confirmations, officer sign-in through a bank login. Line-by-line status in <code>proof/AUDIT.md</code>.</td></tr>
+    <tr><td>Data</td><td>Frauds are planted; honest behaviour and thresholds come from real SEC data. It proves coverage of the documented tricks, not real-world rates. Tricolor's own deals were private and never filed ABS-EE.</td></tr>
+    <tr><td>Workload</td><td>About 29 in every 100 honest borrowers land in "worth a look": the real review cost, reported rather than hidden.</td></tr>
+    <tr><td>Weakest check</td><td>Bad loans reported as good: 63 of 65. Both misses hid only a few loans, too few for a 30-loan servicer pull to hit.</td></tr>
+    <tr><td>Model</td><td>Compared only with its untrained base; no large-model benchmark yet.</td></tr>
+    <tr><td>Market</td><td>Vendors each cover one place (Setpoint, Quantexa, Wolters Kluwer); none publicly joins all seven, so this uses them rather than replacing them.</td></tr>
+    <tr><td>Not built</td><td>Partitioned storage, obligor confirmations, bank sign-in. Status: <code>proof/AUDIT.md</code>.</td></tr>
   </table>
 
   <p class="fine">Sources: WF 10-Q (Q1, Q2 2026); DOJ SDNY 25-271, 26-012 (allegations); SEC 2026-77; Setpoint release (Oct 2025). 57 of 57 claims checked (<code>research/VERIFY.md</code>). Not affiliated with Wells Fargo.</p>
