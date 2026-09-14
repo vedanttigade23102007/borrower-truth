@@ -12,6 +12,13 @@ missed; that is reported, not hidden.
 Old undisclosed liens that pre-date onboarding are often stale (debt repaid,
 filing never terminated). They are reported at lower confidence and asked
 about, not treated as proof.
+
+When the borrower (or its parent) files with the SEC, its own filings are a second
+source: the 10-K debt footnote and 8-K Item 2.03 ("creation of a direct financial
+obligation") name its lenders. A lender named there, but never disclosed to Wells
+Fargo two months after the filing, is FILED_DEBT_UNDISCLOSED: a checkable fact that
+needs no lien (unsecured debt leaves no UCC filing). 8-K Item 2.04 (a lender sped up
+repayment) is shown as context: a credit event, not fraud.
 """
 import re
 
@@ -26,6 +33,14 @@ ABBREV = {"INDS": "INDUSTRIES", "IND": "INDUSTRIES", "GRP": "GROUP", "HLDGS": "H
           "CAP": "CAPITAL", "INTL": "INTERNATIONAL", "MFG": "MANUFACTURING", "SVCS": "SERVICES", "SVC": "SERVICES",
           "DIST": "DISTRIBUTION", "FINL": "FINANCIAL", "MGMT": "MANAGEMENT", "PTNRS": "PARTNERS", "ASSOC": "ASSOCIATES"}
 FUZZY_CUTOFF = 88
+FILING_GRACE = 2  # months a borrower has to tell the bank about debt it announced to the SEC
+
+FILED_DEBT = """
+SELECT borrower_id, counterparty_entity_id AS lender, any_value(counterparty_name) AS name, min(filed_month) AS first_m,
+       list(DISTINCT form || ' ' || item ORDER BY form || ' ' || item) AS forms
+FROM sec_filings WHERE item IN ('debt', '2.03') AND coalesce(counterparty_entity_id, '') NOT IN ('', 'E_WF')
+GROUP BY 1, 2
+"""
 ADDRESS_NAME_FLOOR = 60  # a filing at a company's exact registered address still needs a broadly similar name
 
 
@@ -100,13 +115,37 @@ def run(ctx: Ctx):
             out.append(s)
             if not stale:
                 undisclosed.setdefault(b, []).append(s.signal_id)
+    exact: dict[str, set] = {}  # full legal name, suffix included -> registry entities
+    for r in ctx.rows("SELECT entity_id, name FROM entities"):
+        exact.setdefault(norm_addr(r["name"]), set()).add(r["entity_id"])
     for c in ctx.rows("SELECT * FROM courts"):
         targets, score = match(c["defendant_name"])
+        owners = exact.get(norm_addr(c["defendant_name"]), set())
+        if owners:  # the judgment names a registered company exactly: it belongs to that one, not a look-alike
+            targets = [t for t in targets if t["entity_id"] in owners]
         for t in targets:
             big = c["amount"] > 1_000_000
             out.append(sig("S5", t["borrower_id"], "JUDGMENT", 0.5 if big else 0.15, 0.9 if score == 100 else 0.8,
                            [f"court:{c['case_id']}"],
                            f"Judgment of ${c['amount']:,.0f} against '{c['defendant_name']}' in favour of {c['plaintiff']}",
                            c["month"], [t["entity_id"]]))
+    if not ctx.shared.get("sec_off"):
+        for f in ctx.rows(FILED_DEBT):
+            b = f["borrower_id"]
+            if (b, f["lender"]) in disclosed or f["first_m"] > ctx.as_of - FILING_GRACE:
+                continue
+            forms = ", ".join(x.replace(" debt", " debt footnote").replace("8-K 2.03", "8-K Item 2.03") for x in f["forms"])
+            s = sig("S5", b, "FILED_DEBT_UNDISCLOSED", 0.85, 0.9,
+                    [f"sec_filing:{b}:{x.replace(' ', '_')}" for x in f["forms"]] + [f"disclosures:{b}#debt"],
+                    f"The borrower's own SEC filings ({forms}) name '{f['name']}' as a lender, but that debt was never "
+                    f"disclosed to Wells Fargo", f["first_m"], [f["lender"]])
+            out.append(s)
+            undisclosed.setdefault(b, []).append(s.signal_id)
+        for e in ctx.rows("SELECT * FROM sec_filings WHERE item = '2.04' ORDER BY filed_month"):
+            out.append(sig("S5", e["borrower_id"], "DEBT_ACCELERATION_FILED", 0.2, 1.0,
+                           [f"sec_filing:{e['borrower_id']}:8-K_2.04:month={e['filed_month']}"],
+                           f"8-K Item 2.04: '{e['counterparty_name']}' accelerated or increased the borrower's debt "
+                           f"(a credit event to review, not a sign of fraud)", e["filed_month"],
+                           [e["counterparty_entity_id"]] if e["counterparty_entity_id"] else []))
     ctx.shared["s5_undisclosed"] = undisclosed
     return out

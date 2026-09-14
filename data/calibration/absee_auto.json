@@ -1,0 +1,4192 @@
+{
+ "source": "SEC Form ABS-EE (Reg AB II Schedule AL Item 3), public auto-loan securitizations",
+ "note": "Real public data. Loans have no VIN and no borrower identity. Measured, not assumed.",
+ "pools": [
+  [
+   "Ally",
+   "prime",
+   "ALLY AUTO RECEIVABLES TRUST 2024-1"
+  ],
+  [
+   "AmeriCredit (GM Financial)",
+   "subprime",
+   "AmeriCredit Automobile Receivables Trust 2022-1"
+  ],
+  [
+   "AmeriCredit (GM Financial)",
+   "subprime",
+   "AmeriCredit Automobile Receivables Trust 2024-1"
+  ],
+  [
+   "BMW",
+   "prime",
+   "BMW Vehicle Owner Trust 2023-A"
+  ],
+  [
+   "Bridgecrest (DriveTime)",
+   "subprime",
+   "Bridgecrest Lending Auto Securitization Trust 2024-1"
+  ],
+  [
+   "Bridgecrest (DriveTime)",
+   "subprime",
+   "Bridgecrest Lending Auto Securitization Trust 2026-2"
+  ],
+  [
+   "Capital One",
+   "prime",
+   "Capital One Prime Auto Receivables Trust 2023-1"
+  ],
+  [
+   "CarMax",
+   "prime",
+   "CarMax Auto Owner Trust 2024-1"
+  ],
+  [
+   "Carvana non-prime",
+   "subprime",
+   "Carvana Auto Receivables Trust 2021-N1"
+  ],
+  [
+   "Carvana non-prime",
+   "subprime",
+   "Carvana Auto Receivables Trust 2021-N4"
+  ],
+  [
+   "Carvana prime",
+   "prime",
+   "Carvana Auto Receivables Trust 2024-P2"
+  ],
+  [
+   "Drive Auto (Santander)",
+   "subprime",
+   "DRIVE AUTO RECEIVABLES TRUST 2025-2"
+  ],
+  [
+   "Drive Auto (Santander)",
+   "subprime",
+   "Drive Auto Receivables Trust 2024-1"
+  ],
+  [
+   "Exeter",
+   "subprime",
+   "Exeter Automobile Receivables Trust 2024-1"
+  ],
+  [
+   "Exeter",
+   "subprime",
+   "Exeter Automobile Receivables Trust 2026-2"
+  ],
+  [
+   "Exeter Select",
+   "near-prime",
+   "Exeter Select Automobile Receivables Trust 2025-1"
+  ],
+  [
+   "Fifth Third",
+   "prime",
+   "Fifth Third Auto Trust 2023-1"
+  ],
+  [
+   "Ford Credit",
+   "prime",
+   "Ford Credit Auto Owner Trust 2024-A"
+  ],
+  [
+   "GM Financial prime",
+   "prime",
+   "GM Financial Consumer Automobile Receivables Trust 2024-1"
+  ],
+  [
+   "Honda",
+   "prime",
+   "Honda Auto Receivables 2024-1 Owner Trust"
+  ],
+  [
+   "Hyundai",
+   "prime",
+   "Hyundai Auto Receivables Trust 2024-A"
+  ],
+  [
+   "Mercedes-Benz",
+   "prime",
+   "Mercedes-Benz Auto Receivables Trust 2024-1"
+  ],
+  [
+   "Nissan",
+   "prime",
+   "Nissan Auto Receivables 2024-A Owner Trust"
+  ],
+  [
+   "Santander Drive",
+   "subprime",
+   "Santander Drive Auto Receivables Trust 2024-1"
+  ],
+  [
+   "Santander Drive",
+   "subprime",
+   "Santander Drive Auto Receivables Trust 2026-1"
+  ],
+  [
+   "Toyota",
+   "prime",
+   "Toyota Auto Receivables 2024-A Owner Trust"
+  ],
+  [
+   "Volkswagen",
+   "prime",
+   "Volkswagen Auto Loan Enhanced Trust 2023-1"
+  ],
+  [
+   "World Omni",
+   "prime",
+   "World Omni Auto Receivables Trust 2024-A"
+  ]
+ ],
+ "files": 56,
+ "loan_rows": 2231256,
+ "open_loans_month1": 809924,
+ "pairs": 809624,
+ "periods": [
+  {
+   "trust": "ALLY AUTO RECEIVABLES TRUST 2024-1",
+   "p1": "2026-04",
+   "p2": "2026-05"
+  },
+  {
+   "trust": "AmeriCredit Automobile Receivables Trust 2022-1",
+   "p1": "2026-04",
+   "p2": "2026-05"
+  },
+  {
+   "trust": "AmeriCredit Automobile Receivables Trust 2024-1",
+   "p1": "2026-04",
+   "p2": "2026-05"
+  },
+  {
+   "trust": "BMW Vehicle Owner Trust 2023-A",
+   "p1": "2026-03",
+   "p2": "2026-04"
+  },
+  {
+   "trust": "Bridgecrest Lending Auto Securitization Trust 2024-1",
+   "p1": "2026-04",
+   "p2": "2026-05"
+  },
+  {
+   "trust": "Bridgecrest Lending Auto Securitization Trust 2026-2",
+   "p1": "2026-04",
+   "p2": "2026-05"
+  },
+  {
+   "trust": "Capital One Prime Auto Receivables Trust 2023-1",
+   "p1": "2026-04",
+   "p2": "2026-05"
+  },
+  {
+   "trust": "CarMax Auto Owner Trust 2024-1",
+   "p1": "2026-04",
+   "p2": "2026-05"
+  },
+  {
+   "trust": "Carvana Auto Receivables Trust 2021-N1",
+   "p1": "2026-04",
+   "p2": "2026-05"
+  },
+  {
+   "trust": "Carvana Auto Receivables Trust 2021-N4",
+   "p1": "2026-04",
+   "p2": "2026-05"
+  },
+  {
+   "trust": "Carvana Auto Receivables Trust 2024-P2",
+   "p1": "2026-04",
+   "p2": "2026-05"
+  },
+  {
+   "trust": "DRIVE AUTO RECEIVABLES TRUST 2025-2",
+   "p1": "2026-04",
+   "p2": "2026-05"
+  },
+  {
+   "trust": "Drive Auto Receivables Trust 2024-1",
+   "p1": "2026-04",
+   "p2": "2026-05"
+  },
+  {
+   "trust": "Exeter Automobile Receivables Trust 2024-1",
+   "p1": "2026-04",
+   "p2": "2026-05"
+  },
+  {
+   "trust": "Exeter Automobile Receivables Trust 2026-2",
+   "p1": "2026-04",
+   "p2": "2026-05"
+  },
+  {
+   "trust": "Exeter Select Automobile Receivables Trust 2025-1",
+   "p1": "2026-04",
+   "p2": "2026-05"
+  },
+  {
+   "trust": "Fifth Third Auto Trust 2023-1",
+   "p1": "2026-04",
+   "p2": "2026-05"
+  },
+  {
+   "trust": "Ford Credit Auto Owner Trust 2024-A",
+   "p1": "2026-04",
+   "p2": "2026-05"
+  },
+  {
+   "trust": "GM Financial Consumer Automobile Receivables Trust 2024-1",
+   "p1": "2026-04",
+   "p2": "2026-05"
+  },
+  {
+   "trust": "Honda Auto Receivables 2024-1 Owner Trust",
+   "p1": "2026-04",
+   "p2": "2026-05"
+  },
+  {
+   "trust": "Hyundai Auto Receivables Trust 2024-A",
+   "p1": "2026-04",
+   "p2": "2026-05"
+  },
+  {
+   "trust": "Mercedes-Benz Auto Receivables Trust 2024-1",
+   "p1": "2026-04",
+   "p2": "2026-05"
+  },
+  {
+   "trust": "Nissan Auto Receivables 2024-A Owner Trust",
+   "p1": "2026-04",
+   "p2": "2026-05"
+  },
+  {
+   "trust": "Santander Drive Auto Receivables Trust 2024-1",
+   "p1": "2026-04",
+   "p2": "2026-05"
+  },
+  {
+   "trust": "Santander Drive Auto Receivables Trust 2026-1",
+   "p1": "2026-04",
+   "p2": "2026-05"
+  },
+  {
+   "trust": "Toyota Auto Receivables 2024-A Owner Trust",
+   "p1": "2026-04",
+   "p2": "2026-05"
+  },
+  {
+   "trust": "Volkswagen Auto Loan Enhanced Trust 2023-1",
+   "p1": "2026-04",
+   "p2": "2026-05"
+  },
+  {
+   "trust": "World Omni Auto Receivables Trust 2024-A",
+   "p1": "2026-04",
+   "p2": "2026-05"
+  }
+ ],
+ "dpd_unit_months": [],
+ "transitions": {
+  "all": {
+   "90+": {
+    "n": 5917,
+    "p": {
+     "current": 0.12777,
+     "30-59": 0.03296,
+     "60-89": 0.0747,
+     "90+": 0.301,
+     "charged_off": 0.4509,
+     "paid_off": 0.01268
+    }
+   },
+   "current": {
+    "n": 754185,
+    "p": {
+     "current": 0.94703,
+     "30-59": 0.02783,
+     "60-89": 0.00041,
+     "90+": 8e-05,
+     "charged_off": 0.00087,
+     "paid_off": 0.02378
+    }
+   },
+   "30-59": {
+    "n": 34615,
+    "p": {
+     "current": 0.26815,
+     "30-59": 0.44767,
+     "60-89": 0.26347,
+     "90+": 0.00601,
+     "charged_off": 0.00537,
+     "paid_off": 0.00933
+    }
+   },
+   "60-89": {
+    "n": 14907,
+    "p": {
+     "current": 0.12752,
+     "30-59": 0.14235,
+     "60-89": 0.40082,
+     "90+": 0.29865,
+     "charged_off": 0.02194,
+     "paid_off": 0.00872
+    }
+   }
+  },
+  "subprime": {
+   "90+": {
+    "n": 5263,
+    "p": {
+     "current": 0.12977,
+     "30-59": 0.03439,
+     "60-89": 0.07885,
+     "90+": 0.30629,
+     "charged_off": 0.44024,
+     "paid_off": 0.01045
+    }
+   },
+   "30-59": {
+    "n": 29441,
+    "p": {
+     "current": 0.25699,
+     "30-59": 0.45291,
+     "60-89": 0.27034,
+     "90+": 0.00615,
+     "charged_off": 0.00537,
+     "paid_off": 0.00825
+    }
+   },
+   "60-89": {
+    "n": 12981,
+    "p": {
+     "current": 0.11763,
+     "30-59": 0.14313,
+     "60-89": 0.40783,
+     "90+": 0.30337,
+     "charged_off": 0.02034,
+     "paid_off": 0.0077
+    }
+   },
+   "current": {
+    "n": 315101,
+    "p": {
+     "current": 0.92526,
+     "30-59": 0.05638,
+     "60-89": 0.00075,
+     "90+": 0.00017,
+     "charged_off": 0.00098,
+     "paid_off": 0.01646
+    }
+   }
+  },
+  "prime": {
+   "90+": {
+    "n": 490,
+    "p": {
+     "current": 0.11224,
+     "30-59": 0.02245,
+     "60-89": 0.04286,
+     "90+": 0.2551,
+     "charged_off": 0.52653,
+     "paid_off": 0.04082
+    }
+   },
+   "30-59": {
+    "n": 4701,
+    "p": {
+     "current": 0.33738,
+     "30-59": 0.42629,
+     "60-89": 0.20974,
+     "90+": 0.00532,
+     "charged_off": 0.00532,
+     "paid_off": 0.01595
+    }
+   },
+   "60-89": {
+    "n": 1717,
+    "p": {
+     "current": 0.19685,
+     "30-59": 0.14036,
+     "60-89": 0.37682,
+     "90+": 0.23529,
+     "charged_off": 0.03378,
+     "paid_off": 0.01689
+    }
+   },
+   "current": {
+    "n": 429473,
+    "p": {
+     "current": 0.96309,
+     "30-59": 0.00671,
+     "60-89": 0.00013,
+     "90+": 2e-05,
+     "charged_off": 0.00078,
+     "paid_off": 0.02926
+    }
+   }
+  },
+  "near-prime": {
+   "90+": {
+    "n": 164,
+    "p": {
+     "current": 0.10976,
+     "30-59": 0.01829,
+     "60-89": 0.03659,
+     "90+": 0.26829,
+     "charged_off": 0.56707,
+     "paid_off": 0.0
+    }
+   },
+   "30-59": {
+    "n": 473,
+    "p": {
+     "current": 0.27484,
+     "30-59": 0.33404,
+     "60-89": 0.36998,
+     "90+": 0.00423,
+     "charged_off": 0.00634,
+     "paid_off": 0.01057
+    }
+   },
+   "60-89": {
+    "n": 209,
+    "p": {
+     "current": 0.17225,
+     "30-59": 0.11005,
+     "60-89": 0.16268,
+     "90+": 0.52632,
+     "charged_off": 0.02392,
+     "paid_off": 0.00478
+    }
+   },
+   "current": {
+    "n": 9611,
+    "p": {
+     "current": 0.94329,
+     "30-59": 0.03517,
+     "60-89": 0.00156,
+     "90+": 0.0001,
+     "charged_off": 0.00125,
+     "paid_off": 0.01862
+    }
+   }
+  },
+  "band <580": {
+   "90+": {
+    "n": 2744,
+    "p": {
+     "current": 0.13921,
+     "30-59": 0.03899,
+     "60-89": 0.08455,
+     "90+": 0.34548,
+     "charged_off": 0.38047,
+     "paid_off": 0.0113
+    }
+   },
+   "current": {
+    "n": 130590,
+    "p": {
+     "current": 0.91282,
+     "30-59": 0.07171,
+     "60-89": 0.00105,
+     "90+": 0.00018,
+     "charged_off": 0.00113,
+     "paid_off": 0.01311
+    }
+   },
+   "30-59": {
+    "n": 15534,
+    "p": {
+     "current": 0.25724,
+     "30-59": 0.47213,
+     "60-89": 0.25267,
+     "90+": 0.00599,
+     "charged_off": 0.00431,
+     "paid_off": 0.00766
+    }
+   },
+   "60-89": {
+    "n": 6834,
+    "p": {
+     "current": 0.1235,
+     "30-59": 0.15306,
+     "60-89": 0.43006,
+     "90+": 0.26397,
+     "charged_off": 0.02224,
+     "paid_off": 0.00717
+    }
+   }
+  },
+  "band 580-619": {
+   "90+": {
+    "n": 1211,
+    "p": {
+     "current": 0.11974,
+     "30-59": 0.03386,
+     "60-89": 0.07762,
+     "90+": 0.26755,
+     "charged_off": 0.48637,
+     "paid_off": 0.01486
+    }
+   },
+   "30-59": {
+    "n": 7344,
+    "p": {
+     "current": 0.26212,
+     "30-59": 0.44281,
+     "60-89": 0.27369,
+     "90+": 0.00531,
+     "charged_off": 0.0064,
+     "paid_off": 0.00967
+    }
+   },
+   "60-89": {
+    "n": 3208,
+    "p": {
+     "current": 0.11253,
+     "30-59": 0.13404,
+     "60-89": 0.40399,
+     "90+": 0.32637,
+     "charged_off": 0.01496,
+     "paid_off": 0.0081
+    }
+   },
+   "current": {
+    "n": 82929,
+    "p": {
+     "current": 0.92863,
+     "30-59": 0.05372,
+     "60-89": 0.00068,
+     "90+": 0.00019,
+     "charged_off": 0.00109,
+     "paid_off": 0.0157
+    }
+   }
+  },
+  "band 620-659": {
+   "90+": {
+    "n": 839,
+    "p": {
+     "current": 0.09774,
+     "30-59": 0.02861,
+     "60-89": 0.06794,
+     "90+": 0.26579,
+     "charged_off": 0.53635,
+     "paid_off": 0.00358
+    }
+   },
+   "current": {
+    "n": 73382,
+    "p": {
+     "current": 0.93929,
+     "30-59": 0.04102,
+     "60-89": 0.00061,
+     "90+": 0.00014,
+     "charged_off": 0.00091,
+     "paid_off": 0.01803
+    }
+   },
+   "60-89": {
+    "n": 2067,
+    "p": {
+     "current": 0.13885,
+     "30-59": 0.13933,
+     "60-89": 0.39623,
+     "90+": 0.30189,
+     "charged_off": 0.015,
+     "paid_off": 0.00871
+    }
+   },
+   "30-59": {
+    "n": 4979,
+    "p": {
+     "current": 0.27475,
+     "30-59": 0.43081,
+     "60-89": 0.27214,
+     "90+": 0.00864,
+     "charged_off": 0.00462,
+     "paid_off": 0.00904
+    }
+   }
+  },
+  "band 660-719": {
+   "90+": {
+    "n": 596,
+    "p": {
+     "current": 0.13255,
+     "30-59": 0.0151,
+     "60-89": 0.05034,
+     "90+": 0.26342,
+     "charged_off": 0.51846,
+     "paid_off": 0.02013
+    }
+   },
+   "30-59": {
+    "n": 3619,
+    "p": {
+     "current": 0.30948,
+     "30-59": 0.41061,
+     "60-89": 0.25587,
+     "90+": 0.00525,
+     "charged_off": 0.0058,
+     "paid_off": 0.01299
+    }
+   },
+   "60-89": {
+    "n": 1427,
+    "p": {
+     "current": 0.15907,
+     "30-59": 0.13385,
+     "60-89": 0.32376,
+     "90+": 0.33146,
+     "charged_off": 0.03854,
+     "paid_off": 0.01331
+    }
+   },
+   "current": {
+    "n": 111568,
+    "p": {
+     "current": 0.95485,
+     "30-59": 0.01931,
+     "60-89": 0.00035,
+     "90+": 7e-05,
+     "charged_off": 0.00124,
+     "paid_off": 0.02418
+    }
+   }
+  },
+  "band 720+": {
+   "90+": {
+    "n": 200,
+    "p": {
+     "current": 0.16,
+     "30-59": 0.045,
+     "60-89": 0.065,
+     "90+": 0.28,
+     "charged_off": 0.42,
+     "paid_off": 0.03
+    }
+   },
+   "30-59": {
+    "n": 1643,
+    "p": {
+     "current": 0.3311,
+     "30-59": 0.40231,
+     "60-89": 0.23311,
+     "90+": 0.00609,
+     "charged_off": 0.00852,
+     "paid_off": 0.01887
+    }
+   },
+   "60-89": {
+    "n": 568,
+    "p": {
+     "current": 0.18838,
+     "30-59": 0.13204,
+     "60-89": 0.32042,
+     "90+": 0.30458,
+     "charged_off": 0.03521,
+     "paid_off": 0.01937
+    }
+   },
+   "current": {
+    "n": 323469,
+    "p": {
+     "current": 0.96457,
+     "30-59": 0.0034,
+     "60-89": 7e-05,
+     "90+": 1e-05,
+     "charged_off": 0.00059,
+     "paid_off": 0.03135
+    }
+   }
+  }
+ },
+ "transitions_band_age": {
+  "<580|0-11m": {
+   "90+": {
+    "n": 450,
+    "p": {
+     "current": 0.31556,
+     "30-59": 0.04889,
+     "60-89": 0.09111,
+     "90+": 0.15333,
+     "charged_off": 0.37778,
+     "paid_off": 0.01333
+    }
+   },
+   "30-59": {
+    "n": 4551,
+    "p": {
+     "current": 0.23885,
+     "30-59": 0.45067,
+     "60-89": 0.29708,
+     "90+": 0.00286,
+     "charged_off": 0.00352,
+     "paid_off": 0.00703
+    }
+   },
+   "60-89": {
+    "n": 1525,
+    "p": {
+     "current": 0.10885,
+     "30-59": 0.16131,
+     "60-89": 0.39016,
+     "90+": 0.3259,
+     "charged_off": 0.00984,
+     "paid_off": 0.00393
+    }
+   },
+   "current": {
+    "n": 62320,
+    "p": {
+     "current": 0.93214,
+     "30-59": 0.05846,
+     "60-89": 0.0008,
+     "90+": 0.00013,
+     "charged_off": 0.00082,
+     "paid_off": 0.00765
+    }
+   }
+  },
+  "<580|12-23m": {
+   "90+": {
+    "n": 140,
+    "p": {
+     "current": 0.15,
+     "30-59": 0.05,
+     "60-89": 0.09286,
+     "90+": 0.18571,
+     "charged_off": 0.51429,
+     "paid_off": 0.00714
+    }
+   },
+   "30-59": {
+    "n": 1231,
+    "p": {
+     "current": 0.27945,
+     "30-59": 0.46385,
+     "60-89": 0.24695,
+     "90+": 0.00162,
+     "charged_off": 0.0065,
+     "paid_off": 0.00162
+    }
+   },
+   "60-89": {
+    "n": 441,
+    "p": {
+     "current": 0.14286,
+     "30-59": 0.17234,
+     "60-89": 0.39456,
+     "90+": 0.27211,
+     "charged_off": 0.01134,
+     "paid_off": 0.0068
+    }
+   },
+   "current": {
+    "n": 9426,
+    "p": {
+     "current": 0.9042,
+     "30-59": 0.0784,
+     "60-89": 0.00074,
+     "90+": 0.0,
+     "charged_off": 0.00042,
+     "paid_off": 0.01623
+    }
+   }
+  },
+  "<580|24m+": {
+   "90+": {
+    "n": 2154,
+    "p": {
+     "current": 0.10167,
+     "30-59": 0.03621,
+     "60-89": 0.08264,
+     "90+": 0.39601,
+     "charged_off": 0.37233,
+     "paid_off": 0.01114
+    }
+   },
+   "30-59": {
+    "n": 9752,
+    "p": {
+     "current": 0.26302,
+     "30-59": 0.48318,
+     "60-89": 0.23267,
+     "90+": 0.008,
+     "charged_off": 0.00441,
+     "paid_off": 0.00872
+    }
+   },
+   "60-89": {
+    "n": 4868,
+    "p": {
+     "current": 0.12634,
+     "30-59": 0.14873,
+     "60-89": 0.44577,
+     "90+": 0.24384,
+     "charged_off": 0.02712,
+     "paid_off": 0.00822
+    }
+   },
+   "current": {
+    "n": 58844,
+    "p": {
+     "current": 0.89374,
+     "30-59": 0.08466,
+     "60-89": 0.00136,
+     "90+": 0.00027,
+     "charged_off": 0.00158,
+     "paid_off": 0.01839
+    }
+   }
+  },
+  "580-619|0-11m": {
+   "90+": {
+    "n": 209,
+    "p": {
+     "current": 0.27273,
+     "30-59": 0.04306,
+     "60-89": 0.08134,
+     "90+": 0.14833,
+     "charged_off": 0.44976,
+     "paid_off": 0.00478
+    }
+   },
+   "current": {
+    "n": 35690,
+    "p": {
+     "current": 0.94208,
+     "30-59": 0.04637,
+     "60-89": 0.00053,
+     "90+": 6e-05,
+     "charged_off": 0.00095,
+     "paid_off": 0.01
+    }
+   },
+   "30-59": {
+    "n": 1996,
+    "p": {
+     "current": 0.22144,
+     "30-59": 0.41984,
+     "60-89": 0.34269,
+     "90+": 0.00251,
+     "charged_off": 0.00902,
+     "paid_off": 0.00451
+    }
+   },
+   "60-89": {
+    "n": 673,
+    "p": {
+     "current": 0.07578,
+     "30-59": 0.13522,
+     "60-89": 0.29569,
+     "90+": 0.47103,
+     "charged_off": 0.01932,
+     "paid_off": 0.00297
+    }
+   }
+  },
+  "580-619|12-23m": {
+   "90+": {
+    "n": 71,
+    "p": {
+     "current": 0.09859,
+     "30-59": 0.05634,
+     "60-89": 0.04225,
+     "90+": 0.15493,
+     "charged_off": 0.64789,
+     "paid_off": 0.0
+    }
+   },
+   "30-59": {
+    "n": 598,
+    "p": {
+     "current": 0.29097,
+     "30-59": 0.42475,
+     "60-89": 0.26589,
+     "90+": 0.00167,
+     "charged_off": 0.01003,
+     "paid_off": 0.00669
+    }
+   },
+   "60-89": {
+    "n": 230,
+    "p": {
+     "current": 0.15217,
+     "30-59": 0.17826,
+     "60-89": 0.35652,
+     "90+": 0.30435,
+     "charged_off": 0.00435,
+     "paid_off": 0.00435
+    }
+   },
+   "current": {
+    "n": 5906,
+    "p": {
+     "current": 0.92076,
+     "30-59": 0.05858,
+     "60-89": 0.00017,
+     "90+": 0.00017,
+     "charged_off": 0.00034,
+     "paid_off": 0.01998
+    }
+   }
+  },
+  "580-619|24m+": {
+   "90+": {
+    "n": 931,
+    "p": {
+     "current": 0.087,
+     "30-59": 0.03008,
+     "60-89": 0.07948,
+     "90+": 0.3029,
+     "charged_off": 0.48228,
+     "paid_off": 0.01826
+    }
+   },
+   "30-59": {
+    "n": 4750,
+    "p": {
+     "current": 0.27558,
+     "30-59": 0.45474,
+     "60-89": 0.24568,
+     "90+": 0.00695,
+     "charged_off": 0.00484,
+     "paid_off": 0.01221
+    }
+   },
+   "60-89": {
+    "n": 2305,
+    "p": {
+     "current": 0.11931,
+     "30-59": 0.12928,
+     "60-89": 0.44035,
+     "90+": 0.28633,
+     "charged_off": 0.01475,
+     "paid_off": 0.00998
+    }
+   },
+   "current": {
+    "n": 41333,
+    "p": {
+     "current": 0.91813,
+     "30-59": 0.05937,
+     "60-89": 0.00087,
+     "90+": 0.00031,
+     "charged_off": 0.00131,
+     "paid_off": 0.02001
+    }
+   }
+  },
+  "620-659|0-11m": {
+   "90+": {
+    "n": 118,
+    "p": {
+     "current": 0.17797,
+     "30-59": 0.00847,
+     "60-89": 0.04237,
+     "90+": 0.13559,
+     "charged_off": 0.63559,
+     "paid_off": 0.0
+    }
+   },
+   "30-59": {
+    "n": 981,
+    "p": {
+     "current": 0.20082,
+     "30-59": 0.40061,
+     "60-89": 0.38532,
+     "90+": 0.0051,
+     "charged_off": 0.00306,
+     "paid_off": 0.0051
+    }
+   },
+   "60-89": {
+    "n": 326,
+    "p": {
+     "current": 0.08589,
+     "30-59": 0.11043,
+     "60-89": 0.36503,
+     "90+": 0.42331,
+     "charged_off": 0.0092,
+     "paid_off": 0.00613
+    }
+   },
+   "current": {
+    "n": 19967,
+    "p": {
+     "current": 0.94731,
+     "30-59": 0.03846,
+     "60-89": 0.0005,
+     "90+": 5e-05,
+     "charged_off": 0.00065,
+     "paid_off": 0.01302
+    }
+   }
+  },
+  "620-659|12-23m": {
+   "90+": {
+    "n": 95,
+    "p": {
+     "current": 0.05263,
+     "30-59": 0.01053,
+     "60-89": 0.06316,
+     "90+": 0.26316,
+     "charged_off": 0.61053,
+     "paid_off": 0.0
+    }
+   },
+   "30-59": {
+    "n": 462,
+    "p": {
+     "current": 0.27056,
+     "30-59": 0.40043,
+     "60-89": 0.31169,
+     "90+": 0.00216,
+     "charged_off": 0.00649,
+     "paid_off": 0.00866
+    }
+   },
+   "60-89": {
+    "n": 199,
+    "p": {
+     "current": 0.1407,
+     "30-59": 0.10553,
+     "60-89": 0.28141,
+     "90+": 0.46734,
+     "charged_off": 0.00503,
+     "paid_off": 0.0
+    }
+   },
+   "current": {
+    "n": 7745,
+    "p": {
+     "current": 0.9388,
+     "30-59": 0.04158,
+     "60-89": 0.0009,
+     "90+": 0.00013,
+     "charged_off": 0.00077,
+     "paid_off": 0.01782
+    }
+   }
+  },
+  "620-659|24m+": {
+   "90+": {
+    "n": 626,
+    "p": {
+     "current": 0.08946,
+     "30-59": 0.03514,
+     "60-89": 0.07348,
+     "90+": 0.29073,
+     "charged_off": 0.50639,
+     "paid_off": 0.00479
+    }
+   },
+   "current": {
+    "n": 45670,
+    "p": {
+     "current": 0.93587,
+     "30-59": 0.04204,
+     "60-89": 0.00061,
+     "90+": 0.00018,
+     "charged_off": 0.00105,
+     "paid_off": 0.02025
+    }
+   },
+   "60-89": {
+    "n": 1542,
+    "p": {
+     "current": 0.14981,
+     "30-59": 0.14981,
+     "60-89": 0.41764,
+     "90+": 0.25486,
+     "charged_off": 0.01751,
+     "paid_off": 0.01038
+    }
+   },
+   "30-59": {
+    "n": 3536,
+    "p": {
+     "current": 0.29581,
+     "30-59": 0.44316,
+     "60-89": 0.23558,
+     "90+": 0.01046,
+     "charged_off": 0.00481,
+     "paid_off": 0.01018
+    }
+   }
+  },
+  "660-719|0-11m": {
+   "90+": {
+    "n": 75,
+    "p": {
+     "current": 0.22667,
+     "30-59": 0.01333,
+     "60-89": 0.02667,
+     "90+": 0.10667,
+     "charged_off": 0.61333,
+     "paid_off": 0.01333
+    }
+   },
+   "current": {
+    "n": 9303,
+    "p": {
+     "current": 0.94163,
+     "30-59": 0.04224,
+     "60-89": 0.00043,
+     "90+": 0.00021,
+     "charged_off": 0.00118,
+     "paid_off": 0.0143
+    }
+   },
+   "30-59": {
+    "n": 465,
+    "p": {
+     "current": 0.19785,
+     "30-59": 0.36129,
+     "60-89": 0.42151,
+     "90+": 0.00215,
+     "charged_off": 0.0129,
+     "paid_off": 0.0043
+    }
+   },
+   "60-89": {
+    "n": 204,
+    "p": {
+     "current": 0.06373,
+     "30-59": 0.07353,
+     "60-89": 0.25,
+     "90+": 0.57843,
+     "charged_off": 0.03431,
+     "paid_off": 0.0
+    }
+   }
+  },
+  "660-719|12-23m": {
+   "90+": {
+    "n": 107,
+    "p": {
+     "current": 0.1028,
+     "30-59": 0.01869,
+     "60-89": 0.03738,
+     "90+": 0.23364,
+     "charged_off": 0.60748,
+     "paid_off": 0.0
+    }
+   },
+   "current": {
+    "n": 7263,
+    "p": {
+     "current": 0.94988,
+     "30-59": 0.03002,
+     "60-89": 0.00096,
+     "90+": 0.00014,
+     "charged_off": 0.00069,
+     "paid_off": 0.01831
+    }
+   },
+   "30-59": {
+    "n": 360,
+    "p": {
+     "current": 0.30278,
+     "30-59": 0.36944,
+     "60-89": 0.31111,
+     "90+": 0.00278,
+     "charged_off": 0.00833,
+     "paid_off": 0.00556
+    }
+   },
+   "60-89": {
+    "n": 139,
+    "p": {
+     "current": 0.15108,
+     "30-59": 0.10072,
+     "60-89": 0.22302,
+     "90+": 0.48921,
+     "charged_off": 0.02878,
+     "paid_off": 0.00719
+    }
+   }
+  },
+  "660-719|24m+": {
+   "90+": {
+    "n": 414,
+    "p": {
+     "current": 0.12319,
+     "30-59": 0.01449,
+     "60-89": 0.05797,
+     "90+": 0.29952,
+     "charged_off": 0.47826,
+     "paid_off": 0.02657
+    }
+   },
+   "current": {
+    "n": 95002,
+    "p": {
+     "current": 0.95653,
+     "30-59": 0.01624,
+     "60-89": 0.00029,
+     "90+": 5e-05,
+     "charged_off": 0.00128,
+     "paid_off": 0.0256
+    }
+   },
+   "30-59": {
+    "n": 2794,
+    "p": {
+     "current": 0.32892,
+     "30-59": 0.42412,
+     "60-89": 0.22119,
+     "90+": 0.00608,
+     "charged_off": 0.00429,
+     "paid_off": 0.01539
+    }
+   },
+   "60-89": {
+    "n": 1084,
+    "p": {
+     "current": 0.17804,
+     "30-59": 0.14945,
+     "60-89": 0.35055,
+     "90+": 0.26476,
+     "charged_off": 0.04059,
+     "paid_off": 0.01661
+    }
+   }
+  },
+  "720+|0-11m": {
+   "90+": {
+    "n": 17,
+    "p": {
+     "current": 0.17647,
+     "30-59": 0.11765,
+     "60-89": 0.0,
+     "90+": 0.29412,
+     "charged_off": 0.41176,
+     "paid_off": 0.0
+    }
+   },
+   "30-59": {
+    "n": 108,
+    "p": {
+     "current": 0.24074,
+     "30-59": 0.37037,
+     "60-89": 0.36111,
+     "90+": 0.0,
+     "charged_off": 0.00926,
+     "paid_off": 0.01852
+    }
+   },
+   "60-89": {
+    "n": 50,
+    "p": {
+     "current": 0.1,
+     "30-59": 0.12,
+     "60-89": 0.28,
+     "90+": 0.48,
+     "charged_off": 0.02,
+     "paid_off": 0.0
+    }
+   },
+   "current": {
+    "n": 3281,
+    "p": {
+     "current": 0.96221,
+     "30-59": 0.02408,
+     "60-89": 0.00061,
+     "90+": 0.0,
+     "charged_off": 0.00061,
+     "paid_off": 0.0125
+    }
+   }
+  },
+  "720+|12-23m": {
+   "90+": {
+    "n": 22,
+    "p": {
+     "current": 0.18182,
+     "30-59": 0.0,
+     "60-89": 0.04545,
+     "90+": 0.13636,
+     "charged_off": 0.63636,
+     "paid_off": 0.0
+    }
+   },
+   "current": {
+    "n": 3371,
+    "p": {
+     "current": 0.95491,
+     "30-59": 0.01958,
+     "60-89": 0.00089,
+     "90+": 0.0,
+     "charged_off": 0.0003,
+     "paid_off": 0.02433
+    }
+   },
+   "30-59": {
+    "n": 86,
+    "p": {
+     "current": 0.2093,
+     "30-59": 0.47674,
+     "60-89": 0.30233,
+     "90+": 0.0,
+     "charged_off": 0.0,
+     "paid_off": 0.01163
+    }
+   },
+   "60-89": {
+    "n": 40,
+    "p": {
+     "current": 0.1,
+     "30-59": 0.075,
+     "60-89": 0.35,
+     "90+": 0.475,
+     "charged_off": 0.0,
+     "paid_off": 0.0
+    }
+   }
+  },
+  "720+|24m+": {
+   "60-89": {
+    "n": 478,
+    "p": {
+     "current": 0.20502,
+     "30-59": 0.13808,
+     "60-89": 0.32218,
+     "90+": 0.27197,
+     "charged_off": 0.03975,
+     "paid_off": 0.02301
+    }
+   },
+   "30-59": {
+    "n": 1449,
+    "p": {
+     "current": 0.34507,
+     "30-59": 0.40028,
+     "60-89": 0.21946,
+     "90+": 0.0069,
+     "charged_off": 0.00897,
+     "paid_off": 0.01932
+    }
+   },
+   "current": {
+    "n": 316817,
+    "p": {
+     "current": 0.9647,
+     "30-59": 0.00301,
+     "60-89": 5e-05,
+     "90+": 1e-05,
+     "charged_off": 0.0006,
+     "paid_off": 0.03162
+    }
+   },
+   "90+": {
+    "n": 161,
+    "p": {
+     "current": 0.15528,
+     "30-59": 0.04348,
+     "60-89": 0.07453,
+     "90+": 0.29814,
+     "charged_off": 0.3913,
+     "paid_off": 0.03727
+    }
+   }
+  }
+ },
+ "current_no_payment": {
+  "near-prime": {
+   "n": 9066,
+   "share": 0.09585,
+   "share_with_payment_due": 0.09574,
+   "paid_over_scheduled_q10_25_50_75_90": [
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.135
+   ]
+  },
+  "prime": {
+   "n": 413622,
+   "share": 0.05535,
+   "share_with_payment_due": 0.05268,
+   "paid_over_scheduled_q10_25_50_75_90": [
+    1.0,
+    1.0,
+    1.0,
+    1.004,
+    1.126
+   ]
+  },
+  "subprime": {
+   "n": 291549,
+   "share": 0.09891,
+   "share_with_payment_due": 0.09728,
+   "paid_over_scheduled_q10_25_50_75_90": [
+    0.973,
+    1.0,
+    1.0,
+    1.001,
+    1.221
+   ]
+  }
+ },
+ "current_no_payment_by_pool": [
+  0.0247,
+  0.0369,
+  0.0372,
+  0.039,
+  0.0422,
+  0.0451,
+  0.046,
+  0.0466,
+  0.048,
+  0.0493,
+  0.0515,
+  0.0582,
+  0.0659,
+  0.0737,
+  0.076,
+  0.0788,
+  0.0868,
+  0.0881,
+  0.0952,
+  0.0959,
+  0.1016,
+  0.104,
+  0.1169,
+  0.1171,
+  0.1181,
+  0.1224,
+  0.125,
+  0.1359
+ ],
+ "late_to_current": {
+  "late_loans": 20824,
+  "became_current": 2657,
+  "without_payment": 97,
+  "without_payment_but_extended_or_modified": 56
+ },
+ "score_changes": {
+  "loans": 774975,
+  "changed": 0,
+  "crossed_600_upward": 0
+ },
+ "score_edges": {
+  "550": {
+   "prime": {
+    "edge_share_of_eligible": 0.0016,
+    "ratio_just_above_to_just_below": 1.384
+   },
+   "subprime": {
+    "edge_share_of_eligible": 0.1062,
+    "ratio_just_above_to_just_below": 1.199
+   },
+   "near-prime": {
+    "edge_share_of_eligible": 0.0031,
+    "ratio_just_above_to_just_below": 1.333
+   }
+  },
+  "575": {
+   "prime": {
+    "edge_share_of_eligible": 0.0032,
+    "ratio_just_above_to_just_below": 1.644
+   },
+   "subprime": {
+    "edge_share_of_eligible": 0.1526,
+    "ratio_just_above_to_just_below": 1.065
+   },
+   "near-prime": {
+    "edge_share_of_eligible": 0.0055,
+    "ratio_just_above_to_just_below": 1.14
+   }
+  },
+  "600": {
+   "prime": {
+    "edge_share_of_eligible": 0.0062,
+    "ratio_just_above_to_just_below": 1.385
+   },
+   "near-prime": {
+    "edge_share_of_eligible": 0.0078,
+    "ratio_just_above_to_just_below": 1.197
+   },
+   "subprime": {
+    "edge_share_of_eligible": 0.2053,
+    "ratio_just_above_to_just_below": 0.955
+   }
+  },
+  "620": {
+   "prime": {
+    "edge_share_of_eligible": 0.0108,
+    "ratio_just_above_to_just_below": 1.515
+   },
+   "subprime": {
+    "edge_share_of_eligible": 0.2881,
+    "ratio_just_above_to_just_below": 0.985
+   },
+   "near-prime": {
+    "edge_share_of_eligible": 0.0172,
+    "ratio_just_above_to_just_below": 1.89
+   }
+  },
+  "640": {
+   "prime": {
+    "edge_share_of_eligible": 0.0167,
+    "ratio_just_above_to_just_below": 1.432
+   },
+   "subprime": {
+    "edge_share_of_eligible": 0.2313,
+    "ratio_just_above_to_just_below": 0.483
+   },
+   "near-prime": {
+    "edge_share_of_eligible": 0.2671,
+    "ratio_just_above_to_just_below": 14.646
+   }
+  },
+  "660": {
+   "prime": {
+    "edge_share_of_eligible": 0.0342,
+    "ratio_just_above_to_just_below": 1.608
+   },
+   "subprime": {
+    "edge_share_of_eligible": 0.2188,
+    "ratio_just_above_to_just_below": 0.729
+   },
+   "near-prime": {
+    "edge_share_of_eligible": 0.2812,
+    "ratio_just_above_to_just_below": 0.699
+   }
+  }
+ },
+ "score_hist": {
+  "subprime": {
+   "340": 3,
+   "360": 18,
+   "380": 96,
+   "400": 395,
+   "420": 1299,
+   "440": 2995,
+   "460": 6405,
+   "480": 11745,
+   "500": 20016,
+   "520": 28458,
+   "540": 36979,
+   "560": 43782,
+   "580": 44677,
+   "600": 42800,
+   "620": 40453,
+   "640": 17764,
+   "660": 11181,
+   "680": 7756,
+   "700": 5140,
+   "720": 3507,
+   "740": 2345,
+   "760": 1541,
+   "780": 1210,
+   "800": 984,
+   "820": 837,
+   "840": 681,
+   "860": 402,
+   "880": 130,
+   "900": 6
+  },
+  "near-prime": {
+   "440": 2,
+   "460": 2,
+   "480": 10,
+   "500": 19,
+   "520": 27,
+   "540": 39,
+   "560": 77,
+   "580": 93,
+   "600": 130,
+   "620": 268,
+   "640": 3834,
+   "660": 2397,
+   "680": 1695,
+   "700": 801,
+   "720": 439,
+   "740": 236,
+   "760": 122,
+   "780": 107,
+   "800": 74,
+   "820": 49,
+   "840": 5
+  },
+  "prime": {
+   "300": 3,
+   "320": 4,
+   "340": 4,
+   "360": 9,
+   "380": 15,
+   "400": 21,
+   "420": 40,
+   "440": 63,
+   "460": 143,
+   "480": 148,
+   "500": 278,
+   "520": 479,
+   "540": 917,
+   "560": 1327,
+   "580": 2732,
+   "600": 4324,
+   "620": 7172,
+   "640": 11816,
+   "660": 22411,
+   "680": 27609,
+   "700": 38246,
+   "720": 42992,
+   "740": 44413,
+   "760": 42521,
+   "780": 42134,
+   "800": 43387,
+   "820": 40147,
+   "840": 33044,
+   "860": 20034,
+   "880": 4555,
+   "900": 218
+  }
+ },
+ "fingerprint": {
+  "fields": "origination month, original amount, term, rate, make, model, model year, state, credit score",
+  "loans": 787944,
+  "unique_loans": 787835,
+  "in_two_pools": 2,
+  "across_lenders": 2,
+  "unique_share": 0.99986,
+  "unique_share_without_score": 0.99981
+ },
+ "cells": [
+  {
+   "trust": "ALLY AUTO RECEIVABLES TRUST 2024-1",
+   "family": "Ally",
+   "band": "580-619",
+   "age_b": "24m+",
+   "n": 182,
+   "late": 3
+  },
+  {
+   "trust": "ALLY AUTO RECEIVABLES TRUST 2024-1",
+   "family": "Ally",
+   "band": "620-659",
+   "age_b": "24m+",
+   "n": 297,
+   "late": 6
+  },
+  {
+   "trust": "ALLY AUTO RECEIVABLES TRUST 2024-1",
+   "family": "Ally",
+   "band": "660-719",
+   "age_b": "24m+",
+   "n": 11435,
+   "late": 484
+  },
+  {
+   "trust": "ALLY AUTO RECEIVABLES TRUST 2024-1",
+   "family": "Ally",
+   "band": "720+",
+   "age_b": "24m+",
+   "n": 11497,
+   "late": 160
+  },
+  {
+   "trust": "ALLY AUTO RECEIVABLES TRUST 2024-1",
+   "family": "Ally",
+   "band": "<580",
+   "age_b": "24m+",
+   "n": 468,
+   "late": 9
+  },
+  {
+   "trust": "ALLY AUTO RECEIVABLES TRUST 2024-1",
+   "family": "Ally",
+   "band": "unknown",
+   "age_b": "24m+",
+   "n": 809,
+   "late": 23
+  },
+  {
+   "trust": "AmeriCredit Automobile Receivables Trust 2022-1",
+   "family": "AmeriCredit (GM Financial)",
+   "band": "580-619",
+   "age_b": "24m+",
+   "n": 4018,
+   "late": 524
+  },
+  {
+   "trust": "AmeriCredit Automobile Receivables Trust 2022-1",
+   "family": "AmeriCredit (GM Financial)",
+   "band": "620-659",
+   "age_b": "24m+",
+   "n": 3995,
+   "late": 403
+  },
+  {
+   "trust": "AmeriCredit Automobile Receivables Trust 2022-1",
+   "family": "AmeriCredit (GM Financial)",
+   "band": "660-719",
+   "age_b": "24m+",
+   "n": 525,
+   "late": 71
+  },
+  {
+   "trust": "AmeriCredit Automobile Receivables Trust 2022-1",
+   "family": "AmeriCredit (GM Financial)",
+   "band": "720+",
+   "age_b": "24m+",
+   "n": 60,
+   "late": 6
+  },
+  {
+   "trust": "AmeriCredit Automobile Receivables Trust 2022-1",
+   "family": "AmeriCredit (GM Financial)",
+   "band": "<580",
+   "age_b": "24m+",
+   "n": 6671,
+   "late": 1119
+  },
+  {
+   "trust": "AmeriCredit Automobile Receivables Trust 2022-1",
+   "family": "AmeriCredit (GM Financial)",
+   "band": "unknown",
+   "age_b": "24m+",
+   "n": 124,
+   "late": 20
+  },
+  {
+   "trust": "AmeriCredit Automobile Receivables Trust 2024-1",
+   "family": "AmeriCredit (GM Financial)",
+   "band": "580-619",
+   "age_b": "24m+",
+   "n": 9528,
+   "late": 1220
+  },
+  {
+   "trust": "AmeriCredit Automobile Receivables Trust 2024-1",
+   "family": "AmeriCredit (GM Financial)",
+   "band": "620-659",
+   "age_b": "24m+",
+   "n": 9203,
+   "late": 867
+  },
+  {
+   "trust": "AmeriCredit Automobile Receivables Trust 2024-1",
+   "family": "AmeriCredit (GM Financial)",
+   "band": "660-719",
+   "age_b": "24m+",
+   "n": 1552,
+   "late": 214
+  },
+  {
+   "trust": "AmeriCredit Automobile Receivables Trust 2024-1",
+   "family": "AmeriCredit (GM Financial)",
+   "band": "720+",
+   "age_b": "24m+",
+   "n": 209,
+   "late": 14
+  },
+  {
+   "trust": "AmeriCredit Automobile Receivables Trust 2024-1",
+   "family": "AmeriCredit (GM Financial)",
+   "band": "<580",
+   "age_b": "24m+",
+   "n": 16825,
+   "late": 2970
+  },
+  {
+   "trust": "AmeriCredit Automobile Receivables Trust 2024-1",
+   "family": "AmeriCredit (GM Financial)",
+   "band": "unknown",
+   "age_b": "24m+",
+   "n": 221,
+   "late": 14
+  },
+  {
+   "trust": "BMW Vehicle Owner Trust 2023-A",
+   "family": "BMW",
+   "band": "580-619",
+   "age_b": "24m+",
+   "n": 62,
+   "late": 8
+  },
+  {
+   "trust": "BMW Vehicle Owner Trust 2023-A",
+   "family": "BMW",
+   "band": "620-659",
+   "age_b": "24m+",
+   "n": 310,
+   "late": 30
+  },
+  {
+   "trust": "BMW Vehicle Owner Trust 2023-A",
+   "family": "BMW",
+   "band": "660-719",
+   "age_b": "24m+",
+   "n": 2443,
+   "late": 124
+  },
+  {
+   "trust": "BMW Vehicle Owner Trust 2023-A",
+   "family": "BMW",
+   "band": "720+",
+   "age_b": "24m+",
+   "n": 14093,
+   "late": 82
+  },
+  {
+   "trust": "BMW Vehicle Owner Trust 2023-A",
+   "family": "BMW",
+   "band": "unknown",
+   "age_b": "24m+",
+   "n": 11,
+   "late": 0
+  },
+  {
+   "trust": "Bridgecrest Lending Auto Securitization Trust 2024-1",
+   "family": "Bridgecrest (DriveTime)",
+   "band": "580-619",
+   "age_b": "24m+",
+   "n": 2045,
+   "late": 383
+  },
+  {
+   "trust": "Bridgecrest Lending Auto Securitization Trust 2024-1",
+   "family": "Bridgecrest (DriveTime)",
+   "band": "620-659",
+   "age_b": "24m+",
+   "n": 1348,
+   "late": 233
+  },
+  {
+   "trust": "Bridgecrest Lending Auto Securitization Trust 2024-1",
+   "family": "Bridgecrest (DriveTime)",
+   "band": "660-719",
+   "age_b": "24m+",
+   "n": 871,
+   "late": 106
+  },
+  {
+   "trust": "Bridgecrest Lending Auto Securitization Trust 2024-1",
+   "family": "Bridgecrest (DriveTime)",
+   "band": "720+",
+   "age_b": "24m+",
+   "n": 448,
+   "late": 53
+  },
+  {
+   "trust": "Bridgecrest Lending Auto Securitization Trust 2024-1",
+   "family": "Bridgecrest (DriveTime)",
+   "band": "<580",
+   "age_b": "24m+",
+   "n": 9252,
+   "late": 2457
+  },
+  {
+   "trust": "Bridgecrest Lending Auto Securitization Trust 2024-1",
+   "family": "Bridgecrest (DriveTime)",
+   "band": "unknown",
+   "age_b": "24m+",
+   "n": 977,
+   "late": 145
+  },
+  {
+   "trust": "Bridgecrest Lending Auto Securitization Trust 2026-2",
+   "family": "Bridgecrest (DriveTime)",
+   "band": "580-619",
+   "age_b": "0-11m",
+   "n": 6670,
+   "late": 134
+  },
+  {
+   "trust": "Bridgecrest Lending Auto Securitization Trust 2026-2",
+   "family": "Bridgecrest (DriveTime)",
+   "band": "580-619",
+   "age_b": "12-23m",
+   "n": 40,
+   "late": 4
+  },
+  {
+   "trust": "Bridgecrest Lending Auto Securitization Trust 2026-2",
+   "family": "Bridgecrest (DriveTime)",
+   "band": "580-619",
+   "age_b": "24m+",
+   "n": 522,
+   "late": 19
+  },
+  {
+   "trust": "Bridgecrest Lending Auto Securitization Trust 2026-2",
+   "family": "Bridgecrest (DriveTime)",
+   "band": "620-659",
+   "age_b": "0-11m",
+   "n": 3340,
+   "late": 40
+  },
+  {
+   "trust": "Bridgecrest Lending Auto Securitization Trust 2026-2",
+   "family": "Bridgecrest (DriveTime)",
+   "band": "620-659",
+   "age_b": "12-23m",
+   "n": 14,
+   "late": 0
+  },
+  {
+   "trust": "Bridgecrest Lending Auto Securitization Trust 2026-2",
+   "family": "Bridgecrest (DriveTime)",
+   "band": "620-659",
+   "age_b": "24m+",
+   "n": 369,
+   "late": 14
+  },
+  {
+   "trust": "Bridgecrest Lending Auto Securitization Trust 2026-2",
+   "family": "Bridgecrest (DriveTime)",
+   "band": "660-719",
+   "age_b": "0-11m",
+   "n": 1970,
+   "late": 35
+  },
+  {
+   "trust": "Bridgecrest Lending Auto Securitization Trust 2026-2",
+   "family": "Bridgecrest (DriveTime)",
+   "band": "660-719",
+   "age_b": "12-23m",
+   "n": 10,
+   "late": 1
+  },
+  {
+   "trust": "Bridgecrest Lending Auto Securitization Trust 2026-2",
+   "family": "Bridgecrest (DriveTime)",
+   "band": "660-719",
+   "age_b": "24m+",
+   "n": 256,
+   "late": 10
+  },
+  {
+   "trust": "Bridgecrest Lending Auto Securitization Trust 2026-2",
+   "family": "Bridgecrest (DriveTime)",
+   "band": "720+",
+   "age_b": "0-11m",
+   "n": 657,
+   "late": 9
+  },
+  {
+   "trust": "Bridgecrest Lending Auto Securitization Trust 2026-2",
+   "family": "Bridgecrest (DriveTime)",
+   "band": "720+",
+   "age_b": "12-23m",
+   "n": 3,
+   "late": 0
+  },
+  {
+   "trust": "Bridgecrest Lending Auto Securitization Trust 2026-2",
+   "family": "Bridgecrest (DriveTime)",
+   "band": "720+",
+   "age_b": "24m+",
+   "n": 133,
+   "late": 1
+  },
+  {
+   "trust": "Bridgecrest Lending Auto Securitization Trust 2026-2",
+   "family": "Bridgecrest (DriveTime)",
+   "band": "<580",
+   "age_b": "0-11m",
+   "n": 17197,
+   "late": 337
+  },
+  {
+   "trust": "Bridgecrest Lending Auto Securitization Trust 2026-2",
+   "family": "Bridgecrest (DriveTime)",
+   "band": "<580",
+   "age_b": "12-23m",
+   "n": 231,
+   "late": 19
+  },
+  {
+   "trust": "Bridgecrest Lending Auto Securitization Trust 2026-2",
+   "family": "Bridgecrest (DriveTime)",
+   "band": "<580",
+   "age_b": "24m+",
+   "n": 1784,
+   "late": 68
+  },
+  {
+   "trust": "Bridgecrest Lending Auto Securitization Trust 2026-2",
+   "family": "Bridgecrest (DriveTime)",
+   "band": "unknown",
+   "age_b": "0-11m",
+   "n": 753,
+   "late": 13
+  },
+  {
+   "trust": "Bridgecrest Lending Auto Securitization Trust 2026-2",
+   "family": "Bridgecrest (DriveTime)",
+   "band": "unknown",
+   "age_b": "12-23m",
+   "n": 13,
+   "late": 1
+  },
+  {
+   "trust": "Bridgecrest Lending Auto Securitization Trust 2026-2",
+   "family": "Bridgecrest (DriveTime)",
+   "band": "unknown",
+   "age_b": "24m+",
+   "n": 458,
+   "late": 10
+  },
+  {
+   "trust": "Capital One Prime Auto Receivables Trust 2023-1",
+   "family": "Capital One",
+   "band": "660-719",
+   "age_b": "24m+",
+   "n": 2846,
+   "late": 49
+  },
+  {
+   "trust": "Capital One Prime Auto Receivables Trust 2023-1",
+   "family": "Capital One",
+   "band": "720+",
+   "age_b": "24m+",
+   "n": 24861,
+   "late": 82
+  },
+  {
+   "trust": "CarMax Auto Owner Trust 2024-1",
+   "family": "CarMax",
+   "band": "580-619",
+   "age_b": "24m+",
+   "n": 2970,
+   "late": 425
+  },
+  {
+   "trust": "CarMax Auto Owner Trust 2024-1",
+   "family": "CarMax",
+   "band": "620-659",
+   "age_b": "24m+",
+   "n": 5340,
+   "late": 465
+  },
+  {
+   "trust": "CarMax Auto Owner Trust 2024-1",
+   "family": "CarMax",
+   "band": "660-719",
+   "age_b": "24m+",
+   "n": 9000,
+   "late": 410
+  },
+  {
+   "trust": "CarMax Auto Owner Trust 2024-1",
+   "family": "CarMax",
+   "band": "720+",
+   "age_b": "24m+",
+   "n": 19060,
+   "late": 118
+  },
+  {
+   "trust": "CarMax Auto Owner Trust 2024-1",
+   "family": "CarMax",
+   "band": "<580",
+   "age_b": "24m+",
+   "n": 1358,
+   "late": 306
+  },
+  {
+   "trust": "CarMax Auto Owner Trust 2024-1",
+   "family": "CarMax",
+   "band": "unknown",
+   "age_b": "24m+",
+   "n": 436,
+   "late": 32
+  },
+  {
+   "trust": "Carvana Auto Receivables Trust 2021-N1",
+   "family": "Carvana non-prime",
+   "band": "580-619",
+   "age_b": "24m+",
+   "n": 974,
+   "late": 230
+  },
+  {
+   "trust": "Carvana Auto Receivables Trust 2021-N1",
+   "family": "Carvana non-prime",
+   "band": "620-659",
+   "age_b": "24m+",
+   "n": 728,
+   "late": 162
+  },
+  {
+   "trust": "Carvana Auto Receivables Trust 2021-N1",
+   "family": "Carvana non-prime",
+   "band": "660-719",
+   "age_b": "24m+",
+   "n": 347,
+   "late": 51
+  },
+  {
+   "trust": "Carvana Auto Receivables Trust 2021-N1",
+   "family": "Carvana non-prime",
+   "band": "720+",
+   "age_b": "24m+",
+   "n": 66,
+   "late": 4
+  },
+  {
+   "trust": "Carvana Auto Receivables Trust 2021-N1",
+   "family": "Carvana non-prime",
+   "band": "<580",
+   "age_b": "24m+",
+   "n": 2252,
+   "late": 741
+  },
+  {
+   "trust": "Carvana Auto Receivables Trust 2021-N1",
+   "family": "Carvana non-prime",
+   "band": "unknown",
+   "age_b": "24m+",
+   "n": 275,
+   "late": 61
+  },
+  {
+   "trust": "Carvana Auto Receivables Trust 2021-N4",
+   "family": "Carvana non-prime",
+   "band": "580-619",
+   "age_b": "24m+",
+   "n": 1553,
+   "late": 389
+  },
+  {
+   "trust": "Carvana Auto Receivables Trust 2021-N4",
+   "family": "Carvana non-prime",
+   "band": "620-659",
+   "age_b": "24m+",
+   "n": 1048,
+   "late": 221
+  },
+  {
+   "trust": "Carvana Auto Receivables Trust 2021-N4",
+   "family": "Carvana non-prime",
+   "band": "660-719",
+   "age_b": "24m+",
+   "n": 436,
+   "late": 72
+  },
+  {
+   "trust": "Carvana Auto Receivables Trust 2021-N4",
+   "family": "Carvana non-prime",
+   "band": "720+",
+   "age_b": "24m+",
+   "n": 107,
+   "late": 17
+  },
+  {
+   "trust": "Carvana Auto Receivables Trust 2021-N4",
+   "family": "Carvana non-prime",
+   "band": "<580",
+   "age_b": "24m+",
+   "n": 2763,
+   "late": 812
+  },
+  {
+   "trust": "Carvana Auto Receivables Trust 2021-N4",
+   "family": "Carvana non-prime",
+   "band": "unknown",
+   "age_b": "24m+",
+   "n": 328,
+   "late": 59
+  },
+  {
+   "trust": "Carvana Auto Receivables Trust 2024-P2",
+   "family": "Carvana prime",
+   "band": "580-619",
+   "age_b": "12-23m",
+   "n": 768,
+   "late": 42
+  },
+  {
+   "trust": "Carvana Auto Receivables Trust 2024-P2",
+   "family": "Carvana prime",
+   "band": "580-619",
+   "age_b": "24m+",
+   "n": 1174,
+   "late": 78
+  },
+  {
+   "trust": "Carvana Auto Receivables Trust 2024-P2",
+   "family": "Carvana prime",
+   "band": "620-659",
+   "age_b": "12-23m",
+   "n": 1012,
+   "late": 34
+  },
+  {
+   "trust": "Carvana Auto Receivables Trust 2024-P2",
+   "family": "Carvana prime",
+   "band": "620-659",
+   "age_b": "24m+",
+   "n": 1562,
+   "late": 76
+  },
+  {
+   "trust": "Carvana Auto Receivables Trust 2024-P2",
+   "family": "Carvana prime",
+   "band": "660-719",
+   "age_b": "12-23m",
+   "n": 1440,
+   "late": 28
+  },
+  {
+   "trust": "Carvana Auto Receivables Trust 2024-P2",
+   "family": "Carvana prime",
+   "band": "660-719",
+   "age_b": "24m+",
+   "n": 2165,
+   "late": 56
+  },
+  {
+   "trust": "Carvana Auto Receivables Trust 2024-P2",
+   "family": "Carvana prime",
+   "band": "720+",
+   "age_b": "12-23m",
+   "n": 1783,
+   "late": 14
+  },
+  {
+   "trust": "Carvana Auto Receivables Trust 2024-P2",
+   "family": "Carvana prime",
+   "band": "720+",
+   "age_b": "24m+",
+   "n": 2832,
+   "late": 25
+  },
+  {
+   "trust": "Carvana Auto Receivables Trust 2024-P2",
+   "family": "Carvana prime",
+   "band": "unknown",
+   "age_b": "12-23m",
+   "n": 51,
+   "late": 4
+  },
+  {
+   "trust": "Carvana Auto Receivables Trust 2024-P2",
+   "family": "Carvana prime",
+   "band": "unknown",
+   "age_b": "24m+",
+   "n": 72,
+   "late": 4
+  },
+  {
+   "trust": "DRIVE AUTO RECEIVABLES TRUST 2025-2",
+   "family": "Drive Auto (Santander)",
+   "band": "580-619",
+   "age_b": "0-11m",
+   "n": 7279,
+   "late": 1236
+  },
+  {
+   "trust": "DRIVE AUTO RECEIVABLES TRUST 2025-2",
+   "family": "Drive Auto (Santander)",
+   "band": "580-619",
+   "age_b": "12-23m",
+   "n": 4742,
+   "late": 716
+  },
+  {
+   "trust": "DRIVE AUTO RECEIVABLES TRUST 2025-2",
+   "family": "Drive Auto (Santander)",
+   "band": "580-619",
+   "age_b": "24m+",
+   "n": 1599,
+   "late": 185
+  },
+  {
+   "trust": "DRIVE AUTO RECEIVABLES TRUST 2025-2",
+   "family": "Drive Auto (Santander)",
+   "band": "620-659",
+   "age_b": "0-11m",
+   "n": 4350,
+   "late": 667
+  },
+  {
+   "trust": "DRIVE AUTO RECEIVABLES TRUST 2025-2",
+   "family": "Drive Auto (Santander)",
+   "band": "620-659",
+   "age_b": "12-23m",
+   "n": 2604,
+   "late": 323
+  },
+  {
+   "trust": "DRIVE AUTO RECEIVABLES TRUST 2025-2",
+   "family": "Drive Auto (Santander)",
+   "band": "620-659",
+   "age_b": "24m+",
+   "n": 769,
+   "late": 92
+  },
+  {
+   "trust": "DRIVE AUTO RECEIVABLES TRUST 2025-2",
+   "family": "Drive Auto (Santander)",
+   "band": "660-719",
+   "age_b": "0-11m",
+   "n": 2421,
+   "late": 363
+  },
+  {
+   "trust": "DRIVE AUTO RECEIVABLES TRUST 2025-2",
+   "family": "Drive Auto (Santander)",
+   "band": "660-719",
+   "age_b": "12-23m",
+   "n": 1187,
+   "late": 153
+  },
+  {
+   "trust": "DRIVE AUTO RECEIVABLES TRUST 2025-2",
+   "family": "Drive Auto (Santander)",
+   "band": "660-719",
+   "age_b": "24m+",
+   "n": 320,
+   "late": 34
+  },
+  {
+   "trust": "DRIVE AUTO RECEIVABLES TRUST 2025-2",
+   "family": "Drive Auto (Santander)",
+   "band": "720+",
+   "age_b": "0-11m",
+   "n": 640,
+   "late": 79
+  },
+  {
+   "trust": "DRIVE AUTO RECEIVABLES TRUST 2025-2",
+   "family": "Drive Auto (Santander)",
+   "band": "720+",
+   "age_b": "12-23m",
+   "n": 463,
+   "late": 49
+  },
+  {
+   "trust": "DRIVE AUTO RECEIVABLES TRUST 2025-2",
+   "family": "Drive Auto (Santander)",
+   "band": "720+",
+   "age_b": "24m+",
+   "n": 113,
+   "late": 12
+  },
+  {
+   "trust": "DRIVE AUTO RECEIVABLES TRUST 2025-2",
+   "family": "Drive Auto (Santander)",
+   "band": "<580",
+   "age_b": "0-11m",
+   "n": 15436,
+   "late": 3262
+  },
+  {
+   "trust": "DRIVE AUTO RECEIVABLES TRUST 2025-2",
+   "family": "Drive Auto (Santander)",
+   "band": "<580",
+   "age_b": "12-23m",
+   "n": 9571,
+   "late": 1601
+  },
+  {
+   "trust": "DRIVE AUTO RECEIVABLES TRUST 2025-2",
+   "family": "Drive Auto (Santander)",
+   "band": "<580",
+   "age_b": "24m+",
+   "n": 2651,
+   "late": 381
+  },
+  {
+   "trust": "DRIVE AUTO RECEIVABLES TRUST 2025-2",
+   "family": "Drive Auto (Santander)",
+   "band": "unknown",
+   "age_b": "0-11m",
+   "n": 4112,
+   "late": 460
+  },
+  {
+   "trust": "DRIVE AUTO RECEIVABLES TRUST 2025-2",
+   "family": "Drive Auto (Santander)",
+   "band": "unknown",
+   "age_b": "12-23m",
+   "n": 1976,
+   "late": 237
+  },
+  {
+   "trust": "DRIVE AUTO RECEIVABLES TRUST 2025-2",
+   "family": "Drive Auto (Santander)",
+   "band": "unknown",
+   "age_b": "24m+",
+   "n": 623,
+   "late": 66
+  },
+  {
+   "trust": "Drive Auto Receivables Trust 2024-1",
+   "family": "Drive Auto (Santander)",
+   "band": "580-619",
+   "age_b": "24m+",
+   "n": 7819,
+   "late": 1707
+  },
+  {
+   "trust": "Drive Auto Receivables Trust 2024-1",
+   "family": "Drive Auto (Santander)",
+   "band": "620-659",
+   "age_b": "24m+",
+   "n": 4356,
+   "late": 892
+  },
+  {
+   "trust": "Drive Auto Receivables Trust 2024-1",
+   "family": "Drive Auto (Santander)",
+   "band": "660-719",
+   "age_b": "24m+",
+   "n": 1294,
+   "late": 246
+  },
+  {
+   "trust": "Drive Auto Receivables Trust 2024-1",
+   "family": "Drive Auto (Santander)",
+   "band": "720+",
+   "age_b": "24m+",
+   "n": 403,
+   "late": 76
+  },
+  {
+   "trust": "Drive Auto Receivables Trust 2024-1",
+   "family": "Drive Auto (Santander)",
+   "band": "<580",
+   "age_b": "24m+",
+   "n": 12601,
+   "late": 3604
+  },
+  {
+   "trust": "Drive Auto Receivables Trust 2024-1",
+   "family": "Drive Auto (Santander)",
+   "band": "unknown",
+   "age_b": "24m+",
+   "n": 2623,
+   "late": 437
+  },
+  {
+   "trust": "Exeter Automobile Receivables Trust 2024-1",
+   "family": "Exeter",
+   "band": "580-619",
+   "age_b": "24m+",
+   "n": 5233,
+   "late": 1015
+  },
+  {
+   "trust": "Exeter Automobile Receivables Trust 2024-1",
+   "family": "Exeter",
+   "band": "620-659",
+   "age_b": "24m+",
+   "n": 3713,
+   "late": 638
+  },
+  {
+   "trust": "Exeter Automobile Receivables Trust 2024-1",
+   "family": "Exeter",
+   "band": "660-719",
+   "age_b": "24m+",
+   "n": 1409,
+   "late": 206
+  },
+  {
+   "trust": "Exeter Automobile Receivables Trust 2024-1",
+   "family": "Exeter",
+   "band": "720+",
+   "age_b": "24m+",
+   "n": 210,
+   "late": 26
+  },
+  {
+   "trust": "Exeter Automobile Receivables Trust 2024-1",
+   "family": "Exeter",
+   "band": "<580",
+   "age_b": "24m+",
+   "n": 6951,
+   "late": 1666
+  },
+  {
+   "trust": "Exeter Automobile Receivables Trust 2024-1",
+   "family": "Exeter",
+   "band": "unknown",
+   "age_b": "24m+",
+   "n": 147,
+   "late": 26
+  },
+  {
+   "trust": "Exeter Automobile Receivables Trust 2026-2",
+   "family": "Exeter",
+   "band": "580-619",
+   "age_b": "0-11m",
+   "n": 10156,
+   "late": 440
+  },
+  {
+   "trust": "Exeter Automobile Receivables Trust 2026-2",
+   "family": "Exeter",
+   "band": "580-619",
+   "age_b": "12-23m",
+   "n": 72,
+   "late": 35
+  },
+  {
+   "trust": "Exeter Automobile Receivables Trust 2026-2",
+   "family": "Exeter",
+   "band": "580-619",
+   "age_b": "24m+",
+   "n": 55,
+   "late": 19
+  },
+  {
+   "trust": "Exeter Automobile Receivables Trust 2026-2",
+   "family": "Exeter",
+   "band": "620-659",
+   "age_b": "0-11m",
+   "n": 5260,
+   "late": 177
+  },
+  {
+   "trust": "Exeter Automobile Receivables Trust 2026-2",
+   "family": "Exeter",
+   "band": "620-659",
+   "age_b": "12-23m",
+   "n": 26,
+   "late": 10
+  },
+  {
+   "trust": "Exeter Automobile Receivables Trust 2026-2",
+   "family": "Exeter",
+   "band": "620-659",
+   "age_b": "24m+",
+   "n": 17,
+   "late": 3
+  },
+  {
+   "trust": "Exeter Automobile Receivables Trust 2026-2",
+   "family": "Exeter",
+   "band": "660-719",
+   "age_b": "0-11m",
+   "n": 954,
+   "late": 59
+  },
+  {
+   "trust": "Exeter Automobile Receivables Trust 2026-2",
+   "family": "Exeter",
+   "band": "660-719",
+   "age_b": "12-23m",
+   "n": 10,
+   "late": 4
+  },
+  {
+   "trust": "Exeter Automobile Receivables Trust 2026-2",
+   "family": "Exeter",
+   "band": "660-719",
+   "age_b": "24m+",
+   "n": 3,
+   "late": 0
+  },
+  {
+   "trust": "Exeter Automobile Receivables Trust 2026-2",
+   "family": "Exeter",
+   "band": "720+",
+   "age_b": "0-11m",
+   "n": 165,
+   "late": 11
+  },
+  {
+   "trust": "Exeter Automobile Receivables Trust 2026-2",
+   "family": "Exeter",
+   "band": "720+",
+   "age_b": "24m+",
+   "n": 1,
+   "late": 0
+  },
+  {
+   "trust": "Exeter Automobile Receivables Trust 2026-2",
+   "family": "Exeter",
+   "band": "<580",
+   "age_b": "0-11m",
+   "n": 14119,
+   "late": 779
+  },
+  {
+   "trust": "Exeter Automobile Receivables Trust 2026-2",
+   "family": "Exeter",
+   "band": "<580",
+   "age_b": "12-23m",
+   "n": 152,
+   "late": 69
+  },
+  {
+   "trust": "Exeter Automobile Receivables Trust 2026-2",
+   "family": "Exeter",
+   "band": "<580",
+   "age_b": "24m+",
+   "n": 146,
+   "late": 51
+  },
+  {
+   "trust": "Exeter Automobile Receivables Trust 2026-2",
+   "family": "Exeter",
+   "band": "unknown",
+   "age_b": "0-11m",
+   "n": 64,
+   "late": 4
+  },
+  {
+   "trust": "Exeter Automobile Receivables Trust 2026-2",
+   "family": "Exeter",
+   "band": "unknown",
+   "age_b": "12-23m",
+   "n": 1,
+   "late": 0
+  },
+  {
+   "trust": "Exeter Automobile Receivables Trust 2026-2",
+   "family": "Exeter",
+   "band": "unknown",
+   "age_b": "24m+",
+   "n": 13,
+   "late": 3
+  },
+  {
+   "trust": "Exeter Select Automobile Receivables Trust 2025-1",
+   "family": "Exeter Select",
+   "band": "580-619",
+   "age_b": "12-23m",
+   "n": 223,
+   "late": 15
+  },
+  {
+   "trust": "Exeter Select Automobile Receivables Trust 2025-1",
+   "family": "Exeter Select",
+   "band": "620-659",
+   "age_b": "12-23m",
+   "n": 4094,
+   "late": 346
+  },
+  {
+   "trust": "Exeter Select Automobile Receivables Trust 2025-1",
+   "family": "Exeter Select",
+   "band": "620-659",
+   "age_b": "24m+",
+   "n": 8,
+   "late": 3
+  },
+  {
+   "trust": "Exeter Select Automobile Receivables Trust 2025-1",
+   "family": "Exeter Select",
+   "band": "660-719",
+   "age_b": "12-23m",
+   "n": 4882,
+   "late": 393
+  },
+  {
+   "trust": "Exeter Select Automobile Receivables Trust 2025-1",
+   "family": "Exeter Select",
+   "band": "660-719",
+   "age_b": "24m+",
+   "n": 11,
+   "late": 2
+  },
+  {
+   "trust": "Exeter Select Automobile Receivables Trust 2025-1",
+   "family": "Exeter Select",
+   "band": "720+",
+   "age_b": "12-23m",
+   "n": 1029,
+   "late": 69
+  },
+  {
+   "trust": "Exeter Select Automobile Receivables Trust 2025-1",
+   "family": "Exeter Select",
+   "band": "720+",
+   "age_b": "24m+",
+   "n": 3,
+   "late": 1
+  },
+  {
+   "trust": "Exeter Select Automobile Receivables Trust 2025-1",
+   "family": "Exeter Select",
+   "band": "<580",
+   "age_b": "12-23m",
+   "n": 176,
+   "late": 16
+  },
+  {
+   "trust": "Exeter Select Automobile Receivables Trust 2025-1",
+   "family": "Exeter Select",
+   "band": "unknown",
+   "age_b": "12-23m",
+   "n": 30,
+   "late": 1
+  },
+  {
+   "trust": "Exeter Select Automobile Receivables Trust 2025-1",
+   "family": "Exeter Select",
+   "band": "unknown",
+   "age_b": "24m+",
+   "n": 1,
+   "late": 0
+  },
+  {
+   "trust": "Fifth Third Auto Trust 2023-1",
+   "family": "Fifth Third",
+   "band": "620-659",
+   "age_b": "24m+",
+   "n": 559,
+   "late": 14
+  },
+  {
+   "trust": "Fifth Third Auto Trust 2023-1",
+   "family": "Fifth Third",
+   "band": "660-719",
+   "age_b": "24m+",
+   "n": 8333,
+   "late": 194
+  },
+  {
+   "trust": "Fifth Third Auto Trust 2023-1",
+   "family": "Fifth Third",
+   "band": "720+",
+   "age_b": "24m+",
+   "n": 26685,
+   "late": 162
+  },
+  {
+   "trust": "Ford Credit Auto Owner Trust 2024-A",
+   "family": "Ford Credit",
+   "band": "580-619",
+   "age_b": "24m+",
+   "n": 961,
+   "late": 39
+  },
+  {
+   "trust": "Ford Credit Auto Owner Trust 2024-A",
+   "family": "Ford Credit",
+   "band": "620-659",
+   "age_b": "24m+",
+   "n": 1573,
+   "late": 58
+  },
+  {
+   "trust": "Ford Credit Auto Owner Trust 2024-A",
+   "family": "Ford Credit",
+   "band": "660-719",
+   "age_b": "24m+",
+   "n": 3557,
+   "late": 69
+  },
+  {
+   "trust": "Ford Credit Auto Owner Trust 2024-A",
+   "family": "Ford Credit",
+   "band": "720+",
+   "age_b": "24m+",
+   "n": 14754,
+   "late": 35
+  },
+  {
+   "trust": "Ford Credit Auto Owner Trust 2024-A",
+   "family": "Ford Credit",
+   "band": "<580",
+   "age_b": "24m+",
+   "n": 1371,
+   "late": 40
+  },
+  {
+   "trust": "Ford Credit Auto Owner Trust 2024-A",
+   "family": "Ford Credit",
+   "band": "unknown",
+   "age_b": "24m+",
+   "n": 3467,
+   "late": 55
+  },
+  {
+   "trust": "GM Financial Consumer Automobile Receivables Trust 2024-1",
+   "family": "GM Financial prime",
+   "band": "580-619",
+   "age_b": "24m+",
+   "n": 116,
+   "late": 4
+  },
+  {
+   "trust": "GM Financial Consumer Automobile Receivables Trust 2024-1",
+   "family": "GM Financial prime",
+   "band": "620-659",
+   "age_b": "24m+",
+   "n": 809,
+   "late": 39
+  },
+  {
+   "trust": "GM Financial Consumer Automobile Receivables Trust 2024-1",
+   "family": "GM Financial prime",
+   "band": "660-719",
+   "age_b": "24m+",
+   "n": 4128,
+   "late": 135
+  },
+  {
+   "trust": "GM Financial Consumer Automobile Receivables Trust 2024-1",
+   "family": "GM Financial prime",
+   "band": "720+",
+   "age_b": "24m+",
+   "n": 21116,
+   "late": 192
+  },
+  {
+   "trust": "GM Financial Consumer Automobile Receivables Trust 2024-1",
+   "family": "GM Financial prime",
+   "band": "<580",
+   "age_b": "24m+",
+   "n": 96,
+   "late": 9
+  },
+  {
+   "trust": "GM Financial Consumer Automobile Receivables Trust 2024-1",
+   "family": "GM Financial prime",
+   "band": "unknown",
+   "age_b": "24m+",
+   "n": 138,
+   "late": 3
+  },
+  {
+   "trust": "Honda Auto Receivables 2024-1 Owner Trust",
+   "family": "Honda",
+   "band": "580-619",
+   "age_b": "24m+",
+   "n": 502,
+   "late": 39
+  },
+  {
+   "trust": "Honda Auto Receivables 2024-1 Owner Trust",
+   "family": "Honda",
+   "band": "620-659",
+   "age_b": "24m+",
+   "n": 1799,
+   "late": 82
+  },
+  {
+   "trust": "Honda Auto Receivables 2024-1 Owner Trust",
+   "family": "Honda",
+   "band": "660-719",
+   "age_b": "24m+",
+   "n": 8516,
+   "late": 161
+  },
+  {
+   "trust": "Honda Auto Receivables 2024-1 Owner Trust",
+   "family": "Honda",
+   "band": "720+",
+   "age_b": "24m+",
+   "n": 38749,
+   "late": 134
+  },
+  {
+   "trust": "Honda Auto Receivables 2024-1 Owner Trust",
+   "family": "Honda",
+   "band": "<580",
+   "age_b": "24m+",
+   "n": 158,
+   "late": 28
+  },
+  {
+   "trust": "Honda Auto Receivables 2024-1 Owner Trust",
+   "family": "Honda",
+   "band": "unknown",
+   "age_b": "24m+",
+   "n": 13,
+   "late": 0
+  },
+  {
+   "trust": "Hyundai Auto Receivables Trust 2024-A",
+   "family": "Hyundai",
+   "band": "580-619",
+   "age_b": "24m+",
+   "n": 282,
+   "late": 23
+  },
+  {
+   "trust": "Hyundai Auto Receivables Trust 2024-A",
+   "family": "Hyundai",
+   "band": "620-659",
+   "age_b": "24m+",
+   "n": 2589,
+   "late": 189
+  },
+  {
+   "trust": "Hyundai Auto Receivables Trust 2024-A",
+   "family": "Hyundai",
+   "band": "660-719",
+   "age_b": "24m+",
+   "n": 6542,
+   "late": 220
+  },
+  {
+   "trust": "Hyundai Auto Receivables Trust 2024-A",
+   "family": "Hyundai",
+   "band": "720+",
+   "age_b": "24m+",
+   "n": 33230,
+   "late": 120
+  },
+  {
+   "trust": "Hyundai Auto Receivables Trust 2024-A",
+   "family": "Hyundai",
+   "band": "unknown",
+   "age_b": "24m+",
+   "n": 13,
+   "late": 0
+  },
+  {
+   "trust": "Mercedes-Benz Auto Receivables Trust 2024-1",
+   "family": "Mercedes-Benz",
+   "band": "620-659",
+   "age_b": "24m+",
+   "n": 551,
+   "late": 17
+  },
+  {
+   "trust": "Mercedes-Benz Auto Receivables Trust 2024-1",
+   "family": "Mercedes-Benz",
+   "band": "660-719",
+   "age_b": "24m+",
+   "n": 4375,
+   "late": 137
+  },
+  {
+   "trust": "Mercedes-Benz Auto Receivables Trust 2024-1",
+   "family": "Mercedes-Benz",
+   "band": "720+",
+   "age_b": "24m+",
+   "n": 8115,
+   "late": 80
+  },
+  {
+   "trust": "Nissan Auto Receivables 2024-A Owner Trust",
+   "family": "Nissan",
+   "band": "660-719",
+   "age_b": "24m+",
+   "n": 5746,
+   "late": 82
+  },
+  {
+   "trust": "Nissan Auto Receivables 2024-A Owner Trust",
+   "family": "Nissan",
+   "band": "720+",
+   "age_b": "24m+",
+   "n": 30971,
+   "late": 140
+  },
+  {
+   "trust": "Nissan Auto Receivables 2024-A Owner Trust",
+   "family": "Nissan",
+   "band": "unknown",
+   "age_b": "24m+",
+   "n": 64,
+   "late": 0
+  },
+  {
+   "trust": "Santander Drive Auto Receivables Trust 2024-1",
+   "family": "Santander Drive",
+   "band": "580-619",
+   "age_b": "24m+",
+   "n": 7587,
+   "late": 1559
+  },
+  {
+   "trust": "Santander Drive Auto Receivables Trust 2024-1",
+   "family": "Santander Drive",
+   "band": "620-659",
+   "age_b": "24m+",
+   "n": 5458,
+   "late": 920
+  },
+  {
+   "trust": "Santander Drive Auto Receivables Trust 2024-1",
+   "family": "Santander Drive",
+   "band": "660-719",
+   "age_b": "24m+",
+   "n": 2449,
+   "late": 394
+  },
+  {
+   "trust": "Santander Drive Auto Receivables Trust 2024-1",
+   "family": "Santander Drive",
+   "band": "720+",
+   "age_b": "24m+",
+   "n": 1153,
+   "late": 127
+  },
+  {
+   "trust": "Santander Drive Auto Receivables Trust 2024-1",
+   "family": "Santander Drive",
+   "band": "<580",
+   "age_b": "24m+",
+   "n": 9213,
+   "late": 2462
+  },
+  {
+   "trust": "Santander Drive Auto Receivables Trust 2024-1",
+   "family": "Santander Drive",
+   "band": "unknown",
+   "age_b": "24m+",
+   "n": 2802,
+   "late": 387
+  },
+  {
+   "trust": "Santander Drive Auto Receivables Trust 2026-1",
+   "family": "Santander Drive",
+   "band": "580-619",
+   "age_b": "0-11m",
+   "n": 14526,
+   "late": 1119
+  },
+  {
+   "trust": "Santander Drive Auto Receivables Trust 2026-1",
+   "family": "Santander Drive",
+   "band": "580-619",
+   "age_b": "12-23m",
+   "n": 960,
+   "late": 87
+  },
+  {
+   "trust": "Santander Drive Auto Receivables Trust 2026-1",
+   "family": "Santander Drive",
+   "band": "580-619",
+   "age_b": "24m+",
+   "n": 2099,
+   "late": 111
+  },
+  {
+   "trust": "Santander Drive Auto Receivables Trust 2026-1",
+   "family": "Santander Drive",
+   "band": "620-659",
+   "age_b": "0-11m",
+   "n": 8479,
+   "late": 574
+  },
+  {
+   "trust": "Santander Drive Auto Receivables Trust 2026-1",
+   "family": "Santander Drive",
+   "band": "620-659",
+   "age_b": "12-23m",
+   "n": 751,
+   "late": 43
+  },
+  {
+   "trust": "Santander Drive Auto Receivables Trust 2026-1",
+   "family": "Santander Drive",
+   "band": "620-659",
+   "age_b": "24m+",
+   "n": 2389,
+   "late": 94
+  },
+  {
+   "trust": "Santander Drive Auto Receivables Trust 2026-1",
+   "family": "Santander Drive",
+   "band": "660-719",
+   "age_b": "0-11m",
+   "n": 4725,
+   "late": 309
+  },
+  {
+   "trust": "Santander Drive Auto Receivables Trust 2026-1",
+   "family": "Santander Drive",
+   "band": "660-719",
+   "age_b": "12-23m",
+   "n": 340,
+   "late": 27
+  },
+  {
+   "trust": "Santander Drive Auto Receivables Trust 2026-1",
+   "family": "Santander Drive",
+   "band": "660-719",
+   "age_b": "24m+",
+   "n": 2998,
+   "late": 101
+  },
+  {
+   "trust": "Santander Drive Auto Receivables Trust 2026-1",
+   "family": "Santander Drive",
+   "band": "720+",
+   "age_b": "0-11m",
+   "n": 1999,
+   "late": 81
+  },
+  {
+   "trust": "Santander Drive Auto Receivables Trust 2026-1",
+   "family": "Santander Drive",
+   "band": "720+",
+   "age_b": "12-23m",
+   "n": 241,
+   "late": 16
+  },
+  {
+   "trust": "Santander Drive Auto Receivables Trust 2026-1",
+   "family": "Santander Drive",
+   "band": "720+",
+   "age_b": "24m+",
+   "n": 4566,
+   "late": 53
+  },
+  {
+   "trust": "Santander Drive Auto Receivables Trust 2026-1",
+   "family": "Santander Drive",
+   "band": "<580",
+   "age_b": "0-11m",
+   "n": 22210,
+   "late": 2230
+  },
+  {
+   "trust": "Santander Drive Auto Receivables Trust 2026-1",
+   "family": "Santander Drive",
+   "band": "<580",
+   "age_b": "12-23m",
+   "n": 1108,
+   "late": 107
+  },
+  {
+   "trust": "Santander Drive Auto Receivables Trust 2026-1",
+   "family": "Santander Drive",
+   "band": "<580",
+   "age_b": "24m+",
+   "n": 1058,
+   "late": 51
+  },
+  {
+   "trust": "Santander Drive Auto Receivables Trust 2026-1",
+   "family": "Santander Drive",
+   "band": "unknown",
+   "age_b": "0-11m",
+   "n": 12205,
+   "late": 514
+  },
+  {
+   "trust": "Santander Drive Auto Receivables Trust 2026-1",
+   "family": "Santander Drive",
+   "band": "unknown",
+   "age_b": "12-23m",
+   "n": 262,
+   "late": 23
+  },
+  {
+   "trust": "Santander Drive Auto Receivables Trust 2026-1",
+   "family": "Santander Drive",
+   "band": "unknown",
+   "age_b": "24m+",
+   "n": 1494,
+   "late": 52
+  },
+  {
+   "trust": "Toyota Auto Receivables 2024-A Owner Trust",
+   "family": "Toyota",
+   "band": "620-659",
+   "age_b": "24m+",
+   "n": 1584,
+   "late": 110
+  },
+  {
+   "trust": "Toyota Auto Receivables 2024-A Owner Trust",
+   "family": "Toyota",
+   "band": "660-719",
+   "age_b": "24m+",
+   "n": 7259,
+   "late": 236
+  },
+  {
+   "trust": "Toyota Auto Receivables 2024-A Owner Trust",
+   "family": "Toyota",
+   "band": "720+",
+   "age_b": "24m+",
+   "n": 29861,
+   "late": 156
+  },
+  {
+   "trust": "Toyota Auto Receivables 2024-A Owner Trust",
+   "family": "Toyota",
+   "band": "unknown",
+   "age_b": "24m+",
+   "n": 69,
+   "late": 0
+  },
+  {
+   "trust": "Volkswagen Auto Loan Enhanced Trust 2023-1",
+   "family": "Volkswagen",
+   "band": "580-619",
+   "age_b": "24m+",
+   "n": 39,
+   "late": 6
+  },
+  {
+   "trust": "Volkswagen Auto Loan Enhanced Trust 2023-1",
+   "family": "Volkswagen",
+   "band": "620-659",
+   "age_b": "24m+",
+   "n": 563,
+   "late": 47
+  },
+  {
+   "trust": "Volkswagen Auto Loan Enhanced Trust 2023-1",
+   "family": "Volkswagen",
+   "band": "660-719",
+   "age_b": "24m+",
+   "n": 5188,
+   "late": 174
+  },
+  {
+   "trust": "Volkswagen Auto Loan Enhanced Trust 2023-1",
+   "family": "Volkswagen",
+   "band": "720+",
+   "age_b": "24m+",
+   "n": 18634,
+   "late": 94
+  },
+  {
+   "trust": "Volkswagen Auto Loan Enhanced Trust 2023-1",
+   "family": "Volkswagen",
+   "band": "unknown",
+   "age_b": "24m+",
+   "n": 2,
+   "late": 0
+  },
+  {
+   "trust": "World Omni Auto Receivables Trust 2024-A",
+   "family": "World Omni",
+   "band": "620-659",
+   "age_b": "24m+",
+   "n": 440,
+   "late": 29
+  },
+  {
+   "trust": "World Omni Auto Receivables Trust 2024-A",
+   "family": "World Omni",
+   "band": "660-719",
+   "age_b": "24m+",
+   "n": 5293,
+   "late": 254
+  },
+  {
+   "trust": "World Omni Auto Receivables Trust 2024-A",
+   "family": "World Omni",
+   "band": "720+",
+   "age_b": "24m+",
+   "n": 16986,
+   "late": 120
+  },
+  {
+   "trust": "World Omni Auto Receivables Trust 2024-A",
+   "family": "World Omni",
+   "band": "unknown",
+   "age_b": "24m+",
+   "n": 264,
+   "late": 7
+  }
+ ],
+ "pool_metrics": [
+  {
+   "trust": "Exeter Select Automobile Receivables Trust 2025-1",
+   "family": "Exeter Select",
+   "tier": "near-prime",
+   "open_loans": 10457,
+   "late30": 0.0809,
+   "late60": 0.0357,
+   "avg_score": 671.8437,
+   "avg_age": 15.0349
+  },
+  {
+   "trust": "ALLY AUTO RECEIVABLES TRUST 2024-1",
+   "family": "Ally",
+   "tier": "prime",
+   "open_loans": 24688,
+   "late30": 0.0277,
+   "late60": 0.0093,
+   "avg_score": 726.6385,
+   "avg_age": 42.3925
+  },
+  {
+   "trust": "BMW Vehicle Owner Trust 2023-A",
+   "family": "BMW",
+   "tier": "prime",
+   "open_loans": 16919,
+   "late30": 0.0144,
+   "late60": 0.0046,
+   "avg_score": 786.2511,
+   "avg_age": 46.7123
+  },
+  {
+   "trust": "Capital One Prime Auto Receivables Trust 2023-1",
+   "family": "Capital One",
+   "tier": "prime",
+   "open_loans": 27707,
+   "late30": 0.0047,
+   "late60": 0.0017,
+   "avg_score": 777.0249,
+   "avg_age": 49.396
+  },
+  {
+   "trust": "CarMax Auto Owner Trust 2024-1",
+   "family": "CarMax",
+   "tier": "prime",
+   "open_loans": 38164,
+   "late30": 0.046,
+   "late60": 0.0203,
+   "avg_score": 721.0106,
+   "avg_age": 33.2322
+  },
+  {
+   "trust": "Carvana Auto Receivables Trust 2024-P2",
+   "family": "Carvana prime",
+   "tier": "prime",
+   "open_loans": 12859,
+   "late30": 0.0281,
+   "late60": 0.0109,
+   "avg_score": 698.6022,
+   "avg_age": 23.9514
+  },
+  {
+   "trust": "Fifth Third Auto Trust 2023-1",
+   "family": "Fifth Third",
+   "tier": "prime",
+   "open_loans": 35577,
+   "late30": 0.0104,
+   "late60": 0.0033,
+   "avg_score": 764.6673,
+   "avg_age": 49.3579
+  },
+  {
+   "trust": "Ford Credit Auto Owner Trust 2024-A",
+   "family": "Ford Credit",
+   "tier": "prime",
+   "open_loans": 25683,
+   "late30": 0.0115,
+   "late60": 0.0026,
+   "avg_score": 748.415,
+   "avg_age": 33.937
+  },
+  {
+   "trust": "GM Financial Consumer Automobile Receivables Trust 2024-1",
+   "family": "GM Financial prime",
+   "tier": "prime",
+   "open_loans": 26403,
+   "late30": 0.0145,
+   "late60": 0.0037,
+   "avg_score": 775.5414,
+   "avg_age": 40.1466
+  },
+  {
+   "trust": "Honda Auto Receivables 2024-1 Owner Trust",
+   "family": "Honda",
+   "tier": "prime",
+   "open_loans": 49737,
+   "late30": 0.0089,
+   "late60": 0.0022,
+   "avg_score": 768.464,
+   "avg_age": 39.6704
+  },
+  {
+   "trust": "Hyundai Auto Receivables Trust 2024-A",
+   "family": "Hyundai",
+   "tier": "prime",
+   "open_loans": 42656,
+   "late30": 0.0129,
+   "late60": 0.0027,
+   "avg_score": 769.5192,
+   "avg_age": 35.3138
+  },
+  {
+   "trust": "Mercedes-Benz Auto Receivables Trust 2024-1",
+   "family": "Mercedes-Benz",
+   "tier": "prime",
+   "open_loans": 13041,
+   "late30": 0.0179,
+   "late60": 0.0049,
+   "avg_score": 750.2934,
+   "avg_age": 37.4109
+  },
+  {
+   "trust": "Nissan Auto Receivables 2024-A Owner Trust",
+   "family": "Nissan",
+   "tier": "prime",
+   "open_loans": 36781,
+   "late30": 0.006,
+   "late60": 0.0012,
+   "avg_score": 782.3993,
+   "avg_age": 37.4883
+  },
+  {
+   "trust": "Toyota Auto Receivables 2024-A Owner Trust",
+   "family": "Toyota",
+   "tier": "prime",
+   "open_loans": 38773,
+   "late30": 0.0129,
+   "late60": 0.0038,
+   "avg_score": 769.5857,
+   "avg_age": 40.5154
+  },
+  {
+   "trust": "Volkswagen Auto Loan Enhanced Trust 2023-1",
+   "family": "Volkswagen",
+   "tier": "prime",
+   "open_loans": 24426,
+   "late30": 0.0131,
+   "late60": 0.0026,
+   "avg_score": 770.7956,
+   "avg_age": 45.2254
+  },
+  {
+   "trust": "World Omni Auto Receivables Trust 2024-A",
+   "family": "World Omni",
+   "tier": "prime",
+   "open_loans": 22983,
+   "late30": 0.0178,
+   "late60": 0.005,
+   "avg_score": 766.7194,
+   "avg_age": 34.0081
+  },
+  {
+   "trust": "AmeriCredit Automobile Receivables Trust 2022-1",
+   "family": "AmeriCredit (GM Financial)",
+   "tier": "subprime",
+   "open_loans": 15393,
+   "late30": 0.1392,
+   "late60": 0.0384,
+   "avg_score": 585.671,
+   "avg_age": 57.187
+  },
+  {
+   "trust": "AmeriCredit Automobile Receivables Trust 2024-1",
+   "family": "AmeriCredit (GM Financial)",
+   "tier": "subprime",
+   "open_loans": 37538,
+   "late30": 0.1412,
+   "late60": 0.044,
+   "avg_score": 584.3131,
+   "avg_age": 33.8912
+  },
+  {
+   "trust": "Bridgecrest Lending Auto Securitization Trust 2024-1",
+   "family": "Bridgecrest (DriveTime)",
+   "tier": "subprime",
+   "open_loans": 14941,
+   "late30": 0.226,
+   "late60": 0.1297,
+   "avg_score": 555.4462,
+   "avg_age": 29.8453
+  },
+  {
+   "trust": "Bridgecrest Lending Auto Securitization Trust 2026-2",
+   "family": "Bridgecrest (DriveTime)",
+   "tier": "subprime",
+   "open_loans": 34420,
+   "late30": 0.0208,
+   "late60": 0.008,
+   "avg_score": 571.8899,
+   "avg_age": 9.051
+  },
+  {
+   "trust": "Carvana Auto Receivables Trust 2021-N1",
+   "family": "Carvana non-prime",
+   "tier": "subprime",
+   "open_loans": 4642,
+   "late30": 0.2691,
+   "late60": 0.1555,
+   "avg_score": 575.692,
+   "avg_age": 62.9595
+  },
+  {
+   "trust": "Carvana Auto Receivables Trust 2021-N4",
+   "family": "Carvana non-prime",
+   "tier": "subprime",
+   "open_loans": 6235,
+   "late30": 0.2518,
+   "late60": 0.1442,
+   "avg_score": 583.0738,
+   "avg_age": 54.0595
+  },
+  {
+   "trust": "DRIVE AUTO RECEIVABLES TRUST 2025-2",
+   "family": "Drive Auto (Santander)",
+   "tier": "subprime",
+   "open_loans": 60856,
+   "late30": 0.1629,
+   "late60": 0.0606,
+   "avg_score": 581.5844,
+   "avg_age": 15.1668
+  },
+  {
+   "trust": "Drive Auto Receivables Trust 2024-1",
+   "family": "Drive Auto (Santander)",
+   "tier": "subprime",
+   "open_loans": 29096,
+   "late30": 0.2393,
+   "late60": 0.0968,
+   "avg_score": 582.4106,
+   "avg_age": 33.8653
+  },
+  {
+   "trust": "Exeter Automobile Receivables Trust 2024-1",
+   "family": "Exeter",
+   "tier": "subprime",
+   "open_loans": 17663,
+   "late30": 0.2025,
+   "late60": 0.09,
+   "avg_score": 593.9581,
+   "avg_age": 30.2098
+  },
+  {
+   "trust": "Exeter Automobile Receivables Trust 2026-2",
+   "family": "Exeter",
+   "tier": "subprime",
+   "open_loans": 31214,
+   "late30": 0.0533,
+   "late60": 0.0107,
+   "avg_score": 581.2941,
+   "avg_age": 3.0525
+  },
+  {
+   "trust": "Santander Drive Auto Receivables Trust 2024-1",
+   "family": "Santander Drive",
+   "tier": "subprime",
+   "open_loans": 28662,
+   "late30": 0.2041,
+   "late60": 0.0847,
+   "avg_score": 601.6376,
+   "avg_age": 33.2318
+  },
+  {
+   "trust": "Santander Drive Auto Receivables Trust 2026-1",
+   "family": "Santander Drive",
+   "tier": "subprime",
+   "open_loans": 82410,
+   "late30": 0.0679,
+   "late60": 0.0184,
+   "avg_score": 612.5645,
+   "avg_age": 15.0947
+  }
+ ],
+ "pool_behaviour": [
+  {
+   "trust": "Exeter Select Automobile Receivables Trust 2025-1",
+   "family": "Exeter Select",
+   "tier": "near-prime",
+   "current_both": 9066,
+   "current_no_pay_2m": 111,
+   "late30": 473,
+   "rolled_forward": 180,
+   "cured": 130,
+   "cured_no_pay": 0,
+   "late60": 373,
+   "late60_current_no_pay": 0,
+   "current_no_pay_2m_share": 0.01224,
+   "roll_forward_rate": 0.3805,
+   "late60_current_no_pay_share": 0.0
+  },
+  {
+   "trust": "ALLY AUTO RECEIVABLES TRUST 2024-1",
+   "family": "Ally",
+   "tier": "prime",
+   "current_both": 22923,
+   "current_no_pay_2m": 218,
+   "late30": 455,
+   "rolled_forward": 74,
+   "cured": 166,
+   "cured_no_pay": 2,
+   "late60": 230,
+   "late60_current_no_pay": 12,
+   "current_no_pay_2m_share": 0.00951,
+   "roll_forward_rate": 0.1626,
+   "late60_current_no_pay_share": 0.0522
+  },
+  {
+   "trust": "BMW Vehicle Owner Trust 2023-A",
+   "family": "BMW",
+   "tier": "prime",
+   "current_both": 15771,
+   "current_no_pay_2m": 79,
+   "late30": 167,
+   "rolled_forward": 43,
+   "cured": 48,
+   "cured_no_pay": 0,
+   "late60": 75,
+   "late60_current_no_pay": 0,
+   "current_no_pay_2m_share": 0.00501,
+   "roll_forward_rate": 0.2575,
+   "late60_current_no_pay_share": 0.0
+  },
+  {
+   "trust": "Capital One Prime Auto Receivables Trust 2023-1",
+   "family": "Capital One",
+   "tier": "prime",
+   "current_both": 26635,
+   "current_no_pay_2m": 34,
+   "late30": 85,
+   "rolled_forward": 17,
+   "cured": 27,
+   "cured_no_pay": 0,
+   "late60": 46,
+   "late60_current_no_pay": 0,
+   "current_no_pay_2m_share": 0.00128,
+   "roll_forward_rate": 0.2,
+   "late60_current_no_pay_share": 0.0
+  },
+  {
+   "trust": "CarMax Auto Owner Trust 2024-1",
+   "family": "CarMax",
+   "tier": "prime",
+   "current_both": 35055,
+   "current_no_pay_2m": 403,
+   "late30": 981,
+   "rolled_forward": 292,
+   "cured": 254,
+   "cured_no_pay": 0,
+   "late60": 775,
+   "late60_current_no_pay": 0,
+   "current_no_pay_2m_share": 0.0115,
+   "roll_forward_rate": 0.2977,
+   "late60_current_no_pay_share": 0.0
+  },
+  {
+   "trust": "Carvana Auto Receivables Trust 2024-P2",
+   "family": "Carvana prime",
+   "tier": "prime",
+   "current_both": 12096,
+   "current_no_pay_2m": 95,
+   "late30": 221,
+   "rolled_forward": 51,
+   "cured": 78,
+   "cured_no_pay": 0,
+   "late60": 140,
+   "late60_current_no_pay": 0,
+   "current_no_pay_2m_share": 0.00785,
+   "roll_forward_rate": 0.2308,
+   "late60_current_no_pay_share": 0.0
+  },
+  {
+   "trust": "Fifth Third Auto Trust 2023-1",
+   "family": "Fifth Third",
+   "tier": "prime",
+   "current_both": 33895,
+   "current_no_pay_2m": 254,
+   "late30": 252,
+   "rolled_forward": 55,
+   "cured": 107,
+   "cured_no_pay": 0,
+   "late60": 118,
+   "late60_current_no_pay": 0,
+   "current_no_pay_2m_share": 0.00749,
+   "roll_forward_rate": 0.2183,
+   "late60_current_no_pay_share": 0.0
+  },
+  {
+   "trust": "Ford Credit Auto Owner Trust 2024-A",
+   "family": "Ford Credit",
+   "tier": "prime",
+   "current_both": 24408,
+   "current_no_pay_2m": 231,
+   "late30": 230,
+   "rolled_forward": 32,
+   "cured": 113,
+   "cured_no_pay": 6,
+   "late60": 66,
+   "late60_current_no_pay": 3,
+   "current_no_pay_2m_share": 0.00946,
+   "roll_forward_rate": 0.1391,
+   "late60_current_no_pay_share": 0.0455
+  },
+  {
+   "trust": "GM Financial Consumer Automobile Receivables Trust 2024-1",
+   "family": "GM Financial prime",
+   "tier": "prime",
+   "current_both": 25047,
+   "current_no_pay_2m": 141,
+   "late30": 285,
+   "rolled_forward": 55,
+   "cured": 109,
+   "cured_no_pay": 0,
+   "late60": 97,
+   "late60_current_no_pay": 0,
+   "current_no_pay_2m_share": 0.00563,
+   "roll_forward_rate": 0.193,
+   "late60_current_no_pay_share": 0.0
+  },
+  {
+   "trust": "Honda Auto Receivables 2024-1 Owner Trust",
+   "family": "Honda",
+   "tier": "prime",
+   "current_both": 47375,
+   "current_no_pay_2m": 243,
+   "late30": 337,
+   "rolled_forward": 72,
+   "cured": 105,
+   "cured_no_pay": 0,
+   "late60": 107,
+   "late60_current_no_pay": 0,
+   "current_no_pay_2m_share": 0.00513,
+   "roll_forward_rate": 0.2136,
+   "late60_current_no_pay_share": 0.0
+  },
+  {
+   "trust": "Hyundai Auto Receivables Trust 2024-A",
+   "family": "Hyundai",
+   "tier": "prime",
+   "current_both": 40764,
+   "current_no_pay_2m": 305,
+   "late30": 435,
+   "rolled_forward": 74,
+   "cured": 163,
+   "cured_no_pay": 4,
+   "late60": 117,
+   "late60_current_no_pay": 10,
+   "current_no_pay_2m_share": 0.00748,
+   "roll_forward_rate": 0.1701,
+   "late60_current_no_pay_share": 0.0855
+  },
+  {
+   "trust": "Mercedes-Benz Auto Receivables Trust 2024-1",
+   "family": "Mercedes-Benz",
+   "tier": "prime",
+   "current_both": 12319,
+   "current_no_pay_2m": 77,
+   "late30": 170,
+   "rolled_forward": 45,
+   "cured": 58,
+   "cured_no_pay": 0,
+   "late60": 64,
+   "late60_current_no_pay": 0,
+   "current_no_pay_2m_share": 0.00625,
+   "roll_forward_rate": 0.2647,
+   "late60_current_no_pay_share": 0.0
+  },
+  {
+   "trust": "Nissan Auto Receivables 2024-A Owner Trust",
+   "family": "Nissan",
+   "tier": "prime",
+   "current_both": 35021,
+   "current_no_pay_2m": 111,
+   "late30": 177,
+   "rolled_forward": 31,
+   "cured": 65,
+   "cured_no_pay": 0,
+   "late60": 45,
+   "late60_current_no_pay": 0,
+   "current_no_pay_2m_share": 0.00317,
+   "roll_forward_rate": 0.1751,
+   "late60_current_no_pay_share": 0.0
+  },
+  {
+   "trust": "Toyota Auto Receivables 2024-A Owner Trust",
+   "family": "Toyota",
+   "tier": "prime",
+   "current_both": 37034,
+   "current_no_pay_2m": 241,
+   "late30": 354,
+   "rolled_forward": 79,
+   "cured": 113,
+   "cured_no_pay": 0,
+   "late60": 148,
+   "late60_current_no_pay": 0,
+   "current_no_pay_2m_share": 0.00651,
+   "roll_forward_rate": 0.2232,
+   "late60_current_no_pay_share": 0.0
+  },
+  {
+   "trust": "Volkswagen Auto Loan Enhanced Trust 2023-1",
+   "family": "Volkswagen",
+   "tier": "prime",
+   "current_both": 23376,
+   "current_no_pay_2m": 191,
+   "late30": 257,
+   "rolled_forward": 49,
+   "cured": 102,
+   "cured_no_pay": 0,
+   "late60": 64,
+   "late60_current_no_pay": 0,
+   "current_no_pay_2m_share": 0.00817,
+   "roll_forward_rate": 0.1907,
+   "late60_current_no_pay_share": 0.0
+  },
+  {
+   "trust": "World Omni Auto Receivables Trust 2024-A",
+   "family": "World Omni",
+   "tier": "prime",
+   "current_both": 21903,
+   "current_no_pay_2m": 83,
+   "late30": 295,
+   "rolled_forward": 67,
+   "cured": 78,
+   "cured_no_pay": 0,
+   "late60": 115,
+   "late60_current_no_pay": 14,
+   "current_no_pay_2m_share": 0.00379,
+   "roll_forward_rate": 0.2271,
+   "late60_current_no_pay_share": 0.1217
+  },
+  {
+   "trust": "AmeriCredit Automobile Receivables Trust 2022-1",
+   "family": "AmeriCredit (GM Financial)",
+   "tier": "subprime",
+   "current_both": 12078,
+   "current_no_pay_2m": 185,
+   "late30": 1552,
+   "rolled_forward": 282,
+   "cured": 479,
+   "cured_no_pay": 0,
+   "late60": 591,
+   "late60_current_no_pay": 1,
+   "current_no_pay_2m_share": 0.01532,
+   "roll_forward_rate": 0.1817,
+   "late60_current_no_pay_share": 0.0017
+  },
+  {
+   "trust": "AmeriCredit Automobile Receivables Trust 2024-1",
+   "family": "AmeriCredit (GM Financial)",
+   "tier": "subprime",
+   "current_both": 29425,
+   "current_no_pay_2m": 419,
+   "late30": 3647,
+   "rolled_forward": 754,
+   "cured": 1291,
+   "cured_no_pay": 1,
+   "late60": 1652,
+   "late60_current_no_pay": 1,
+   "current_no_pay_2m_share": 0.01424,
+   "roll_forward_rate": 0.2067,
+   "late60_current_no_pay_share": 0.0006
+  },
+  {
+   "trust": "Bridgecrest Lending Auto Securitization Trust 2024-1",
+   "family": "Bridgecrest (DriveTime)",
+   "tier": "subprime",
+   "current_both": 10406,
+   "current_no_pay_2m": 58,
+   "late30": 1439,
+   "rolled_forward": 468,
+   "cured": 325,
+   "cured_no_pay": 0,
+   "late60": 1938,
+   "late60_current_no_pay": 0,
+   "current_no_pay_2m_share": 0.00557,
+   "roll_forward_rate": 0.3252,
+   "late60_current_no_pay_share": 0.0
+  },
+  {
+   "trust": "Bridgecrest Lending Auto Securitization Trust 2026-2",
+   "family": "Bridgecrest (DriveTime)",
+   "tier": "subprime",
+   "current_both": 31925,
+   "current_no_pay_2m": 67,
+   "late30": 424,
+   "rolled_forward": 149,
+   "cured": 99,
+   "cured_no_pay": 0,
+   "late60": 276,
+   "late60_current_no_pay": 0,
+   "current_no_pay_2m_share": 0.0021,
+   "roll_forward_rate": 0.3514,
+   "late60_current_no_pay_share": 0.0
+  },
+  {
+   "trust": "Carvana Auto Receivables Trust 2021-N1",
+   "family": "Carvana non-prime",
+   "tier": "subprime",
+   "current_both": 3051,
+   "current_no_pay_2m": 51,
+   "late30": 527,
+   "rolled_forward": 138,
+   "cured": 117,
+   "cured_no_pay": 0,
+   "late60": 722,
+   "late60_current_no_pay": 0,
+   "current_no_pay_2m_share": 0.01672,
+   "roll_forward_rate": 0.2619,
+   "late60_current_no_pay_share": 0.0
+  },
+  {
+   "trust": "Carvana Auto Receivables Trust 2021-N4",
+   "family": "Carvana non-prime",
+   "tier": "subprime",
+   "current_both": 4287,
+   "current_no_pay_2m": 57,
+   "late30": 671,
+   "rolled_forward": 183,
+   "cured": 174,
+   "cured_no_pay": 0,
+   "late60": 899,
+   "late60_current_no_pay": 0,
+   "current_no_pay_2m_share": 0.0133,
+   "roll_forward_rate": 0.2727,
+   "late60_current_no_pay_share": 0.0
+  },
+  {
+   "trust": "DRIVE AUTO RECEIVABLES TRUST 2025-2",
+   "family": "Drive Auto (Santander)",
+   "tier": "subprime",
+   "current_both": 46903,
+   "current_no_pay_2m": 586,
+   "late30": 6230,
+   "rolled_forward": 1622,
+   "cured": 1669,
+   "cured_no_pay": 0,
+   "late60": 3686,
+   "late60_current_no_pay": 0,
+   "current_no_pay_2m_share": 0.01249,
+   "roll_forward_rate": 0.2604,
+   "late60_current_no_pay_share": 0.0
+  },
+  {
+   "trust": "Drive Auto Receivables Trust 2024-1",
+   "family": "Drive Auto (Santander)",
+   "tier": "subprime",
+   "current_both": 19969,
+   "current_no_pay_2m": 229,
+   "late30": 4145,
+   "rolled_forward": 1062,
+   "cured": 981,
+   "cured_no_pay": 0,
+   "late60": 2817,
+   "late60_current_no_pay": 0,
+   "current_no_pay_2m_share": 0.01147,
+   "roll_forward_rate": 0.2562,
+   "late60_current_no_pay_share": 0.0
+  },
+  {
+   "trust": "Exeter Automobile Receivables Trust 2024-1",
+   "family": "Exeter",
+   "tier": "subprime",
+   "current_both": 12749,
+   "current_no_pay_2m": 250,
+   "late30": 1987,
+   "rolled_forward": 719,
+   "cured": 499,
+   "cured_no_pay": 0,
+   "late60": 1590,
+   "late60_current_no_pay": 0,
+   "current_no_pay_2m_share": 0.01961,
+   "roll_forward_rate": 0.3619,
+   "late60_current_no_pay_share": 0.0
+  },
+  {
+   "trust": "Exeter Automobile Receivables Trust 2026-2",
+   "family": "Exeter",
+   "tier": "subprime",
+   "current_both": 27725,
+   "current_no_pay_2m": 153,
+   "late30": 1328,
+   "rolled_forward": 707,
+   "cured": 246,
+   "cured_no_pay": 1,
+   "late60": 333,
+   "late60_current_no_pay": 0,
+   "current_no_pay_2m_share": 0.00552,
+   "roll_forward_rate": 0.5324,
+   "late60_current_no_pay_share": 0.0
+  },
+  {
+   "trust": "Santander Drive Auto Receivables Trust 2024-1",
+   "family": "Santander Drive",
+   "tier": "subprime",
+   "current_both": 20876,
+   "current_no_pay_2m": 197,
+   "late30": 3420,
+   "rolled_forward": 855,
+   "cured": 776,
+   "cured_no_pay": 0,
+   "late60": 2429,
+   "late60_current_no_pay": 0,
+   "current_no_pay_2m_share": 0.00944,
+   "roll_forward_rate": 0.25,
+   "late60_current_no_pay_share": 0.0
+  },
+  {
+   "trust": "Santander Drive Auto Receivables Trust 2026-1",
+   "family": "Santander Drive",
+   "tier": "subprime",
+   "current_both": 72155,
+   "current_no_pay_2m": 282,
+   "late30": 4071,
+   "rolled_forward": 1359,
+   "cured": 910,
+   "cured_no_pay": 0,
+   "late60": 1311,
+   "late60_current_no_pay": 0,
+   "current_no_pay_2m_share": 0.00391,
+   "roll_forward_rate": 0.3338,
+   "late60_current_no_pay_share": 0.0
+  }
+ ],
+ "edge_600": [
+  {
+   "trust": "ALLY AUTO RECEIVABLES TRUST 2024-1",
+   "tier": "prime",
+   "a1": 59,
+   "a2": 56,
+   "ratio": 1.054
+  },
+  {
+   "trust": "AmeriCredit Automobile Receivables Trust 2022-1",
+   "tier": "subprime",
+   "a1": 1322,
+   "a2": 1790,
+   "ratio": 0.739
+  },
+  {
+   "trust": "AmeriCredit Automobile Receivables Trust 2024-1",
+   "tier": "subprime",
+   "a1": 3102,
+   "a2": 3941,
+   "ratio": 0.787
+  },
+  {
+   "trust": "BMW Vehicle Owner Trust 2023-A",
+   "tier": "prime",
+   "a1": 36,
+   "a2": 65,
+   "ratio": 0.554
+  },
+  {
+   "trust": "Bridgecrest Lending Auto Securitization Trust 2024-1",
+   "tier": "subprime",
+   "a1": 632,
+   "a2": 559,
+   "ratio": 1.131
+  },
+  {
+   "trust": "Bridgecrest Lending Auto Securitization Trust 2026-2",
+   "tier": "subprime",
+   "a1": 2181,
+   "a2": 1873,
+   "ratio": 1.164
+  },
+  {
+   "trust": "CarMax Auto Owner Trust 2024-1",
+   "tier": "prime",
+   "a1": 1060,
+   "a2": 1330,
+   "ratio": 0.797
+  },
+  {
+   "trust": "Carvana Auto Receivables Trust 2021-N1",
+   "tier": "subprime",
+   "a1": 349,
+   "a2": 302,
+   "ratio": 1.156
+  },
+  {
+   "trust": "Carvana Auto Receivables Trust 2021-N4",
+   "tier": "subprime",
+   "a1": 506,
+   "a2": 458,
+   "ratio": 1.105
+  },
+  {
+   "trust": "Carvana Auto Receivables Trust 2024-P2",
+   "tier": "prime",
+   "a1": 714,
+   "a2": 808,
+   "ratio": 0.884
+  },
+  {
+   "trust": "DRIVE AUTO RECEIVABLES TRUST 2025-2",
+   "tier": "subprime",
+   "a1": 4284,
+   "a2": 3793,
+   "ratio": 1.129
+  },
+  {
+   "trust": "Drive Auto Receivables Trust 2024-1",
+   "tier": "subprime",
+   "a1": 2665,
+   "a2": 2257,
+   "ratio": 1.181
+  },
+  {
+   "trust": "Exeter Automobile Receivables Trust 2024-1",
+   "tier": "subprime",
+   "a1": 1711,
+   "a2": 1723,
+   "ratio": 0.993
+  },
+  {
+   "trust": "Exeter Automobile Receivables Trust 2026-2",
+   "tier": "subprime",
+   "a1": 3257,
+   "a2": 3120,
+   "ratio": 1.044
+  },
+  {
+   "trust": "Exeter Select Automobile Receivables Trust 2025-1",
+   "tier": "near-prime",
+   "a1": 79,
+   "a2": 129,
+   "ratio": 0.612
+  },
+  {
+   "trust": "Ford Credit Auto Owner Trust 2024-A",
+   "tier": "prime",
+   "a1": 299,
+   "a2": 353,
+   "ratio": 0.847
+  },
+  {
+   "trust": "GM Financial Consumer Automobile Receivables Trust 2024-1",
+   "tier": "prime",
+   "a1": 40,
+   "a2": 61,
+   "ratio": 0.656
+  },
+  {
+   "trust": "Honda Auto Receivables 2024-1 Owner Trust",
+   "tier": "prime",
+   "a1": 201,
+   "a2": 404,
+   "ratio": 0.498
+  },
+  {
+   "trust": "Hyundai Auto Receivables Trust 2024-A",
+   "tier": "prime",
+   "a1": 182,
+   "a2": 435,
+   "ratio": 0.418
+  },
+  {
+   "trust": "Santander Drive Auto Receivables Trust 2024-1",
+   "tier": "subprime",
+   "a1": 2570,
+   "a2": 2513,
+   "ratio": 1.023
+  },
+  {
+   "trust": "Santander Drive Auto Receivables Trust 2026-1",
+   "tier": "subprime",
+   "a1": 5492,
+   "a2": 5199,
+   "ratio": 1.056
+  },
+  {
+   "trust": "Toyota Auto Receivables 2024-A Owner Trust",
+   "tier": "prime",
+   "a1": 0,
+   "a2": 138,
+   "ratio": 0.0
+  },
+  {
+   "trust": "Volkswagen Auto Loan Enhanced Trust 2023-1",
+   "tier": "prime",
+   "a1": 26,
+   "a2": 70,
+   "ratio": 0.371
+  }
+ ],
+ "real_extremes": {
+  "max_edge_ratio_600": 1.181,
+  "max_current_no_pay_2m_share": 0.01961,
+  "min_roll_forward_rate": 0.1391,
+  "max_late60_current_no_pay_share": 0.1217,
+  "pools": 28
+ }
+}

@@ -21,7 +21,8 @@ import subprocess
 from bt.systems.base import VIEWS
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-RULE_GLOBS = ("bt/systems/*.py", "bt/combiner/*.py", "bt/pipeline/dq.py", "bt/pipeline/run.py")
+RULE_GLOBS = ("bt/systems/*.py", "bt/combiner/*.py", "bt/pipeline/dq.py", "bt/pipeline/run.py",
+              "bt/sec/benchmark.py", "data/calibration/absee_auto.json")  # measured peer rates are part of the rules
 EXTRA_INPUTS = ("doc_reads",)
 _hash_cache: dict[tuple, str] = {}
 

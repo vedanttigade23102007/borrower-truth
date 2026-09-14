@@ -28,6 +28,13 @@ EMPTY_SCHEMAS = {
     "source_truth": "month SMALLINT, borrower_id VARCHAR, asset_id VARCHAR, dpd_bucket_true TINYINT, balance_true DOUBLE",
     "outflows": "txn_id VARCHAR, month SMALLINT, day TINYINT, borrower_id VARCHAR, account_id VARCHAR, payee_id VARCHAR, "
                 "payee_name VARCHAR, amount DOUBLE, memo VARCHAR",
+    # public SEC data (generator v3): loan-level reports of the borrower's own public securitizations (no VIN)
+    "public_abs": "pool_id VARCHAR, issuer_borrower_id VARCHAR, month SMALLINT, pool_loan_id VARCHAR, orig_month SMALLINT, "
+                  "orig_amount DOUBLE, rate DOUBLE, term SMALLINT, make VARCHAR, model VARCHAR, model_year SMALLINT, "
+                  "obligor_state VARCHAR, credit_score SMALLINT, dpd_bucket TINYINT",
+    # what the borrower (or its parent) filed with the SEC: 10-K debt notes and Exhibit 21, 8-K items, XBRL revenue
+    "sec_filings": "borrower_id VARCHAR, form VARCHAR, filed_month BIGINT, item VARCHAR, counterparty_entity_id VARCHAR, "
+                   "counterparty_name VARCHAR, amount DOUBLE, quarter BIGINT, note VARCHAR",
 }
 
 # view name -> (file, time filter using {a} = as_of)
@@ -47,6 +54,8 @@ VIEWS = {
     "payments": ("payments", "month <= {a}"),
     "outflows": ("outflows", "month <= {a}"),  # the borrower's operating account at WF (older books: empty)
     "invoices": ("invoices", "pledged_month <= {a}"),
+    "public_abs": ("public_abs", "month <= {a}"),  # older books: empty
+    "sec_filings": ("sec_filings", "filed_month <= {a}"),  # older books: empty
 }
 
 NORM_MACRO = ("CREATE OR REPLACE MACRO norm(s) AS "

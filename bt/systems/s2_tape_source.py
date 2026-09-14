@@ -16,13 +16,30 @@ Checks (window = the three most recent complete months):
                             current but that paid nothing (bank-payment evidence)
                             are pulled from the servicer system, and are 60+ late
                             or gone. A random sample misses a small dress-up; a
-                            cash-targeted pull of the same size does not.
+                            cash-targeted pull of the same size does not. A second
+                            pull takes loans that went straight from 30-59 days late
+                            to current: that catches dress-up even when the borrower
+                            pays the hidden loans itself, so the cash looks fine.
   ATTRIBUTE_REWRITE         a loan's credit score at origination should never change;
                             several were rewritten from below the 600 eligibility line
                             to above it (Tricolor, as alleged: ineligible collateral
                             made to meet lender requirements)
   ELIGIBILITY_EDGE_CLUSTER  far more eligible loans sit just above the line than the
                             rest of the book would predict (statistical, weaker)
+  ROLL_RATE_TOO_LOW         late loans almost never get later: of loans 30-59 days late,
+                            hardly any are 60+ late the next month. Hiding 60+ day loans
+                            does exactly that. Judged against 28 real public auto pools
+                            (SEC ABS-EE), where the lowest honest rate is 13.9%.
+
+Thresholds checked against real servicer data (SEC ABS-EE, 28 public auto-loan pools, 22
+lenders, April-May 2026; bt/sec/calibrate.py -> data/calibration/absee_auto.json):
+  - loans reported current with no payment in two consecutive months: at most 1.96% in any
+    real pool, so CURRENT_WITHOUT_PAYMENT's 3% line leaves honest servicers below it;
+  - 60+ days late -> current next month with no payment and no extension/modification: up to
+    12.2% of late loans in one real prime pool, so IMPOSSIBLE_TRANSITION now needs a share
+    above 20% as well as a count (a count alone would flag that honest pool);
+  - a loan's credit score at origination changed between monthly reports: 0 of 774,975 real
+    loans, so ATTRIBUTE_REWRITE has no honest base rate to hide in.
 """
 from bt.systems.base import Ctx, sig
 
@@ -67,6 +84,22 @@ WHERE p.asset_id IS NULL
 GROUP BY 1
 """
 
+LATE60 = """
+SELECT borrower_id, count(DISTINCT asset_id) AS n FROM tape
+WHERE asset_id LIKE 'A-%' AND month BETWEEN ? AND ? AND dpd_bucket_reported >= 2 GROUP BY 1
+"""
+
+ROLL = """
+WITH a AS (
+    SELECT borrower_id, asset_id, month, dpd_bucket_reported AS r FROM tape
+    WHERE asset_id LIKE 'A-%' AND facility_id LIKE '%A' AND month BETWEEN ? AND ?
+)
+SELECT p.borrower_id, count(*) AS late30, count(*) FILTER (WHERE c.r >= 2) AS rolled
+FROM a p JOIN a c ON c.asset_id = p.asset_id AND c.month = p.month + 1
+WHERE p.r = 1
+GROUP BY 1
+"""
+
 SAMPLE = """
 WITH elig AS (
     SELECT borrower_id, asset_id, month, dpd_bucket_reported AS r,
@@ -99,6 +132,24 @@ WHERE c.k <= ?
 GROUP BY 1
 """
 
+CURED = """
+WITH a AS (
+    SELECT borrower_id, asset_id, month, dpd_bucket_reported AS r FROM tape
+    WHERE asset_id LIKE 'A-%' AND facility_id LIKE '%A' AND month BETWEEN ? AND ?
+), c AS (
+    SELECT cur.borrower_id, cur.asset_id, cur.month,
+           row_number() OVER (PARTITION BY cur.borrower_id ORDER BY hash(cur.asset_id || 'cure')) AS k
+    FROM a cur JOIN a prev ON prev.asset_id = cur.asset_id AND prev.month = cur.month - 1
+    WHERE prev.r = 1 AND cur.r = 0 AND cur.month >= ?
+)
+SELECT c.borrower_id, count(*) AS pulled,
+       count(*) FILTER (WHERE s.asset_id IS NULL OR s.dpd_bucket_true >= 2) AS mismatches,
+       list(c.asset_id ORDER BY c.asset_id) FILTER (WHERE s.asset_id IS NULL OR s.dpd_bucket_true >= 2)[1:3] AS ex
+FROM c LEFT JOIN source_truth s ON s.asset_id = c.asset_id AND s.month = c.month
+WHERE c.k <= ?
+GROUP BY 1
+"""
+
 REWRITE = """
 WITH a AS (
     SELECT borrower_id, vin, arg_min(credit_score, month) AS first_s, arg_max(credit_score, month) AS last_s,
@@ -115,13 +166,21 @@ FROM a GROUP BY 1
 EDGE = """
 WITH e AS (
     SELECT borrower_id, vin, any_value(credit_score) AS s FROM tape
-    WHERE month = ? AND eligible_reported AND credit_score >= ? GROUP BY 1, 2
+    WHERE month = ? AND credit_score BETWEEN ? AND ? GROUP BY 1, 2
 )
-SELECT borrower_id, count(*) AS n, count(*) FILTER (WHERE s < ?) AS edge FROM e GROUP BY 1
+SELECT borrower_id, count(*) FILTER (WHERE s < ?) AS a1, count(*) FILTER (WHERE s >= ?) AS a2 FROM e GROUP BY 1
 """
+# Just above the line, a lender's own score curve keeps the two bands 600-612 and 613-625 close. Across 28 real public
+# auto pools the first band is at most 1.18x the second (Drive Auto 2024-1). Comparing a tape with itself, not with the
+# book, keeps prime and subprime lenders (different curves) from being judged against each other.
+EDGE_RATIO_REAL, EDGE_FACTOR, EDGE_MIN, EDGE_Z = 1.18, 1.5, 40, 3.0
 
 SAMPLE_SIZE = 60
 TARGETED_SIZE = 30
+CURE_SIZE = 30  # loans that went from 30-59 days late to current, looked up in the servicer system
+JUMP_SHARE = 0.20  # real honest pools reach 12.2% (bt/sec/calibrate.py); a count alone isn't enough
+ROLL_MIN_REAL = 0.139  # lowest 30->60+ roll-forward rate among 28 real public auto pools (Ford Credit 2024-A)
+ROLL_FACTOR, ROLL_WINDOW, ROLL_MIN_N, ROLL_Z = 0.5, 6, 30, -2.5
 ELIGIBLE_SCORE, EDGE_BAND = 600, 13  # the facility's eligibility rule, and "just above it"  # same order of cost as the random sample: a handful of loans looked up by hand
 
 
@@ -144,11 +203,28 @@ def run(ctx: Ctx):
                                [f"tape:{b}:deferred_flag:months={lo}-{hi}", f"disclosures:{b}#deferment_program:none"],
                                f"{r['def_noprog']} loans flagged 'deferred' with no disclosed deferment programme", hi))
     if a >= 1:
+        late60 = {r["borrower_id"]: r["n"] for r in ctx.rows(LATE60, [max(0, lo - 1), a - 1])}
         for r in ctx.rows(TRANSITIONS, [max(0, lo - 1), a, max(1, lo)]):
-            if r["n"] >= 3:
+            share = r["n"] / max(late60.get(r["borrower_id"], 0), 1)
+            if r["n"] >= 3 and share >= JUMP_SHARE:
                 out.append(sig("S2", r["borrower_id"], "IMPOSSIBLE_TRANSITION", 0.75, 0.85,
-                               [f"tape:asset:{x}" for x in r["ex"]] + [f"count:{r['n']}"],
-                               f"{r['n']} loans jumped from 60+ days late to current with no payment", r["first_m"]))
+                               [f"tape:asset:{x}" for x in r["ex"]] + [f"count:{r['n']}", f"share_of_60plus:{share:.2f}"],
+                               f"{r['n']} loans jumped from 60+ days late to current with no payment "
+                               f"({share:.0%} of loans that were 60+ late)", r["first_m"]))
+    if a >= 2:
+        for r in ctx.rows(ROLL, [max(0, a - ROLL_WINDOW), a]):
+            n, k = r["late30"], r["rolled"]
+            if n < ROLL_MIN_N:
+                continue
+            rate = k / n
+            z = (rate - ROLL_MIN_REAL) / (ROLL_MIN_REAL * (1 - ROLL_MIN_REAL) / n) ** 0.5
+            if rate < ROLL_MIN_REAL * ROLL_FACTOR and z < ROLL_Z:
+                out.append(sig("S2", r["borrower_id"], "ROLL_RATE_TOO_LOW", 0.6, 0.7,
+                               [f"tape:{r['borrower_id']}:months={max(0, a - ROLL_WINDOW)}-{a}:rolled={k}/{n}",
+                                f"public_abs:min_roll_forward={ROLL_MIN_REAL}"],
+                               f"Only {k} of {n} loans reported 30-59 days late were 60+ late a month later ({rate:.0%}). "
+                               f"In 28 real public auto-loan pools the lowest rate is {ROLL_MIN_REAL:.0%}: "
+                               f"late loans here seem to vanish instead of getting later", a))
     for r in ctx.rows(SAMPLE, [a, SAMPLE_SIZE]):
         if r["mismatches"] >= 2 and r["mismatches"] / r["sampled"] > 0.02:
             out.append(sig("S2", r["borrower_id"], "SOURCE_MISMATCH", 0.9, 0.8 if r["mismatches"] == 2 else 0.92,
@@ -164,6 +240,17 @@ def run(ctx: Ctx):
                                f"Loans reported current but with no payment for two months were pulled from the "
                                f"servicer system: {r['mismatches']} of {r['pulled']} are actually 60+ days late or "
                                f"no longer active", a))
+    if a >= 2:
+        # the pull a sharp auditor makes when late loans seem to vanish: the loans that went straight from 30-59 days
+        # late to current. Real cures are current in the servicer system; a hidden 60+ day loan is not.
+        for r in ctx.rows(CURED, [a - 2, a, a - 1, CURE_SIZE]):
+            if r["mismatches"] >= 2:
+                out.append(sig("S2", r["borrower_id"], "TARGETED_SOURCE_MISMATCH", 0.9, 0.92,
+                               [f"source_pull:{r['borrower_id']}:month={a}:targeted_by=cure_from_30"]
+                               + [f"tape:asset:{x}" for x in r["ex"]],
+                               f"Loans the tape shows going from 30-59 days late to current were pulled from the servicer "
+                               f"system: {r['mismatches']} of {r['pulled']} are actually 60+ days late or no longer active",
+                               a))
     if "credit_score" in {r[0] for r in ctx.con.execute("DESCRIBE tape").fetchall()}:  # older books lack it
         L = ELIGIBLE_SCORE
         for r in ctx.rows(REWRITE, [L, L, L, L, L, L, L]):
@@ -172,17 +259,20 @@ def run(ctx: Ctx):
                                [f"tape:vin:{v}" for v in r["ex"]] + [f"count:{r['crossed']}"],
                                f"{r['crossed']} loans' credit scores at origination were rewritten after the fact, "
                                f"from below the {L} eligibility line to above it", r["first_m"]))
-        edge = ctx.rows(EDGE, [a, L, L + EDGE_BAND])
-        tot_n, tot_e = sum(r["n"] for r in edge), sum(r["edge"] for r in edge)
-        p0 = tot_e / tot_n if tot_n else 0.0
-        for r in edge:
-            n, k = r["n"], r["edge"]
-            if n >= 50 and p0 > 0:
-                z = (k - n * p0) / (n * p0 * (1 - p0)) ** 0.5
-                if z > 3.5 and k / n > 1.8 * p0:
-                    out.append(sig("S2", r["borrower_id"], "ELIGIBILITY_EDGE_CLUSTER", 0.5, 0.6,
-                                   [f"tape:{r['borrower_id']}:month={a}:score_{L}-{L + EDGE_BAND - 1}={k}/{n}",
-                                    f"book_share={p0:.3f}"],
-                                   f"{k / n:.0%} of eligible loans sit just above the {L} line, against "
-                                   f"{p0:.0%} across the book", a))
+        p = EDGE_RATIO_REAL / (1 + EDGE_RATIO_REAL)  # the first band's share of both, at the real maximum
+        for r in ctx.rows(EDGE, [a, L, L + 2 * EDGE_BAND - 1, L + EDGE_BAND, L + EDGE_BAND]):
+            a1, a2 = r["a1"], r["a2"]
+            n = a1 + a2
+            if n < EDGE_MIN:
+                continue
+            ratio = a1 / max(a2, 1)
+            z = (a1 - n * p) / (n * p * (1 - p)) ** 0.5
+            if ratio > EDGE_RATIO_REAL * EDGE_FACTOR and z > EDGE_Z:
+                out.append(sig("S2", r["borrower_id"], "ELIGIBILITY_EDGE_CLUSTER", 0.5, 0.6,
+                               [f"tape:{r['borrower_id']}:month={a}:score_{L}-{L + EDGE_BAND - 1}={a1}",
+                                f"tape:{r['borrower_id']}:month={a}:score_{L + EDGE_BAND}-{L + 2 * EDGE_BAND - 1}={a2}",
+                                f"public_abs:max_ratio={EDGE_RATIO_REAL}"],
+                               f"{a1} loans sit at {L}-{L + EDGE_BAND - 1}, just over the eligibility line, against {a2} at "
+                               f"{L + EDGE_BAND}-{L + 2 * EDGE_BAND - 1} ({ratio:.1f}x). In 28 real public auto pools the "
+                               f"highest is {EDGE_RATIO_REAL}x: scores look nudged over the line", a))
     return out

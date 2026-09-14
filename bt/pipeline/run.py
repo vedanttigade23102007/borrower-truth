@@ -58,6 +58,7 @@ def run(data_dir: str, as_of: int = 23, simulate_fail: set[str] | None = None, m
     t0 = time.perf_counter()
     overrides, dq_report = dq.stage(data_dir)  # quarantine bad files before anything reads them
     ctx = Ctx(data_dir, as_of, materialize=materialize, overrides=overrides)
+    ctx.shared["sec_off"] = "SEC" in simulate_fail  # switch-off test for the checks built on public SEC data
     metrics: dict = {"data_quality": dq_report}
     signals = []
     signals += _guarded(ctx, "S6", lambda: s6_relationships.run(ctx), simulate_fail, metrics)

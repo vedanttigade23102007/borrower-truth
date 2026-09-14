@@ -30,7 +30,13 @@ MECHANISM_OF = {
     "SHELL_INDICATORS": "RELATED_SHELLS", "RELATED_ENTITY": "RELATED_SHELLS",
     "CASH_REVENUE_GAP": "FIN_MANIPULATION", "COVENANT_EDGE_PATTERN": "FIN_MANIPULATION",
     "RECEIVABLES_OUTPACE_REVENUE": "FAKE_INVOICES",
+    # public SEC data (bt/sec)
+    "ROLL_RATE_TOO_LOW": "TAPE_DRESSUP", "PUBLIC_POOL_OVERLAP": "DOUBLE_PLEDGE", "POOL_LOANS_PAID_ELSEWHERE": "DOUBLE_PLEDGE",
+    "FILED_DEBT_UNDISCLOSED": "HIDDEN_DEBT", "FILED_VS_REPORTED": "FIN_MANIPULATION",
+    "DEBT_ACCELERATION_FILED": "HIDDEN_DEBT",
 }
+SEC_TYPES = {"ROLL_RATE_TOO_LOW", "PUBLIC_POOL_OVERLAP", "POOL_LOANS_PAID_ELSEWHERE", "FILED_DEBT_UNDISCLOSED", "FILED_VS_REPORTED",
+             "DEBT_ACCELERATION_FILED"}  # checks that exist because of public SEC data (switch-off test: "SEC")
 
 # where each signal's evidence actually comes from
 SOURCE = {
@@ -49,11 +55,20 @@ SOURCE = {
     "CASH_REVENUE_GAP": "financials_vs_cash", "COVENANT_EDGE_PATTERN": "covenant_certificate",
     "RECEIVABLES_OUTPACE_REVENUE": "financial_statements",
     "DEBT_GAP": "derived", "RECEIVABLES_QUALITY": "derived",
+    # the peer yardstick is public, but the evidence is the tape's own history: not an independent source
+    "ROLL_RATE_TOO_LOW": "tape_history",
+    "PUBLIC_POOL_OVERLAP": "public_abs", "POOL_LOANS_PAID_ELSEWHERE": "payments",
+    "FILED_DEBT_UNDISCLOSED": "sec_filings", "FILED_VS_REPORTED": "sec_filings",
+    "DEBT_ACCELERATION_FILED": "sec_filings",
 }
 
 # checkable facts (not statistical inferences): strong enough to stand alone
 FACT = {"DUPLICATE_ASSET", "PLEDGECHECK_UNIQUENESS_FAIL", "ALTERED_INVOICE", "SOURCE_MISMATCH", "TARGETED_SOURCE_MISMATCH",
-        "LENDER_FUNDS_AS_RECEIPTS", "RELATED_PARTY_INFLOW", "COMPETING_LIEN", "CIRCULAR_FLOW", "ATTRIBUTE_REWRITE"}
+        "LENDER_FUNDS_AS_RECEIPTS", "RELATED_PARTY_INFLOW", "COMPETING_LIEN", "CIRCULAR_FLOW", "ATTRIBUTE_REWRITE",
+        # what the borrower told the SEC contradicts what it told the bank: checkable in the filing itself
+        "FILED_DEBT_UNDISCLOSED", "FILED_VS_REPORTED",
+        # named loans, matched to the public trust, whose payments no longer reach Wells Fargo: checkable per loan
+        "POOL_LOANS_PAID_ELSEWHERE"}
 
 # an undisclosed lien on the loan collateral itself means that collateral is pledged twice
 DOUBLE_PLEDGE_HINT = ("receivables and chattel paper",)
@@ -69,7 +84,9 @@ PLAIN = {
 }
 
 WEIGHT = {"S1": 1.0, "S2": 1.0, "S3": 1.0, "S4": 1.0, "S5": 0.9, "S6": 0.5, "S7": 0.8}
-CONTEXT = {"PLEDGECHECK_ABSENT"}  # coverage notes shown to the officer; never scored
+CONTEXT = {"PLEDGECHECK_ABSENT",  # coverage notes shown to the officer; never scored
+           "DEBT_ACCELERATION_FILED"}  # a lender sped up repayment (8-K Item 2.04): a credit event, not fraud
+LONE_CONTEXT = ("RELATED_ENTITY", "JUDGMENT")  # alone at low confidence: context, not a finding
 MIN_X = 0.25  # severity x confidence needed for a clue to count as corroboration
 ESCALATE_PRIORITY = 0.95
 
@@ -134,7 +151,7 @@ def build_cases(signals, coverage: dict, explanations: dict, borrowers: list[str
                 conf = "low"
             else:
                 continue
-            if conf == "low" and all(s.type in ("RELATED_ENTITY", "JUDGMENT") for s in ss):
+            if conf == "low" and all(s.type in LONE_CONTEXT for s in ss):
                 continue  # a lone affiliate or small judgment is context, not a finding
             findings.append(dict(mechanism=m, confidence=conf, plain=PLAIN[m],
                                  signals=[s.signal_id for s in ss],

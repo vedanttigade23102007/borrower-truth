@@ -86,6 +86,26 @@ h1{font-size:30px}h2{font-size:24px}}
   <p class="fine mt">Sources: 17 CFR 229.1125 (Schedule AL); SEC EDGAR API and access pages; SEC ABS-EE interpretations. Details: research/SEC-DATA.md.</p>
 </div></section>
 
+<!-- 2b Built: what the real data showed -->
+<section class="slide"><div class="frame">
+  <div class="kicker">Built and measured · 14 Sep 2026 · real public data</div>
+  <h2>2.23 million real loan records from 28 public auto-loan pools of 22 lenders. No real honest pool trips any check.</h2>
+  <div class="grid4">
+    <div class="card"><div style="font-size:30px;font-weight:800">809,624</div>real month-to-month loan moves measured, by credit band and loan age</div>
+    <div class="card"><div style="font-size:30px;font-weight:800">0 of 28</div>real honest pools trip any threshold (each checked against every pool)</div>
+    <div class="card"><div style="font-size:30px;font-weight:800">0 of 774,975</div>real loans had their credit score changed: a rewrite has no honest cover</div>
+    <div class="card"><div style="font-size:30px;font-weight:800">99.99%</div>of real loans are unique by their public profile, even without a VIN</div>
+  </div>
+  <div class="grid2">
+    <div class="card good"><h3>What it changed</h3><ul>
+      <li>Honest synthetic auto loans now move at the real monthly rates</li>
+      <li>One check tightened: in one real pool, 12% of 60+ day loans became current without paying</li>
+      <li>New check: in real pools at least 13.9% of 30-day-late loans are 60+ late a month later; hidden loans make that vanish</li></ul></div>
+    <div class="card bad"><h3>A design the real data rejected</h3>My first peer benchmark (overall late share vs peers) would have flagged <b>3 of 28 honest real pools</b>. Lenders differ more than credit scores explain, so it was dropped before it could reach a credit officer.</div>
+  </div>
+  <p class="fine mt">Sources: SEC Form ABS-EE (56 monthly files, Mar–May 2026) and data.sec.gov for 24 public non-bank lenders. Full tables: proof/REAL_DATA.md.</p>
+</div></section>
+
 <!-- 3 Use 1: calibrate -->
 <section class="slide"><div class="frame">
   <div class="kicker">Use 1 · Calibrate</div>
@@ -213,7 +233,7 @@ h1{font-size:30px}h2{font-size:24px}}
       <div class="step"><b class="n">5</b><div><b>S7 peer benchmarks</b> from XBRL for public non-bank lenders.</div></div>
       <div class="step"><b class="n">6</b><div><b>8-K watcher</b> for Items 2.03 and 2.04, feeding S5.</div></div>
       <div class="step"><b class="n">7</b><div><b>Re-score once</b> on fresh test books, then update the site, deck, resume and case study together.</div></div>
-      <div class="card warn" style="background:var(--warn-bg)"><h3>One decision needed from you</h3>The SEC requires every automated request to name a contact email in its header. Which email should go there?</div>
+      <div class="card good"><h3>Status, 14 Sep 2026</h3>Steps 1–6 are built on real SEC data (contact email approved). Step 7, the one-time fresh test, is scored and shown to you before anything public changes.</div>
     </div>
   </div>
 </div></section>

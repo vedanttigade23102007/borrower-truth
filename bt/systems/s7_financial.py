@@ -7,6 +7,9 @@ Uses other systems' outputs (this is where the chaining pays off):
   S3 verified collections  -> CASH_REVENUE_GAP (revenue grows, verified cash doesn't)
   S5 undisclosed liens     -> DEBT_GAP
   S4 invoice findings      -> RECEIVABLES_QUALITY
+SEC filings (filers only)  -> FILED_VS_REPORTED (revenue in the package sent to Wells Fargo
+                              differs from the same quarter's revenue reported to the SEC
+                              in XBRL: two versions of the same number, one of them wrong)
 and its own                -> COVENANT_EDGE_PATTERN (repeatedly just clearing the line)
                            -> RECEIVABLES_OUTPACE_REVENUE (invoice-based borrowers: reported
                               receivables pile up far faster than revenue, the footprint of
@@ -16,6 +19,8 @@ and its own                -> COVENANT_EDGE_PATTERN (repeatedly just clearing th
 import statistics
 
 from bt.systems.base import Ctx, sig
+
+FILED_GAP = 0.05  # the package and the 10-Q come from the same books: 5% apart is not rounding
 
 
 def run(ctx: Ctx, upstream: dict):
@@ -56,6 +61,20 @@ def run(ctx: Ctx, upstream: dict):
                            + [f"financials:{b}:baseline={base:.2f}"],
                            f"Reported receivables are {mult:.1f}x their usual size relative to revenue "
                            f"(2 quarters in a row): money is booked that isn't being collected", last2[0][0] * 3 + 2))
+    if not ctx.shared.get("sec_off"):
+        gaps = {}
+        for r in ctx.rows("""SELECT f.borrower_id, f.quarter, f.amount AS filed, fin.revenue_reported AS told
+                             FROM sec_filings f JOIN financials fin ON fin.borrower_id = f.borrower_id AND fin.quarter = f.quarter
+                             WHERE f.item = 'revenue' AND f.amount > 0 ORDER BY 1, 2"""):
+            gap = r["told"] / r["filed"] - 1
+            if abs(gap) > FILED_GAP:
+                gaps.setdefault(r["borrower_id"], []).append((r["quarter"], gap))
+        for b, qs in gaps.items():
+            q, g = qs[-1]
+            out.append(sig("S7", b, "FILED_VS_REPORTED", min(1.0, 0.6 + abs(g)), 0.9,
+                           [f"financials:{b}:Q{x}" for x, _ in qs[-2:]] + [f"sec_filing:{b}:xbrl_revenue:Q{x}" for x, _ in qs[-2:]],
+                           f"Revenue sent to Wells Fargo for Q{q} is {g:+.0%} off what the borrower reported to the SEC for "
+                           f"the same quarter ({len(qs)} quarter{'s' if len(qs) > 1 else ''} differ)", qs[0][0] * 3 + 2))
     for b, ids in upstream.get("s5_undisclosed", {}).items():
         out.append(sig("S7", b, "DEBT_GAP", 0.7, 0.8, [f"signal:{i}" for i in ids[:3]] + [f"financials:{b}:debt_reported"],
                        f"Debt reported to Wells Fargo omits {len(ids)} secured lender(s) found in public lien filings",

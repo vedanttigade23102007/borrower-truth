@@ -36,6 +36,7 @@ from bt.datagen.generate import main as generate
 from bt.pipeline.run import run as pipeline
 
 SYSTEMS = ("S1", "S2", "S3", "S4", "S5", "S6", "S7")
+ABLATE = SYSTEMS + ("SEC",)  # "SEC": every check built on public SEC data, switched off together
 AUDIT_LOANS, AUDIT_INVOICES = 20, 10
 
 
@@ -122,7 +123,7 @@ def evaluate_book(data):
 
     # switch-off test
     ablation = {}
-    for s in SYSTEMS:
+    for s in ABLATE:
         _, cases, _ = pipeline(data, MONTHS - 1, {s})
         fc = {c["borrower_id"]: c for c in cases}
         lost_b = [b for b in caught if not flagged(fc[b])]
@@ -175,7 +176,7 @@ def summarize(results: dict) -> dict:
     pat = {p: [sum(r["per_pattern"].get(p, [0, 0])[0] for r in results.values()),
                sum(r["per_pattern"].get(p, [0, 0])[1] for r in results.values())] for p in patterns}
     abl = {s: {k: sum(r["ablation"][s][k] for r in results.values()) for k in ("borrowers_lost", "mechanism_detections_lost")}
-           for s in SYSTEMS}
+           for s in ABLATE if all(s in r["ablation"] for r in results.values())}
     lead = [d for r in results.values() for d in r["lead_days"]]
     after = [d for r in results.values() for d in r["detect_after_start_days"]]
     timing = Counter("before the effects start" if d < 0 else "same month" if d == 0 else
@@ -260,7 +261,7 @@ def main(argv=None):
     ap = argparse.ArgumentParser()
     ap.add_argument("--seeds", type=int, nargs="+", default=[101, 102, 103, 104, 105])
     ap.add_argument("--borrowers", type=int, default=120)
-    ap.add_argument("--root", default="data/out/eval")
+    ap.add_argument("--root", default="data/out/eval_v3")  # generator v3 books (data/out/eval holds the v2 books)
     ap.add_argument("--report", default="proof/REPORT.md")
     a = ap.parse_args(argv)
     t0 = time.time()

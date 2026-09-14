@@ -37,6 +37,8 @@ export const SOURCE: Record<string, string> = {
   financial_statements: "financial statements",
   operating_account: "operating account",
   covenant_certificate: "covenant certificate",
+  public_abs: "public securitization (SEC ABS-EE)",
+  sec_filings: "SEC filings",
 };
 
 export const VERDICT: Record<Verdict, { label: string; tone: Tone }> = {
