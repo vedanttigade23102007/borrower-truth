@@ -1,0 +1,97 @@
+{
+ "borrower_id": "B0010",
+ "verdict_by_rules": "LIKELY_FRAUD",
+ "steps": [
+  {
+   "id": "T1",
+   "tool": "case_evidence",
+   "args": {
+    "borrower_id": "B0010"
+   },
+   "result": "{\"verdict_by_rules\": \"LIKELY_FRAUD\", \"headline\": \"Likely: the same collateral is pledged to more than one lender\", \"findings\": [{\"mechanism\": \"DOUBLE_PLEDGE\", \"confidence\": \"high\", \"plain\": \"the same collateral is pledged to more than one lender\", \"signals\": [\"S1-B0010-POOL_LOANS_PAID_ELSEWHERE-43af5cd9\", \"S1-B0010-PUBLIC_POOL_OVERLAP-7385a52b\"], \"corroborated_by\": []}, {\"mechanism\": \"FIN_MANIPULATION\", \"confidence\": \"low\", \"plain\": \"the reported financial statements don't fit the evidence\", \"signals\": [\"S7-B0010-CASH_REVENUE_GAP-8162c89b\"], \"corroborated_by\": []}, {\"mechanism\": \"TAPE_DRESSUP\", \"confidence\": \"low\", \"plain\": \"bad loans are being reported as good ones\", \"signals\": [\"S2-B0010-C"
+  },
+  {
+   "id": "T2",
+   "tool": "related_companies",
+   "args": {
+    "borrower_id": "B0010"
+   },
+   "result": "[{\"entity_id\": \"E000333\", \"name\": \"Crescent Motor LLC\", \"kind\": \"borrower\", \"officer\": \"Sofia Moore\", \"address\": \"5197 Center Dr, Suite 324\", \"formed_month\": -137, \"has_operations\": true, \"same_officer\": true, \"same_address\": true, \"is_borrower\": true}, {\"entity_id\": \"E000334\", \"name\": \"Crescent Insurance Agency LLC\", \"kind\": \"company\", \"officer\": \"Sofia Moore\", \"address\": \"5917 Park Ave, Suite 325\", \"formed_month\": 8, \"has_operations\": true, \"same_officer\": true, \"same_address\": false, \"is_borrower\": false}]"
+  },
+  {
+   "id": "T3",
+   "tool": "lien_search",
+   "args": {
+    "name": "B0010"
+   },
+   "result": "[{\"filing_id\": \"UCC-000021\", \"debtor_name\": \"Crescent Motor LLC\", \"debtor_address\": \"5197 Center Dr, Suite 324\", \"secured_party_name\": \"Wells Fargo Bank, N.A.\", \"collateral_desc\": \"all assets, including receivables and chattel paper\", \"filed_month\": -12, \"match_score\": 100}]"
+  },
+  {
+   "id": "T4",
+   "tool": "court_search",
+   "args": {
+    "name": "B0010"
+   },
+   "result": "[{\"case_id\": \"CV-00001\", \"defendant_name\": \"Crescent Motor LLC\", \"plaintiff\": \"(synthetic) former landlord\", \"kind\": \"judgment\", \"amount\": 52625.94, \"month\": 18, \"match_score\": 100}]"
+  },
+  {
+   "id": "T5",
+   "tool": "disclosures",
+   "args": {
+    "borrower_id": "B0010"
+   },
+   "result": "{\"result\": \"the borrower disclosed nothing\"}"
+  }
+ ],
+ "errors": [],
+ "generated_at": "2026-09-14",
+ "status": "ok",
+ "model": "Qwen/Qwen3-8B",
+ "memo": [
+  {
+   "text": "The borrower's disclosures indicate no additional debts or affiliates",
+   "cites": [
+    "T5"
+   ]
+  },
+  {
+   "text": "A related company, Crescent Insurance Agency LLC, shares the borrower's officer but not address",
+   "cites": [
+    "S6-B0010-RELATED_ENTITY-20f9eeec"
+   ]
+  },
+  {
+   "text": "A judgment of $52,626 was recorded against Crescent Motor LLC, a related company, in favor of a synthetic former landlord",
+   "cites": [
+    "S5-B0010-JUDGMENT-29d24132"
+   ]
+  },
+  {
+   "text": "The same collateral is pledged to more than one lender, as 31 loans pledged to Wells Fargo match loans in the borrower's public securitization",
+   "cites": [
+    "S1-B0010-PUBLIC_POOL_OVERLAP-7385a52b"
+   ]
+  },
+  {
+   "text": "The borrower's financials show reported revenue 17% above verified customer cash for two quarters",
+   "cites": [
+    "S7-B0010-CASH_REVENUE_GAP-8162c89b"
+   ]
+  },
+  {
+   "text": "Could not confirm if the collateral is actually pledged to other lenders, as VINs and titles were not provided",
+   "cites": [
+    "S1-B0010-PUBLIC_POOL_OVERLAP-7385a52b"
+   ]
+  },
+  {
+   "text": "Ask the borrower: to provide VINs and titles for the collateral in question",
+   "cites": []
+  }
+ ],
+ "dropped": [],
+ "rounds": 2,
+ "tokens": 4403,
+ "seconds": 55.7,
+ "checks_reapplied": "2026-09-16"
+}

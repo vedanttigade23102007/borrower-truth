@@ -1,0 +1,96 @@
+{
+ "borrower_id": "B0061",
+ "verdict_by_rules": "LIKELY_FRAUD",
+ "steps": [
+  {
+   "id": "T1",
+   "tool": "case_evidence",
+   "args": {
+    "borrower_id": "B0061"
+   },
+   "result": "{\"verdict_by_rules\": \"LIKELY_FRAUD\", \"headline\": \"Likely: bad loans are being reported as good ones\", \"findings\": [{\"mechanism\": \"TAPE_DRESSUP\", \"confidence\": \"medium\", \"plain\": \"bad loans are being reported as good ones\", \"signals\": [\"S2-B0061-TARGETED_SOURCE_MISMATCH-10c347a4\"], \"corroborated_by\": []}], \"signals\": [{\"id\": \"S2-B0061-TARGETED_SOURCE_MISMATCH-10c347a4\", \"system\": \"S2\", \"type\": \"TARGETED_SOURCE_MISMATCH\", \"explanation\": \"Loans the tape shows going from 30-59 days late to current were pulled from the servicer system: 3 of 9 are actually 60+ days late or no longer active\", \"evidence\": [\"source_pull:B0061:month=23:targeted_by=cure_from_30\", \"tape:asset:A-B0061-000009\", \"tape:asse"
+  },
+  {
+   "id": "T2",
+   "tool": "related_companies",
+   "args": {
+    "borrower_id": "B0061"
+   },
+   "result": "[{\"entity_id\": \"E000436\", \"name\": \"Northstar Partners LP\", \"kind\": \"borrower\", \"officer\": \"Nora Garcia\", \"address\": \"9738 Harbor Rd, Suite 393\", \"formed_month\": -74, \"has_operations\": true, \"same_officer\": true, \"same_address\": true, \"is_borrower\": true}, {\"entity_id\": \"E000437\", \"name\": \"Northstar Services LLC\", \"kind\": \"company\", \"officer\": \"Nora Garcia\", \"address\": \"5494 Market Ave, Suite 394\", \"formed_month\": 17, \"has_operations\": true, \"same_officer\": true, \"same_address\": false, \"is_borrower\": false}]"
+  },
+  {
+   "id": "T3",
+   "tool": "lien_search",
+   "args": {
+    "name": "B0061"
+   },
+   "result": "[{\"filing_id\": \"UCC-000115\", \"debtor_name\": \"Northstar Partners LP\", \"debtor_address\": \"9738 Harbor Rd, Suite 393\", \"secured_party_name\": \"Prairie Capital Partners LP\", \"collateral_desc\": \"second-priority lien on all assets\", \"filed_month\": -10, \"match_score\": 100}, {\"filing_id\": \"UCC-000114\", \"debtor_name\": \"Northstar Partners LP\", \"debtor_address\": \"9738 Harbor Rd, Suite 393\", \"secured_party_name\": \"Wells Fargo Bank, N.A.\", \"collateral_desc\": \"all assets, including receivables and chattel paper\", \"filed_month\": -12, \"match_score\": 100}]"
+  },
+  {
+   "id": "T4",
+   "tool": "court_search",
+   "args": {
+    "name": "B0061"
+   },
+   "result": "{\"result\": \"no records matching 'Northstar Partners LP'\"}"
+  },
+  {
+   "id": "T5",
+   "tool": "disclosures",
+   "args": {
+    "borrower_id": "B0061"
+   },
+   "result": "[{\"kind\": \"debt\", \"counterparty_entity_id\": \"E000008\", \"counterparty\": \"Prairie Capital Partners LP\", \"note\": \"disclosed subordinated facility\"}]"
+  }
+ ],
+ "errors": [],
+ "generated_at": "2026-09-14",
+ "status": "ok",
+ "model": "Qwen/Qwen3-8B",
+ "memo": [
+  {
+   "text": "The borrower's case shows a LIKELY_FRAUD verdict due to bad loans being reported as good ones",
+   "cites": [
+    "T1"
+   ]
+  },
+  {
+   "text": "A related company, Northstar Services LLC, shares the borrower's officer but not address",
+   "cites": [
+    "T2"
+   ]
+  },
+  {
+   "text": "Northstar Partners LP has two UCC liens, including a second-priority lien on all assets",
+   "cites": [
+    "T3"
+   ]
+  },
+  {
+   "text": "No court records were found for Northstar Partners LP",
+   "cites": [
+    "T4"
+   ]
+  },
+  {
+   "text": "The borrower disclosed a subordinated facility with Prairie Capital Partners LP",
+   "cites": [
+    "T5"
+   ]
+  }
+ ],
+ "dropped": [
+  {
+   "text": "Could not confirm if the related company's liens affect the borrower's creditworthiness.",
+   "reason": "cites no source"
+  },
+  {
+   "text": "Ask the borrower: to clarify the relationship with Northstar Services LLC and the purpose of the disclosed subordinated facility.",
+   "reason": "says 'northstar services' was disclosed, but the disclosures don't list it"
+  }
+ ],
+ "rounds": 2,
+ "tokens": 3696,
+ "seconds": 35.9,
+ "checks_reapplied": "2026-09-16"
+}

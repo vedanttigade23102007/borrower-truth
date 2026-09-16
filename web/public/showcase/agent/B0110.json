@@ -1,0 +1,96 @@
+{
+ "borrower_id": "B0110",
+ "verdict_by_rules": "LIKELY_FRAUD",
+ "steps": [
+  {
+   "id": "T1",
+   "tool": "case_evidence",
+   "args": {
+    "borrower_id": "B0110"
+   },
+   "result": "{\"verdict_by_rules\": \"LIKELY_FRAUD\", \"headline\": \"Likely: money from lenders or linked companies is arriving dressed up as customer payments\", \"findings\": [{\"mechanism\": \"DISGUISED_RECEIPTS\", \"confidence\": \"high\", \"plain\": \"money from lenders or linked companies is arriving dressed up as customer payments\", \"signals\": [\"S3-B0110-RELATED_PARTY_INFLOW-6643f5fe\"], \"corroborated_by\": [\"S5-B0110-COMPETING_LIEN-dbc6236f\", \"S6-B0110-SHELL_INDICATORS-7df46d81\", \"S5-B0110-JUDGMENT-5eb6941a\", \"S6-B0110-RELATED_ENTITY-7b3baf04\"]}, {\"mechanism\": \"HIDDEN_DEBT\", \"confidence\": \"high\", \"plain\": \"the borrower has debt it has not disclosed\", \"signals\": [\"S5-B0110-COMPETING_LIEN-dbc6236f\", \"S5-B0110-UNDISCLOSE"
+  },
+  {
+   "id": "T2",
+   "tool": "related_companies",
+   "args": {
+    "borrower_id": "B0110"
+   },
+   "result": "[{\"entity_id\": \"E000530\", \"name\": \"Apex Capital LLC\", \"kind\": \"borrower\", \"officer\": \"Ethan Kim\", \"address\": \"5971 Harbor Rd, Suite 455\", \"formed_month\": -140, \"has_operations\": true, \"same_officer\": true, \"same_address\": true, \"is_borrower\": true}, {\"entity_id\": \"E000531\", \"name\": \"Apex Holdings Group LLC\", \"kind\": \"holding\", \"officer\": \"Ethan Kim\", \"address\": \"5971 Harbor Rd, Suite 455\", \"formed_month\": -200, \"has_operations\": true, \"same_officer\": true, \"same_address\": true, \"is_borrower\": false}, {\"entity_id\": \"E000532\", \"name\": \"Apex Inventory Holdings LLC\", \"kind\": \"company\", \"officer\": \"Ethan Kim\", \"address\": \"5971 Harbor Rd, Suite 455\", \"formed_month\": 12, \"has_operations\": false, \"s"
+  },
+  {
+   "id": "T3",
+   "tool": "lien_search",
+   "args": {
+    "name": "B0110"
+   },
+   "result": "[{\"filing_id\": \"UCC-000215\", \"debtor_name\": \"Apex Capital LLC\", \"debtor_address\": \"5971 Harbor Rd, Suite 455\", \"secured_party_name\": \"Silverline Specialty Finance LLC\", \"collateral_desc\": \"second-priority lien on all assets\", \"filed_month\": -10, \"match_score\": 100}, {\"filing_id\": \"UCC-000052\", \"debtor_name\": \"Apex Capital Corp\", \"debtor_address\": \"6789 Harbor Rd, Suite 347\", \"secured_party_name\": \"Wells Fargo Bank, N.A.\", \"collateral_desc\": \"all assets, including receivables and chattel paper\", \"filed_month\": -12, \"match_score\": 100}, {\"filing_id\": \"UCC-000214\", \"debtor_name\": \"Apex Capital LLC\", \"debtor_address\": \"5971 Harbor Rd, Suite 455\", \"secured_party_name\": \"Wells Fargo Bank, N.A.\", \""
+  },
+  {
+   "id": "T4",
+   "tool": "court_search",
+   "args": {
+    "name": "B0110"
+   },
+   "result": "{\"result\": \"no records matching 'Apex Capital LLC'\"}"
+  },
+  {
+   "id": "T5",
+   "tool": "disclosures",
+   "args": {
+    "borrower_id": "B0110"
+   },
+   "result": "[{\"kind\": \"debt\", \"counterparty_entity_id\": \"E000002\", \"counterparty\": \"Prairie Capital Partners LLC\", \"note\": \"equipment lease\"}, {\"kind\": \"debt\", \"counterparty_entity_id\": \"E000007\", \"counterparty\": \"Silverline Specialty Finance LLC\", \"note\": \"disclosed subordinated facility\"}, {\"kind\": \"related_party\", \"counterparty_entity_id\": \"E000531\", \"counterparty\": \"Apex Holdings Group LLC\", \"note\": \"parent holding company\"}]"
+  }
+ ],
+ "errors": [],
+ "generated_at": "2026-09-14",
+ "status": "ok",
+ "model": "Qwen/Qwen3-8B",
+ "memo": [
+  {
+   "text": "$154,682 in payments from Apex Inventory Holdings LLC, a shell company linked to the borrower, were classified as customer payments",
+   "cites": [
+    "S3-B0110-RELATED_PARTY_INFLOW-6643f5fe"
+   ]
+  },
+  {
+   "text": "The borrower is connected to multiple shell companies, including Apex Inventory Holdings LLC, which has no operations and shares the same address as the borrower",
+   "cites": [
+    "S6-B0110-SHELL_INDICATORS-7df46d81"
+   ]
+  },
+  {
+   "text": "The borrower's financial statements show a debt gap, omitting two secured lenders identified in public lien filings",
+   "cites": [
+    "S7-B0110-DEBT_GAP-7fcc33cd"
+   ]
+  },
+  {
+   "text": "Could not confirm if Apex Inventory Holdings LLC is a legal entity in the GLEIF registry",
+   "cites": [
+    "S6-B0110-SHELL_INDICATORS-7df46d81"
+   ]
+  },
+  {
+   "text": "Ask the borrower: to clarify the relationship between Apex Inventory Holdings LLC and the borrower, and provide documentation for the $154,682 in payments",
+   "cites": [
+    "S3-B0110-RELATED_PARTY_INFLOW-6643f5fe"
+   ]
+  }
+ ],
+ "dropped": [
+  {
+   "text": "The borrower has undisclosed debt from Prairie Capital Partners LLC and Silverline Specialty Finance LLC [S5-B0110-UNDISCLOSED_SECURED_PARTY-adabe5ac, S5-B0110-COMPETING_LIEN-dbc6236f].",
+   "reason": "says 'silverline specialty finance' was not disclosed, but the disclosures list it"
+  },
+  {
+   "text": "The borrower disclosed a parent holding company, Apex Holdings Group LLC, but not all related entities [S7-B0110-DEBT_GAP-7fcc33cd].",
+   "reason": "names 'apex holdings group', which its sources don't mention"
+  }
+ ],
+ "rounds": 2,
+ "tokens": 5421,
+ "seconds": 76.6,
+ "checks_reapplied": "2026-09-16"
+}

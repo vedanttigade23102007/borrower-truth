@@ -1,0 +1,91 @@
+{
+ "borrower_id": "B0041",
+ "verdict_by_rules": "LIKELY_FRAUD",
+ "steps": [
+  {
+   "id": "T1",
+   "tool": "case_evidence",
+   "args": {
+    "borrower_id": "B0041"
+   },
+   "result": "{\"verdict_by_rules\": \"LIKELY_FRAUD\", \"headline\": \"Likely: the borrower has debt it has not disclosed\", \"findings\": [{\"mechanism\": \"HIDDEN_DEBT\", \"confidence\": \"high\", \"plain\": \"the borrower has debt it has not disclosed\", \"signals\": [\"S5-B0041-COMPETING_LIEN-eada8f04\", \"S7-B0041-DEBT_GAP-ad849207\", \"S5-B0041-JUDGMENT-92e93db8\"], \"corroborated_by\": [\"S6-B0041-SHELL_INDICATORS-de69d832\", \"S6-B0041-RELATED_ENTITY-e2f5eb7e\"]}, {\"mechanism\": \"RELATED_SHELLS\", \"confidence\": \"high\", \"plain\": \"the borrower is connected to undisclosed shell companies\", \"signals\": [\"S6-B0041-SHELL_INDICATORS-de69d832\", \"S6-B0041-SHELL_INDICATORS-0ec078d7\", \"S6-B0041-SHELL_INDICATORS-7a4358b2\", \"S6-B0041-RELATED_ENTITY"
+  },
+  {
+   "id": "T2",
+   "tool": "related_companies",
+   "args": {
+    "borrower_id": "B0041"
+   },
+   "result": "[{\"entity_id\": \"E000398\", \"name\": \"Silverline Finance Group LLC\", \"kind\": \"borrower\", \"officer\": \"Robert Patel\", \"address\": \"5218 Commerce St, Suite 368\", \"formed_month\": -135, \"has_operations\": true, \"same_officer\": true, \"same_address\": true, \"is_borrower\": true}, {\"entity_id\": \"E000399\", \"name\": \"Silverline Holdings Group LLC\", \"kind\": \"holding\", \"officer\": \"Robert Patel\", \"address\": \"5218 Commerce St, Suite 368\", \"formed_month\": -200, \"has_operations\": true, \"same_officer\": true, \"same_address\": true, \"is_borrower\": false}, {\"entity_id\": \"E000402\", \"name\": \"Silverline Customer Collections III LLC\", \"kind\": \"company\", \"officer\": \"Robert Patel\", \"address\": \"5218 Commerce St, Suite 368\", \"f"
+  },
+  {
+   "id": "T3",
+   "tool": "lien_search",
+   "args": {
+    "name": "B0041"
+   },
+   "result": "[{\"filing_id\": \"UCC-000077\", \"debtor_name\": \"Silverline Finance Group LLC\", \"debtor_address\": \"5218 Commerce St, Suite 368\", \"secured_party_name\": \"Canyon Specialty Finance LP\", \"collateral_desc\": \"second-priority lien on all assets\", \"filed_month\": -10, \"match_score\": 100}, {\"filing_id\": \"UCC-000076\", \"debtor_name\": \"Silverline Finance Group LLC\", \"debtor_address\": \"5218 Commerce St, Suite 368\", \"secured_party_name\": \"Wells Fargo Bank, N.A.\", \"collateral_desc\": \"all assets, including receivables and chattel paper\", \"filed_month\": -12, \"match_score\": 100}]"
+  },
+  {
+   "id": "T4",
+   "tool": "court_search",
+   "args": {
+    "name": "B0041"
+   },
+   "result": "{\"result\": \"no records matching 'Silverline Finance Group LLC'\"}"
+  },
+  {
+   "id": "T5",
+   "tool": "disclosures",
+   "args": {
+    "borrower_id": "B0041"
+   },
+   "result": "[{\"kind\": \"debt\", \"counterparty_entity_id\": \"E000001\", \"counterparty\": \"Canyon Specialty Finance LP\", \"note\": \"disclosed subordinated facility\"}, {\"kind\": \"related_party\", \"counterparty_entity_id\": \"E000399\", \"counterparty\": \"Silverline Holdings Group LLC\", \"note\": \"parent holding company\"}]"
+  }
+ ],
+ "errors": [],
+ "generated_at": "2026-09-14",
+ "status": "ok",
+ "model": "Qwen/Qwen3-8B",
+ "memo": [
+  {
+   "text": "The borrower has undisclosed debt, including a $5,161,476 judgment against a related shell company",
+   "cites": [
+    "S5-B0041-JUDGMENT-92e93db8"
+   ]
+  },
+  {
+   "text": "The borrower is linked to three shell companies with the same address and officer, showing potential for hidden operations",
+   "cites": [
+    "S6-B0041-SHELL_INDICATORS-de69d832"
+   ]
+  },
+  {
+   "text": "A lien exists on a related company by Bluebonnet Asset Finance LP, which the borrower did not disclose",
+   "cites": [
+    "S5-B0041-COMPETING_LIEN-eada8f04"
+   ]
+  },
+  {
+   "text": "The borrower disclosed a parent holding company but not the shell companies connected to it",
+   "cites": [
+    "S6-B0041-RELATED_ENTITY-e2f5eb7e"
+   ]
+  },
+  {
+   "text": "Could not confirm if the shell companies have any legal entity identifiers or parent companies",
+   "cites": [
+    "S6-B0041-SHELL_INDICATORS-de69d832"
+   ]
+  },
+  {
+   "text": "Ask the borrower: to clarify the relationship with the shell companies and the undisclosed debt",
+   "cites": []
+  }
+ ],
+ "dropped": [],
+ "rounds": 2,
+ "tokens": 4981,
+ "seconds": 55.0,
+ "checks_reapplied": "2026-09-16"
+}

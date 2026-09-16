@@ -1,0 +1,97 @@
+{
+ "borrower_id": "B0024",
+ "verdict_by_rules": "LIKELY_FRAUD",
+ "steps": [
+  {
+   "id": "T1",
+   "tool": "case_evidence",
+   "args": {
+    "borrower_id": "B0024"
+   },
+   "result": "{\"verdict_by_rules\": \"LIKELY_FRAUD\", \"headline\": \"Likely: money from lenders or linked companies is arriving dressed up as customer payments\", \"findings\": [{\"mechanism\": \"DISGUISED_RECEIPTS\", \"confidence\": \"high\", \"plain\": \"money from lenders or linked companies is arriving dressed up as customer payments\", \"signals\": [\"S3-B0024-CIRCULAR_FLOW-18164cee\", \"S3-B0024-NON_OBLIGOR_PAYER-57c18cd2\"], \"corroborated_by\": []}], \"signals\": [{\"id\": \"S3-B0024-CIRCULAR_FLOW-18164cee\", \"system\": \"S3\", \"type\": \"CIRCULAR_FLOW\", \"explanation\": \"16 times, money sent to 'Northstar Industrial Supply Inc' came back from 'Northstar Industrial Supply Inc' within 35 days as a 'customer' payment of almost the same amo"
+  },
+  {
+   "id": "T2",
+   "tool": "related_companies",
+   "args": {
+    "borrower_id": "B0024"
+   },
+   "result": "[{\"entity_id\": \"E000362\", \"name\": \"Meridian Partners LP\", \"kind\": \"borrower\", \"officer\": \"Grace Brown\", \"address\": \"457 Harbor Rd, Suite 345\", \"formed_month\": -132, \"has_operations\": true, \"same_officer\": true, \"same_address\": true, \"is_borrower\": true}, {\"entity_id\": \"E000576\", \"name\": \"Prairie Auto Sales LLC\", \"kind\": \"company\", \"officer\": \"Grace Brown\", \"address\": \"7183 Main St, Suite 489\", \"formed_month\": -129, \"has_operations\": true, \"same_officer\": true, \"same_address\": false, \"is_borrower\": false}, {\"entity_id\": \"E000577\", \"name\": \"Harbor Auto Sales LLC\", \"kind\": \"company\", \"officer\": \"Grace Brown\", \"address\": \"8768 Harbor Rd, Suite 490\", \"formed_month\": -32, \"has_operations\": true, \""
+  },
+  {
+   "id": "T3",
+   "tool": "lien_search",
+   "args": {
+    "name": "B0024"
+   },
+   "result": "[{\"filing_id\": \"UCC-000047\", \"debtor_name\": \"Meridian Partners LP\", \"debtor_address\": \"457 Harbor Rd, Suite 345\", \"secured_party_name\": \"Prairie Capital Partners LP\", \"collateral_desc\": \"second-priority lien on all assets\", \"filed_month\": -10, \"match_score\": 100}, {\"filing_id\": \"UCC-000046\", \"debtor_name\": \"Meridian Partners LP\", \"debtor_address\": \"457 Harbor Rd, Suite 345\", \"secured_party_name\": \"Wells Fargo Bank, N.A.\", \"collateral_desc\": \"all assets, including receivables and chattel paper\", \"filed_month\": -12, \"match_score\": 100}]"
+  },
+  {
+   "id": "T4",
+   "tool": "court_search",
+   "args": {
+    "name": "B0024"
+   },
+   "result": "[{\"case_id\": \"CV-00002\", \"defendant_name\": \"Meridian Partners LP\", \"plaintiff\": \"(synthetic) former landlord\", \"kind\": \"judgment\", \"amount\": 186745.51, \"month\": 11, \"match_score\": 100}]"
+  },
+  {
+   "id": "T5",
+   "tool": "disclosures",
+   "args": {
+    "borrower_id": "B0024"
+   },
+   "result": "[{\"kind\": \"debt\", \"counterparty_entity_id\": \"E000008\", \"counterparty\": \"Prairie Capital Partners LP\", \"note\": \"disclosed subordinated facility\"}, {\"kind\": \"related_party\", \"counterparty_entity_id\": \"E000576\", \"counterparty\": \"Prairie Auto Sales LLC\", \"note\": \"subsidiary (listed in 10-K Exhibit 21)\"}, {\"kind\": \"related_party\", \"counterparty_entity_id\": \"E000577\", \"counterparty\": \"Harbor Auto Sales LLC\", \"note\": \"subsidiary (listed in 10-K Exhibit 21)\"}]"
+  }
+ ],
+ "errors": [],
+ "generated_at": "2026-09-14",
+ "status": "ok",
+ "model": "Qwen/Qwen3-8B",
+ "memo": [
+  {
+   "text": "The borrower's case evidence shows $8,971,724 in payments from 'Northstar Industrial Supply Inc', a non-obligor, with circular flows of nearly $9 million",
+   "cites": [
+    "S3-B0024-NON_OBLIGOR_PAYER-57c18cd2"
+   ]
+  },
+  {
+   "text": "'Meridian Partners LP' has a judgment of $186,746 against it from a synthetic former landlord",
+   "cites": [
+    "S5-B0024-JUDGMENT-3f0dc359"
+   ]
+  },
+  {
+   "text": "'Meridian Partners LP' has two UCC liens, including a second-priority lien on all assets by Prairie Capital Partners LP",
+   "cites": [
+    "T3"
+   ]
+  },
+  {
+   "text": "The borrower disclosed a subordinated facility with Prairie Capital Partners LP and subsidiaries Prairie Auto Sales LLC and Harbor Auto Sales LLC",
+   "cites": [
+    "T5"
+   ]
+  },
+  {
+   "text": "The borrower's related companies include Meridian Partners LP, Prairie Auto Sales LLC, and Harbor Auto Sales LLC, all sharing officers or addresses",
+   "cites": [
+    "T2"
+   ]
+  },
+  {
+   "text": "Could not confirm the exact source of the $9 million circular flow, which may involve linked entities",
+   "cites": [
+    "S3-B0024-CIRCULAR_FLOW-18164cee"
+   ]
+  },
+  {
+   "text": "Ask the borrower: to clarify the relationship with Northstar Industrial Supply Inc and the source of the $9 million circular flow",
+   "cites": []
+  }
+ ],
+ "dropped": [],
+ "rounds": 2,
+ "tokens": 4286,
+ "seconds": 55.8,
+ "checks_reapplied": "2026-09-16"
+}

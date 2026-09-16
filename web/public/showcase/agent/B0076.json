@@ -1,0 +1,91 @@
+{
+ "borrower_id": "B0076",
+ "verdict_by_rules": "NEEDS_MORE_EVIDENCE",
+ "steps": [
+  {
+   "id": "T1",
+   "tool": "case_evidence",
+   "args": {
+    "borrower_id": "B0076"
+   },
+   "result": "{\"verdict_by_rules\": \"NEEDS_MORE_EVIDENCE\", \"headline\": \"Worth a look: invoices are fake, inflated or altered\", \"findings\": [{\"mechanism\": \"FAKE_INVOICES\", \"confidence\": \"low\", \"plain\": \"invoices are fake, inflated or altered\", \"signals\": [\"S4-B0076-DOC_DATA_MISMATCH-81ea799e\", \"S7-B0076-RECEIVABLES_QUALITY-067b5062\"], \"corroborated_by\": []}], \"signals\": [{\"id\": \"S4-B0076-DOC_DATA_MISMATCH-81ea799e\", \"system\": \"S4\", \"type\": \"DOC_DATA_MISMATCH\", \"explanation\": \"2 of 15 invoice documents show a different total from the borrower's data (read twice by the document model)\", \"evidence\": [\"document:INV00048420\", \"document:INV00049179\", \"mismatched:2/15\"], \"month\": 1}, {\"id\": \"S7-B0076-RECEIVABLES_Q"
+  },
+  {
+   "id": "T2",
+   "tool": "related_companies",
+   "args": {
+    "borrower_id": "B0076"
+   },
+   "result": "[{\"entity_id\": \"E000469\", \"name\": \"Prairie Distribution Corp\", \"kind\": \"borrower\", \"officer\": \"Priya Wilson\", \"address\": \"9335 Harbor Rd, Suite 414\", \"formed_month\": -88, \"has_operations\": true, \"same_officer\": true, \"same_address\": true, \"is_borrower\": true}, {\"entity_id\": \"E000470\", \"name\": \"Prairie Holdings Group LLC\", \"kind\": \"holding\", \"officer\": \"Priya Wilson\", \"address\": \"9335 Harbor Rd, Suite 414\", \"formed_month\": -200, \"has_operations\": true, \"same_officer\": true, \"same_address\": true, \"is_borrower\": false}, {\"entity_id\": \"E000597\", \"name\": \"Lakeshore Auto Sales Inc\", \"kind\": \"company\", \"officer\": \"Priya Wilson\", \"address\": \"8394 Center Dr, Suite 510\", \"formed_month\": -32, \"has_oper"
+  },
+  {
+   "id": "T3",
+   "tool": "lien_search",
+   "args": {
+    "name": "B0076"
+   },
+   "result": "[{\"filing_id\": \"UCC-000148\", \"debtor_name\": \"Prairie Distribution Corp\", \"debtor_address\": \"9335 Harbor Rd, Suite 414\", \"secured_party_name\": \"Sterling Capital Partners LLC\", \"collateral_desc\": \"second-priority lien on all assets\", \"filed_month\": -10, \"match_score\": 100}, {\"filing_id\": \"UCC-000147\", \"debtor_name\": \"Prairie Distribution Corp\", \"debtor_address\": \"9335 Harbor Rd, Suite 414\", \"secured_party_name\": \"Wells Fargo Bank, N.A.\", \"collateral_desc\": \"all assets, including receivables and chattel paper\", \"filed_month\": -12, \"match_score\": 100}, {\"filing_id\": \"UCC-000227\", \"debtor_name\": \"Prairie Distribution LLC\", \"debtor_address\": \"8051 Oak Blvd, Suite 464\", \"secured_party_name\": \"Wells"
+  },
+  {
+   "id": "T4",
+   "tool": "court_search",
+   "args": {
+    "name": "B0076"
+   },
+   "result": "{\"result\": \"no records matching 'Prairie Distribution Corp'\"}"
+  },
+  {
+   "id": "T5",
+   "tool": "disclosures",
+   "args": {
+    "borrower_id": "B0076"
+   },
+   "result": "[{\"kind\": \"debt\", \"counterparty_entity_id\": \"E000009\", \"counterparty\": \"Sterling Capital Partners LLC\", \"note\": \"disclosed subordinated facility\"}, {\"kind\": \"related_party\", \"counterparty_entity_id\": \"E000470\", \"counterparty\": \"Prairie Holdings Group LLC\", \"note\": \"parent holding company\"}, {\"kind\": \"related_party\", \"counterparty_entity_id\": \"E000597\", \"counterparty\": \"Lakeshore Auto Sales Inc\", \"note\": \"subsidiary (listed in 10-K Exhibit 21)\"}]"
+  }
+ ],
+ "errors": [],
+ "generated_at": "2026-09-14",
+ "status": "ok",
+ "model": "Qwen/Qwen3-8B",
+ "memo": [
+  {
+   "text": "The borrower's case evidence shows 2 out of 15 invoice documents have data mismatches",
+   "cites": [
+    "S4-B0076-DOC_DATA_MISMATCH-81ea799e"
+   ]
+  },
+  {
+   "text": "The borrower has a related entity, \"Harbor Leasing Inc,\" listed in the 10-K but not disclosed to the bank",
+   "cites": [
+    "S6-B0076-RELATED_ENTITY-38fbcee7"
+   ]
+  },
+  {
+   "text": "Prairie Distribution Corp has two UCC liens, including a second-priority lien from Sterling Capital Partners LLC",
+   "cites": [
+    "T3"
+   ]
+  },
+  {
+   "text": "The borrower disclosed a subordinated facility with Sterling Capital Partners LLC and a subsidiary, Lakeshore Auto Sales Inc",
+   "cites": [
+    "T5"
+   ]
+  },
+  {
+   "text": "Could not confirm if the borrower's receivables are fully collateralized or if there are hidden liabilities",
+   "cites": [
+    "S7-B0076-RECEIVABLES_QUALITY-067b5062"
+   ]
+  },
+  {
+   "text": "Ask the borrower: to clarify the relationship with Harbor Leasing Inc and provide additional documentation on the receivables",
+   "cites": []
+  }
+ ],
+ "dropped": [],
+ "rounds": 2,
+ "tokens": 4244,
+ "seconds": 48.0,
+ "checks_reapplied": "2026-09-16"
+}

@@ -1,0 +1,96 @@
+{
+ "borrower_id": "B0028",
+ "verdict_by_rules": "LIKELY_FRAUD",
+ "steps": [
+  {
+   "id": "T1",
+   "tool": "case_evidence",
+   "args": {
+    "borrower_id": "B0028"
+   },
+   "result": "{\"verdict_by_rules\": \"LIKELY_FRAUD\", \"headline\": \"Likely: money from lenders or linked companies is arriving dressed up as customer payments\", \"findings\": [{\"mechanism\": \"DISGUISED_RECEIPTS\", \"confidence\": \"high\", \"plain\": \"money from lenders or linked companies is arriving dressed up as customer payments\", \"signals\": [\"S3-B0028-RELATED_PARTY_INFLOW-27aa045b\"], \"corroborated_by\": [\"S6-B0028-SHELL_INDICATORS-a80898c9\", \"S5-B0028-JUDGMENT-5c5e0929\", \"S6-B0028-RELATED_ENTITY-f7cb7314\"]}, {\"mechanism\": \"HIDDEN_DEBT\", \"confidence\": \"high\", \"plain\": \"the borrower has debt it has not disclosed\", \"signals\": [\"S5-B0028-JUDGMENT-5c5e0929\"], \"corroborated_by\": [\"S3-B0028-RELATED_PARTY_INFLOW-27aa045b\","
+  },
+  {
+   "id": "T2",
+   "tool": "related_companies",
+   "args": {
+    "borrower_id": "B0028"
+   },
+   "result": "[{\"entity_id\": \"E000369\", \"name\": \"Lakeshore Lending Group LLC\", \"kind\": \"borrower\", \"officer\": \"David Clark\", \"address\": \"5586 Main St, Suite 351\", \"formed_month\": -90, \"has_operations\": true, \"same_officer\": true, \"same_address\": true, \"is_borrower\": true}, {\"entity_id\": \"E000372\", \"name\": \"Lakeshore Receivables III LLC\", \"kind\": \"company\", \"officer\": \"David Clark\", \"address\": \"5586 Main St, Suite 351\", \"formed_month\": 4, \"has_operations\": false, \"same_officer\": true, \"same_address\": true, \"is_borrower\": false}, {\"entity_id\": \"E000371\", \"name\": \"Lakeshore Receivables II LLC\", \"kind\": \"company\", \"officer\": \"David Clark\", \"address\": \"5586 Main St, Suite 351\", \"formed_month\": 6, \"has_operatio"
+  },
+  {
+   "id": "T3",
+   "tool": "lien_search",
+   "args": {
+    "name": "B0028"
+   },
+   "result": "[{\"filing_id\": \"UCC-000057\", \"debtor_name\": \"Lakeshore Lending Group LLC\", \"debtor_address\": \"5586 Main St, Suite 351\", \"secured_party_name\": \"Silverline Credit Fund LLC\", \"collateral_desc\": \"second-priority lien on all assets\", \"filed_month\": -10, \"match_score\": 100}, {\"filing_id\": \"UCC-000056\", \"debtor_name\": \"Lakeshore Lending Group LLC\", \"debtor_address\": \"5586 Main St, Suite 351\", \"secured_party_name\": \"Wells Fargo Bank, N.A.\", \"collateral_desc\": \"all assets, including receivables and chattel paper\", \"filed_month\": -12, \"match_score\": 100}, {\"filing_id\": \"UCC-000058\", \"debtor_name\": \"Lakeshore Lending Group LLC\", \"debtor_address\": \"5586 Main St, Suite 351\", \"secured_party_name\": \"Beacon"
+  },
+  {
+   "id": "T4",
+   "tool": "court_search",
+   "args": {
+    "name": "B0028"
+   },
+   "result": "{\"result\": \"no records matching 'Lakeshore Lending Group LLC'\"}"
+  },
+  {
+   "id": "T5",
+   "tool": "disclosures",
+   "args": {
+    "borrower_id": "B0028"
+   },
+   "result": "[{\"kind\": \"debt\", \"counterparty_entity_id\": \"E000011\", \"counterparty\": \"Beacon Credit Fund LLC\", \"note\": \"equipment lease\"}, {\"kind\": \"debt\", \"counterparty_entity_id\": \"E000013\", \"counterparty\": \"Silverline Credit Fund LLC\", \"note\": \"disclosed subordinated facility\"}]"
+  }
+ ],
+ "errors": [],
+ "generated_at": "2026-09-14",
+ "status": "ok",
+ "model": "Qwen/Qwen3-8B",
+ "memo": [
+  {
+   "text": "The borrower received $229,587 from Lakeshore Receivables LLC, an undisclosed company linked to the borrower",
+   "cites": [
+    "S3-B0028-RELATED_PARTY_INFLOW-27aa045b"
+   ]
+  },
+  {
+   "text": "Lakeshore Receivables LLC and related entities appear to be shell companies with no operations and same address as the borrower",
+   "cites": [
+    "S6-B0028-SHELL_INDICATORS-a80898c9"
+   ]
+  },
+  {
+   "text": "There is a judgment of $7,209,023 against Lakeshore Receivables LLC in favor of Silverline Credit Fund LP",
+   "cites": [
+    "S5-B0028-JUDGMENT-5c5e0929"
+   ]
+  },
+  {
+   "text": "The reported revenue is 24% higher than verified customer cash",
+   "cites": [
+    "S7-B0028-CASH_REVENUE_GAP-5fa8e835"
+   ]
+  },
+  {
+   "text": "No records were found for Lakeshore Lending Group LLC in court judgments",
+   "cites": [
+    "T4"
+   ]
+  },
+  {
+   "text": "Ask the borrower: to clarify the relationship with Lakeshore Receivables LLC and the source of the $229,587 inflow",
+   "cites": []
+  }
+ ],
+ "dropped": [
+  {
+   "text": "The borrower has undisclosed debt to Beacon Credit Fund LLC and Silverline Credit Fund LLC [S5-B0028-JUDGMENT-5c5e0929].",
+   "reason": "says 'silverline credit fund' was not disclosed, but the disclosures list it"
+  }
+ ],
+ "rounds": 2,
+ "tokens": 5155,
+ "seconds": 65.3,
+ "checks_reapplied": "2026-09-16"
+}

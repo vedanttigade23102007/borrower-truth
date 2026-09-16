@@ -1,0 +1,102 @@
+{
+ "borrower_id": "B0067",
+ "verdict_by_rules": "LIKELY_FRAUD",
+ "steps": [
+  {
+   "id": "T1",
+   "tool": "case_evidence",
+   "args": {
+    "borrower_id": "B0067"
+   },
+   "result": "{\"verdict_by_rules\": \"LIKELY_FRAUD\", \"headline\": \"Likely: money from lenders or linked companies is arriving dressed up as customer payments\", \"findings\": [{\"mechanism\": \"DISGUISED_RECEIPTS\", \"confidence\": \"high\", \"plain\": \"money from lenders or linked companies is arriving dressed up as customer payments\", \"signals\": [\"S3-B0067-RELATED_PARTY_INFLOW-8cee8762\"], \"corroborated_by\": [\"S5-B0067-COMPETING_LIEN-0b7defd6\", \"S6-B0067-SHELL_INDICATORS-46191db2\", \"S6-B0067-RELATED_ENTITY-7e9a30a3\"]}, {\"mechanism\": \"HIDDEN_DEBT\", \"confidence\": \"high\", \"plain\": \"the borrower has debt it has not disclosed\", \"signals\": [\"S5-B0067-COMPETING_LIEN-0b7defd6\", \"S5-B0067-FILED_DEBT_UNDISCLOSED-82d640c3\", \"S7-B0"
+  },
+  {
+   "id": "T2",
+   "tool": "related_companies",
+   "args": {
+    "borrower_id": "B0067"
+   },
+   "result": "[{\"entity_id\": \"E000450\", \"name\": \"Magnolia Industries Corp\", \"kind\": \"borrower\", \"officer\": \"Nora Kim\", \"address\": \"8997 Harbor Rd, Suite 402\", \"formed_month\": -87, \"has_operations\": true, \"same_officer\": true, \"same_address\": true, \"is_borrower\": true}, {\"entity_id\": \"E000451\", \"name\": \"Magnolia Holdings Group LLC\", \"kind\": \"holding\", \"officer\": \"Nora Kim\", \"address\": \"8997 Harbor Rd, Suite 402\", \"formed_month\": -200, \"has_operations\": true, \"same_officer\": true, \"same_address\": true, \"is_borrower\": false}, {\"entity_id\": \"E000596\", \"name\": \"Pioneer Recovery Inc\", \"kind\": \"company\", \"officer\": \"Nora Kim\", \"address\": \"5922 Park Ave, Suite 509\", \"formed_month\": -97, \"has_operations\": true, \"s"
+  },
+  {
+   "id": "T3",
+   "tool": "lien_search",
+   "args": {
+    "name": "B0067"
+   },
+   "result": "[{\"filing_id\": \"UCC-000130\", \"debtor_name\": \"Magnolia Industries Corp\", \"debtor_address\": \"8997 Harbor Rd, Suite 402\", \"secured_party_name\": \"Silverline Credit Fund LLC\", \"collateral_desc\": \"second-priority lien on all assets\", \"filed_month\": -10, \"match_score\": 100}, {\"filing_id\": \"UCC-000129\", \"debtor_name\": \"Magnolia Industries Corp\", \"debtor_address\": \"8997 Harbor Rd, Suite 402\", \"secured_party_name\": \"Wells Fargo Bank, N.A.\", \"collateral_desc\": \"all assets, including receivables and chattel paper\", \"filed_month\": -12, \"match_score\": 100}, {\"filing_id\": \"UCC-000131\", \"debtor_name\": \"Magnolia Industries Corp\", \"debtor_address\": \"8997 Harbor Rd, Suite 402\", \"secured_party_name\": \"Canyon Ca"
+  },
+  {
+   "id": "T4",
+   "tool": "court_search",
+   "args": {
+    "name": "B0067"
+   },
+   "result": "{\"result\": \"no records matching 'Magnolia Industries Corp'\"}"
+  },
+  {
+   "id": "T5",
+   "tool": "disclosures",
+   "args": {
+    "borrower_id": "B0067"
+   },
+   "result": "[{\"kind\": \"debt\", \"counterparty_entity_id\": \"E000003\", \"counterparty\": \"Canyon Capital Partners LLC\", \"note\": \"equipment lease\"}, {\"kind\": \"debt\", \"counterparty_entity_id\": \"E000013\", \"counterparty\": \"Silverline Credit Fund LLC\", \"note\": \"disclosed subordinated facility\"}, {\"kind\": \"related_party\", \"counterparty_entity_id\": \"E000451\", \"counterparty\": \"Magnolia Holdings Group LLC\", \"note\": \"parent holding company\"}, {\"kind\": \"related_party\", \"counterparty_entity_id\": \"E000454\", \"counterparty\": \"Magnolia Property Partners LLC\", \"note\": \"sublease income from affiliated property company\"}, {\"kind\": \"related_party\", \"counterparty_entity_id\": \"E000596\", \"counterparty\": \"Pioneer Recovery Inc\", \"not"
+  }
+ ],
+ "errors": [],
+ "generated_at": "2026-09-14",
+ "status": "ok",
+ "model": "Qwen/Qwen3-8B",
+ "memo": [
+  {
+   "text": "\"Magnolia Inventory Holdings LLC\" is a shell company with no operations, same address as the borrower, and formed 11 months ago",
+   "cites": [
+    "S6-B0067-SHELL_INDICATORS-46191db2"
+   ]
+  },
+  {
+   "text": "The borrower received $221,944 from \"Magnolia Inventory Holdings LLC\" disguised as customer payments",
+   "cites": [
+    "S3-B0067-RELATED_PARTY_INFLOW-8cee8762"
+   ]
+  },
+  {
+   "text": "There is a competing lien from \"Canyon Specialty Finance LP\" on \"Magnolia Inventory Holdings LLC\" that was not disclosed",
+   "cites": [
+    "S5-B0067-COMPETING_LIEN-0b7defd6"
+   ]
+  },
+  {
+   "text": "The borrower's financial statements show a debt gap, omitting two secured lenders",
+   "cites": [
+    "S7-B0067-DEBT_GAP-f2b02f77"
+   ]
+  },
+  {
+   "text": "Could not confirm if \"Magnolia Inventory Holdings LLC\" has a LEI or is listed in GLEIF",
+   "cites": [
+    "S6-B0067-SHELL_INDICATORS-46191db2"
+   ]
+  },
+  {
+   "text": "Ask the borrower: to clarify the relationship with \"Magnolia Inventory Holdings LLC\" and provide documentation for the $221,944 inflow",
+   "cites": [
+    "S3-B0067-RELATED_PARTY_INFLOW-8cee8762"
+   ]
+  }
+ ],
+ "dropped": [
+  {
+   "text": "The borrower has undisclosed debt from \"Canyon Specialty Finance LP\" and \"Canyon Capital Partners LLC\" [S5-B0067-FILED_DEBT_UNDISCLOSED-82d640c3].",
+   "reason": "says 'canyon capital partners' was not disclosed, but the disclosures list it"
+  },
+  {
+   "text": "The borrower disclosed related entities like \"Magnolia Holdings Group LLC\" and \"Pioneer Recovery Inc\" [S7-B0067-RELATED_PARTY-5c8d6f3a].",
+   "reason": "cites an unknown source: S7-B0067-RELATED_PARTY-5c8d6f3a"
+  }
+ ],
+ "rounds": 2,
+ "tokens": 5547,
+ "seconds": 84.2,
+ "checks_reapplied": "2026-09-16"
+}

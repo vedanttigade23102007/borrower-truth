@@ -1,0 +1,94 @@
+{
+ "borrower_id": "B0031",
+ "verdict_by_rules": "LIKELY_FRAUD",
+ "steps": [
+  {
+   "id": "T1",
+   "tool": "case_evidence",
+   "args": {
+    "borrower_id": "B0031"
+   },
+   "result": "{\"verdict_by_rules\": \"LIKELY_FRAUD\", \"headline\": \"Likely: bad loans are being reported as good ones\", \"findings\": [{\"mechanism\": \"TAPE_DRESSUP\", \"confidence\": \"high\", \"plain\": \"bad loans are being reported as good ones\", \"signals\": [\"S2-B0031-SOURCE_MISMATCH-7fba5ec8\", \"S2-B0031-TARGETED_SOURCE_MISMATCH-d45bee69\", \"S2-B0031-ROLL_RATE_TOO_LOW-2138499c\"], \"corroborated_by\": []}, {\"mechanism\": \"HIDDEN_DEBT\", \"confidence\": \"low\", \"plain\": \"the borrower has debt it has not disclosed\", \"signals\": [\"S5-B0031-COMPETING_LIEN-53c63888\"], \"corroborated_by\": []}], \"signals\": [{\"id\": \"S2-B0031-SOURCE_MISMATCH-7fba5ec8\", \"system\": \"S2\", \"type\": \"SOURCE_MISMATCH\", \"explanation\": \"Servicer-system pull: 3 of"
+  },
+  {
+   "id": "T2",
+   "tool": "related_companies",
+   "args": {
+    "borrower_id": "B0031"
+   },
+   "result": "[{\"entity_id\": \"E000376\", \"name\": \"Harbor Motor LLC\", \"kind\": \"borrower\", \"officer\": \"Sofia Martinez\", \"address\": \"1366 Center Dr, Suite 354\", \"formed_month\": -48, \"has_operations\": true, \"same_officer\": true, \"same_address\": true, \"is_borrower\": true}, {\"entity_id\": \"E000377\", \"name\": \"Harbor Services LLC\", \"kind\": \"company\", \"officer\": \"Sofia Martinez\", \"address\": \"5773 Market Ave, Suite 355\", \"formed_month\": 8, \"has_operations\": true, \"same_officer\": true, \"same_address\": false, \"is_borrower\": false}]"
+  },
+  {
+   "id": "T3",
+   "tool": "lien_search",
+   "args": {
+    "name": "B0031"
+   },
+   "result": "[{\"filing_id\": \"UCC-000064\", \"debtor_name\": \"Harbor Motor LLC\", \"debtor_address\": \"1366 Center Dr, Suite 354\", \"secured_party_name\": \"Prairie Capital Partners LLC\", \"collateral_desc\": \"second-priority lien on all assets\", \"filed_month\": -10, \"match_score\": 100}, {\"filing_id\": \"UCC-000063\", \"debtor_name\": \"Harbor Motor LLC\", \"debtor_address\": \"1366 Center Dr, Suite 354\", \"secured_party_name\": \"Wells Fargo Bank, N.A.\", \"collateral_desc\": \"all assets, including receivables and chattel paper\", \"filed_month\": -12, \"match_score\": 100}]"
+  },
+  {
+   "id": "T4",
+   "tool": "court_search",
+   "args": {
+    "name": "B0031"
+   },
+   "result": "{\"result\": \"no records matching 'Harbor Motor LLC'\"}"
+  },
+  {
+   "id": "T5",
+   "tool": "disclosures",
+   "args": {
+    "borrower_id": "B0031"
+   },
+   "result": "[{\"kind\": \"debt\", \"counterparty_entity_id\": \"E000002\", \"counterparty\": \"Prairie Capital Partners LLC\", \"note\": \"disclosed subordinated facility\"}]"
+  }
+ ],
+ "errors": [],
+ "generated_at": "2026-09-14",
+ "status": "ok",
+ "model": "Qwen/Qwen3-8B",
+ "memo": [
+  {
+   "text": "The borrower has a disclosed subordinated facility with Prairie Capital Partners LLC",
+   "cites": [
+    "T5"
+   ]
+  },
+  {
+   "text": "The borrower's related company, Harbor Services LLC, shares an officer with the borrower but has a different address",
+   "cites": [
+    "S6-B0031-RELATED_ENTITY-744cc9e3"
+   ]
+  },
+  {
+   "text": "The borrower's servicer system shows discrepancies in loan statuses, with some loans being 60+ days late or no longer active",
+   "cites": [
+    "S2-B0031-SOURCE_MISMATCH-7fba5ec8"
+   ]
+  },
+  {
+   "text": "The borrower is not enrolled in Setpoint PledgeCheck, making collateral verification at other lenders uncertain",
+   "cites": [
+    "S1-B0031-PLEDGECHECK_ABSENT-21612261"
+   ]
+  }
+ ],
+ "dropped": [
+  {
+   "text": "A lien from Prairie Capital Partners LLC on Harbor Motor LLC was not disclosed by the borrower [S5-B0031-COMPETING_LIEN-53c63888].",
+   "reason": "says 'prairie capital partners' was not disclosed, but the disclosures list it"
+  },
+  {
+   "text": "The borrower disclosed a debt to Prairie Capital Partners LLC, but the lien was not mentioned [S5-B0031-COMPETING_LIEN-53c63888].",
+   "reason": "says 'prairie capital partners' was not disclosed, but the disclosures list it"
+  },
+  {
+   "text": "Ask the borrower: Why was the lien from Prairie Capital Partners LLC not disclosed despite being filed before onboarding?",
+   "reason": "says 'prairie capital partners' was not disclosed, but the disclosures list it"
+  }
+ ],
+ "rounds": 2,
+ "tokens": 4445,
+ "seconds": 55.1,
+ "checks_reapplied": "2026-09-16"
+}

@@ -1,0 +1,88 @@
+{
+ "borrower_id": "B0088",
+ "verdict_by_rules": "LIKELY_FRAUD",
+ "steps": [
+  {
+   "id": "T1",
+   "tool": "case_evidence",
+   "args": {
+    "borrower_id": "B0088"
+   },
+   "result": "{\"verdict_by_rules\": \"LIKELY_FRAUD\", \"headline\": \"Likely: the borrower has debt it has not disclosed\", \"findings\": [{\"mechanism\": \"HIDDEN_DEBT\", \"confidence\": \"medium\", \"plain\": \"the borrower has debt it has not disclosed\", \"signals\": [\"S5-B0088-COMPETING_LIEN-dd310934\", \"S7-B0088-DEBT_GAP-d9b088f2\"], \"corroborated_by\": []}], \"signals\": [{\"id\": \"S5-B0088-COMPETING_LIEN-dd310934\", \"system\": \"S5\", \"type\": \"COMPETING_LIEN\", \"explanation\": \"'Redwood Specialty Finance LP' holds a lien on the borrower ('Harbor Realty LP': all accounts receivable) that the borrower never disclosed\", \"evidence\": [\"ucc:NJ-UCC-000174\", \"disclosures:B0088#debt\"], \"month\": 8}, {\"id\": \"S7-B0088-DEBT_GAP-d9b088f2\", \"syste"
+  },
+  {
+   "id": "T2",
+   "tool": "related_companies",
+   "args": {
+    "borrower_id": "B0088"
+   },
+   "result": "[{\"entity_id\": \"E000489\", \"name\": \"Harbor Realty LP\", \"kind\": \"borrower\", \"officer\": \"Mei Chen\", \"address\": \"8734 Elm St, Suite 427\", \"formed_month\": -67, \"has_operations\": true, \"same_officer\": true, \"same_address\": true, \"is_borrower\": true}, {\"entity_id\": \"E000490\", \"name\": \"Harbor Holdings Group LLC\", \"kind\": \"holding\", \"officer\": \"Mei Chen\", \"address\": \"8734 Elm St, Suite 427\", \"formed_month\": -200, \"has_operations\": true, \"same_officer\": true, \"same_address\": true, \"is_borrower\": false}]"
+  },
+  {
+   "id": "T3",
+   "tool": "lien_search",
+   "args": {
+    "name": "B0088"
+   },
+   "result": "[{\"filing_id\": \"UCC-000173\", \"debtor_name\": \"Harbor Realty LP\", \"debtor_address\": \"8734 Elm St, Suite 427\", \"secured_party_name\": \"Harbor Capital Partners LP\", \"collateral_desc\": \"second-priority lien on all assets\", \"filed_month\": -10, \"match_score\": 100}, {\"filing_id\": \"UCC-000172\", \"debtor_name\": \"Harbor Realty LP\", \"debtor_address\": \"8734 Elm St, Suite 427\", \"secured_party_name\": \"Wells Fargo Bank, N.A.\", \"collateral_desc\": \"all assets, including receivables and chattel paper\", \"filed_month\": -12, \"match_score\": 100}, {\"filing_id\": \"UCC-000174\", \"debtor_name\": \"Harbor Realty LP\", \"debtor_address\": \"8734 Elm St, Suite 427\", \"secured_party_name\": \"Redwood Specialty Finance LP\", \"collateral"
+  },
+  {
+   "id": "T4",
+   "tool": "court_search",
+   "args": {
+    "name": "B0088"
+   },
+   "result": "{\"result\": \"no records matching 'Harbor Realty LP'\"}"
+  },
+  {
+   "id": "T5",
+   "tool": "disclosures",
+   "args": {
+    "borrower_id": "B0088"
+   },
+   "result": "[{\"kind\": \"debt\", \"counterparty_entity_id\": \"E000012\", \"counterparty\": \"Harbor Capital Partners LP\", \"note\": \"disclosed subordinated facility\"}, {\"kind\": \"related_party\", \"counterparty_entity_id\": \"E000490\", \"counterparty\": \"Harbor Holdings Group LLC\", \"note\": \"parent holding company\"}]"
+  }
+ ],
+ "errors": [],
+ "generated_at": "2026-09-14",
+ "status": "ok",
+ "model": "Qwen/Qwen3-8B",
+ "memo": [
+  {
+   "text": "The borrower has a lien from Redwood Specialty Finance LP on all accounts receivable, which was not disclosed",
+   "cites": [
+    "S5-B0088-COMPETING_LIEN-dd310934"
+   ]
+  },
+  {
+   "text": "Related companies include Harbor Holdings Group LLC, a holding company with the same officer and address",
+   "cites": [
+    "T2"
+   ]
+  },
+  {
+   "text": "No court judgments were found against Harbor Realty LP",
+   "cites": [
+    "T4"
+   ]
+  },
+  {
+   "text": "Ask the borrower: to clarify the status of the lien from Redwood Specialty Finance LP and any other undisclosed debts",
+   "cites": []
+  }
+ ],
+ "dropped": [
+  {
+   "text": "The borrower's disclosures include a subordinated facility with Harbor Capital Partners LP but omit other secured lenders [S7-B0088-DEBT_GAP-d9b088f2].",
+   "reason": "says 'harbor capital partners' was not disclosed, but the disclosures list it"
+  },
+  {
+   "text": "The borrower's disclosed debts do not include the lien from Redwood Specialty Finance LP [S7-B0088-DEBT_GAP-d9b088f2].",
+   "reason": "names 'redwood specialty finance', which its sources don't mention"
+  }
+ ],
+ "rounds": 2,
+ "tokens": 3825,
+ "seconds": 40.4,
+ "checks_reapplied": "2026-09-16"
+}

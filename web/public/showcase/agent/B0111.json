@@ -1,0 +1,97 @@
+{
+ "borrower_id": "B0111",
+ "verdict_by_rules": "LIKELY_FRAUD",
+ "steps": [
+  {
+   "id": "T1",
+   "tool": "case_evidence",
+   "args": {
+    "borrower_id": "B0111"
+   },
+   "result": "{\"verdict_by_rules\": \"LIKELY_FRAUD\", \"headline\": \"Likely: bad loans are being reported as good ones\", \"findings\": [{\"mechanism\": \"TAPE_DRESSUP\", \"confidence\": \"high\", \"plain\": \"bad loans are being reported as good ones\", \"signals\": [\"S2-B0111-TARGETED_SOURCE_MISMATCH-1408ccc1\", \"S2-B0111-ATTRIBUTE_REWRITE-a147302a\", \"S1-B0111-PLEDGECHECK_COMPLETENESS_FAIL-dc756722\"], \"corroborated_by\": []}], \"signals\": [{\"id\": \"S2-B0111-TARGETED_SOURCE_MISMATCH-1408ccc1\", \"system\": \"S2\", \"type\": \"TARGETED_SOURCE_MISMATCH\", \"explanation\": \"Loans reported current but with no payment for two months were pulled from the servicer system: 4 of 4 are actually 60+ days late or no longer active\", \"evidence\": [\"source"
+  },
+  {
+   "id": "T2",
+   "tool": "related_companies",
+   "args": {
+    "borrower_id": "B0111"
+   },
+   "result": "[{\"entity_id\": \"E000535\", \"name\": \"Juniper Credit Inc\", \"kind\": \"borrower\", \"officer\": \"Wei Moore\", \"address\": \"5537 Market Ave, Suite 458\", \"formed_month\": -140, \"has_operations\": true, \"same_officer\": true, \"same_address\": true, \"is_borrower\": true}, {\"entity_id\": \"E000536\", \"name\": \"Juniper Holdings Group LLC\", \"kind\": \"holding\", \"officer\": \"Wei Moore\", \"address\": \"5537 Market Ave, Suite 458\", \"formed_month\": -200, \"has_operations\": true, \"same_officer\": true, \"same_address\": true, \"is_borrower\": false}, {\"entity_id\": \"E000604\", \"name\": \"Juniper Auto Sales Inc\", \"kind\": \"company\", \"officer\": \"Wei Moore\", \"address\": \"3426 Main St, Suite 517\", \"formed_month\": -59, \"has_operations\": true, \"s"
+  },
+  {
+   "id": "T3",
+   "tool": "lien_search",
+   "args": {
+    "name": "B0111"
+   },
+   "result": "[{\"filing_id\": \"UCC-000218\", \"debtor_name\": \"Juniper Credit Inc\", \"debtor_address\": \"5537 Market Ave, Suite 458\", \"secured_party_name\": \"Wells Fargo Bank, N.A.\", \"collateral_desc\": \"all assets, including receivables and chattel paper\", \"filed_month\": -12, \"match_score\": 100}]"
+  },
+  {
+   "id": "T4",
+   "tool": "court_search",
+   "args": {
+    "name": "B0111"
+   },
+   "result": "{\"result\": \"no records matching 'Juniper Credit Inc'\"}"
+  },
+  {
+   "id": "T5",
+   "tool": "disclosures",
+   "args": {
+    "borrower_id": "B0111"
+   },
+   "result": "[{\"kind\": \"related_party\", \"counterparty_entity_id\": \"E000536\", \"counterparty\": \"Juniper Holdings Group LLC\", \"note\": \"parent holding company\"}, {\"kind\": \"related_party\", \"counterparty_entity_id\": \"E000604\", \"counterparty\": \"Juniper Auto Sales Inc\", \"note\": \"subsidiary (listed in 10-K Exhibit 21)\"}]"
+  }
+ ],
+ "errors": [],
+ "generated_at": "2026-09-14",
+ "status": "ok",
+ "model": "Qwen/Qwen3-8B",
+ "memo": [
+  {
+   "text": "The borrower, B0111, has a verdict of LIKELY_FRAUD due to bad loans being reported as good ones",
+   "cites": [
+    "T1"
+   ]
+  },
+  {
+   "text": "Related companies include Juniper Credit Inc, Juniper Holdings Group LLC, and Juniper Auto Sales Inc, all linked through the same officer and address",
+   "cites": [
+    "T2"
+   ]
+  },
+  {
+   "text": "Juniper Credit Inc has a UCC lien filed by Wells Fargo Bank, N.A., securing all assets including receivables",
+   "cites": [
+    "T3"
+   ]
+  },
+  {
+   "text": "No court records were found for Juniper Credit Inc",
+   "cites": [
+    "T4"
+   ]
+  },
+  {
+   "text": "The borrower disclosed related parties, including Juniper Holdings Group LLC as a parent holding company and Juniper Auto Sales Inc as a subsidiary",
+   "cites": [
+    "T5"
+   ]
+  },
+  {
+   "text": "Could not confirm if the borrower's disclosed affiliates have any claims or liabilities that might affect the loan",
+   "cites": [
+    "T5"
+   ]
+  },
+  {
+   "text": "Ask the borrower: to clarify the relationship between the disclosed affiliates and the loan portfolio",
+   "cites": []
+  }
+ ],
+ "dropped": [],
+ "rounds": 2,
+ "tokens": 3971,
+ "seconds": 41.7,
+ "checks_reapplied": "2026-09-16"
+}

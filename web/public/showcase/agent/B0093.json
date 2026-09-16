@@ -1,0 +1,96 @@
+{
+ "borrower_id": "B0093",
+ "verdict_by_rules": "LIKELY_FRAUD",
+ "steps": [
+  {
+   "id": "T1",
+   "tool": "case_evidence",
+   "args": {
+    "borrower_id": "B0093"
+   },
+   "result": "{\"verdict_by_rules\": \"LIKELY_FRAUD\", \"headline\": \"Likely: bad loans are being reported as good ones\", \"findings\": [{\"mechanism\": \"TAPE_DRESSUP\", \"confidence\": \"high\", \"plain\": \"bad loans are being reported as good ones\", \"signals\": [\"S2-B0093-TARGETED_SOURCE_MISMATCH-b327067c\", \"S2-B0093-SOURCE_MISMATCH-ddd1e1de\", \"S2-B0093-ROLL_RATE_TOO_LOW-3bf7bda0\"], \"corroborated_by\": []}], \"signals\": [{\"id\": \"S2-B0093-TARGETED_SOURCE_MISMATCH-b327067c\", \"system\": \"S2\", \"type\": \"TARGETED_SOURCE_MISMATCH\", \"explanation\": \"Loans the tape shows going from 30-59 days late to current were pulled from the servicer system: 12 of 25 are actually 60+ days late or no longer active\", \"evidence\": [\"source_pull:B0093"
+  },
+  {
+   "id": "T2",
+   "tool": "related_companies",
+   "args": {
+    "borrower_id": "B0093"
+   },
+   "result": "[{\"entity_id\": \"E000500\", \"name\": \"Redwood Credit Inc\", \"kind\": \"borrower\", \"officer\": \"Robert Lee\", \"address\": \"8351 Park Ave, Suite 434\", \"formed_month\": -135, \"has_operations\": true, \"same_officer\": true, \"same_address\": true, \"is_borrower\": true}, {\"entity_id\": \"E000501\", \"name\": \"Redwood Holdings Group LLC\", \"kind\": \"holding\", \"officer\": \"Robert Lee\", \"address\": \"8351 Park Ave, Suite 434\", \"formed_month\": -200, \"has_operations\": true, \"same_officer\": true, \"same_address\": true, \"is_borrower\": false}]"
+  },
+  {
+   "id": "T3",
+   "tool": "lien_search",
+   "args": {
+    "name": "B0093"
+   },
+   "result": "[{\"filing_id\": \"UCC-000183\", \"debtor_name\": \"Redwood Credit Inc\", \"debtor_address\": \"8351 Park Ave, Suite 434\", \"secured_party_name\": \"Harbor Credit Fund LP\", \"collateral_desc\": \"second-priority lien on all assets\", \"filed_month\": -10, \"match_score\": 100}, {\"filing_id\": \"UCC-000182\", \"debtor_name\": \"Redwood Credit Inc\", \"debtor_address\": \"8351 Park Ave, Suite 434\", \"secured_party_name\": \"Wells Fargo Bank, N.A.\", \"collateral_desc\": \"all assets, including receivables and chattel paper\", \"filed_month\": -12, \"match_score\": 100}]"
+  },
+  {
+   "id": "T4",
+   "tool": "court_search",
+   "args": {
+    "name": "B0093"
+   },
+   "result": "{\"result\": \"no records matching 'Redwood Credit Inc'\"}"
+  },
+  {
+   "id": "T5",
+   "tool": "disclosures",
+   "args": {
+    "borrower_id": "B0093"
+   },
+   "result": "[{\"kind\": \"debt\", \"counterparty_entity_id\": \"E000004\", \"counterparty\": \"Harbor Credit Fund LP\", \"note\": \"disclosed subordinated facility\"}, {\"kind\": \"related_party\", \"counterparty_entity_id\": \"E000501\", \"counterparty\": \"Redwood Holdings Group LLC\", \"note\": \"parent holding company\"}]"
+  }
+ ],
+ "errors": [],
+ "generated_at": "2026-09-14",
+ "status": "ok",
+ "model": "Qwen/Qwen3-8B",
+ "memo": [
+  {
+   "text": "The borrower's case shows a LIKELY_FRAUD verdict with signals indicating bad loans are reported as good ones",
+   "cites": [
+    "T1"
+   ]
+  },
+  {
+   "text": "Related companies include Redwood Credit Inc and Redwood Holdings Group LLC, both with Robert Lee as officer and same address",
+   "cites": [
+    "T2"
+   ]
+  },
+  {
+   "text": "Redwood Credit Inc has two UCC liens: one from Harbor Credit Fund LP and another from Wells Fargo Bank, N.A",
+   "cites": [
+    "T3"
+   ]
+  },
+  {
+   "text": "No court records were found for Redwood Credit Inc",
+   "cites": [
+    "T4"
+   ]
+  },
+  {
+   "text": "The borrower disclosed a subordinated facility with Harbor Credit Fund LP and a parent holding company, Redwood Holdings Group LLC",
+   "cites": [
+    "T5"
+   ]
+  },
+  {
+   "text": "Ask the borrower: to clarify the relationship between the disclosed entities and the loan portfolio",
+   "cites": []
+  }
+ ],
+ "dropped": [
+  {
+   "text": "Could not confirm if the liens or court records are linked to the fraud signals.",
+   "reason": "cites no source"
+  }
+ ],
+ "rounds": 2,
+ "tokens": 3987,
+ "seconds": 39.9,
+ "checks_reapplied": "2026-09-16"
+}

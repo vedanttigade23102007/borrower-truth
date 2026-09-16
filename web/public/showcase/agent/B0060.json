@@ -1,0 +1,99 @@
+{
+ "borrower_id": "B0060",
+ "verdict_by_rules": "LIKELY_FRAUD",
+ "steps": [
+  {
+   "id": "T1",
+   "tool": "case_evidence",
+   "args": {
+    "borrower_id": "B0060"
+   },
+   "result": "{\"verdict_by_rules\": \"LIKELY_FRAUD\", \"headline\": \"Likely: the same collateral is pledged to more than one lender\", \"findings\": [{\"mechanism\": \"DOUBLE_PLEDGE\", \"confidence\": \"high\", \"plain\": \"the same collateral is pledged to more than one lender\", \"signals\": [\"S1-B0060-POOL_LOANS_PAID_ELSEWHERE-7d34b1b9\", \"S1-B0060-PUBLIC_POOL_OVERLAP-0355b0d1\"], \"corroborated_by\": []}, {\"mechanism\": \"FIN_MANIPULATION\", \"confidence\": \"low\", \"plain\": \"the reported financial statements don't fit the evidence\", \"signals\": [\"S7-B0060-CASH_REVENUE_GAP-4692ca67\"], \"corroborated_by\": []}, {\"mechanism\": \"TAPE_DRESSUP\", \"confidence\": \"low\", \"plain\": \"bad loans are being reported as good ones\", \"signals\": [\"S2-B0060-C"
+  },
+  {
+   "id": "T2",
+   "tool": "related_companies",
+   "args": {
+    "borrower_id": "B0060"
+   },
+   "result": "[{\"entity_id\": \"E000433\", \"name\": \"Tidewater Industries LP\", \"kind\": \"borrower\", \"officer\": \"David Smith\", \"address\": \"7167 Main St, Suite 391\", \"formed_month\": -97, \"has_operations\": true, \"same_officer\": true, \"same_address\": true, \"is_borrower\": true}, {\"entity_id\": \"E000434\", \"name\": \"Tidewater Holdings Group LLC\", \"kind\": \"holding\", \"officer\": \"David Smith\", \"address\": \"7167 Main St, Suite 391\", \"formed_month\": -200, \"has_operations\": true, \"same_officer\": true, \"same_address\": true, \"is_borrower\": false}, {\"entity_id\": \"E000435\", \"name\": \"Tidewater Logistics LLC\", \"kind\": \"company\", \"officer\": \"David Smith\", \"address\": \"608 Oak Blvd, Suite 392\", \"formed_month\": 19, \"has_operations\": tr"
+  },
+  {
+   "id": "T3",
+   "tool": "lien_search",
+   "args": {
+    "name": "B0060"
+   },
+   "result": "[{\"filing_id\": \"UCC-000113\", \"debtor_name\": \"Tidewater Industries LP\", \"debtor_address\": \"7167 Main St, Suite 391\", \"secured_party_name\": \"Prairie Capital Partners LP\", \"collateral_desc\": \"second-priority lien on all assets\", \"filed_month\": -10, \"match_score\": 100}, {\"filing_id\": \"UCC-000112\", \"debtor_name\": \"Tidewater Industries LP\", \"debtor_address\": \"7167 Main St, Suite 391\", \"secured_party_name\": \"Wells Fargo Bank, N.A.\", \"collateral_desc\": \"all assets, including receivables and chattel paper\", \"filed_month\": -12, \"match_score\": 100}]"
+  },
+  {
+   "id": "T4",
+   "tool": "court_search",
+   "args": {
+    "name": "B0060"
+   },
+   "result": "{\"result\": \"no records matching 'Tidewater Industries LP'\"}"
+  },
+  {
+   "id": "T5",
+   "tool": "disclosures",
+   "args": {
+    "borrower_id": "B0060"
+   },
+   "result": "[{\"kind\": \"debt\", \"counterparty_entity_id\": \"E000008\", \"counterparty\": \"Prairie Capital Partners LP\", \"note\": \"disclosed subordinated facility\"}, {\"kind\": \"deferment_program\", \"counterparty_entity_id\": null, \"counterparty\": null, \"note\": \"disclosed 3-month hardship deferment, months 8-10\"}, {\"kind\": \"related_party\", \"counterparty_entity_id\": \"E000434\", \"counterparty\": \"Tidewater Holdings Group LLC\", \"note\": \"parent holding company\"}]"
+  }
+ ],
+ "errors": [],
+ "generated_at": "2026-09-14",
+ "status": "ok",
+ "model": "Qwen/Qwen3-8B",
+ "memo": [
+  {
+   "text": "The borrower's collateral is pledged to multiple lenders, including Prairie Capital Partners LP and Wells Fargo Bank, N.A., as shown by UCC filings",
+   "cites": [
+    "T3"
+   ]
+  },
+  {
+   "text": "A related company, Tidewater Logistics LLC, shares the same officer as the borrower but has a different address",
+   "cites": [
+    "T2"
+   ]
+  },
+  {
+   "text": "The borrower disclosed a subordinated facility with Prairie Capital Partners LP and a parent holding company, Tidewater Holdings Group LLC",
+   "cites": [
+    "T5"
+   ]
+  },
+  {
+   "text": "The borrower's financials show a 24% gap between reported revenue and verified customer cash",
+   "cites": [
+    "T1"
+   ]
+  },
+  {
+   "text": "The SEC data for the borrower's public securitization (SYN-ABS-B0060) matches 20 loans pledged to Wells Fargo, raising concerns about collateral overlap",
+   "cites": [
+    "T1"
+   ]
+  },
+  {
+   "text": "The borrower is not enrolled in Setpoint PledgeCheck, making it impossible to verify if collateral is pledged elsewhere",
+   "cites": [
+    "T1"
+   ]
+  },
+  {
+   "text": "Ask the borrower: to provide VINs and titles for the collateral to resolve the public pool overlap",
+   "cites": [
+    "T1"
+   ]
+  }
+ ],
+ "dropped": [],
+ "rounds": 2,
+ "tokens": 4587,
+ "seconds": 49.8,
+ "checks_reapplied": "2026-09-16"
+}

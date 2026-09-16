@@ -1,0 +1,96 @@
+{
+ "borrower_id": "B0043",
+ "verdict_by_rules": "LIKELY_FRAUD",
+ "steps": [
+  {
+   "id": "T1",
+   "tool": "case_evidence",
+   "args": {
+    "borrower_id": "B0043"
+   },
+   "result": "{\"verdict_by_rules\": \"LIKELY_FRAUD\", \"headline\": \"Likely: money from lenders or linked companies is arriving dressed up as customer payments\", \"findings\": [{\"mechanism\": \"DISGUISED_RECEIPTS\", \"confidence\": \"high\", \"plain\": \"money from lenders or linked companies is arriving dressed up as customer payments\", \"signals\": [\"S3-B0043-RELATED_PARTY_INFLOW-3e48aa82\"], \"corroborated_by\": [\"S5-B0043-COMPETING_LIEN-6ff168f5\", \"S6-B0043-SHELL_INDICATORS-86cd4718\", \"S6-B0043-RELATED_ENTITY-2ef47058\"]}, {\"mechanism\": \"FAKE_INVOICES\", \"confidence\": \"high\", \"plain\": \"invoices are fake, inflated or altered\", \"signals\": [\"S4-B0043-ALTERED_INVOICE-b3b04ec8\", \"S7-B0043-RECEIVABLES_OUTPACE_REVENUE-da22ac59\", \"S"
+  },
+  {
+   "id": "T2",
+   "tool": "related_companies",
+   "args": {
+    "borrower_id": "B0043"
+   },
+   "result": "[{\"entity_id\": \"E000404\", \"name\": \"Sterling Capital Group LLC\", \"kind\": \"borrower\", \"officer\": \"Priya Lee\", \"address\": \"1184 Park Ave, Suite 370\", \"formed_month\": -103, \"has_operations\": true, \"same_officer\": true, \"same_address\": true, \"is_borrower\": true}, {\"entity_id\": \"E000405\", \"name\": \"Sterling Customer Collections LLC\", \"kind\": \"company\", \"officer\": \"Priya Lee\", \"address\": \"1184 Park Ave, Suite 370\", \"formed_month\": 8, \"has_operations\": false, \"same_officer\": true, \"same_address\": true, \"is_borrower\": false}, {\"entity_id\": \"E000406\", \"name\": \"Sterling Trade Services LLC\", \"kind\": \"company\", \"officer\": \"Priya Lee\", \"address\": \"1655 Center Dr, Suite 371\", \"formed_month\": 9, \"has_operati"
+  },
+  {
+   "id": "T3",
+   "tool": "lien_search",
+   "args": {
+    "name": "B0043"
+   },
+   "result": "[{\"filing_id\": \"UCC-000083\", \"debtor_name\": \"Sterling Capital Group LLC\", \"debtor_address\": \"1184 Park Ave, Suite 370\", \"secured_party_name\": \"Harbor Credit Fund LP\", \"collateral_desc\": \"second-priority lien on all assets\", \"filed_month\": -10, \"match_score\": 100}, {\"filing_id\": \"UCC-000082\", \"debtor_name\": \"Sterling Capital Group LLC\", \"debtor_address\": \"1184 Park Ave, Suite 370\", \"secured_party_name\": \"Wells Fargo Bank, N.A.\", \"collateral_desc\": \"all assets, including receivables and chattel paper\", \"filed_month\": -12, \"match_score\": 100}]"
+  },
+  {
+   "id": "T4",
+   "tool": "court_search",
+   "args": {
+    "name": "B0043"
+   },
+   "result": "{\"result\": \"no records matching 'Sterling Capital Group LLC'\"}"
+  },
+  {
+   "id": "T5",
+   "tool": "disclosures",
+   "args": {
+    "borrower_id": "B0043"
+   },
+   "result": "[{\"kind\": \"debt\", \"counterparty_entity_id\": \"E000004\", \"counterparty\": \"Harbor Credit Fund LP\", \"note\": \"disclosed subordinated facility\"}]"
+  }
+ ],
+ "errors": [],
+ "generated_at": "2026-09-14",
+ "status": "ok",
+ "model": "Qwen/Qwen3-8B",
+ "memo": [
+  {
+   "text": "Related companies like Sterling Customer Collections LLC, linked to the borrower, show signs of being shell entities",
+   "cites": [
+    "S6-B0043-SHELL_INDICATORS-86cd4718"
+   ]
+  },
+  {
+   "text": "The borrower received $13,740,260 from Sterling Customer Collections LLC, an undisclosed company, disguised as customer payments",
+   "cites": [
+    "S3-B0043-RELATED_PARTY_INFLOW-3e48aa82"
+   ]
+  },
+  {
+   "text": "Invoices show discrepancies, with some amounts up to 24.8x the original, suggesting possible fraud",
+   "cites": [
+    "S4-B0043-ALTERED_INVOICE-b3b04ec8"
+   ]
+  },
+  {
+   "text": "Receivables are 17.1x their usual size relative to revenue, indicating potential financial manipulation",
+   "cites": [
+    "S7-B0043-RECEIVABLES_OUTPACE_REVENUE-da22ac59"
+   ]
+  },
+  {
+   "text": "Ask the borrower: to clarify the relationship with Sterling Customer Collections LLC and the source of the $13,740,260 inflow",
+   "cites": [
+    "S3-B0043-RELATED_PARTY_INFLOW-3e48aa82"
+   ]
+  }
+ ],
+ "dropped": [
+  {
+   "text": "The borrower has undisclosed debt to Harbor Credit Fund LP, which holds a lien on its related company [S5-B0043-COMPETING_LIEN-6ff168f5].",
+   "reason": "says 'harbor credit fund' was not disclosed, but the disclosures list it"
+  },
+  {
+   "text": "The borrower did not disclose a competing lien held by Harbor Credit Fund LP [S5-B0043-COMPETING_LIEN-6ff168f5].",
+   "reason": "says 'harbor credit fund' was not disclosed, but the disclosures list it"
+  }
+ ],
+ "rounds": 2,
+ "tokens": 5183,
+ "seconds": 71.4,
+ "checks_reapplied": "2026-09-16"
+}

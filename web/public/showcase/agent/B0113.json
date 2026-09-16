@@ -1,0 +1,96 @@
+{
+ "borrower_id": "B0113",
+ "verdict_by_rules": "LIKELY_FRAUD",
+ "steps": [
+  {
+   "id": "T1",
+   "tool": "case_evidence",
+   "args": {
+    "borrower_id": "B0113"
+   },
+   "result": "{\"verdict_by_rules\": \"LIKELY_FRAUD\", \"headline\": \"Likely: money from lenders or linked companies is arriving dressed up as customer payments\", \"findings\": [{\"mechanism\": \"DISGUISED_RECEIPTS\", \"confidence\": \"high\", \"plain\": \"money from lenders or linked companies is arriving dressed up as customer payments\", \"signals\": [\"S3-B0113-RELATED_PARTY_INFLOW-a3708403\"], \"corroborated_by\": [\"S6-B0113-SHELL_INDICATORS-568b98ea\", \"S6-B0113-RELATED_ENTITY-529a9fcd\"]}, {\"mechanism\": \"RELATED_SHELLS\", \"confidence\": \"medium\", \"plain\": \"the borrower is connected to undisclosed shell companies\", \"signals\": [\"S6-B0113-SHELL_INDICATORS-568b98ea\", \"S6-B0113-SHELL_INDICATORS-40311109\", \"S6-B0113-RELATED_ENTITY-52"
+  },
+  {
+   "id": "T2",
+   "tool": "related_companies",
+   "args": {
+    "borrower_id": "B0113"
+   },
+   "result": "[{\"entity_id\": \"E000538\", \"name\": \"Apex Partners Group LLC\", \"kind\": \"borrower\", \"officer\": \"Wei Wilson\", \"address\": \"8340 Industrial Pkwy, Suite 460\", \"formed_month\": -110, \"has_operations\": true, \"same_officer\": true, \"same_address\": true, \"is_borrower\": true}, {\"entity_id\": \"E000541\", \"name\": \"Apex Trade Services III LLC\", \"kind\": \"company\", \"officer\": \"Wei Wilson\", \"address\": \"8340 Industrial Pkwy, Suite 460\", \"formed_month\": 7, \"has_operations\": false, \"same_officer\": true, \"same_address\": true, \"is_borrower\": false}, {\"entity_id\": \"E000540\", \"name\": \"Apex Inventory Holdings II LLC\", \"kind\": \"company\", \"officer\": \"Wei Wilson\", \"address\": \"7298 Market Ave, Suite 461\", \"formed_month\": 9, "
+  },
+  {
+   "id": "T3",
+   "tool": "lien_search",
+   "args": {
+    "name": "B0113"
+   },
+   "result": "[{\"filing_id\": \"UCC-000223\", \"debtor_name\": \"Apex Partners Group LLC\", \"debtor_address\": \"8340 Industrial Pkwy, Suite 460\", \"secured_party_name\": \"Redwood Specialty Finance LP\", \"collateral_desc\": \"second-priority lien on all assets\", \"filed_month\": -10, \"match_score\": 100}, {\"filing_id\": \"UCC-000222\", \"debtor_name\": \"Apex Partners Group LLC\", \"debtor_address\": \"8340 Industrial Pkwy, Suite 460\", \"secured_party_name\": \"Wells Fargo Bank, N.A.\", \"collateral_desc\": \"all assets, including receivables and chattel paper\", \"filed_month\": -12, \"match_score\": 100}]"
+  },
+  {
+   "id": "T4",
+   "tool": "court_search",
+   "args": {
+    "name": "B0113"
+   },
+   "result": "{\"result\": \"no records matching 'Apex Partners Group LLC'\"}"
+  },
+  {
+   "id": "T5",
+   "tool": "disclosures",
+   "args": {
+    "borrower_id": "B0113"
+   },
+   "result": "[{\"kind\": \"debt\", \"counterparty_entity_id\": \"E000006\", \"counterparty\": \"Redwood Specialty Finance LP\", \"note\": \"disclosed subordinated facility\"}]"
+  }
+ ],
+ "errors": [],
+ "generated_at": "2026-09-14",
+ "status": "ok",
+ "model": "Qwen/Qwen3-8B",
+ "memo": [
+  {
+   "text": "$199,026 in payments from Apex Customer Collections LLC, linked to the borrower, were classified as customer cash",
+   "cites": [
+    "S3-B0113-RELATED_PARTY_INFLOW-a3708403"
+   ]
+  },
+  {
+   "text": "Apex Customer Collections LLC is a shell company with no operations, same address as the borrower, and no LEI",
+   "cites": [
+    "S6-B0113-SHELL_INDICATORS-568b98ea"
+   ]
+  },
+  {
+   "text": "The borrower is connected to other shell companies like Apex Trade Services III LLC, sharing officers and addresses",
+   "cites": [
+    "S6-B0113-RELATED_ENTITY-7c14460f"
+   ]
+  },
+  {
+   "text": "No court records were found for the borrower or its linked companies",
+   "cites": [
+    "T4"
+   ]
+  },
+  {
+   "text": "The borrower disclosed a subordinated facility with Redwood Specialty Finance LP",
+   "cites": [
+    "T5"
+   ]
+  },
+  {
+   "text": "Ask the borrower: to clarify the nature of payments from Apex Customer Collections LLC and confirm if any other shell companies are involved",
+   "cites": []
+  }
+ ],
+ "dropped": [
+  {
+   "text": "Could not confirm if Apex Customer Collections LLC has any outgoing payments to the borrower [T7].",
+   "reason": "cites an unknown source: T7"
+  }
+ ],
+ "rounds": 2,
+ "tokens": 4581,
+ "seconds": 51.2,
+ "checks_reapplied": "2026-09-16"
+}

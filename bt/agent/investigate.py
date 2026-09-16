@@ -329,11 +329,36 @@ def chat(model: str, messages: list[dict], tools: list[dict] | None, token: str,
         return json.loads(r.read())
 
 
+CASH_SIGNALS = ("CIRCULAR_FLOW", "NON_OBLIGOR_PAYER", "RELATED_PARTY_INFLOW", "LENDER_FUNDS_AS_RECEIPTS")
+PAYER_PREFIX = ("counterparty:", "payer:")
+
+
+def _payers(case, limit=2) -> list[str]:
+    """Who sent the money the cash checks flagged, from the signals' own evidence."""
+    names: list[str] = []
+    for s in case["signals"]:
+        if s["type"] not in CASH_SIGNALS:
+            continue
+        for e in s["evidence"]:
+            for p in PAYER_PREFIX:
+                if e.startswith(p) and e[len(p):] and e[len(p):] not in names:
+                    names.append(e[len(p):])
+    return names[:limit]
+
+
 def _loop(model, borrower_id, tools: Tools, ask):
     c = tools.cases[borrower_id]
     msgs = [{"role": "system", "content": SYSTEM},
             {"role": "user", "content": f"Investigate borrower {borrower_id}. The rules' verdict is {c['verdict']}: "
                                         f"{c['headline']}."}]
+    # Money that comes back from the same company, or a payer who is no customer, is answered by the operating
+    # account. Asking the model to check that was not enough (it never called the tool), so the harness calls it
+    # and hands over the result. The call is recorded like any other, so a memo line can cite it.
+    for name in _payers(c):
+        tid, out = tools.run("outgoing_payments", dict(borrower_id=borrower_id, payee_name=name))
+        msgs.append({"role": "user", "content": f"Already looked up for you (call {tid}): money the borrower SENT to "
+                                                f"'{name}' from its own operating account -> "
+                                                f"{json.dumps(out, default=str)[:1000]}"})
     used, t0 = 0, time.perf_counter()
     for rnd in range(MAX_ROUNDS):
         last = rnd == MAX_ROUNDS - 1

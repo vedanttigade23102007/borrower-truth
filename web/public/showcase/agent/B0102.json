@@ -1,0 +1,100 @@
+{
+ "borrower_id": "B0102",
+ "verdict_by_rules": "LIKELY_FRAUD",
+ "steps": [
+  {
+   "id": "T1",
+   "tool": "case_evidence",
+   "args": {
+    "borrower_id": "B0102"
+   },
+   "result": "{\"verdict_by_rules\": \"LIKELY_FRAUD\", \"headline\": \"Likely: money from lenders or linked companies is arriving dressed up as customer payments\", \"findings\": [{\"mechanism\": \"DISGUISED_RECEIPTS\", \"confidence\": \"high\", \"plain\": \"money from lenders or linked companies is arriving dressed up as customer payments\", \"signals\": [\"S3-B0102-CIRCULAR_FLOW-46db702d\", \"S3-B0102-NON_OBLIGOR_PAYER-59865833\"], \"corroborated_by\": []}], \"signals\": [{\"id\": \"S3-B0102-CIRCULAR_FLOW-46db702d\", \"system\": \"S3\", \"type\": \"CIRCULAR_FLOW\", \"explanation\": \"26 times, money sent to 'Northstar Wholesale LLC' came back from 'Northstar Wholesale LLC' within 35 days as a 'customer' payment of almost the same amount that settles"
+  },
+  {
+   "id": "T2",
+   "tool": "related_companies",
+   "args": {
+    "borrower_id": "B0102"
+   },
+   "result": "[{\"entity_id\": \"E000517\", \"name\": \"Meridian Motor Group LLC\", \"kind\": \"borrower\", \"officer\": \"Maria Johnson\", \"address\": \"944 Commerce St, Suite 444\", \"formed_month\": -118, \"has_operations\": true, \"same_officer\": true, \"same_address\": true, \"is_borrower\": true}, {\"entity_id\": \"E000518\", \"name\": \"Meridian Holdings Group LLC\", \"kind\": \"holding\", \"officer\": \"Maria Johnson\", \"address\": \"944 Commerce St, Suite 444\", \"formed_month\": -200, \"has_operations\": true, \"same_officer\": true, \"same_address\": true, \"is_borrower\": false}]"
+  },
+  {
+   "id": "T3",
+   "tool": "lien_search",
+   "args": {
+    "name": "B0102"
+   },
+   "result": "[{\"filing_id\": \"UCC-000201\", \"debtor_name\": \"Meridian Motor Group LLC\", \"debtor_address\": \"944 Commerce St, Suite 444\", \"secured_party_name\": \"Wells Fargo Bank, N.A.\", \"collateral_desc\": \"all assets, including receivables and chattel paper\", \"filed_month\": -12, \"match_score\": 100}]"
+  },
+  {
+   "id": "T4",
+   "tool": "court_search",
+   "args": {
+    "name": "B0102"
+   },
+   "result": "{\"result\": \"no records matching 'Meridian Motor Group LLC'\"}"
+  },
+  {
+   "id": "T5",
+   "tool": "disclosures",
+   "args": {
+    "borrower_id": "B0102"
+   },
+   "result": "[{\"kind\": \"related_party\", \"counterparty_entity_id\": \"E000518\", \"counterparty\": \"Meridian Holdings Group LLC\", \"note\": \"parent holding company\"}]"
+  }
+ ],
+ "errors": [],
+ "generated_at": "2026-09-14",
+ "status": "ok",
+ "model": "Qwen/Qwen3-8B",
+ "memo": [
+  {
+   "text": "The borrower, B0102, has signals indicating money from non-obligor entities like Northstar Wholesale LLC is disguised as customer payments",
+   "cites": [
+    "S3-B0102-CIRCULAR_FLOW-46db702d",
+    "S3-B0102-NON_OBLIGOR_PAYER-59865833"
+   ]
+  },
+  {
+   "text": "Related companies include Meridian Motor Group LLC and Meridian Holdings Group LLC, both sharing officers and addresses with the borrower",
+   "cites": [
+    "T2"
+   ]
+  },
+  {
+   "text": "Meridian Motor Group LLC has a UCC lien with Wells Fargo Bank, N.A., securing all assets including receivables",
+   "cites": [
+    "T3"
+   ]
+  },
+  {
+   "text": "No court records were found for Meridian Motor Group LLC",
+   "cites": [
+    "T4"
+   ]
+  },
+  {
+   "text": "The borrower disclosed Meridian Holdings Group LLC as a parent holding company",
+   "cites": [
+    "T5"
+   ]
+  },
+  {
+   "text": "The borrower is not enrolled in Setpoint PledgeCheck, making collateral verification at other lenders uncertain",
+   "cites": [
+    "S1-B0102-PLEDGECHECK_ABSENT-2a8a6110"
+   ]
+  },
+  {
+   "text": "Ask the borrower: clarify the relationship with Northstar Wholesale LLC and the source of the $118,303 in payments",
+   "cites": [
+    "S3-B0102-NON_OBLIGOR_PAYER-59865833"
+   ]
+  }
+ ],
+ "dropped": [],
+ "rounds": 2,
+ "tokens": 3923,
+ "seconds": 51.0,
+ "checks_reapplied": "2026-09-16"
+}

@@ -1,0 +1,97 @@
+{
+ "borrower_id": "B0042",
+ "verdict_by_rules": "LIKELY_FRAUD",
+ "steps": [
+  {
+   "id": "T1",
+   "tool": "case_evidence",
+   "args": {
+    "borrower_id": "B0042"
+   },
+   "result": "{\"verdict_by_rules\": \"LIKELY_FRAUD\", \"headline\": \"Likely: bad loans are being reported as good ones\", \"findings\": [{\"mechanism\": \"TAPE_DRESSUP\", \"confidence\": \"high\", \"plain\": \"bad loans are being reported as good ones\", \"signals\": [\"S2-B0042-TARGETED_SOURCE_MISMATCH-43f2887c\", \"S2-B0042-TARGETED_SOURCE_MISMATCH-d086a301\", \"S2-B0042-ATTRIBUTE_REWRITE-498e1d4f\", \"S2-B0042-SOURCE_MISMATCH-9986e666\"], \"corroborated_by\": []}, {\"mechanism\": \"DOUBLE_PLEDGE\", \"confidence\": \"medium\", \"plain\": \"the same collateral is pledged to more than one lender\", \"signals\": [\"S5-B0042-COMPETING_LIEN-2511f217\", \"S7-B0042-DEBT_GAP-2d313b02\"], \"corroborated_by\": [\"S5-B0042-COMPETING_LIEN-804366ca\"]}, {\"mechanism\": \""
+  },
+  {
+   "id": "T2",
+   "tool": "related_companies",
+   "args": {
+    "borrower_id": "B0042"
+   },
+   "result": "[{\"entity_id\": \"E000403\", \"name\": \"Crescent Credit LP\", \"kind\": \"borrower\", \"officer\": \"Priya Johnson\", \"address\": \"8785 Industrial Pkwy, Suite 369\", \"formed_month\": -144, \"has_operations\": true, \"same_officer\": true, \"same_address\": true, \"is_borrower\": true}, {\"entity_id\": \"E000584\", \"name\": \"Harbor Recovery LLC\", \"kind\": \"company\", \"officer\": \"Priya Johnson\", \"address\": \"7147 Harbor Rd, Suite 497\", \"formed_month\": -84, \"has_operations\": true, \"same_officer\": true, \"same_address\": false, \"is_borrower\": false}]"
+  },
+  {
+   "id": "T3",
+   "tool": "lien_search",
+   "args": {
+    "name": "B0042"
+   },
+   "result": "[{\"filing_id\": \"UCC-000079\", \"debtor_name\": \"Crescent Credit LP\", \"debtor_address\": \"8785 Industrial Pkwy, Suite 369\", \"secured_party_name\": \"Wells Fargo Bank, N.A.\", \"collateral_desc\": \"all assets, including receivables and chattel paper\", \"filed_month\": -12, \"match_score\": 100}, {\"filing_id\": \"UCC-000080\", \"debtor_name\": \"Crescent Credit LP\", \"debtor_address\": \"8785 Industrial Pkwy, Suite 369\", \"secured_party_name\": \"Redwood Specialty Finance LP\", \"collateral_desc\": \"all assets of the debtor\", \"filed_month\": -37, \"match_score\": 100}, {\"filing_id\": \"UCC-000081\", \"debtor_name\": \"Crescent Credit\", \"debtor_address\": \"8785 Industrial Pkwy, Suite 369\", \"secured_party_name\": \"Prairie Capital Part"
+  },
+  {
+   "id": "T4",
+   "tool": "court_search",
+   "args": {
+    "name": "B0042"
+   },
+   "result": "{\"result\": \"no records matching 'Crescent Credit LP'\"}"
+  },
+  {
+   "id": "T5",
+   "tool": "disclosures",
+   "args": {
+    "borrower_id": "B0042"
+   },
+   "result": "[{\"kind\": \"related_party\", \"counterparty_entity_id\": \"E000584\", \"counterparty\": \"Harbor Recovery LLC\", \"note\": \"subsidiary (listed in 10-K Exhibit 21)\"}]"
+  }
+ ],
+ "errors": [],
+ "generated_at": "2026-09-14",
+ "status": "ok",
+ "model": "Qwen/Qwen3-8B",
+ "memo": [
+  {
+   "text": "The borrower has a lien from Prairie Capital Partners LLC on its collateral, which was not disclosed",
+   "cites": [
+    "S5-B0042-COMPETING_LIEN-2511f217"
+   ]
+  },
+  {
+   "text": "The borrower's related company, Harbor Recovery LLC, is a subsidiary listed in its 10-K Exhibit 21",
+   "cites": [
+    "T5"
+   ]
+  },
+  {
+   "text": "The borrower's financial statements show a revenue gap, with reported revenue not matching cash inflows",
+   "cites": [
+    "S7-B0042-CASH_REVENUE_GAP-24038f3c"
+   ]
+  },
+  {
+   "text": "The borrower's disclosures do not mention the lien from Prairie Capital Partners LLC",
+   "cites": [
+    "S5-B0042-COMPETING_LIEN-2511f217"
+   ]
+  },
+  {
+   "text": "Some loans reported as current are actually 60+ days late or no longer active",
+   "cites": [
+    "S2-B0042-TARGETED_SOURCE_MISMATCH-43f2887c"
+   ]
+  },
+  {
+   "text": "The borrower's credit scores for 7 loans were rewritten after origination to meet eligibility criteria",
+   "cites": [
+    "S2-B0042-ATTRIBUTE_REWRITE-498e1d4f"
+   ]
+  },
+  {
+   "text": "Ask the borrower: to clarify the lien from Prairie Capital Partners LLC and provide documentation for the rewritten credit scores",
+   "cites": []
+  }
+ ],
+ "dropped": [],
+ "rounds": 2,
+ "tokens": 4928,
+ "seconds": 60.3,
+ "checks_reapplied": "2026-09-16"
+}

@@ -1,0 +1,99 @@
+{
+ "borrower_id": "B0068",
+ "verdict_by_rules": "LIKELY_FRAUD",
+ "steps": [
+  {
+   "id": "T1",
+   "tool": "case_evidence",
+   "args": {
+    "borrower_id": "B0068"
+   },
+   "result": "{\"verdict_by_rules\": \"LIKELY_FRAUD\", \"headline\": \"Likely: money from lenders or linked companies is arriving dressed up as customer payments\", \"findings\": [{\"mechanism\": \"DISGUISED_RECEIPTS\", \"confidence\": \"high\", \"plain\": \"money from lenders or linked companies is arriving dressed up as customer payments\", \"signals\": [\"S3-B0068-RELATED_PARTY_INFLOW-af4ca57c\"], \"corroborated_by\": [\"S6-B0068-SHELL_INDICATORS-2f09cbb6\", \"S6-B0068-RELATED_ENTITY-42025aeb\"]}, {\"mechanism\": \"RELATED_SHELLS\", \"confidence\": \"medium\", \"plain\": \"the borrower is connected to undisclosed shell companies\", \"signals\": [\"S6-B0068-SHELL_INDICATORS-2f09cbb6\", \"S6-B0068-RELATED_ENTITY-42025aeb\"], \"corroborated_by\": [\"S3-B006"
+  },
+  {
+   "id": "T2",
+   "tool": "related_companies",
+   "args": {
+    "borrower_id": "B0068"
+   },
+   "result": "[{\"entity_id\": \"E000455\", \"name\": \"Lakeshore Realty Corp\", \"kind\": \"borrower\", \"officer\": \"Sofia Smith\", \"address\": \"5101 Harbor Rd, Suite 404\", \"formed_month\": -61, \"has_operations\": true, \"same_officer\": true, \"same_address\": true, \"is_borrower\": true}, {\"entity_id\": \"E000456\", \"name\": \"Lakeshore Holdings Group LLC\", \"kind\": \"holding\", \"officer\": \"Sofia Smith\", \"address\": \"5101 Harbor Rd, Suite 404\", \"formed_month\": -200, \"has_operations\": true, \"same_officer\": true, \"same_address\": true, \"is_borrower\": false}]"
+  },
+  {
+   "id": "T3",
+   "tool": "lien_search",
+   "args": {
+    "name": "B0068"
+   },
+   "result": "[{\"filing_id\": \"UCC-000133\", \"debtor_name\": \"Lakeshore Realty Corp\", \"debtor_address\": \"5101 Harbor Rd, Suite 404\", \"secured_party_name\": \"Wells Fargo Bank, N.A.\", \"collateral_desc\": \"all assets, including receivables and chattel paper\", \"filed_month\": -12, \"match_score\": 100}]"
+  },
+  {
+   "id": "T4",
+   "tool": "court_search",
+   "args": {
+    "name": "B0068"
+   },
+   "result": "{\"result\": \"no records matching 'Lakeshore Realty Corp'\"}"
+  },
+  {
+   "id": "T5",
+   "tool": "disclosures",
+   "args": {
+    "borrower_id": "B0068"
+   },
+   "result": "[{\"kind\": \"related_party\", \"counterparty_entity_id\": \"E000456\", \"counterparty\": \"Lakeshore Holdings Group LLC\", \"note\": \"parent holding company\"}]"
+  }
+ ],
+ "errors": [],
+ "generated_at": "2026-09-14",
+ "status": "ok",
+ "model": "Qwen/Qwen3-8B",
+ "memo": [
+  {
+   "text": "The borrower received $336,685 from Granite Trade Services Inc, an undisclosed company linked to the borrower",
+   "cites": [
+    "S3-B0068-RELATED_PARTY_INFLOW-af4ca57c"
+   ]
+  },
+  {
+   "text": "Granite Trade Services Inc appears to be a shell company with no operations and no LEI registration",
+   "cites": [
+    "S6-B0068-SHELL_INDICATORS-2f09cbb6"
+   ]
+  },
+  {
+   "text": "The borrower is connected to Lakeshore Realty Corp and Lakeshore Holdings Group LLC, which share the same officer and address",
+   "cites": [
+    "T2"
+   ]
+  },
+  {
+   "text": "Lakeshore Realty Corp has a UCC lien filed by Wells Fargo Bank, N.A",
+   "cites": [
+    "T3"
+   ]
+  },
+  {
+   "text": "The borrower disclosed Lakeshore Holdings Group LLC as a related entity",
+   "cites": [
+    "T5"
+   ]
+  },
+  {
+   "text": "Could not confirm if Granite Trade Services Inc is a legitimate business entity",
+   "cites": [
+    "S6-B0068-SHELL_INDICATORS-2f09cbb6"
+   ]
+  },
+  {
+   "text": "Ask the borrower: to clarify the relationship with Granite Trade Services Inc and provide additional documentation on the source of the $336,685 inflow",
+   "cites": [
+    "S3-B0068-RELATED_PARTY_INFLOW-af4ca57c"
+   ]
+  }
+ ],
+ "dropped": [],
+ "rounds": 2,
+ "tokens": 4011,
+ "seconds": 49.9,
+ "checks_reapplied": "2026-09-16"
+}

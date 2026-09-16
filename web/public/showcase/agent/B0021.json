@@ -1,0 +1,95 @@
+{
+ "borrower_id": "B0021",
+ "verdict_by_rules": "LIKELY_FRAUD",
+ "steps": [
+  {
+   "id": "T1",
+   "tool": "case_evidence",
+   "args": {
+    "borrower_id": "B0021"
+   },
+   "result": "{\"verdict_by_rules\": \"LIKELY_FRAUD\", \"headline\": \"Likely: money from lenders or linked companies is arriving dressed up as customer payments\", \"findings\": [{\"mechanism\": \"DISGUISED_RECEIPTS\", \"confidence\": \"high\", \"plain\": \"money from lenders or linked companies is arriving dressed up as customer payments\", \"signals\": [\"S3-B0021-RELATED_PARTY_INFLOW-2d3834a8\"], \"corroborated_by\": [\"S6-B0021-SHELL_INDICATORS-72d43ed7\", \"S6-B0021-RELATED_ENTITY-639065e7\"]}, {\"mechanism\": \"RELATED_SHELLS\", \"confidence\": \"medium\", \"plain\": \"the borrower is connected to undisclosed shell companies\", \"signals\": [\"S6-B0021-SHELL_INDICATORS-72d43ed7\", \"S6-B0021-RELATED_ENTITY-639065e7\", \"S6-B0021-RELATED_ENTITY-7dae"
+  },
+  {
+   "id": "T2",
+   "tool": "related_companies",
+   "args": {
+    "borrower_id": "B0021"
+   },
+   "result": "[{\"entity_id\": \"E000353\", \"name\": \"Canyon Funding Corp\", \"kind\": \"borrower\", \"officer\": \"James Thomas\", \"address\": \"9120 Harbor Rd, Suite 338\", \"formed_month\": -34, \"has_operations\": true, \"same_officer\": true, \"same_address\": true, \"is_borrower\": true}, {\"entity_id\": \"E000355\", \"name\": \"Canyon Receivables LLC\", \"kind\": \"company\", \"officer\": \"James Thomas\", \"address\": \"2072 Main St, Suite 339\", \"formed_month\": 6, \"has_operations\": false, \"same_officer\": true, \"same_address\": false, \"is_borrower\": false}, {\"entity_id\": \"E000354\", \"name\": \"Canyon Trade Services LLC\", \"kind\": \"company\", \"officer\": \"James Thomas\", \"address\": \"9120 Harbor Rd, Suite 338\", \"formed_month\": 7, \"has_operations\": false"
+  },
+  {
+   "id": "T3",
+   "tool": "lien_search",
+   "args": {
+    "name": "B0021"
+   },
+   "result": "[{\"filing_id\": \"UCC-000168\", \"debtor_name\": \"Canyon Funding Inc\", \"debtor_address\": \"8954 Main St, Suite 424\", \"secured_party_name\": \"Ironwood Capital Partners LP\", \"collateral_desc\": \"second-priority lien on all assets\", \"filed_month\": -10, \"match_score\": 100}, {\"filing_id\": \"UCC-000040\", \"debtor_name\": \"Canyon Funding Corp\", \"debtor_address\": \"9120 Harbor Rd, Suite 338\", \"secured_party_name\": \"Wells Fargo Bank, N.A.\", \"collateral_desc\": \"all assets, including receivables and chattel paper\", \"filed_month\": -12, \"match_score\": 100}, {\"filing_id\": \"UCC-000167\", \"debtor_name\": \"Canyon Funding Inc\", \"debtor_address\": \"8954 Main St, Suite 424\", \"secured_party_name\": \"Wells Fargo Bank, N.A.\", \"co"
+  },
+  {
+   "id": "T4",
+   "tool": "court_search",
+   "args": {
+    "name": "B0021"
+   },
+   "result": "{\"result\": \"no records matching 'Canyon Funding Corp'\"}"
+  },
+  {
+   "id": "T5",
+   "tool": "disclosures",
+   "args": {
+    "borrower_id": "B0021"
+   },
+   "result": "[{\"kind\": \"debt\", \"counterparty_entity_id\": \"E000007\", \"counterparty\": \"Silverline Specialty Finance LLC\", \"note\": \"equipment lease\"}]"
+  }
+ ],
+ "errors": [],
+ "generated_at": "2026-09-14",
+ "status": "ok",
+ "model": "Qwen/Qwen3-8B",
+ "memo": [
+  {
+   "text": "$696,156 from Canyon Trade Services LLC, linked to the borrower, arrived as customer payments",
+   "cites": [
+    "S3-B0021-RELATED_PARTY_INFLOW-2d3834a8"
+   ]
+  },
+  {
+   "text": "Canyon Trade Services LLC shares the borrower's officer and address, indicating a potential shell company",
+   "cites": [
+    "S6-B0021-RELATED_ENTITY-639065e7"
+   ]
+  },
+  {
+   "text": "The borrower has undisclosed related companies, including Canyon Receivables LLC and Canyon Trade Services II LLC",
+   "cites": [
+    "S6-B0021-RELATED_ENTITY-7dae4c1c",
+    "S6-B0021-RELATED_ENTITY-4f9e211a"
+   ]
+  },
+  {
+   "text": "The borrower is not enrolled in Setpoint PledgeCheck, making collateral verification impossible",
+   "cites": [
+    "S1-B0021-PLEDGECHECK_ABSENT-0ca33325"
+   ]
+  },
+  {
+   "text": "Ask the borrower: to clarify the source of the $696,156 and provide documentation for related companies",
+   "cites": []
+  }
+ ],
+ "dropped": [
+  {
+   "text": "The borrower has a second-priority lien on all assets from Ironwood Capital Partners LP [UCC-000168].",
+   "reason": "cites an unknown source: UCC-000168"
+  },
+  {
+   "text": "Could not confirm if the $696,156 was repaid or if Canyon Trade Services LLC has other claims [T3, T5].",
+   "reason": "states a number not in its sources: 696156"
+  }
+ ],
+ "rounds": 2,
+ "tokens": 5006,
+ "seconds": 62.9,
+ "checks_reapplied": "2026-09-16"
+}
