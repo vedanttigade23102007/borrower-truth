@@ -4,6 +4,15 @@
  "steps": [
   {
    "id": "T1",
+   "tool": "outgoing_payments",
+   "args": {
+    "borrower_id": "B0063",
+    "payee_name": "Tidewater Receivables LLC"
+   },
+   "result": "{\"result\": \"no payments to 'Tidewater Receivables LLC'\"}"
+  },
+  {
+   "id": "T2",
    "tool": "case_evidence",
    "args": {
     "borrower_id": "B0063"
@@ -11,7 +20,7 @@
    "result": "{\"verdict_by_rules\": \"LIKELY_FRAUD\", \"headline\": \"Likely: money from lenders or linked companies is arriving dressed up as customer payments\", \"findings\": [{\"mechanism\": \"DISGUISED_RECEIPTS\", \"confidence\": \"high\", \"plain\": \"money from lenders or linked companies is arriving dressed up as customer payments\", \"signals\": [\"S3-B0063-RELATED_PARTY_INFLOW-82a615e2\"], \"corroborated_by\": [\"S5-B0063-COMPETING_LIEN-5ca9b8cf\", \"S6-B0063-SHELL_INDICATORS-42301a81\", \"S6-B0063-RELATED_ENTITY-a76d7bea\"]}, {\"mechanism\": \"FAKE_INVOICES\", \"confidence\": \"high\", \"plain\": \"invoices are fake, inflated or altered\", \"signals\": [\"S4-B0063-ALTERED_INVOICE-b7180850\", \"S7-B0063-RECEIVABLES_OUTPACE_REVENUE-4ec756f5\", \"S"
   },
   {
-   "id": "T2",
+   "id": "T3",
    "tool": "related_companies",
    "args": {
     "borrower_id": "B0063"
@@ -19,7 +28,7 @@
    "result": "[{\"entity_id\": \"E000440\", \"name\": \"Tidewater Lending LLC\", \"kind\": \"borrower\", \"officer\": \"Hannah Jackson\", \"address\": \"4897 Gateway Blvd, Suite 396\", \"formed_month\": -141, \"has_operations\": true, \"same_officer\": true, \"same_address\": true, \"is_borrower\": true}, {\"entity_id\": \"E000441\", \"name\": \"Tidewater Holdings Group LLC\", \"kind\": \"holding\", \"officer\": \"Hannah Jackson\", \"address\": \"4897 Gateway Blvd, Suite 396\", \"formed_month\": -200, \"has_operations\": true, \"same_officer\": true, \"same_address\": true, \"is_borrower\": false}, {\"entity_id\": \"E000444\", \"name\": \"Tidewater Property Partners LLC\", \"kind\": \"company\", \"officer\": \"Hannah Jackson\", \"address\": \"7971 Harbor Rd, Suite 397\", \"formed_mont"
   },
   {
-   "id": "T3",
+   "id": "T4",
    "tool": "lien_search",
    "args": {
     "name": "B0063"
@@ -27,7 +36,7 @@
    "result": "[{\"filing_id\": \"UCC-000119\", \"debtor_name\": \"Tidewater Lending LLC\", \"debtor_address\": \"4897 Gateway Blvd, Suite 396\", \"secured_party_name\": \"Wells Fargo Bank, N.A.\", \"collateral_desc\": \"all assets, including receivables and chattel paper\", \"filed_month\": -12, \"match_score\": 100}, {\"filing_id\": \"UCC-000120\", \"debtor_name\": \"Tidewater Lending LLC\", \"debtor_address\": \"4897 Gateway Blvd, Suite 396\", \"secured_party_name\": \"Beacon Credit Fund LLC\", \"collateral_desc\": \"specific equipment: servers, forklifts and related leases\", \"filed_month\": 4, \"match_score\": 100}, {\"filing_id\": \"UCC-000205\", \"debtor_name\": \"Tidewater Funding LLC\", \"debtor_address\": \"7008 Commerce St, Suite 449\", \"secured_party_n"
   },
   {
-   "id": "T4",
+   "id": "T5",
    "tool": "court_search",
    "args": {
     "name": "B0063"
@@ -35,7 +44,7 @@
    "result": "{\"result\": \"no records matching 'Tidewater Lending LLC'\"}"
   },
   {
-   "id": "T5",
+   "id": "T6",
    "tool": "disclosures",
    "args": {
     "borrower_id": "B0063"
@@ -44,43 +53,51 @@
   }
  ],
  "errors": [],
- "generated_at": "2026-09-14",
+ "generated_at": "2026-09-16",
  "status": "ok",
  "model": "Qwen/Qwen3-8B",
  "memo": [
   {
-   "text": "The borrower's financial reports show discrepancies with revenue reported to Wells Fargo compared to SEC filings",
+   "text": "The borrower has undisclosed debt to 'Silverline Credit Fund LP' and related entities",
+   "cites": [
+    "S5-B0063-COMPETING_LIEN-5ca9b8cf"
+   ]
+  },
+  {
+   "text": "The borrower's reported revenue differs significantly from actual bank records, indicating possible financial manipulation",
    "cites": [
     "S7-B0063-FILED_VS_REPORTED-04493be7"
    ]
   },
   {
-   "text": "Ask the borrower: to clarify the relationship with Tidewater Receivables LLC and the source of the related party inflow",
+   "text": "The borrower's disclosures include related entities but not all shell companies or debts",
    "cites": [
-    "S3-B0063-RELATED_PARTY_INFLOW-82a615e2"
+    "S6-B0063-RELATED_ENTITY-a76d7bea"
    ]
+  },
+  {
+   "text": "The borrower's financial statements show a cash revenue gap, suggesting possible misreporting",
+   "cites": [
+    "S7-B0063-CASH_REVENUE_GAP-6d6e466f"
+   ]
+  },
+  {
+   "text": "Ask the borrower: to clarify the relationship with 'Silverline Credit Fund LP' and provide documentation for all related entities and debts",
+   "cites": []
   }
  ],
  "dropped": [
   {
-   "text": "The borrower has undisclosed debt with Beacon Credit Fund LLC, which holds a lien on Tidewater Receivables LLC [S5-B0063-COMPETING_LIEN-5ca9b8cf].",
-   "reason": "says 'beacon credit fund' was not disclosed, but the disclosures list it"
-  },
-  {
-   "text": "The borrower is connected to multiple shell companies, including Tidewater Trade Services LLC and Tidewater Property Partners LLC [S6-B0063-SHELL_INDICATORS-42301a81].",
+   "text": "The borrower is connected to shell companies like 'Tidewater Trade Services LLC' and 'Tidewater Property Partners LLC' [S6-B0063-SHELL_INDICATORS-42301a81].",
    "reason": "names 'tidewater property partners', which its sources don't mention"
   },
   {
-   "text": "The borrower has not disclosed a related party inflow from Tidewater Holdings Group LLC [S3-B0063-RELATED_PARTY_INFLOW-82a615e2].",
-   "reason": "says 'tidewater holdings group' was not disclosed, but the disclosures list it"
-  },
-  {
-   "text": "The borrower's disclosures include a parent holding company, Tidewater Holdings Group LLC, but no mention of the lien on Tidewater Receivables LLC [S5-B0063-FILED_DEBT_UNDISCLOSED-35024f9a].",
-   "reason": "says 'tidewater receivables' was disclosed, but the disclosures don't list it"
+   "text": "The borrower has not disclosed a lien on 'Tidewater Receivables LLC' by 'Silverline Credit Fund LP' [S5-B0063-FILED_DEBT_UNDISCLOSED-35024f9a].",
+   "reason": "names 'tidewater receivables', which its sources don't mention"
   }
  ],
  "rounds": 2,
- "tokens": 5378,
- "seconds": 68.5,
+ "tokens": 5481,
+ "seconds": 67.5,
  "checks_reapplied": "2026-09-16"
 }

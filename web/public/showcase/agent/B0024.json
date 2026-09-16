@@ -4,11 +4,12 @@
  "steps": [
   {
    "id": "T1",
-   "tool": "case_evidence",
+   "tool": "outgoing_payments",
    "args": {
-    "borrower_id": "B0024"
+    "borrower_id": "B0024",
+    "payee_name": "Northstar Industrial Supply Inc"
    },
-   "result": "{\"verdict_by_rules\": \"LIKELY_FRAUD\", \"headline\": \"Likely: money from lenders or linked companies is arriving dressed up as customer payments\", \"findings\": [{\"mechanism\": \"DISGUISED_RECEIPTS\", \"confidence\": \"high\", \"plain\": \"money from lenders or linked companies is arriving dressed up as customer payments\", \"signals\": [\"S3-B0024-CIRCULAR_FLOW-18164cee\", \"S3-B0024-NON_OBLIGOR_PAYER-57c18cd2\"], \"corroborated_by\": []}], \"signals\": [{\"id\": \"S3-B0024-CIRCULAR_FLOW-18164cee\", \"system\": \"S3\", \"type\": \"CIRCULAR_FLOW\", \"explanation\": \"16 times, money sent to 'Northstar Industrial Supply Inc' came back from 'Northstar Industrial Supply Inc' within 35 days as a 'customer' payment of almost the same amo"
+   "result": "{\"payments\": 16, \"total\": 9049017.09, \"first_month\": 12, \"last_month\": 22, \"memos\": [\"vendor payment\"], \"payee\": \"Northstar Industrial Supply Inc\", \"same_party_paid_back\": 16, \"paid_back_total\": 8971723.66}"
   },
   {
    "id": "T2",
@@ -20,22 +21,30 @@
   },
   {
    "id": "T3",
-   "tool": "lien_search",
+   "tool": "company_registry",
    "args": {
-    "name": "B0024"
+    "name": "Northstar Industrial Supply Inc"
    },
-   "result": "[{\"filing_id\": \"UCC-000047\", \"debtor_name\": \"Meridian Partners LP\", \"debtor_address\": \"457 Harbor Rd, Suite 345\", \"secured_party_name\": \"Prairie Capital Partners LP\", \"collateral_desc\": \"second-priority lien on all assets\", \"filed_month\": -10, \"match_score\": 100}, {\"filing_id\": \"UCC-000046\", \"debtor_name\": \"Meridian Partners LP\", \"debtor_address\": \"457 Harbor Rd, Suite 345\", \"secured_party_name\": \"Wells Fargo Bank, N.A.\", \"collateral_desc\": \"all assets, including receivables and chattel paper\", \"filed_month\": -12, \"match_score\": 100}]"
+   "result": "[{\"entity_id\": \"E000565\", \"name\": \"Northstar Industrial Supply Inc\", \"kind\": \"company\", \"officer\": \"Hannah Johnson\", \"address\": \"673 Market Ave, Suite 478\", \"formed_month\": -174, \"has_operations\": true}]"
   },
   {
    "id": "T4",
-   "tool": "court_search",
+   "tool": "lien_search",
    "args": {
-    "name": "B0024"
+    "name": "Northstar Industrial Supply Inc"
    },
-   "result": "[{\"case_id\": \"CV-00002\", \"defendant_name\": \"Meridian Partners LP\", \"plaintiff\": \"(synthetic) former landlord\", \"kind\": \"judgment\", \"amount\": 186745.51, \"month\": 11, \"match_score\": 100}]"
+   "result": "{\"result\": \"no records matching 'Northstar Industrial Supply Inc'\"}"
   },
   {
    "id": "T5",
+   "tool": "court_search",
+   "args": {
+    "name": "Northstar Industrial Supply Inc"
+   },
+   "result": "{\"result\": \"no records matching 'Northstar Industrial Supply Inc'\"}"
+  },
+  {
+   "id": "T6",
    "tool": "disclosures",
    "args": {
     "borrower_id": "B0024"
@@ -44,54 +53,57 @@
   }
  ],
  "errors": [],
- "generated_at": "2026-09-14",
+ "generated_at": "2026-09-16",
  "status": "ok",
  "model": "Qwen/Qwen3-8B",
  "memo": [
   {
-   "text": "The borrower's case evidence shows $8,971,724 in payments from 'Northstar Industrial Supply Inc', a non-obligor, with circular flows of nearly $9 million",
-   "cites": [
-    "S3-B0024-NON_OBLIGOR_PAYER-57c18cd2"
-   ]
-  },
-  {
-   "text": "'Meridian Partners LP' has a judgment of $186,746 against it from a synthetic former landlord",
-   "cites": [
-    "S5-B0024-JUDGMENT-3f0dc359"
-   ]
-  },
-  {
-   "text": "'Meridian Partners LP' has two UCC liens, including a second-priority lien on all assets by Prairie Capital Partners LP",
-   "cites": [
-    "T3"
-   ]
-  },
-  {
-   "text": "The borrower disclosed a subordinated facility with Prairie Capital Partners LP and subsidiaries Prairie Auto Sales LLC and Harbor Auto Sales LLC",
-   "cites": [
-    "T5"
-   ]
-  },
-  {
-   "text": "The borrower's related companies include Meridian Partners LP, Prairie Auto Sales LLC, and Harbor Auto Sales LLC, all sharing officers or addresses",
+   "text": "The borrower has related companies, including Prairie Auto Sales LLC and Harbor Auto Sales LLC, both with the same officer, Grace Brown",
    "cites": [
     "T2"
    ]
   },
   {
-   "text": "Could not confirm the exact source of the $9 million circular flow, which may involve linked entities",
+   "text": "Northstar Industrial Supply Inc, a payee of the borrower, is a registered company with officer Hannah Johnson and address 673 Market Ave, Suite 478",
    "cites": [
-    "S3-B0024-CIRCULAR_FLOW-18164cee"
+    "T3"
    ]
   },
   {
-   "text": "Ask the borrower: to clarify the relationship with Northstar Industrial Supply Inc and the source of the $9 million circular flow",
-   "cites": []
+   "text": "There are no court records or liens linked to Northstar Industrial Supply Inc",
+   "cites": [
+    "T4",
+    "T5"
+   ]
+  },
+  {
+   "text": "The borrower disclosed a subordinated facility with Prairie Capital Partners LP and listed Prairie Auto Sales LLC and Harbor Auto Sales LLC as subsidiaries",
+   "cites": [
+    "T6"
+   ]
+  },
+  {
+   "text": "The borrower sent $9,049,017.09 to Northstar Industrial Supply Inc over 11 months, with $8,971,723.66 returned by the same party",
+   "cites": [
+    "T1"
+   ]
+  },
+  {
+   "text": "Ask the borrower: Why is Northstar Industrial Supply Inc receiving and returning significant payments?",
+   "cites": [
+    "T1",
+    "T3"
+   ]
   }
  ],
- "dropped": [],
+ "dropped": [
+  {
+   "text": "The borrower's disclosures do not mention Northstar Industrial Supply Inc as a related party [T6].",
+   "reason": "names 'northstar industrial supply', which its sources don't mention"
+  }
+ ],
  "rounds": 2,
- "tokens": 4286,
- "seconds": 55.8,
+ "tokens": 3725,
+ "seconds": 42.3,
  "checks_reapplied": "2026-09-16"
 }

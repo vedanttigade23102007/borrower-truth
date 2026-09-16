@@ -4,11 +4,12 @@
  "steps": [
   {
    "id": "T1",
-   "tool": "case_evidence",
+   "tool": "outgoing_payments",
    "args": {
-    "borrower_id": "B0019"
+    "borrower_id": "B0019",
+    "payee_name": "Bluebonnet Distributors Inc"
    },
-   "result": "{\"verdict_by_rules\": \"LIKELY_FRAUD\", \"headline\": \"Likely: money from lenders or linked companies is arriving dressed up as customer payments\", \"findings\": [{\"mechanism\": \"DISGUISED_RECEIPTS\", \"confidence\": \"high\", \"plain\": \"money from lenders or linked companies is arriving dressed up as customer payments\", \"signals\": [\"S3-B0019-CIRCULAR_FLOW-5bb656d9\", \"S3-B0019-NON_OBLIGOR_PAYER-66edc5c8\"], \"corroborated_by\": []}], \"signals\": [{\"id\": \"S3-B0019-CIRCULAR_FLOW-5bb656d9\", \"system\": \"S3\", \"type\": \"CIRCULAR_FLOW\", \"explanation\": \"16 times, money sent to 'Bluebonnet Distributors Inc' came back from 'Bluebonnet Distributors Inc' within 35 days as a 'customer' payment of almost the same amount that"
+   "result": "{\"payments\": 16, \"total\": 64048.25, \"first_month\": 13, \"last_month\": 22, \"memos\": [\"vendor payment\"], \"payee\": \"Bluebonnet Distributors Inc\", \"same_party_paid_back\": 16, \"paid_back_total\": 63573.83}"
   },
   {
    "id": "T2",
@@ -20,22 +21,30 @@
   },
   {
    "id": "T3",
-   "tool": "lien_search",
+   "tool": "company_registry",
    "args": {
-    "name": "B0019"
+    "name": "Bluebonnet Distributors Inc"
    },
-   "result": "[{\"filing_id\": \"UCC-000037\", \"debtor_name\": \"Keystone Holdings Group LLC\", \"debtor_address\": \"2300 Center Dr, Suite 336\", \"secured_party_name\": \"Harbor Capital Partners LP\", \"collateral_desc\": \"second-priority lien on all assets\", \"filed_month\": -10, \"match_score\": 100}, {\"filing_id\": \"UCC-000036\", \"debtor_name\": \"Keystone Holdings Group LLC\", \"debtor_address\": \"2300 Center Dr, Suite 336\", \"secured_party_name\": \"Wells Fargo Bank, N.A.\", \"collateral_desc\": \"all assets, including receivables and chattel paper\", \"filed_month\": -12, \"match_score\": 100}]"
+   "result": "[{\"entity_id\": \"E000567\", \"name\": \"Bluebonnet Distributors Inc\", \"kind\": \"company\", \"officer\": \"Wei Johnson\", \"address\": \"1723 Gateway Blvd, Suite 480\", \"formed_month\": -122, \"has_operations\": true}]"
   },
   {
    "id": "T4",
-   "tool": "court_search",
+   "tool": "lien_search",
    "args": {
-    "name": "B0019"
+    "name": "Bluebonnet Distributors Inc"
    },
-   "result": "{\"result\": \"no records matching 'Keystone Holdings Group LLC'\"}"
+   "result": "{\"result\": \"no records matching 'Bluebonnet Distributors Inc'\"}"
   },
   {
    "id": "T5",
+   "tool": "court_search",
+   "args": {
+    "name": "Bluebonnet Distributors Inc"
+   },
+   "result": "{\"result\": \"no records matching 'Bluebonnet Distributors Inc'\"}"
+  },
+  {
+   "id": "T6",
    "tool": "disclosures",
    "args": {
     "borrower_id": "B0019"
@@ -44,53 +53,55 @@
   }
  ],
  "errors": [],
- "generated_at": "2026-09-14",
+ "generated_at": "2026-09-16",
  "status": "ok",
  "model": "Qwen/Qwen3-8B",
  "memo": [
   {
-   "text": "The borrower's case evidence shows $63,574 in payments from Bluebonnet Distributors Inc, which is not a known customer or obligor",
+   "text": "The borrower has disclosed a subordinated facility with Harbor Capital Partners LP",
    "cites": [
-    "S3-B0019-NON_OBLIGOR_PAYER-66edc5c8"
+    "T6"
    ]
   },
   {
-   "text": "Related companies include Keystone Logistics LLC, which shares the borrower's officer and address",
+   "text": "The borrower is linked to Keystone Holdings Group LLC, which shares officers and addresses",
    "cites": [
-    "S6-B0019-RELATED_ENTITY-537c99d7"
+    "T2"
    ]
   },
   {
-   "text": "Keystone Holdings Group LLC has two UCC liens, including a second-priority lien on all assets",
+   "text": "The borrower sent $64,048.25 to Bluebonnet Distributors Inc over 10 months, with $63,573.83 returned",
+   "cites": [
+    "T1"
+   ]
+  },
+  {
+   "text": "No liens or court records were found for Bluebonnet Distributors Inc",
+   "cites": [
+    "T4",
+    "T5"
+   ]
+  },
+  {
+   "text": "The borrower's disclosures include a related party, Keystone Holdings Group LLC",
+   "cites": [
+    "T6"
+   ]
+  },
+  {
+   "text": "Could not confirm if Bluebonnet Distributors Inc is a linked company or has legal ties",
    "cites": [
     "T3"
    ]
   },
   {
-   "text": "No court records were found for the borrower or related companies",
-   "cites": [
-    "T4"
-   ]
-  },
-  {
-   "text": "The borrower disclosed a subordinated facility with Harbor Capital Partners LP and a parent holding company",
-   "cites": [
-    "T5"
-   ]
-  },
-  {
-   "text": "Ask the borrower: to clarify the relationship with Bluebonnet Distributors Inc and the source of the payments",
+   "text": "Ask the borrower: clarify the relationship with Bluebonnet Distributors Inc and the purpose of the payments",
    "cites": []
   }
  ],
- "dropped": [
-  {
-   "text": "Could not confirm if Bluebonnet Distributors Inc is linked to the borrower or related entities.",
-   "reason": "cites no source"
-  }
- ],
+ "dropped": [],
  "rounds": 2,
- "tokens": 4084,
- "seconds": 44.5,
+ "tokens": 3608,
+ "seconds": 36.0,
  "checks_reapplied": "2026-09-16"
 }

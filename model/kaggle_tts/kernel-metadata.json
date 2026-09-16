@@ -1,0 +1,13 @@
+{
+  "id": "vedanttigade5/borrower-truth-narration-tts",
+  "title": "borrower-truth-narration-tts",
+  "code_file": "run_tts.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": true,
+  "enable_gpu": false,
+  "enable_internet": true,
+  "dataset_sources": ["vedanttigade5/borrower-truth-narration"],
+  "competition_sources": [],
+  "kernel_sources": []
+}

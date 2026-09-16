@@ -4,6 +4,15 @@
  "steps": [
   {
    "id": "T1",
+   "tool": "outgoing_payments",
+   "args": {
+    "borrower_id": "B0029",
+    "payee_name": "Pioneer Trade Services Inc"
+   },
+   "result": "{\"result\": \"no payments to 'Pioneer Trade Services Inc'\"}"
+  },
+  {
+   "id": "T2",
    "tool": "case_evidence",
    "args": {
     "borrower_id": "B0029"
@@ -11,7 +20,7 @@
    "result": "{\"verdict_by_rules\": \"LIKELY_FRAUD\", \"headline\": \"Likely: money from lenders or linked companies is arriving dressed up as customer payments\", \"findings\": [{\"mechanism\": \"DISGUISED_RECEIPTS\", \"confidence\": \"high\", \"plain\": \"money from lenders or linked companies is arriving dressed up as customer payments\", \"signals\": [\"S3-B0029-RELATED_PARTY_INFLOW-65564c53\"], \"corroborated_by\": [\"S6-B0029-SHELL_INDICATORS-cfdc644d\", \"S6-B0029-RELATED_ENTITY-48606269\"]}, {\"mechanism\": \"RELATED_SHELLS\", \"confidence\": \"medium\", \"plain\": \"the borrower is connected to undisclosed shell companies\", \"signals\": [\"S6-B0029-SHELL_INDICATORS-cfdc644d\", \"S6-B0029-RELATED_ENTITY-48606269\"], \"corroborated_by\": [\"S3-B002"
   },
   {
-   "id": "T2",
+   "id": "T3",
    "tool": "related_companies",
    "args": {
     "borrower_id": "B0029"
@@ -19,7 +28,7 @@
    "result": "[{\"entity_id\": \"E000373\", \"name\": \"Cobalt Holdings LLC\", \"kind\": \"borrower\", \"officer\": \"Hannah Kim\", \"address\": \"5205 Commerce St, Suite 352\", \"formed_month\": -44, \"has_operations\": true, \"same_officer\": true, \"same_address\": true, \"is_borrower\": true}]"
   },
   {
-   "id": "T3",
+   "id": "T4",
    "tool": "lien_search",
    "args": {
     "name": "B0029"
@@ -27,7 +36,7 @@
    "result": "[{\"filing_id\": \"UCC-000061\", \"debtor_name\": \"Cobalt Holdings LLC\", \"debtor_address\": \"5205 Commerce St, Suite 352\", \"secured_party_name\": \"Beacon Credit Fund LLC\", \"collateral_desc\": \"second-priority lien on all assets\", \"filed_month\": -10, \"match_score\": 100}, {\"filing_id\": \"UCC-000060\", \"debtor_name\": \"Cobalt Holdings LLC\", \"debtor_address\": \"5205 Commerce St, Suite 352\", \"secured_party_name\": \"Wells Fargo Bank, N.A.\", \"collateral_desc\": \"all assets, including receivables and chattel paper\", \"filed_month\": -12, \"match_score\": 100}]"
   },
   {
-   "id": "T4",
+   "id": "T5",
    "tool": "court_search",
    "args": {
     "name": "B0029"
@@ -35,7 +44,7 @@
    "result": "[{\"case_id\": \"CV-00004\", \"defendant_name\": \"Cobalt Holdings LLC\", \"plaintiff\": \"(synthetic) former landlord\", \"kind\": \"judgment\", \"amount\": 141436.02, \"month\": 20, \"match_score\": 100}]"
   },
   {
-   "id": "T5",
+   "id": "T6",
    "tool": "disclosures",
    "args": {
     "borrower_id": "B0029"
@@ -44,24 +53,24 @@
   }
  ],
  "errors": [],
- "generated_at": "2026-09-14",
+ "generated_at": "2026-09-16",
  "status": "ok",
  "model": "Qwen/Qwen3-8B",
  "memo": [
   {
-   "text": "The borrower received $461,605 from Pioneer Trade Services Inc, an undisclosed company linked to the borrower",
+   "text": "The borrower received $461,605 from 'Pioneer Trade Services Inc', an undisclosed company linked to the borrower",
    "cites": [
     "S3-B0029-RELATED_PARTY_INFLOW-65564c53"
    ]
   },
   {
-   "text": "Pioneer Trade Services Inc appears to be a shell company with no operations and no LEI, registered to a different person and address",
+   "text": "'Pioneer Trade Services Inc' appears to be a shell company with no operations and no LEI registration",
    "cites": [
     "S6-B0029-SHELL_INDICATORS-cfdc644d"
    ]
   },
   {
-   "text": "There is a judgment of $141,436 against Cobalt Holdings LLC in favor of a synthetic former landlord",
+   "text": "There is a judgment of $141,436 against 'Cobalt Holdings LLC', a company linked to the borrower",
    "cites": [
     "S5-B0029-JUDGMENT-2844dfd4"
    ]
@@ -71,24 +80,24 @@
    "cites": [
     "S1-B0029-PLEDGECHECK_ABSENT-0c9a7a97"
    ]
-  },
-  {
-   "text": "Ask the borrower: clarify the relationship between Pioneer Trade Services Inc and the judgment against Cobalt Holdings LLC",
-   "cites": []
   }
  ],
  "dropped": [
   {
-   "text": "The borrower disclosed a subordinated facility with Beacon Credit Fund LLC [S5-B0029-DEBT-0c9a7a97].",
+   "text": "The borrower disclosed a debt to 'Beacon Credit Fund LLC', which has a lien on the borrower's assets [S6-B0029-SHELL_INDICATORS-cfdc644d].",
    "reason": "names 'beacon credit fund', which its sources don't mention"
   },
   {
-   "text": "Could not confirm if the $461,605 from Pioneer Trade Services Inc is tied to the judgment against Cobalt Holdings LLC.",
+   "text": "Could not confirm if 'Pioneer Trade Services Inc' has any other financial ties to the borrower.",
    "reason": "cites no source"
+  },
+  {
+   "text": "Ask the borrower: to clarify the relationship between 'Pioneer Trade Services Inc' and the borrower, and provide documentation for the disclosed debt to 'Beacon Credit Fund LLC'.",
+   "reason": "says 'pioneer trade services' was disclosed, but the disclosures don't list it"
   }
  ],
  "rounds": 2,
- "tokens": 4270,
- "seconds": 54.7,
+ "tokens": 4380,
+ "seconds": 56.0,
  "checks_reapplied": "2026-09-16"
 }

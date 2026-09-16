@@ -4,6 +4,15 @@
  "steps": [
   {
    "id": "T1",
+   "tool": "outgoing_payments",
+   "args": {
+    "borrower_id": "B0110",
+    "payee_name": "Apex Inventory Holdings LLC"
+   },
+   "result": "{\"result\": \"no payments to 'Apex Inventory Holdings LLC'\"}"
+  },
+  {
+   "id": "T2",
    "tool": "case_evidence",
    "args": {
     "borrower_id": "B0110"
@@ -11,7 +20,7 @@
    "result": "{\"verdict_by_rules\": \"LIKELY_FRAUD\", \"headline\": \"Likely: money from lenders or linked companies is arriving dressed up as customer payments\", \"findings\": [{\"mechanism\": \"DISGUISED_RECEIPTS\", \"confidence\": \"high\", \"plain\": \"money from lenders or linked companies is arriving dressed up as customer payments\", \"signals\": [\"S3-B0110-RELATED_PARTY_INFLOW-6643f5fe\"], \"corroborated_by\": [\"S5-B0110-COMPETING_LIEN-dbc6236f\", \"S6-B0110-SHELL_INDICATORS-7df46d81\", \"S5-B0110-JUDGMENT-5eb6941a\", \"S6-B0110-RELATED_ENTITY-7b3baf04\"]}, {\"mechanism\": \"HIDDEN_DEBT\", \"confidence\": \"high\", \"plain\": \"the borrower has debt it has not disclosed\", \"signals\": [\"S5-B0110-COMPETING_LIEN-dbc6236f\", \"S5-B0110-UNDISCLOSE"
   },
   {
-   "id": "T2",
+   "id": "T3",
    "tool": "related_companies",
    "args": {
     "borrower_id": "B0110"
@@ -19,7 +28,7 @@
    "result": "[{\"entity_id\": \"E000530\", \"name\": \"Apex Capital LLC\", \"kind\": \"borrower\", \"officer\": \"Ethan Kim\", \"address\": \"5971 Harbor Rd, Suite 455\", \"formed_month\": -140, \"has_operations\": true, \"same_officer\": true, \"same_address\": true, \"is_borrower\": true}, {\"entity_id\": \"E000531\", \"name\": \"Apex Holdings Group LLC\", \"kind\": \"holding\", \"officer\": \"Ethan Kim\", \"address\": \"5971 Harbor Rd, Suite 455\", \"formed_month\": -200, \"has_operations\": true, \"same_officer\": true, \"same_address\": true, \"is_borrower\": false}, {\"entity_id\": \"E000532\", \"name\": \"Apex Inventory Holdings LLC\", \"kind\": \"company\", \"officer\": \"Ethan Kim\", \"address\": \"5971 Harbor Rd, Suite 455\", \"formed_month\": 12, \"has_operations\": false, \"s"
   },
   {
-   "id": "T3",
+   "id": "T4",
    "tool": "lien_search",
    "args": {
     "name": "B0110"
@@ -27,7 +36,7 @@
    "result": "[{\"filing_id\": \"UCC-000215\", \"debtor_name\": \"Apex Capital LLC\", \"debtor_address\": \"5971 Harbor Rd, Suite 455\", \"secured_party_name\": \"Silverline Specialty Finance LLC\", \"collateral_desc\": \"second-priority lien on all assets\", \"filed_month\": -10, \"match_score\": 100}, {\"filing_id\": \"UCC-000052\", \"debtor_name\": \"Apex Capital Corp\", \"debtor_address\": \"6789 Harbor Rd, Suite 347\", \"secured_party_name\": \"Wells Fargo Bank, N.A.\", \"collateral_desc\": \"all assets, including receivables and chattel paper\", \"filed_month\": -12, \"match_score\": 100}, {\"filing_id\": \"UCC-000214\", \"debtor_name\": \"Apex Capital LLC\", \"debtor_address\": \"5971 Harbor Rd, Suite 455\", \"secured_party_name\": \"Wells Fargo Bank, N.A.\", \""
   },
   {
-   "id": "T4",
+   "id": "T5",
    "tool": "court_search",
    "args": {
     "name": "B0110"
@@ -35,7 +44,7 @@
    "result": "{\"result\": \"no records matching 'Apex Capital LLC'\"}"
   },
   {
-   "id": "T5",
+   "id": "T6",
    "tool": "disclosures",
    "args": {
     "borrower_id": "B0110"
@@ -44,7 +53,7 @@
   }
  ],
  "errors": [],
- "generated_at": "2026-09-14",
+ "generated_at": "2026-09-16",
  "status": "ok",
  "model": "Qwen/Qwen3-8B",
  "memo": [
@@ -81,7 +90,7 @@
  ],
  "dropped": [
   {
-   "text": "The borrower has undisclosed debt from Prairie Capital Partners LLC and Silverline Specialty Finance LLC [S5-B0110-UNDISCLOSED_SECURED_PARTY-adabe5ac, S5-B0110-COMPETING_LIEN-dbc6236f].",
+   "text": "The borrower has undisclosed debt to Prairie Capital Partners LLC and Silverline Specialty Finance LLC [S5-B0110-UNDISCLOSED_SECURED_PARTY-adabe5ac, S5-B0110-COMPETING_LIEN-dbc6236f].",
    "reason": "says 'silverline specialty finance' was not disclosed, but the disclosures list it"
   },
   {
@@ -90,7 +99,7 @@
   }
  ],
  "rounds": 2,
- "tokens": 5421,
- "seconds": 76.6,
+ "tokens": 5517,
+ "seconds": 75.8,
  "checks_reapplied": "2026-09-16"
 }

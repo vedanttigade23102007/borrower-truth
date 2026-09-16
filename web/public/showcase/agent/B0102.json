@@ -4,11 +4,12 @@
  "steps": [
   {
    "id": "T1",
-   "tool": "case_evidence",
+   "tool": "outgoing_payments",
    "args": {
-    "borrower_id": "B0102"
+    "borrower_id": "B0102",
+    "payee_name": "Northstar Wholesale LLC"
    },
-   "result": "{\"verdict_by_rules\": \"LIKELY_FRAUD\", \"headline\": \"Likely: money from lenders or linked companies is arriving dressed up as customer payments\", \"findings\": [{\"mechanism\": \"DISGUISED_RECEIPTS\", \"confidence\": \"high\", \"plain\": \"money from lenders or linked companies is arriving dressed up as customer payments\", \"signals\": [\"S3-B0102-CIRCULAR_FLOW-46db702d\", \"S3-B0102-NON_OBLIGOR_PAYER-59865833\"], \"corroborated_by\": []}], \"signals\": [{\"id\": \"S3-B0102-CIRCULAR_FLOW-46db702d\", \"system\": \"S3\", \"type\": \"CIRCULAR_FLOW\", \"explanation\": \"26 times, money sent to 'Northstar Wholesale LLC' came back from 'Northstar Wholesale LLC' within 35 days as a 'customer' payment of almost the same amount that settles"
+   "result": "{\"payments\": 26, \"total\": 119344.61, \"first_month\": 6, \"last_month\": 22, \"memos\": [\"vendor payment\"], \"payee\": \"Northstar Wholesale LLC\", \"same_party_paid_back\": 26, \"paid_back_total\": 118302.78}"
   },
   {
    "id": "T2",
@@ -20,6 +21,14 @@
   },
   {
    "id": "T3",
+   "tool": "company_registry",
+   "args": {
+    "name": "Northstar Wholesale LLC"
+   },
+   "result": "[{\"entity_id\": \"E000568\", \"name\": \"Northstar Wholesale LLC\", \"kind\": \"company\", \"officer\": \"Hannah Thomas\", \"address\": \"1439 Main St, Suite 481\", \"formed_month\": -81, \"has_operations\": true}]"
+  },
+  {
+   "id": "T4",
    "tool": "lien_search",
    "args": {
     "name": "B0102"
@@ -27,7 +36,7 @@
    "result": "[{\"filing_id\": \"UCC-000201\", \"debtor_name\": \"Meridian Motor Group LLC\", \"debtor_address\": \"944 Commerce St, Suite 444\", \"secured_party_name\": \"Wells Fargo Bank, N.A.\", \"collateral_desc\": \"all assets, including receivables and chattel paper\", \"filed_month\": -12, \"match_score\": 100}]"
   },
   {
-   "id": "T4",
+   "id": "T5",
    "tool": "court_search",
    "args": {
     "name": "B0102"
@@ -35,7 +44,7 @@
    "result": "{\"result\": \"no records matching 'Meridian Motor Group LLC'\"}"
   },
   {
-   "id": "T5",
+   "id": "T6",
    "tool": "disclosures",
    "args": {
     "borrower_id": "B0102"
@@ -44,31 +53,24 @@
   }
  ],
  "errors": [],
- "generated_at": "2026-09-14",
+ "generated_at": "2026-09-16",
  "status": "ok",
  "model": "Qwen/Qwen3-8B",
  "memo": [
   {
-   "text": "The borrower, B0102, has signals indicating money from non-obligor entities like Northstar Wholesale LLC is disguised as customer payments",
-   "cites": [
-    "S3-B0102-CIRCULAR_FLOW-46db702d",
-    "S3-B0102-NON_OBLIGOR_PAYER-59865833"
-   ]
-  },
-  {
-   "text": "Related companies include Meridian Motor Group LLC and Meridian Holdings Group LLC, both sharing officers and addresses with the borrower",
+   "text": "The borrower, B0102, is linked to Meridian Motor Group LLC and Meridian Holdings Group LLC, both sharing the same officer and address",
    "cites": [
     "T2"
    ]
   },
   {
-   "text": "Meridian Motor Group LLC has a UCC lien with Wells Fargo Bank, N.A., securing all assets including receivables",
+   "text": "Northstar Wholesale LLC, a payee of the borrower, is a registered company with Hannah Thomas as its officer",
    "cites": [
     "T3"
    ]
   },
   {
-   "text": "No court records were found for Meridian Motor Group LLC",
+   "text": "Meridian Motor Group LLC has a UCC lien filed by Wells Fargo Bank, N.A., securing all its assets",
    "cites": [
     "T4"
    ]
@@ -76,25 +78,34 @@
   {
    "text": "The borrower disclosed Meridian Holdings Group LLC as a parent holding company",
    "cites": [
+    "T6"
+   ]
+  },
+  {
+   "text": "No court records were found for Meridian Motor Group LLC",
+   "cites": [
     "T5"
    ]
   },
   {
-   "text": "The borrower is not enrolled in Setpoint PledgeCheck, making collateral verification at other lenders uncertain",
+   "text": "Ask the borrower: why did Northstar Wholesale LLC return nearly the full amount sent?",
    "cites": [
-    "S1-B0102-PLEDGECHECK_ABSENT-2a8a6110"
-   ]
-  },
-  {
-   "text": "Ask the borrower: clarify the relationship with Northstar Wholesale LLC and the source of the $118,303 in payments",
-   "cites": [
-    "S3-B0102-NON_OBLIGOR_PAYER-59865833"
+    "T1"
    ]
   }
  ],
- "dropped": [],
+ "dropped": [
+  {
+   "text": "The borrower sent $119,344.61 to Northstar Wholesale LLC over 17 months, with $118,302.78 returned [T1].",
+   "reason": "states a number not in its sources: 17"
+  },
+  {
+   "text": "The borrower did not disclose any debts or affiliations that could explain the inflows from Northstar Wholesale LLC [T6].",
+   "reason": "names 'northstar wholesale', which its sources don't mention"
+  }
+ ],
  "rounds": 2,
- "tokens": 3923,
- "seconds": 51.0,
+ "tokens": 3590,
+ "seconds": 40.8,
  "checks_reapplied": "2026-09-16"
 }
