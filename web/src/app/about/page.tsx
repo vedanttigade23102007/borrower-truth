@@ -64,8 +64,8 @@ export default function AboutPage() {
         <h2 className="text-lg font-semibold tracking-tight text-zinc-900">Two short videos</h2>
         <div className="mt-3 grid gap-4 sm:grid-cols-2">
           {[
-            ["overview", "Overview", "The problem, who it's for, what it does, what other tools miss, and the proof."],
-            ["training", "Training walkthrough", "How a credit officer uses it: queue, case, evidence, agent memo, fix, approval."],
+            ["overview", "Overview", "The problem, who it's for, the real SEC data behind it, what other tools miss, and the proof. About 3½ minutes."],
+            ["training", "Training walkthrough", "A credit officer works a real case on this site: queue, evidence, agent memo, fix, approval. About 3 minutes."],
           ].map(([file, title, what]) => (
             <Card key={file} className="overflow-hidden">
               <video
@@ -84,7 +84,7 @@ export default function AboutPage() {
             </Card>
           ))}
         </div>
-        <p className="mt-2 text-xs text-zinc-500">Narrated with a synthetic voice, with captions. All data shown is synthetic.</p>
+        <p className="mt-2 text-xs text-zinc-500">Recorded on this live site. Narrated by an open-weights voice model, with captions. All borrower data shown is synthetic.</p>
       </div>
 
       <Card className="divide-y divide-zinc-100">
