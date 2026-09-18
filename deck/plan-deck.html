@@ -180,7 +180,7 @@ h1{font-size:30px}h2{font-size:24px}.big{font-size:54px}.timeline{flex-direction
 <!-- 8 How frauds worked -->
 <section class="slide"><div class="frame">
   <div class="kicker">How the frauds worked · SEC and DOJ documents (allegations)</div>
-  <h2>Two recent cases used six different tricks between them.</h2>
+  <h2>Two recent cases used seven different tricks between them, as alleged.</h2>
   <div class="grid2">
     <div class="card"><h3>Tricolor (car lender, bankrupt Sep 2025)</h3>
       <ul><li>Pledged <b>$2.2B</b> of collateral, but only <b>$1.4B</b> was real</li><li>Same loans pledged to several lenders</li><li>Defaulted loans made to "appear current"</li></ul>
@@ -209,7 +209,7 @@ h1{font-size:30px}h2{font-size:24px}.big{font-size:54px}.timeline{flex-direction
 <!-- 10 PledgeCheck -->
 <section class="slide"><div class="frame">
   <div class="kicker">What already exists · checked, not assumed</div>
-  <h2>Wells Fargo already backs a tool that guards the collateral pool. Nobody is watching the borrower around it.</h2>
+  <h2>Wells Fargo already backs a tool that guards the collateral pool. No tool we found joins what happens around it for one borrower.</h2>
   <div class="grid2">
     <div class="card"><h3>Setpoint PledgeCheck (Oct 2025), "backed by Citi and Wells Fargo"</h3>
       <ul><li>Uniqueness: each asset in only one facility</li><li>Data integrity: VIN and address consistent</li><li>Completeness: collections match reports</li><li>Single record: matches the master file</li></ul>
@@ -365,7 +365,7 @@ h1{font-size:30px}h2{font-size:24px}.big{font-size:54px}.timeline{flex-direction
   <h2>You show up with a problem from their filings and a design no other applicant has.</h2>
   <div class="grid2">
     <div class="card"><h3>What you walk away with</h3><ul><li>System design document (done: design/SYSTEM-DESIGN.md)</li><li>Live demo link and a 3-minute video</li><li>1-page case study and a resume line</li><li>Referral message drafts (you send them)</li></ul></div>
-    <div class="card hl"><h3>Your 30-second interview story</h3>"Your biggest loan book is lending to lenders. Its frauds use seven tricks. You backed a tool that guards the collateral pool; I built seven connected checks that watch the borrower around it. It hands the officer a solved case (proof, fix, drafted paperwork) for one-click approval, reads documents with a model I fine-tuned so data never leaves the bank, and runs on your stack."</div>
+    <div class="card hl"><h3>Your 30-second interview story</h3>"Your biggest loan book is lending to lenders. Its frauds use seven tricks. You backed a tool that guards the collateral pool; I built seven connected checks that watch the borrower around it. It hands the officer a solved case (proof, fix, drafted paperwork) for one-click approval, reads documents with a small model I fine-tuned that can run inside the bank, and runs on your stack."</div>
   </div>
   <p class="fine mt">Honest expectation: Wells Fargo won't buy a student's software. This is built so they want to hire the person who designed it.</p>
 </div></section>
@@ -403,10 +403,10 @@ h1{font-size:30px}h2{font-size:24px}.big{font-size:54px}.timeline{flex-direction
 <!-- B2b Real data -->
 <section class="slide"><div class="frame">
   <div class="kicker">Real data · public SEC filings, pulled and measured 14 Sep 2026</div>
-  <h2>2.2 million real loan records from 28 public auto-loan pools of 22 lenders. No honest real pool trips any check.</h2>
+  <h2>2.2 million real loan records from 28 public auto-loan pools of 22 lenders. None of them trips the loan-tape checks.</h2>
   <div class="grid4">
-    <div class="card metric"><div class="v">809,624</div><div class="l">real month-to-month loan moves: honest test loans now behave like these</div></div>
-    <div class="card metric"><div class="v">0 of 28</div><div class="l">real honest pools trip any threshold; a test fails if one ever does</div></div>
+    <div class="card metric"><div class="v">809,624</div><div class="l">real month-to-month loan moves: honest test auto loans now behave like these</div></div>
+    <div class="card metric"><div class="v">0 of 28</div><div class="l">real honest pools trip the five loan-tape checks; a test fails if one ever does</div></div>
     <div class="card metric"><div class="v">0 of 774,975</div><div class="l">real loans had their credit score changed: a rewrite has no honest cover</div></div>
     <div class="card metric"><div class="v">24</div><div class="l">public non-bank lenders' 8-K, Exhibit 21 and XBRL filings read</div></div>
   </div>
@@ -423,7 +423,7 @@ h1{font-size:30px}h2{font-size:24px}.big{font-size:54px}.timeline{flex-direction
   <h2>Public filings give the bank a second source of truth, and a real yardstick for every decision.</h2>
   <table>
     <tr><th style="width:22%">Use</th><th>What it checks</th><th style="width:26%">Who decides better</th></tr>
-    <tr><td><b>1 · Calibrate</b></td><td>Thresholds set from how 2.2M real loans behave, not my assumptions</td><td>Model risk: every threshold traced to public data and a date</td></tr>
+    <tr><td><b>1 · Calibrate</b></td><td>Loan-tape thresholds set from 2.2M real loan records, not my assumptions</td><td>Model risk: each loan-tape threshold traced to public data and a date</td></tr>
     <tr><td><b>2 · Benchmark the tape</b></td><td>Late loans that never get later, far below any real pool, then a servicer pull of the "cured" loans</td><td>Credit officer: is this tape believable?</td></tr>
     <tr><td><b>3 · Cross-check filings</b></td><td>A lender named in the borrower's own 10-K or 8-K but never disclosed to the bank; revenue that differs from the SEC filing</td><td>Credit officer and committee: hidden debt with no lien filed</td></tr>
     <tr><td><b>4 · Same loans, two reports</b></td><td>Loans on the bank's tape that also sit in the borrower's own public trust, and whose payments no longer reach the bank</td><td>Portfolio manager: collateral pledged twice</td></tr>
@@ -481,7 +481,7 @@ h1{font-size:30px}h2{font-size:24px}.big{font-size:54px}.timeline{flex-direction
   <h2>They go deeper in their one place. We connect the places, so we plug into them instead of fighting them.</h2>
   <div class="grid2">
     <div class="card"><h3>Where they beat us</h3><ul>
-      <li><b>Setpoint</b> sees other lenders' facilities. We can't. 250+ lenders use it.</li>
+      <li><b>Setpoint</b> sees other lenders' facilities. We can't. Over 250 lenders and originators use its platform.</li>
       <li><b>Quantexa</b> matches "billions of data points". We match names and addresses.</li>
       <li><b>Ocrolus</b> spots edited PDFs and AI-made documents. We only read the invoice total.</li>
       <li><b>MonetaGo</b> is a registry shared by banks over SWIFT.</li>
@@ -521,9 +521,9 @@ h1{font-size:30px}h2{font-size:24px}.big{font-size:54px}.timeline{flex-direction
   <h2>Every control partner's first question, the evidence we have, and the gap we'll close. Gaps are stated, not hidden.</h2>
   <table>
     <tr><th style="width:18%">Partner</th><th style="width:30%">First question</th><th>Evidence today</th><th style="width:26%">Gap → plan</th></tr>
-    <tr><td><b>Model risk</b><br><span class="fine">OCC 2011-12 / SR 11-7</span></td><td>Is it a model? Soundness, outcomes, monitoring?</td><td>Rules decide; thresholds checked on 28 real pools; held-out test; replay 120/120; the agent never decides</td><td>Register and tier it; validate independently on bank data</td></tr>
+    <tr><td><b>Model risk</b><br><span class="fine">OCC 2011-12 / SR 11-7</span></td><td>Is it a model? Soundness, outcomes, monitoring?</td><td>Rules decide; loan-tape thresholds checked on 28 real pools; held-out test; replay 120/120; the agent never decides</td><td>Register and tier it; validate independently on bank data</td></tr>
     <tr><td><b>BSA/AML compliance</b><br><span class="fine">SAR 12 CFR 21.11; beneficial ownership</span></td><td>Does "likely fraud" trigger a SAR decision? Can letters tip off?</td><td>Evidence chain for every clue; shells linked by owner, address, phone, agent; audit log</td><td>Route cases to the financial-crimes unit; Compliance and Legal approve letter templates</td></tr>
-    <tr><td><b>InfoSec</b><br><span class="fine">GLBA security guidelines</span></td><td>Obligor data, access, encryption, hosting?</td><td>No secrets in code; localhost binding and write key; open-weight models, so no data leaves</td><td>Bank SSO, encryption at rest, in-bank hosting, pen test</td></tr>
+    <tr><td><b>InfoSec</b><br><span class="fine">GLBA security guidelines</span></td><td>Obligor data, access, encryption, hosting?</td><td>No secrets in code; localhost binding and write key; open-weight models that can run in-bank</td><td>Bank SSO, encryption at rest, in-bank hosting, pen test</td></tr>
     <tr><td><b>Legal · third-party · op risk · audit</b></td><td>Data rights? Vendors? Failure modes? Auditable?</td><td>Letters ask, never accuse; open-source stack; isolated checks and quarantine; decision record</td><td>Confirm audit rights per facility; vendor reviews; run-book; audit walk-through</td></tr>
   </table>
   <p class="fine mt">Not applicable: FINRA (broker-dealers) and GDPR (EU privacy). Heightened focus: Wells Fargo's 2024 OCC formal agreement covers BSA/AML, including SAR filing and beneficial ownership. Full matrix: proposal/03-CONTROL-MATRIX.md.</p>
@@ -552,7 +552,7 @@ h1{font-size:30px}h2{font-size:24px}.big{font-size:54px}.timeline{flex-direction
 <!-- 19 Evidence check -->
 <section class="slide"><div class="frame">
   <div class="kicker">Evidence check</div>
-  <h2>57 claims in this deck, each matched against a saved source file.</h2>
+  <h2>The 57 research claims behind this plan, each matched against a saved source file.</h2>
   <div class="grid3">
     <div class="card"><span class="pill ok">VERIFIED — primary</span><div class="big" style="color:var(--ok);font-size:64px">42</div><p class="fine">Wells Fargo filings and job posting, SEC, DOJ, OCC, Setpoint, Kaggle, Hugging Face, data providers</p></div>
     <div class="card"><span class="pill info">secondary</span><div class="big" style="font-size:64px">15</div><p class="fine">Earnings-call transcript, CNBC, Bloomberg via Yahoo, VentureBeat, CIO Dive, job-ad search snippets</p></div>
@@ -565,7 +565,7 @@ h1{font-size:30px}h2{font-size:24px}.big{font-size:54px}.timeline{flex-direction
 <section class="slide"><div class="frame">
   <div class="kicker">Verdict</div>
   <div class="verdict">BUILD</div>
-  <h2>It's Wells Fargo's biggest loan category, it took a live fraud loss, the tricks are documented by prosecutors, and the one existing tool leaves a clear, borrower-sized gap.</h2>
+  <h2>It's Wells Fargo's biggest loan category, it took a live fraud loss, the tricks are documented by prosecutors, and the tool Wells Fargo backs leaves a clear, borrower-sized gap.</h2>
   <div class="grid2 mt">
     <div class="card"><h3>Strongest reason against</h3>The data that matters most is private. The demo proves the design, not real-world accuracy.</div>
     <div class="card hl"><h3>Your decision</h3>Build · change · drop. If build: screens next, then the full build of all 7 systems and the combiner, then the proof run.</div>

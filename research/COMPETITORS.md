@@ -32,7 +32,7 @@ Compiled 2026-09-12 from each vendor's **own public pages**. This covers what th
 
 ## Where each vendor is stronger than Borrower Truth
 
-- **Setpoint:** sees across *other lenders'* facilities (Borrower Truth can't), has 250+ lenders on the platform, and is backed by Citi and Wells Fargo.
+- **Setpoint:** sees across *other lenders'* facilities (Borrower Truth can't), has over 250 lenders and originators on its platform (Setpoint release), and is backed by Citi and Wells Fargo.
 - **MonetaGo:** a cross-bank registry over SWIFT; the network effect is the product.
 - **Quantexa:** entity resolution over "billions of data points"; far more mature than name/address matching.
 - **Ocrolus:** deep document forensics (metadata, edits, AI-generated documents), trained on hundreds of millions of documents; Borrower Truth only reads the invoice total.

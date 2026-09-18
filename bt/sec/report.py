@@ -34,7 +34,7 @@ def main():
         "# Real data: what public SEC filings measured, and what that changed",
         "",
         "Borrower Truth's frauds are still planted in synthetic books. What is real now is the yardstick: how honest "
-        "lenders' loans actually behave, measured on public SEC data, and every threshold checked against it.",
+        "lenders' loans actually behave, measured on public SEC data, and the five loan-tape checks tested against it. The other checks can't be tested on public loan data.",
         "",
         "## What was pulled",
         "",
@@ -78,9 +78,9 @@ def main():
         f"({pct(fp['unique_share'], 2)}) by origination month, amount, term, rate, vehicle, state and score | New check "
         f"PUBLIC_POOL_OVERLAP: loans on the bank's tape that also sit in the borrower's own public trust |",
         "",
-        "## Every threshold against every real pool",
+        "## Every loan-tape threshold against every real pool",
         "",
-        "Each real pool is an honest lender's tape. None may trip a check.",
+        "Each real pool is an honest lender's tape. None may trip a loan-tape check.",
         "",
         "| Pool | Lender tier | Current, unpaid 2 months | 30-59 to 60+ | 60+ to current, unpaid | 600-612 vs 613-625 |",
         "|---|---|---|---|---|---|",
@@ -140,7 +140,7 @@ def main():
         "## Limits",
         "",
         "- Only **registered** securitizations file ABS-EE. Many smaller lenders use private (Rule 144A) deals; Tricolor's "
-        "deals were private, per the bank defendants' court filings reported by Octus. The yardstick comes from larger "
+        "deals were private, per the bank defendants' court filings reported by Octus; on EDGAR its two filing entities filed only Form ABS-15G (19 filings, 2018–2025), never ABS-EE. The yardstick comes from larger "
         "public lenders.",
         "- No VIN and no borrower ID: matching a tape to a public trust is a fingerprint, so it opens a question and the "
         "officer asks for VINs to settle it.",

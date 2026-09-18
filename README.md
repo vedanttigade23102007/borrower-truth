@@ -13,7 +13,7 @@ Built as an internship-application project for the Wells Fargo 2027 Technology P
 - Recent frauds against lenders in this market used several tricks at once, each hiding in a different place. The descriptions below are allegations from DOJ and SEC documents:
   - **Tricolor:** pledged ~$2.2B of collateral while holding ~$1.4B of real collateral; made defaulted loans "appear current".
   - **First Brands:** fake and inflated invoices, collateral pledged two and three times, hidden debt in related "James Entities", and loan money routed to look like customer receipts.
-- Wells Fargo already backs one fix: Setpoint PledgeCheck checks the collateral *pool*. Nothing watches the *borrower around the pool*. That gap is what this project fills.
+- Wells Fargo already backs one fix: Setpoint PledgeCheck checks the collateral *pool*. No tool we found in public material joins what happens *around the pool* for one borrower. That gap is what this project fills (`research/COMPETITORS.md`).
 
 Every claim is matched against a saved source by `research/verify.py` (57 of 57 matched: 42 primary, 15 secondary). The claim table is `research/VERIFY.md`.
 
@@ -42,7 +42,7 @@ A person approves every step. Nothing is sent or changed without approval.
 
 Around the decision:
 - **Decision record.** Every verdict carries fingerprints of its inputs, the rule code and the git commit. `bt.pipeline.replay` recomputes a run and either shows every decision is identical (120 of 120 on the demo run) or names the input or rule that changed.
-- **Investigator agent** (`bt/agent/`). After the rules decide, an open model (Qwen3-8B / gpt-oss, open weights) investigates with read-only tools: registry, liens, courts, payments, disclosures, live GLEIF. It drafts a memo for the credit officer. Code enforces the guardrails: every line must cite a signal or a tool call, every number must appear in what it cites, and claims about what was disclosed or whether liens and judgments exist are checked against the records. Lines that fail are dropped and counted. The agent never decides.
+- **Investigator agent** (`bt/agent/`). After the rules decide, an open model (Qwen3-8B / gpt-oss, open weights) investigates with read-only tools: registry, liens, courts, payments, disclosures, live GLEIF. It drafts a memo for the credit officer. Code enforces the guardrails: every statement must cite a signal or a tool call (the closing question for the borrower may go uncited, but its numbers must still be in the evidence), every number must appear in what it cites, and claims about what was disclosed or whether liens and judgments exist are checked against the records. Lines that fail are dropped and counted. The agent never decides.
 - **Feedback loop, kept human.** Officers' approvals and rejections are counted per finding type (`/api/feedback`, Operations page). A type whose fixes keep getting rejected goes to the person who owns the rules; the rules never change themselves.
 - **Public console** (`web/`): the review queue, each case with its fix, memo and decision record, a data section (dictionary, sample rows, one fraud step by step, invoice documents), and "Test it yourself", the answer key including misses.
 
@@ -52,7 +52,7 @@ The frauds are planted, but the yardstick is real:
 - **2.23M real loan records** from SEC Form ABS-EE: 28 public auto-loan pools of 22 lenders (Santander Drive, Exeter, Bridgecrest, AmeriCredit, Carvana, CarMax, Toyota, Honda and more), two consecutive months each.
 - **Real filings** (8-K items, 10-K Exhibit 21, XBRL financials) of 24 public non-bank lenders.
 - Honest auto loans in the test books move month to month by the measured rates, by credit band and loan age.
-- **Every threshold was checked against every real pool, and 0 of 28 honest pools trip a check.** `tests/test_sec_calibration.py` fails if a threshold moves into the real range.
+- **The five loan-tape checks were tested on every real pool, and none of the 28 honest pools trips any of them.** `tests/test_sec_calibration.py` fails if one of those thresholds moves into the real range. The other checks (collateral, cash, invoices, liens, relationships, financials) can't be tested on public loan data, so their thresholds are still set on synthetic books.
 - The real data rejected a design: an overall peer benchmark would have flagged 3 of 28 honest pools, so it was replaced.
 - Four uses, each a check:
   1. **Calibrate:** set thresholds from real behaviour.

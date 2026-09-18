@@ -1,9 +1,10 @@
 # Committee defense: the hard questions, answered
 
 ## Metrics
-- **"99% is on synthetic data. Why should we believe any of it?"**
+- **"The 99% catch rate comes from synthetic test books. Why should we believe any of it?"**
   - The frauds are planted, so the catch rate proves coverage of the documented tricks, not a real-world rate. I say that first.
-  - What is real: every threshold was checked against 2.2M real loan records from 28 public pools. None of those honest pools trips a check. One design flagged 3 of them, so it was dropped.
+  - What is real: the five loan-tape checks were tested against 2.2M real loan records from 28 public pools, and none of those honest pools trips them. One design flagged 3 of them, so it was dropped.
+  - What isn't yet: the other checks (collateral, cash, invoices, liens, relationships, financials) can't be tested on public data. The pilot tests them on the bank's own data.
   - The pilot exists to measure the real number.
 - **"What does it cost my officers?"**
   - In the test, 29 of every 100 honest borrowers were sent to "worth a look". That is the real workload, and it is reported rather than hidden.

@@ -1,6 +1,6 @@
 # Real data: what public SEC filings measured, and what that changed
 
-Borrower Truth's frauds are still planted in synthetic books. What is real now is the yardstick: how honest lenders' loans actually behave, measured on public SEC data, and every threshold checked against it.
+Borrower Truth's frauds are still planted in synthetic books. What is real now is the yardstick: how honest lenders' loans actually behave, measured on public SEC data, and the five loan-tape checks tested against it. The other checks can't be tested on public loan data.
 
 ## What was pulled
 
@@ -22,9 +22,9 @@ Borrower Truth's frauds are still planted in synthetic books. What is real now i
 | Loans just over the 600 eligibility line | compared with the whole book | loans at 600-612 are at most 1.181x those at 613-625 in any pool | ELIGIBILITY_EDGE_CLUSTER compares each tape with itself (prime and subprime curves differ), flagging above 1.77x |
 | How unique a loan is without a VIN | not measured | 787,835 of 787,944 (99.99%) by origination month, amount, term, rate, vehicle, state and score | New check PUBLIC_POOL_OVERLAP: loans on the bank's tape that also sit in the borrower's own public trust |
 
-## Every threshold against every real pool
+## Every loan-tape threshold against every real pool
 
-Each real pool is an honest lender's tape. None may trip a check.
+Each real pool is an honest lender's tape. None may trip a loan-tape check.
 
 | Pool | Lender tier | Current, unpaid 2 months | 30-59 to 60+ | 60+ to current, unpaid | 600-612 vs 613-625 |
 |---|---|---|---|---|---|
@@ -100,7 +100,7 @@ What it means for the design: new-debt 8-Ks are routine (58 in a year across 24 
 
 ## Limits
 
-- Only **registered** securitizations file ABS-EE. Many smaller lenders use private (Rule 144A) deals; Tricolor's deals were private, per the bank defendants' court filings reported by Octus. The yardstick comes from larger public lenders.
+- Only **registered** securitizations file ABS-EE. Many smaller lenders use private (Rule 144A) deals; Tricolor's deals were private, per the bank defendants' court filings reported by Octus; on EDGAR its two filing entities filed only Form ABS-15G (19 filings, 2018–2025), never ABS-EE. The yardstick comes from larger public lenders.
 - No VIN and no borrower ID: matching a tape to a public trust is a fingerprint, so it opens a question and the officer asks for VINs to settle it.
 - Private borrowers file nothing with the SEC; the filings checks cover only borrowers or parents that file.
 - Two consecutive months per pool, spring 2026. More months would tighten the ranges; the checks sit well outside them already.

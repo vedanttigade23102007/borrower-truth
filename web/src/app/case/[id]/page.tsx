@@ -221,7 +221,7 @@ function AgentMemo({ id, byId }: { id: string; byId: Map<string, Signal> }) {
       </div>
       <p className="border-b border-zinc-100 bg-zinc-50 px-4 py-2 text-xs text-zinc-500">
         After the rules decided, the agent looked up {a.steps.length} records with read-only tools and wrote this memo for
-        the credit officer. Every line cites its source. A code check dropped {a.dropped.length} line
+        the credit officer. Every statement cites its source. A code check dropped {a.dropped.length} line
         {a.dropped.length === 1 ? "" : "s"} that cited nothing, used a number not in its source, or contradicted the records. Run on {a.generated_at}{" "}
         and saved for this public page.
       </p>

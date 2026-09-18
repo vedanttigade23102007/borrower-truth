@@ -5,13 +5,13 @@
 ## 1. Problem
 - **The exposure is large.** Lending to non-bank financial firms is Wells Fargo's largest commercial loan category: $208.8B, 20% of all loans (10-Q, 30 Jun 2026).
 - **The risk has already materialised.** In Q1 2026, net charge-offs rose "driven by a single fraud-related loss" (10-Q). Management said it then reviewed the portfolio, sending teams to clients to review their procedures and collateral (Q1 2026 earnings call, secondary). That was a manual, one-off sweep.
-- **The frauds hide in several places at once.** In the 2025–26 cases (Tricolor, First Brands; allegations in DOJ and SEC documents) one borrower used several tricks at once. They hid in the loan file, the servicer's system, cash receipts, invoices, lien filings, company records and financial statements. Today's controls each look in one place, a quarterly sample at a time.
+- **The frauds hide in several places at once.** In the 2025–26 cases (Tricolor, First Brands; allegations in DOJ and SEC documents) one borrower used several tricks at once. They hid in the loan file, the servicer's system, cash receipts, invoices, lien filings, company records and financial statements. The controls described publicly (field exams, collateral checks such as PledgeCheck) each look in one place, often a sample at a time. The bank's own control set would be mapped in phase 0.
 
 ## 2. Proposed solution
 A layer that joins seven checks (one per documented trick) into one case per borrower: the finding, the evidence, a suggested fix, and drafted paperwork that a credit officer approves.
 - It **uses** the tools the bank already has (Setpoint PledgeCheck results feed S1) rather than replacing them.
 - Verdicts come from auditable rules, not a model.
-- Thresholds are checked against real public loan data (2.2M SEC ABS-EE records).
+- Its five loan-tape checks are tested against real public loan data (2.2M SEC ABS-EE records). The other checks' thresholds are still set on synthetic books.
 - An open-model agent drafts investigation notes, and never decides.
 
 ## 3. Scope
@@ -27,7 +27,7 @@ A layer that joins seven checks (one per documented trick) into one case per bor
 5. Replay any past decision from its fingerprinted inputs, rules and code.
 
 **Non-functional**
-- Runs inside the bank's environment. Open-weight models only, so no borrower data leaves the bank.
+- Must run inside the bank's environment on open-weight models, so no borrower data leaves the bank.
 - A failed feed or check never stops a run: the case says what is missing.
 - Monthly run for the full portfolio in minutes. Measured: 13.2M rows in 4.4 s on one laptop; each borrower is independent, so the work splits across machines.
 - Bank SSO and entitlements, and encryption at rest (not built in the prototype; see the control matrix).

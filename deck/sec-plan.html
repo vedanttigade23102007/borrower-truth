@@ -62,7 +62,7 @@ h1{font-size:30px}h2{font-size:24px}}
 <section class="slide"><div class="frame">
   <div class="kicker">SEC data plan · Borrower Truth · 14 Sep 2026</div>
   <h1>Public SEC filings can replace my guesses with real loan behaviour, and give the bank a second source of truth.</h1>
-  <p class="sub">Today every threshold in Borrower Truth is set on synthetic data I designed. The SEC publishes, every month, how real auto loans in public securitizations actually pay, and what public companies report about their debt, subsidiaries and financials.</p>
+  <p class="sub">Before this work, every threshold in Borrower Truth was set on synthetic data I designed. The SEC publishes, every month, how real auto loans in public securitizations actually pay, and what public companies report about their debt, subsidiaries and financials.</p>
   <div class="grid4 mt">
     <div class="card"><h3>1 · Calibrate</h3>Set thresholds from real payment behaviour, not assumptions.</div>
     <div class="card"><h3>2 · Benchmark</h3>Flag a loan tape that looks better than any public pool.</div>
@@ -89,10 +89,10 @@ h1{font-size:30px}h2{font-size:24px}}
 <!-- 2b Built: what the real data showed -->
 <section class="slide"><div class="frame">
   <div class="kicker">Built and measured · 14 Sep 2026 · real public data</div>
-  <h2>2.23 million real loan records from 28 public auto-loan pools of 22 lenders. No real honest pool trips any check.</h2>
+  <h2>2.23 million real loan records from 28 public auto-loan pools of 22 lenders. None of them trips the loan-tape checks.</h2>
   <div class="grid4">
     <div class="card"><div style="font-size:30px;font-weight:800">809,624</div>real month-to-month loan moves measured, by credit band and loan age</div>
-    <div class="card"><div style="font-size:30px;font-weight:800">0 of 28</div>real honest pools trip any threshold (each checked against every pool)</div>
+    <div class="card"><div style="font-size:30px;font-weight:800">0 of 28</div>real honest pools trip the five loan-tape checks (each tested on every pool)</div>
     <div class="card"><div style="font-size:30px;font-weight:800">0 of 774,975</div>real loans had their credit score changed: a rewrite has no honest cover</div>
     <div class="card"><div style="font-size:30px;font-weight:800">99.99%</div>of real loans are unique by their public profile, even without a VIN</div>
   </div>
@@ -120,7 +120,7 @@ h1{font-size:30px}h2{font-size:24px}}
       <li>Month-by-month payment history for every loan in public auto pools (for example CarMax Auto Owner Trusts, which file monthly)</li>
       <li>Measured: late rates, catch-up rates, charge-offs, by credit-score band and loan age</li>
       <li>The synthetic "normal" borrowers are rebuilt from those measurements</li>
-      <li>Every threshold traces to a public dataset and a date</li></ul></div>
+      <li>Every loan-tape threshold traces to a public dataset and a date</li></ul></div>
   </div>
   <blockquote class="mt">Decision it improves: fewer honest borrowers sent to "worth a look" (today about 30 of every 100 in the proof run), because "unusual" is judged against real behaviour.</blockquote>
   <p class="fine">The frauds stay planted. Calibration makes the honest background real; it does not create real frauds. The re-tuned system gets scored once on fresh test books.</p>
@@ -195,7 +195,7 @@ h1{font-size:30px}h2{font-size:24px}}
     <tr><td><b>Credit officer</b></td><td>Is this borrower's tape believable?</td><td>Where the tape sits against public pools with the same credit mix, shown in the case</td></tr>
     <tr><td><b>Portfolio manager</b></td><td>Who gets the next field exam?</td><td>Rank borrowers by their gap to public peers, so exam time goes where the story looks least real</td></tr>
     <tr><td><b>Credit committee</b></td><td>Advance rates, eligibility cut-offs, limits</td><td>Real loss and catch-up curves by credit band, not just the borrower's own history</td></tr>
-    <tr><td><b>Model risk</b></td><td>Approve the thresholds</td><td>Every threshold traced to a public dataset, a date and a reproducible calculation</td></tr>
+    <tr><td><b>Model risk</b></td><td>Approve the thresholds</td><td>Every loan-tape threshold traced to a public dataset, a date and a reproducible calculation</td></tr>
     <tr><td><b>Head of the business</b></td><td>Is the market turning?</td><td>A monthly trend of late payments across public auto pools, by credit band, before it shows up in the bank's own book</td></tr>
   </table>
 </div></section>

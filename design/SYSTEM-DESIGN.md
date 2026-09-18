@@ -303,7 +303,7 @@ A great tool can still fail to fit a bank. This design plans for that from day o
 | Lost when every SEC-based check is switched off | 41 frauds |
 | Weakest mechanism | bad loans reported as good, 63 of 65 |
 
-Real data (`proof/REAL_DATA.md`): 2.23M loan records from 28 public auto-loan pools of 22 lenders (SEC Form ABS-EE) set the honest behaviour and check every threshold; 0 of 28 real pools trip a check. History: v1 scored 143/150 on seeds 201–205; v2 scored 189/190 on 301–305 (`proof/REPORT_v2_seeds301-305.md`) and 190/190 on 306–310 after an S5 fix; v3 before its auto loans got their own random stream scored 247/250 on 401–405 (`proof/REPORT_v3_seeds401-405.md`).
+Real data (`proof/REAL_DATA.md`): 2.23M loan records from 28 public auto-loan pools of 22 lenders (SEC Form ABS-EE) set honest auto-loan behaviour and test the five loan-tape checks; 0 of 28 real pools trip them. The other checks' thresholds are still set on synthetic books. History: v1 scored 143/150 on seeds 201–205; v2 scored 189/190 on 301–305 (`proof/REPORT_v2_seeds301-305.md`) and 190/190 on 306–310 after an S5 fix; v3 before its auto loans got their own random stream scored 247/250 on 401–405 (`proof/REPORT_v3_seeds401-405.md`).
 
 The switch-off test shows every system contributes.
 
@@ -369,4 +369,4 @@ The switch-off test shows every system contributes.
 - Test on real documents and data, which needs bank access.
 
 ## 11. Interview story, in 30 seconds
-"Your biggest loan book is lending to lenders. The frauds hitting that market use seven different tricks, and each one hides in a different place. You backed a tool that protects the collateral pool. I designed seven connected checks that watch the borrower around the pool. The system doesn't just flag a borrower: it tells the officer what's wrong, shows the proof, suggests the fix and drafts the paperwork, all for one-click approval. The document reading runs on a small model I fine-tuned, so borrower data never leaves the bank. It's built on your stack: Kafka, Airflow, Spring Boot."
+"Your biggest loan book is lending to lenders. The frauds hitting that market use seven different tricks, and each one hides in a different place. You backed a tool that protects the collateral pool. I designed seven connected checks that watch the borrower around the pool. The system doesn't just flag a borrower: it tells the officer what's wrong, shows the proof, suggests the fix and drafts the paperwork, all for one-click approval. The document reading runs on a small model I fine-tuned that can run inside the bank, so borrower data need not leave it. It's built on your stack: Kafka, Airflow, Spring Boot."
