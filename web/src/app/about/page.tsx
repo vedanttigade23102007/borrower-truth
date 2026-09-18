@@ -58,6 +58,12 @@ export default function AboutPage() {
         >
           Read the full plan deck, with every source →
         </a>
+        <a
+          href="/memo.html"
+          className="mt-3 inline-block rounded text-sm font-medium text-blue-700 hover:underline focus-visible:outline-2 focus-visible:outline-blue-600"
+        >
+          Read the one-page proposal memo →
+        </a>
       </div>
 
       <div>

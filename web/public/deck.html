@@ -498,6 +498,57 @@ h1{font-size:30px}h2{font-size:24px}.big{font-size:54px}.timeline{flex-direction
   <p class="fine">Not checked yet: private or enterprise features, pricing, and Moody's, S&amp;P, dv01, Sayari.</p>
 </div></section>
 
+<!-- P1 Path to approval -->
+<section class="slide"><div class="frame">
+  <div class="kicker">How this would actually get approved at a bank</div>
+  <h2>A tool isn't adopted because it works. A sponsor carries it, control partners sign it off, and a committee approves a small, safe first step.</h2>
+  <div class="timeline">
+    <div class="step"><div class="date">1 · Socialize</div>Pitch to peers and a manager, find the roadblocks, secure an executive sponsor who owns NDFI credit risk.</div>
+    <div class="step"><div class="date">2 · Draft</div>One-page memo for the sponsor; a business case (problem, requirements, resources, timeline, money, alternatives).</div>
+    <div class="step"><div class="date">3 · Control partners</div>Model risk, BSA/AML compliance, legal, InfoSec, third-party risk, operational risk, audit.</div>
+    <div class="step good"><div class="date">4 · Committee</div>Present with the sponsor, defend the metrics, alternatives and failure scenarios. Ask for a 90-day shadow pilot, not a rollout.</div>
+  </div>
+  <div class="grid3 mt">
+    <div class="card"><h3>Executive sponsor</h3>Head of the NDFI lending business, or its senior credit officer. They own the loss, so they own the case.</div>
+    <div class="card"><h3>Business owner</h3>The credit officers and portfolio managers who would work the queue. Their verdict is the pilot's success measure.</div>
+    <div class="card hl"><h3>Already written</h3>Exec memo (one page), business case, control matrix, pilot plan, committee Q&amp;A: <code>proposal/</code>.</div>
+  </div>
+</div></section>
+
+<!-- P2 Control partners -->
+<section class="slide"><div class="frame">
+  <div class="kicker">Control framework · answered before they ask</div>
+  <h2>Every control partner's first question, the evidence we have, and the gap we'll close. Gaps are stated, not hidden.</h2>
+  <table>
+    <tr><th style="width:18%">Partner</th><th style="width:30%">First question</th><th>Evidence today</th><th style="width:26%">Gap → plan</th></tr>
+    <tr><td><b>Model risk</b><br><span class="fine">OCC 2011-12 / SR 11-7</span></td><td>Is it a model? Soundness, outcomes, monitoring?</td><td>Rules decide; thresholds checked on 28 real pools; held-out test; replay 120/120; the agent never decides</td><td>Register and tier it; validate independently on bank data</td></tr>
+    <tr><td><b>BSA/AML compliance</b><br><span class="fine">SAR 12 CFR 21.11; beneficial ownership</span></td><td>Does "likely fraud" trigger a SAR decision? Can letters tip off?</td><td>Evidence chain for every clue; shells linked by owner, address, phone, agent; audit log</td><td>Route cases to the financial-crimes unit; Compliance and Legal approve letter templates</td></tr>
+    <tr><td><b>InfoSec</b><br><span class="fine">GLBA security guidelines</span></td><td>Obligor data, access, encryption, hosting?</td><td>No secrets in code; localhost binding and write key; open-weight models, so no data leaves</td><td>Bank SSO, encryption at rest, in-bank hosting, pen test</td></tr>
+    <tr><td><b>Legal · third-party · op risk · audit</b></td><td>Data rights? Vendors? Failure modes? Auditable?</td><td>Letters ask, never accuse; open-source stack; isolated checks and quarantine; decision record</td><td>Confirm audit rights per facility; vendor reviews; run-book; audit walk-through</td></tr>
+  </table>
+  <p class="fine mt">Not applicable: FINRA (broker-dealers) and GDPR (EU privacy). Heightened focus: Wells Fargo's 2024 OCC formal agreement covers BSA/AML, including SAR filing and beneficial ownership. Full matrix: proposal/03-CONTROL-MATRIX.md.</p>
+</div></section>
+
+<!-- P3 Money and pilot -->
+<section class="slide"><div class="frame">
+  <div class="kicker">The money and the first step</div>
+  <h2>A break-even, not a promise: moving one ~$8M exposure three months earlier pays for the pilot.</h2>
+  <div class="grid2">
+    <div class="card"><h3>Pilot cost (planning assumption)</h3>About 19 FTE-months over 4 months (3 engineers, 1 data engineer, part-time credit SME and model validator): <b>~$0.5–1.0M</b>. Compute is negligible: one machine runs the book in seconds.
+      <table style="margin-top:8px"><tr><th>Break-even exposure</th><th>1 mo</th><th>3 mo</th><th>6 mo</th></tr>
+      <tr><td>1% a month erosion</td><td>$70M</td><td>$23M</td><td>$12M</td></tr>
+      <tr class="win"><td>3% a month</td><td>$23M</td><td>$7.8M</td><td>$3.9M</td></tr>
+      <tr><td>5% a month</td><td>$14M</td><td>$4.7M</td><td>$2.3M</td></tr></table>
+      <p class="fine">Cost ÷ (erosion × months earlier), at a $0.7M midpoint. The bank's own loss data replaces these inputs.</p></div>
+    <div class="card hl"><h3>The ask: a 90-day shadow pilot</h3><ul>
+      <li>20–40 auto-finance warehouse borrowers, read-only; the tool never acts</li>
+      <li>Weekly review by credit officers, alongside business as usual</li>
+      <li><b>Success:</b> at least half of "likely fraud" cases worth an officer's time; review load under an agreed ceiling; no data incident; 100% replay</li>
+      <li><b>Kill:</b> cases judged not useful after tuning, or data rights can't be obtained</li>
+      <li>Go / no-go paper back to committee at week 17</li></ul></div>
+  </div>
+</div></section>
+
 <!-- 19 Evidence check -->
 <section class="slide"><div class="frame">
   <div class="kicker">Evidence check</div>

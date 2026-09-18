@@ -60,6 +60,10 @@ The frauds are planted, but the yardstick is real:
   3. **Cross-check filings:** debt named in the borrower's own 10-K or 8-K but never disclosed to the bank; revenue that differs from the SEC filing.
   4. **Same loans, two reports:** loans on the bank's tape that sit in the borrower's own public trust, whose payments no longer reach the bank.
 
+## Proposal pack: how it would get approved at a bank (`proposal/`)
+
+A one-page executive memo for a sponsor, a business case (requirements, resources, timeline, break-even, alternatives), a control-partner matrix (model risk, BSA/AML compliance, legal, InfoSec, third-party risk, operational risk, audit), a 90-day shadow-pilot plan with success and kill criteria, and the committee's hard questions answered.
+
 ## Proof: data it never saw
 
 Rules were built on development books (seed 7 and seeds 101–105). The numbers below come from five fresh books generated and scored once, after every change was final (seeds 406–410, generator v3 calibrated on real SEC data: 600 borrowers, 250 with planted fraud, including 100 of five harder types, 350 honest with realistic look-alikes). Full report: `proof/REPORT.md`.
