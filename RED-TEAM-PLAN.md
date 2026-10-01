@@ -1,6 +1,12 @@
 # Red team plan (step 5): a blind attack on Borrower Truth
 
-**Status: plan only. Nothing has run.** Written 1 Oct 2026 for Vedant to read, question and approve. REVIEW.md gap 4.
+**Status: approved by Vedant on 1 Oct 2026, with changes (below). The harness and the briefing are built and frozen with the code (tag `redteam-frozen`). The red team hasn't run yet.** REVIEW.md gap 4.
+
+**Vedant's decisions (1 Oct 2026):**
+1. **The red team is option (b), on claude.ai.** Vedant runs it himself, in a new incognito chat. He uploads the sealed briefing as one zip, pastes a fixed first message, and brings the attacks back as a zip.
+2. **The leak scan runs on the briefing itself, before upload.** Vedant reads the briefing and the scan result first.
+3. **Decisions 2, 3 and 4 as recommended:** the attacker may falsify its own servicer records (results reported with and without that lever); the size floor is 5% of the credit limit; the pass bar is the table in section 6.
+4. **The code is tagged before he starts the chat.**
 
 ---
 
