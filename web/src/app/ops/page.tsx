@@ -67,9 +67,10 @@ export default function OpsPage() {
     : [];
   const total = latest?.runMetrics["total_seconds"];
   const dq = latest?.runMetrics["data_quality"] as
-    | { checked?: number; quarantined?: Record<string, { issues: string[]; using: string }> }
+    | { checked?: number; quarantined?: Record<string, { issues: string[]; using: string }>; not_delivered?: string[] }
     | undefined;
   const quarantined = Object.entries(dq?.quarantined ?? {});
+  const notDelivered = dq?.not_delivered ?? [];
 
   return (
     <div className="space-y-6">
@@ -116,8 +117,9 @@ export default function OpsPage() {
                     {k} {SYSTEM[k]}
                   </td>
                   <td className="px-4 py-2">
-                    <Badge tone={m.status === "ok" ? "emerald" : "red"}>{m.status}</Badge>
+                    <Badge tone={m.status === "ok" ? "emerald" : m.status === "partial" ? "amber" : "red"}>{m.status}</Badge>
                     {m.error && <span className="ml-2 text-xs text-red-700">{m.error}</span>}
+                    {m.note && <span className="ml-2 text-xs text-zinc-600">{m.note}</span>}
                   </td>
                   <td className="px-4 py-2 text-right tabular-nums">{m.seconds.toFixed(3)}</td>
                   <td className="px-4 py-2 text-right tabular-nums">
@@ -133,11 +135,14 @@ export default function OpsPage() {
       {dq && (
         <Card className="px-4 py-3 text-sm">
           <span className="font-medium text-zinc-900">Input data quality: </span>
-          {quarantined.length === 0 ? (
-            <span className="text-zinc-600">all {dq.checked ?? 0} input files passed their checks.</span>
+          {quarantined.length === 0 && notDelivered.length === 0 ? (
+            <span className="text-zinc-600">all {dq.checked ?? 0} input files passed their checks, and every input was delivered.</span>
           ) : (
             <span className="text-red-700">
-              {quarantined.map(([t, v]) => `${t} quarantined (${v.issues[0]}; using ${v.using})`).join(" · ")}
+              {[
+                ...quarantined.map(([t, v]) => `${t} quarantined (${v.issues[0]}; using ${v.using})`),
+                ...notDelivered.map((n) => `${n} not delivered`),
+              ].join(" · ")}
             </span>
           )}
         </Card>

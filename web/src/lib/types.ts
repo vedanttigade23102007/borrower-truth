@@ -103,7 +103,8 @@ export type CaseSummary = {
   caseStatus: string;
 };
 
-export type SystemMetric = { status: string; seconds: number; signals?: number; cases?: number; error?: string };
+/** status "not run" or "partial": an input wasn't delivered, and `note` says which (the data contract) */
+export type SystemMetric = { status: string; seconds: number; signals?: number; cases?: number; error?: string; note?: string };
 
 export type RunStatus = {
   asOf: number | null;

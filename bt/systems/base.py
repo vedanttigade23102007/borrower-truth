@@ -35,6 +35,14 @@ EMPTY_SCHEMAS = {
     # what the borrower (or its parent) filed with the SEC: 10-K debt notes and Exhibit 21, 8-K items, XBRL revenue
     "sec_filings": "borrower_id VARCHAR, form VARCHAR, filed_month BIGINT, item VARCHAR, counterparty_entity_id VARCHAR, "
                    "counterparty_name VARCHAR, amount DOUBLE, quarter BIGINT, note VARCHAR",
+    # not delivered: the check that needs it doesn't run (bt.pipeline.contract); the empty table only keeps queries valid
+    "gleif": "lei VARCHAR, entity_id VARCHAR, legal_name VARCHAR, parent_entity_id VARCHAR",
+    "ucc_filings": "filing_id VARCHAR, state VARCHAR, debtor_name VARCHAR, debtor_address VARCHAR, secured_party_name VARCHAR, "
+                   "collateral_desc VARCHAR, filed_month BIGINT",
+    "financials": "borrower_id VARCHAR, quarter BIGINT, revenue_reported DOUBLE, receivables_reported DOUBLE, cash_reported DOUBLE, "
+                  "debt_reported DOUBLE, covenant_metric_reported DOUBLE, covenant_threshold DOUBLE",
+    "persons": "person_id VARCHAR, name VARCHAR",
+    "facilities": "facility_id VARCHAR, borrower_id VARCHAR, lender_entity_id VARCHAR, kind VARCHAR, limit DOUBLE, advance_rate DOUBLE",
 }
 
 # view name -> (file, time filter using {a} = as_of)
@@ -84,9 +92,9 @@ class Ctx:
         if p and os.path.exists(p) and len(pq.read_schema(p)) > 0:
             return f"SELECT * FROM read_parquet('{p}')"
         if fname in EMPTY_SCHEMAS:
-            cols = ", ".join(f"CAST(NULL AS {c.split()[1]}) AS {c.split()[0]}" for c in EMPTY_SCHEMAS[fname].split(", "))
+            cols = ", ".join(f"CAST(NULL AS {c.split()[1]}) AS \"{c.split()[0]}\"" for c in EMPTY_SCHEMAS[fname].split(", "))
             return f"SELECT {cols} WHERE false"
-        raise FileNotFoundError(p)
+        raise FileNotFoundError(f"{fname}: a core input was not delivered and there is no last good copy, so the run stops")
 
     def rows(self, sql: str, params=None) -> list[dict]:
         cur = self.con.execute(sql, params or [])

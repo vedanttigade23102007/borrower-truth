@@ -31,7 +31,7 @@ REQUIRED = {
 KEYS = {"tape": ["borrower_id", "asset_id", "month"], "payments": ["borrower_id", "amount", "month"],
         "invoices": ["borrower_id", "invoice_number", "amount"], "borrowers": ["borrower_id", "entity_id"]}
 MONTHLY = {"tape": "month", "source_truth": "month", "payments": "month", "invoices": "pledged_month"}
-CORE = {"borrowers", "entities", "payments"}  # must have rows
+CORE = {"borrowers", "entities", "payments", "disclosures"}  # must have rows (bt.pipeline.contract.CORE)
 MAX_NULL_SHARE = 0.01
 LAST_GOOD = ".last_good"
 

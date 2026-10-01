@@ -8,6 +8,10 @@ fails or times out, the run continues, the failure is recorded in `coverage`,
 and every case says which checks were unavailable. `--fail S4` simulates a crash
 for the break-it demo.
 
+The data contract (bt.pipeline.contract): a check whose needed input wasn't
+delivered doesn't run, and one missing an optional input runs without the clues
+that input decides. `coverage` says which, so a missing file never looks clean.
+
     uv run python -m bt.pipeline.run --data data/out/demo --out data/out/demo/run
 """
 from __future__ import annotations
@@ -22,7 +26,7 @@ import pyarrow as pa
 import pyarrow.parquet as pq
 
 from bt.combiner.combine import build_cases
-from bt.pipeline import dq, record
+from bt.pipeline import contract, dq, record
 from bt.common.metrics import pipeline_samples, push
 from bt.systems import (s1_collateral, s2_tape_source, s3_cash, s4_invoices, s5_hidden_debt,
                         s6_relationships, s7_financial)
@@ -35,7 +39,11 @@ class SystemFailure(Exception):
     pass
 
 
-def _guarded(ctx: Ctx, name: str, fn, simulate_fail: set[str], metrics: dict):
+def _guarded(ctx: Ctx, name: str, fn, simulate_fail: set[str], metrics: dict, missing: set[str] = frozenset()):
+    why = contract.blocked(name, missing)
+    if why:  # no needed input, no run: an empty table would look clean, or invent clues
+        metrics[name] = dict(status="not run", seconds=0.0, signals=0, note=why)
+        return []
     t0 = time.perf_counter()
     timer = threading.Timer(TIME_BUDGET_S, ctx.con.interrupt)
     timer.start()
@@ -43,7 +51,11 @@ def _guarded(ctx: Ctx, name: str, fn, simulate_fail: set[str], metrics: dict):
         if name in simulate_fail:
             raise SystemFailure(f"{name}: simulated crash (break-it demo)")
         out = fn()
-        metrics[name] = dict(status="ok", seconds=round(time.perf_counter() - t0, 3), signals=len(out))
+        note, drop = contract.partial(name, missing)
+        out = [s for s in out if s.type not in drop]
+        metrics[name] = dict(status="partial" if note else "ok", seconds=round(time.perf_counter() - t0, 3), signals=len(out))
+        if note:
+            metrics[name]["note"] = note
         return out
     except Exception as e:  # isolate: one system failing never stops the others
         metrics[name] = dict(status="unavailable", seconds=round(time.perf_counter() - t0, 3), signals=0,
@@ -59,26 +71,30 @@ def run(data_dir: str, as_of: int = 23, simulate_fail: set[str] | None = None, m
     overrides, dq_report = dq.stage(data_dir)  # quarantine bad files before anything reads them
     ctx = Ctx(data_dir, as_of, materialize=materialize, overrides=overrides)
     ctx.shared["sec_off"] = "SEC" in simulate_fail  # switch-off test for the checks built on public SEC data
+    missing = contract.not_delivered(data_dir, overrides)
+    dq_report["not_delivered"] = sorted(contract.INPUTS[f] for f in missing)
     metrics: dict = {"data_quality": dq_report}
     signals = []
-    signals += _guarded(ctx, "S6", lambda: s6_relationships.run(ctx), simulate_fail, metrics)
-    if metrics["S6"]["status"] != "ok":  # degraded mode: downstream systems search the borrower only
+    g = lambda name, fn: _guarded(ctx, name, fn, simulate_fail, metrics, missing)  # noqa: E731
+    signals += g("S6", lambda: s6_relationships.run(ctx))
+    if metrics["S6"]["status"] not in ("ok", "partial"):  # degraded mode: downstream systems search the borrower only
         ctx.con.execute("CREATE OR REPLACE TABLE related AS SELECT NULL::VARCHAR AS borrower_id, NULL::VARCHAR AS entity_id, "
                         "NULL::VARCHAR AS name, NULL::VARCHAR AS kind, NULL::BOOLEAN AS has_operations, "
                         "NULL::BIGINT AS formed_month, NULL::BOOLEAN AS same_owner, NULL::BOOLEAN AS same_address, "
                         "NULL::BOOLEAN AS disclosed, NULL::BOOLEAN AS in_gleif WHERE false")
-    signals += _guarded(ctx, "S1", lambda: s1_collateral.run(ctx), simulate_fail, metrics)
-    signals += _guarded(ctx, "S2", lambda: s2_tape_source.run(ctx), simulate_fail, metrics)
-    signals += _guarded(ctx, "S3", lambda: s3_cash.run(ctx), simulate_fail, metrics)
-    s4 = _guarded(ctx, "S4", lambda: s4_invoices.run(ctx), simulate_fail, metrics)
+    signals += g("S1", lambda: s1_collateral.run(ctx))
+    signals += g("S2", lambda: s2_tape_source.run(ctx))
+    signals += g("S3", lambda: s3_cash.run(ctx))
+    s4 = g("S4", lambda: s4_invoices.run(ctx))
     signals += s4
-    signals += _guarded(ctx, "S5", lambda: s5_hidden_debt.run(ctx), simulate_fail, metrics)
+    signals += g("S5", lambda: s5_hidden_debt.run(ctx))
     upstream = dict(s5_undisclosed=ctx.shared.get("s5_undisclosed", {}), s4_flags={})
     for s in s4:
         upstream["s4_flags"].setdefault(s.entity_id, []).append(s.signal_id)
-    signals += _guarded(ctx, "S7", lambda: s7_financial.run(ctx, upstream), simulate_fail, metrics)
+    signals += g("S7", lambda: s7_financial.run(ctx, upstream))
 
-    coverage = {k: v["status"] for k, v in metrics.items() if isinstance(v, dict) and "status" in v}
+    coverage = {k: v["status"] + (f": {v['note']}" if v.get("note") else "")
+                for k, v in metrics.items() if isinstance(v, dict) and "status" in v}
     q = dq_report["quarantined"]
     coverage["data"] = ("quarantined: " + ", ".join(f"{t} ({v['using']})" for t, v in q.items())) if q else "ok"
     coverage["documents"] = ctx.shared.get("documents", "unavailable (rule checks only)")
