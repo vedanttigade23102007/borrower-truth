@@ -1,6 +1,6 @@
 {
  "asOf": 23,
- "receivedAt": "2026-10-01T07:38:53.842327Z",
+ "receivedAt": "2026-10-01T07:58:56.896572Z",
  "runMetrics": {
   "data_quality": {
    "quarantined": {},
@@ -9,28 +9,28 @@
   },
   "S6": {
    "status": "ok",
-   "seconds": 0.011,
+   "seconds": 0.021,
    "signals": 93
   },
   "S1": {
    "status": "ok",
-   "seconds": 0.071,
+   "seconds": 0.074,
    "signals": 74
   },
   "S2": {
    "status": "ok",
-   "seconds": 0.088,
+   "seconds": 0.093,
    "signals": 61
   },
   "S3": {
    "status": "ok",
-   "seconds": 0.305,
+   "seconds": 0.297,
    "signals": 24
   },
   "S4": {
    "status": "ok",
-   "seconds": 0.038,
-   "signals": 29
+   "seconds": 0.037,
+   "signals": 15
   },
   "S5": {
    "status": "ok",
@@ -40,7 +40,7 @@
   "S7": {
    "status": "ok",
    "seconds": 0.004,
-   "signals": 70
+   "signals": 61
   },
   "manifest": {
    "as_of": 23,
@@ -48,7 +48,6 @@
     "borrowers": "01b1832dcf01bff8",
     "court_records": "a79407e3d9e271c7",
     "disclosures": "0cdaea82b556b55e",
-    "doc_reads": "c5c0b7073fb1f912",
     "entities": "79858846bd92cf4a",
     "facilities": "ac876e56664fca9d",
     "financials": "bf4f50bccb57d5fa",
@@ -64,22 +63,24 @@
     "tape": "5022d2804c4bc776",
     "ucc_filings": "dc69464a1eac5eca"
    },
-   "inputs_digest": "ceddf15cfd0b",
-   "rule_version": "250ca6700cfc",
-   "code_version": "43a7e89"
+   "document_model": false,
+   "inputs_digest": "ec63acb069af",
+   "rule_version": "614d4a97ea9e",
+   "code_version": "3881eb6"
   },
   "combiner": {
    "status": "ok",
-   "seconds": 0.081,
+   "seconds": 0.089,
    "cases": 120
   },
-  "total_seconds": 1.313,
-  "as_of": 23
+  "total_seconds": 1.392,
+  "as_of": 23,
+  "document_model": "off"
  },
  "verdicts": {
-  "EXPLAINED": 7,
+  "EXPLAINED": 8,
   "LIKELY_FRAUD": 50,
-  "NEEDS_MORE_EVIDENCE": 20,
-  "NO_ISSUE": 43
+  "NEEDS_MORE_EVIDENCE": 14,
+  "NO_ISSUE": 48
  }
 }

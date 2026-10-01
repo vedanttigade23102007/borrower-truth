@@ -1,8 +1,8 @@
 {
  "counts": {
-  "cleared": 50,
+  "cleared": 56,
   "caught": 50,
-  "worth a look (honest)": 20
+  "worth a look (honest)": 14
  },
  "borrowers": [
   {
@@ -345,11 +345,11 @@
     "DISCLOSED_RELATED_LEASE",
     "SEASONAL_REVENUE"
    ],
-   "verdict": "NEEDS_MORE_EVIDENCE",
+   "verdict": "EXPLAINED",
    "found": [],
    "right_mechanisms": [],
-   "status": "worth a look (honest)",
-   "priority": 0.85
+   "status": "cleared",
+   "priority": 0.0
   },
   {
    "borrower_id": "B0023",
@@ -719,11 +719,11 @@
    "borrower_id": "B0044",
    "planted": [],
    "lookalikes": [],
-   "verdict": "NEEDS_MORE_EVIDENCE",
+   "verdict": "NO_ISSUE",
    "found": [],
    "right_mechanisms": [],
-   "status": "worth a look (honest)",
-   "priority": 0.878
+   "status": "cleared",
+   "priority": 0.122
   },
   {
    "borrower_id": "B0045",
@@ -846,11 +846,11 @@
     "DORMANT_SUBSIDIARY",
     "NEW_DEBT_8K"
    ],
-   "verdict": "NEEDS_MORE_EVIDENCE",
+   "verdict": "NO_ISSUE",
    "found": [],
    "right_mechanisms": [],
-   "status": "worth a look (honest)",
-   "priority": 0.966
+   "status": "cleared",
+   "priority": 0.157
   },
   {
    "borrower_id": "B0055",
@@ -862,7 +862,7 @@
    "found": [],
    "right_mechanisms": [],
    "status": "worth a look (honest)",
-   "priority": 0.999
+   "priority": 0.3
   },
   {
    "borrower_id": "B0056",
@@ -1131,11 +1131,11 @@
    "lookalikes": [
     "TWO_WAY_TRADE"
    ],
-   "verdict": "NEEDS_MORE_EVIDENCE",
+   "verdict": "NO_ISSUE",
    "found": [],
    "right_mechanisms": [],
-   "status": "worth a look (honest)",
-   "priority": 0.85
+   "status": "cleared",
+   "priority": 0.0
   },
   {
    "borrower_id": "B0072",
@@ -1212,11 +1212,11 @@
     "SEASONAL_REVENUE",
     "TWO_WAY_TRADE"
    ],
-   "verdict": "NEEDS_MORE_EVIDENCE",
+   "verdict": "NO_ISSUE",
    "found": [],
    "right_mechanisms": [],
-   "status": "worth a look (honest)",
-   "priority": 0.966
+   "status": "cleared",
+   "priority": 0.157
   },
   {
    "borrower_id": "B0077",
@@ -1288,7 +1288,7 @@
    "found": [],
    "right_mechanisms": [],
    "status": "worth a look (honest)",
-   "priority": 0.92
+   "priority": 0.36
   },
   {
    "borrower_id": "B0082",
@@ -1399,11 +1399,11 @@
    "lookalikes": [
     "NAME_TYPO"
    ],
-   "verdict": "NEEDS_MORE_EVIDENCE",
+   "verdict": "NO_ISSUE",
    "found": [],
    "right_mechanisms": [],
-   "status": "worth a look (honest)",
-   "priority": 0.85
+   "status": "cleared",
+   "priority": 0.0
   },
   {
    "borrower_id": "B0091",

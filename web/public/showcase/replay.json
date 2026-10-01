@@ -8,7 +8,6 @@
   "borrowers": "01b1832dcf01bff8",
   "court_records": "a79407e3d9e271c7",
   "disclosures": "0cdaea82b556b55e",
-  "doc_reads": "c5c0b7073fb1f912",
   "entities": "79858846bd92cf4a",
   "facilities": "ac876e56664fca9d",
   "financials": "bf4f50bccb57d5fa",
@@ -24,7 +23,7 @@
   "tape": "5022d2804c4bc776",
   "ucc_filings": "dc69464a1eac5eca"
  },
- "inputs_digest": "ceddf15cfd0b",
- "rule_version": "250ca6700cfc",
- "code_version": "43a7e89"
+ "inputs_digest": "ec63acb069af",
+ "rule_version": "614d4a97ea9e",
+ "code_version": "3881eb6"
 }
