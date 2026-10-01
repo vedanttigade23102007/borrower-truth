@@ -1,0 +1,7 @@
+{
+ "tag": "redteam-after-fixes",
+ "rule_version": "cdf8b9b94a09",
+ "code_version": "ee206db",
+ "frozen_at": "2026-10-02",
+ "attacks_zip_sha256": "7cf1b82a57f0731512be12a04a98c5d7458879fc5f6e44e52e6c53936e89ecd5"
+}
