@@ -42,3 +42,5 @@ Files scanned: 26. Forbidden terms searched: 80 (our signal, finding and check n
 **Read by a person, beyond the scan:**
 - **The three allegation texts** are the DOJ and SEC press releases, with the header our research script adds (source URL, date fetched). They don't mention the bank, this project or any code.
 - **The sample book has no labels, notes or generator manifest.** The 6 borrowers with planted frauds were stripped out, along with the companies, people, liens and judgments that only they touched. Their IDs leave gaps in the numbering (B0018, B0019, B0029, B0030, B0034, B0037). That reveals only that some borrowers were removed, which README.md says openly.
+
+**Rebuilt on 1 Oct 2026, after Vedant added the company-history lever.** The scan gave the same 3 hits and the same 14 numbers, and the judgement above still holds. The only content change is the new lever, in README.md and in the example's `USES_COMPANY_HISTORY` flag.
