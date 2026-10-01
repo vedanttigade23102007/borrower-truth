@@ -54,6 +54,17 @@ public class CaseController {
         return service.decide(borrowerId, code, in);
     }
 
+    /** Clears picked for a second person. In a bank only reviewers would see this; that needs the bank's sign-in. */
+    @GetMapping("/second-checks")
+    public List<SecondCheckView> secondChecks() {
+        return service.secondChecks();
+    }
+
+    @PostMapping("/second-checks/{borrowerId}/{code}")
+    public SecondCheckView review(@PathVariable String borrowerId, @PathVariable String code, @Valid @RequestBody DecisionIn in) {
+        return service.review(borrowerId, code, in);
+    }
+
     @GetMapping("/feedback")
     public List<FeedbackRow> feedback() {
         return service.feedback();

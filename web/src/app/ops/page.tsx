@@ -1,8 +1,17 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { Badge, Card, ErrorState, Skeleton } from "@/components/ui";
-import { fetchFeedback, fetchLatest, type FeedbackRow } from "@/lib/api";
+import Link from "next/link";
+import { useCallback, useEffect, useState } from "react";
+import { Badge, Button, Card, ErrorState, Skeleton } from "@/components/ui";
+import {
+  LARGE_AMOUNT,
+  fetchFeedback,
+  fetchLatest,
+  fetchSecondChecks,
+  reviewSecondCheck,
+  type FeedbackRow,
+  type SecondCheck,
+} from "@/lib/api";
 import { MECHANISM, SYSTEM, fmtDate } from "@/lib/labels";
 import type { RunStatus, SystemMetric } from "@/lib/types";
 
@@ -201,6 +210,8 @@ export default function OpsPage() {
         </p>
       </Card>
 
+      <SecondChecks />
+
       <Card className="overflow-hidden">
         <h2 className="border-b border-zinc-200 px-4 py-3 text-sm font-medium text-zinc-900">
           Scale test: all seven checks, one laptop
@@ -251,5 +262,133 @@ export default function OpsPage() {
         </dl>
       </Card>
     </div>
+  );
+}
+
+const USER_KEY = "bt-user";
+
+/** Clears picked for a second person. The officer's case screens never show which clears were picked. */
+function SecondChecks() {
+  const [list, setList] = useState<SecondCheck[] | null>(null);
+  const [user, setUser] = useState("");
+  const [notes, setNotes] = useState<Record<string, string>>({});
+  const [busy, setBusy] = useState<string | null>(null);
+  const [err, setErr] = useState<string | null>(null);
+  const load = useCallback(() => {
+    fetchSecondChecks()
+      .then(setList)
+      .catch(() => setList([]));
+  }, []);
+
+  useEffect(() => {
+    load();
+    try {
+      // restoring a browser-only preference after hydration; there is no server value to render instead
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setUser(window.localStorage.getItem(USER_KEY) ?? "");
+    } catch {
+      /* storage unavailable */
+    }
+  }, [load]);
+
+  async function act(sc: SecondCheck, d: "AGREE" | "DISAGREE") {
+    const key = sc.borrowerId + sc.code;
+    setBusy(key + d);
+    setErr(null);
+    try {
+      await reviewSecondCheck(sc, d, user, notes[key] ?? "");
+      load();
+    } catch (e) {
+      setErr(e instanceof Error ? e.message : String(e));
+    } finally {
+      setBusy(null);
+    }
+  }
+
+  return (
+    <Card className="overflow-hidden">
+      <div className="flex flex-wrap items-center gap-3 border-b border-zinc-200 px-4 py-3">
+        <h2 className="text-sm font-medium text-zinc-900">Second checks on cleared findings</h2>
+        <label className="ml-auto flex items-center gap-2 text-xs text-zinc-600">
+          Reviewing as
+          <input
+            value={user}
+            onChange={(e) => setUser(e.target.value)}
+            className="h-7 w-36 rounded-md border border-zinc-300 px-2 text-sm text-zinc-900 focus-visible:outline-2 focus-visible:outline-blue-600"
+          />
+        </label>
+      </div>
+      <p className="border-b border-zinc-100 bg-zinc-50 px-4 py-2 text-xs text-zinc-600">
+        A second person checks every cleared &ldquo;worth a look&rdquo; finding whose clues name $
+        {LARGE_AMOUNT.toLocaleString("en-US")} or more, and a random 1 in 10 of the rest. The pick is made after the clear, and
+        the officer&apos;s case screens don&apos;t show it. The officer who cleared it can&apos;t be its second check, and a
+        disagreement escalates the finding to its full fix. In a bank only reviewers would see this list; that needs the
+        bank&apos;s sign-in, which isn&apos;t built.
+      </p>
+      {err && (
+        <p role="alert" className="border-b border-red-100 bg-red-50 px-4 py-2 text-sm text-red-800">
+          {err}
+        </p>
+      )}
+      {!list ? (
+        <div className="p-4">
+          <Skeleton className="h-16 w-full" />
+        </div>
+      ) : list.length === 0 ? (
+        <p className="px-4 py-6 text-sm text-zinc-500">No cleared findings have been picked yet.</p>
+      ) : (
+        <ul className="divide-y divide-zinc-100 text-sm">
+          {list.map((sc) => {
+            const key = sc.borrowerId + sc.code;
+            return (
+              <li key={key} className="px-4 py-3">
+                <div className="flex flex-wrap items-center gap-2">
+                  <Link
+                    href={`/case/${sc.borrowerId}`}
+                    className="rounded font-mono text-xs font-medium text-blue-700 hover:underline focus-visible:outline-2 focus-visible:outline-blue-600"
+                  >
+                    {sc.borrowerId}
+                  </Link>
+                  <span className="font-medium text-zinc-900">{sc.title}</span>
+                  <Badge>{MECHANISM[sc.mechanism] ?? sc.mechanism}</Badge>
+                  <Badge tone={sc.reason === "LARGE_AMOUNT" ? "amber" : "zinc"}>
+                    {sc.reason === "LARGE_AMOUNT" ? `large amount: $${(sc.amount ?? 0).toLocaleString("en-US")}` : "random 1 in 10"}
+                  </Badge>
+                  <Badge tone={sc.status === "WAITING" ? "amber" : sc.status === "AGREED" ? "emerald" : "red"}>
+                    {sc.status === "WAITING" ? "Waiting" : sc.status === "AGREED" ? "Agreed" : "Disagreed: escalated"}
+                  </Badge>
+                </div>
+                <p className="mt-1 text-xs text-zinc-500">
+                  cleared by {sc.clearedBy} · {fmtDate(sc.pickedAt)}
+                  {sc.clearNote ? ` · “${sc.clearNote}”` : ""}
+                  {sc.reviewer ? ` · ${sc.status.toLowerCase()} by ${sc.reviewer}${sc.note ? `: “${sc.note}”` : ""}` : ""}
+                </p>
+                {sc.status === "WAITING" && (
+                  <div className="mt-2 flex flex-wrap items-center gap-2">
+                    <input
+                      aria-label={`Note for the second check of ${sc.borrowerId}`}
+                      placeholder="Note (needed to disagree)"
+                      value={notes[key] ?? ""}
+                      onChange={(e) => setNotes({ ...notes, [key]: e.target.value })}
+                      className="h-8 w-full max-w-md rounded-md border border-zinc-300 px-2 text-sm focus-visible:outline-2 focus-visible:outline-blue-600"
+                    />
+                    <Button variant="primary" disabled={busy !== null} onClick={() => void act(sc, "AGREE")}>
+                      Agree
+                    </Button>
+                    <Button
+                      variant="danger"
+                      disabled={busy !== null || !(notes[key] ?? "").trim()}
+                      onClick={() => void act(sc, "DISAGREE")}
+                    >
+                      Disagree
+                    </Button>
+                  </div>
+                )}
+              </li>
+            );
+          })}
+        </ul>
+      )}
+    </Card>
   );
 }

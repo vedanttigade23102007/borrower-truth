@@ -24,8 +24,10 @@ class CaseFlowTest {
 
     @BeforeEach
     void cleanDatabase() {  // each test starts from an empty book of decisions
+        jdbc.update("DELETE FROM second_check");
         jdbc.update("DELETE FROM fix_step");
         jdbc.update("DELETE FROM audit_event");
+        service.setDraw(() -> 0.99);  // no random second checks unless a test asks for one
     }
 
     RunIn run() {
@@ -223,6 +225,84 @@ class CaseFlowTest {
         jdbc.update("UPDATE fix_step SET clues = NULL");
         assertEquals(0, service.ingest(lowRun()).stepsCreated());
         assertNotNull(jdbc.queryForObject("SELECT clues FROM fix_step WHERE code='CHECK_LIEN_RELEASE'", String.class));
+    }
+
+    static SignalIn payer(String amount) {
+        return new SignalIn("S3-B0002-NON_OBLIGOR_PAYER-p", "B0002", "S3", "NON_OBLIGOR_PAYER", 0.5, 0.6,
+                List.of("payment:T1", "payment:T2", "payer:Summit Property Partners LLC"),
+                "$" + amount + " (1.7% of inflows) came from 'Summit Property Partners LLC', who is not a known customer or obligor",
+                3, List.of());
+    }
+
+    @Test
+    void aClearNamingALargeAmountAlwaysGetsASecondCheck() {
+        service.ingest(lowRun("DISGUISED_RECEIPTS", payer("774,996")));
+        StepView cleared = service.decide("B0002", "CHECK_PAYER", new DecisionIn("CLEAR", "officer.a", "parent pays for a customer"));
+        SecondCheckView sc = service.secondChecks().get(0);
+        assertEquals("LARGE_AMOUNT", sc.reason());
+        assertEquals(774_996L, sc.amount());
+        assertEquals("WAITING", sc.status());
+        // the officer's own screens don't show the pick: the step says cleared, the case log has no second-check entry
+        assertEquals("CLEARED", cleared.status());
+        assertTrue(service.detail("B0002").orElseThrow().audit().stream().noneMatch(a -> a.action().startsWith("SECOND_CHECK")));
+        assertTrue(service.audit(null).stream().anyMatch(a -> a.action().equals("SECOND_CHECK_PICKED") && a.borrowerId() == null));
+    }
+
+    @Test
+    void otherClearsArePickedOneInTenAfterTheClear() {
+        service.ingest(lowRun("DISGUISED_RECEIPTS", payer("499,999")));  // just under the line: left to the draw
+        service.setDraw(() -> 0.10);
+        service.decide("B0002", "CHECK_PAYER", new DecisionIn("CLEAR", "officer.a", "known insurer"));
+        assertTrue(service.secondChecks().isEmpty());
+
+        cleanDatabase();
+        service.ingest(lowRun());
+        service.setDraw(() -> 0.0999);
+        service.decide("B0002", "CHECK_LIEN_RELEASE", new DecisionIn("CLEAR", "officer.a", "UCC-3 on file"));
+        assertEquals("RANDOM", service.secondChecks().get(0).reason());
+        assertNull(service.secondChecks().get(0).amount());  // an old lien names no amount
+    }
+
+    @Test
+    void theSecondCheckIsSomeoneElseAndADisagreementEscalates() {
+        service.ingest(lowRun("DISGUISED_RECEIPTS", payer("900,000")));
+        service.decide("B0002", "CHECK_PAYER", new DecisionIn("CLEAR", "officer.a", "parent pays for a customer"));
+        assertThrows(IllegalStateException.class,
+                () -> service.review("B0002", "CHECK_PAYER", new DecisionIn("AGREE", " Officer.A", null)));
+        assertThrows(IllegalArgumentException.class,
+                () -> service.review("B0002", "CHECK_PAYER", new DecisionIn("DISAGREE", "officer.b", " ")));
+        assertEquals("DISAGREED", service.review("B0002", "CHECK_PAYER",
+                new DecisionIn("DISAGREE", "officer.b", "no agreement on file for a parent paying")).status());
+        CaseDetail d = service.detail("B0002").orElseThrow();
+        assertEquals("ESCALATED", visible(d).stream().filter(StepView::check).findFirst().orElseThrow().status());
+        assertEquals(3, visible(d).stream().filter(s -> !s.check() && s.status().equals("PROPOSED")).count());
+        assertTrue(d.audit().stream().anyMatch(a -> a.action().equals("SECOND_CHECK_DISAGREED") && a.actor().equals("officer.b")));
+        assertThrows(IllegalStateException.class,  // decided once
+                () -> service.review("B0002", "CHECK_PAYER", new DecisionIn("AGREE", "officer.c", null)));
+    }
+
+    @Test
+    void anAgreementLeavesTheClearStanding() {
+        service.ingest(lowRun("DISGUISED_RECEIPTS", payer("900,000")));
+        service.decide("B0002", "CHECK_PAYER", new DecisionIn("CLEAR", "officer.a", "parent pays for a customer"));
+        assertEquals("AGREED", service.review("B0002", "CHECK_PAYER", new DecisionIn("AGREE", "officer.b", null)).status());
+        assertEquals("RESOLVED", service.detail("B0002").orElseThrow().caseStatus());
+    }
+
+    @Test
+    void stepCodesAreUniquePerBorrower() {
+        // old liens under two kinds of finding: both checks would be CHECK_LIEN_RELEASE
+        SignalIn a = oldLien("S5-B0002-COMPETING_LIEN-a", "TX-UCC-000010");
+        SignalIn b = oldLien("S5-B0002-COMPETING_LIEN-b", "TX-UCC-000011");
+        FindingIn debt = new FindingIn("HIDDEN_DEBT", "low", "x", List.of(a.signalId()), List.of(), List.of(), List.of("S5"), -10);
+        FindingIn pledge = new FindingIn("DOUBLE_PLEDGE", "low", "x", List.of(b.signalId()), List.of(), List.of(), List.of("S5"), -10);
+        service.ingest(new RunIn(23, Map.of(), List.of(new CaseIn("B0002", "NEEDS_MORE_EVIDENCE", "Worth a look", 0.3,
+                List.of(debt, pledge), List.of(a, b), List.of(), Map.of(), null))));
+        List<StepView> checks = visible(service.detail("B0002").orElseThrow()).stream().filter(StepView::check).toList();
+        assertEquals(2, checks.stream().map(StepView::code).distinct().count());
+        for (StepView c : checks) {
+            assertEquals(c.mechanism(), service.decide("B0002", c.code(), new DecisionIn("CLEAR", "officer.a", "repaid")).mechanism());
+        }
     }
 
     @Test

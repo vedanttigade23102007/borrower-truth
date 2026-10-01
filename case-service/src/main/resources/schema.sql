@@ -30,3 +30,20 @@ CREATE TABLE IF NOT EXISTS audit_event (
     action      VARCHAR(40)   NOT NULL,
     detail      VARCHAR(2000)
 );
+
+-- A second person checks a sample of "worth a look" clears: every clear whose clues name a large amount, and a random
+-- 1 in 10 of the rest. The pick is made after the clear and is not shown on the officer's case screens.
+CREATE TABLE IF NOT EXISTS second_check (
+    borrower_id VARCHAR(20)   NOT NULL,
+    mechanism   VARCHAR(40)   NOT NULL,
+    code        VARCHAR(60)   NOT NULL,
+    reason      VARCHAR(20)   NOT NULL,  -- LARGE_AMOUNT or RANDOM
+    amount      BIGINT,                  -- the largest dollar amount the cleared clues name
+    cleared_by  VARCHAR(80)   NOT NULL,
+    picked_at   TIMESTAMP     NOT NULL,
+    status      VARCHAR(20)   NOT NULL,  -- WAITING, AGREED or DISAGREED
+    reviewer    VARCHAR(80),
+    reviewed_at TIMESTAMP,
+    note        VARCHAR(1000),
+    PRIMARY KEY (borrower_id, mechanism, code)
+);

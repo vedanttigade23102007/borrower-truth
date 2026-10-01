@@ -4,6 +4,7 @@ import com.borrowertruth.cases.api.Dto.CaseIn;
 import com.borrowertruth.cases.api.Dto.FindingIn;
 import com.borrowertruth.cases.api.Dto.SignalIn;
 import com.borrowertruth.cases.domain.Playbooks;
+import com.borrowertruth.cases.service.CaseService;
 import com.borrowertruth.cases.drafts.DraftWriter;
 import com.borrowertruth.cases.drafts.FallbackDraftWriter;
 import com.borrowertruth.cases.drafts.TemplateDraftWriter;
@@ -82,6 +83,13 @@ class PlaybooksTest {
         SignalIn pattern = new SignalIn("S7-x", "B0002", "S7", "CASH_REVENUE_GAP", 0.6, 0.6,
                 List.of("financials:B0002:Q4", "financials:B0002:Q5"), "", 20, List.of());
         assertEquals("CASH_REVENUE_GAP", Playbooks.clueKey(pattern));  // its months change; the clue doesn't
+    }
+
+    @Test
+    void theLargestDollarAmountInTheClues() {
+        assertEquals(774_996L, CaseService.largestAmount(List.of("Judgment of $181,092 against 'Harbor Trade Corp'",
+                "$774,996 (1.7% of inflows) came from 'Summit Property Partners LLC'")));
+        assertEquals(0L, CaseService.largestAmount(List.of("16.6% of loans reported current had no payment arrive (81 of 488)")));
     }
 
     @Test

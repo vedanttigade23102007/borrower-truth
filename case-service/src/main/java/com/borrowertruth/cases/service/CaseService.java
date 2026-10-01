@@ -5,10 +5,12 @@ import com.borrowertruth.cases.domain.Playbooks;
 import com.borrowertruth.cases.domain.Playbooks.StepTemplate;
 import com.borrowertruth.cases.drafts.DraftWriter;
 import io.micrometer.core.instrument.MeterRegistry;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.security.SecureRandom;
 import java.sql.Timestamp;
 import java.time.Clock;
 import java.time.Instant;
@@ -16,6 +18,9 @@ import java.time.LocalDate;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedDeque;
+import java.util.function.DoubleSupplier;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 /**
@@ -35,17 +40,30 @@ public class CaseService {
     private final DraftWriter drafts;
     private final MeterRegistry meters;
     private final Clock clock;
+    private final double secondCheckRate;
+    private final long largeAmount;
+    /** The second-check draw. Unpredictable on purpose; tests replace it. */
+    private DoubleSupplier draw = new SecureRandom()::nextDouble;
+    private static final Pattern DOLLARS = Pattern.compile("\\$([0-9][0-9,]*)");
     private final Map<String, CaseIn> cases = new ConcurrentHashMap<>();
     private final Map<String, Deque<LiveAlertView>> live = new ConcurrentHashMap<>();
     private static final int LIVE_KEEP = 50;
     private volatile RunIn lastRun;
     private volatile Instant lastRunAt;
 
-    public CaseService(JdbcTemplate jdbc, DraftWriter drafts, MeterRegistry meters, Clock clock) {
+    public CaseService(JdbcTemplate jdbc, DraftWriter drafts, MeterRegistry meters, Clock clock,
+                       @Value("${bt.second-check.rate:0.10}") double secondCheckRate,
+                       @Value("${bt.second-check.large-amount:500000}") long largeAmount) {
         this.jdbc = jdbc;
         this.drafts = drafts;
         this.meters = meters;
         this.clock = clock;
+        this.secondCheckRate = secondCheckRate;
+        this.largeAmount = largeAmount;
+    }
+
+    public void setDraw(DoubleSupplier draw) {  // tests only
+        this.draw = draw;
     }
 
     @Transactional
@@ -130,10 +148,7 @@ public class CaseService {
         List<StepView> matches = steps(borrowerId).stream().filter(s -> s.code().equals(code)).toList();
         if (matches.isEmpty()) throw new NoSuchElementException("no step " + code + " for " + borrowerId);
         StepView s = matches.get(0);
-        String user = in.user() == null ? "" : in.user().trim();
-        if (user.isEmpty() || user.equalsIgnoreCase("unknown")) {
-            throw new IllegalArgumentException("a decision needs the officer's own name, not '" + user + "'");
-        }
+        String user = realName(in.user());
         String decision = in.decision().toUpperCase(Locale.ROOT);
         String next = switch (decision) {
             case "APPROVE" -> require(s, "APPROVED", PROPOSED);
@@ -152,15 +167,108 @@ public class CaseService {
         }
         meters.counter("bt.decisions", "decision", next).increment();
         audit(user, borrowerId, "STEP_" + next, code + (in.note() == null ? "" : " — " + in.note()));
-        if (next.equals("ESCALATED")) {
-            CaseIn c = cases.get(borrowerId);
-            FindingIn f = c == null || c.findings() == null ? null
-                    : c.findings().stream().filter(x -> x.mechanism().equals(s.mechanism())).findFirst().orElse(null);
-            int n = 0;
-            for (StepTemplate t : Playbooks.forMechanism(s.mechanism())) n += promote(borrowerId, c, f, s.mechanism(), t);
-            audit(user, borrowerId, "FIX_PROPOSED", s.mechanism() + ": " + n + " fix step(s) proposed after escalation");
-        }
+        if (next.equals("ESCALATED")) proposeFix(borrowerId, s.mechanism(), user);
+        if (next.equals("CLEARED")) pickForSecondCheck(borrowerId, s, user);  // after the clear, never before
         return steps(borrowerId).stream().filter(x -> x.code().equals(code)).findFirst().orElseThrow();
+    }
+
+    /** An escalated finding gets its full fix: the waiting steps become PROPOSED, drafted from today's evidence. */
+    private void proposeFix(String borrowerId, String mechanism, String user) {
+        CaseIn c = cases.get(borrowerId);
+        FindingIn f = c == null || c.findings() == null ? null
+                : c.findings().stream().filter(x -> x.mechanism().equals(mechanism)).findFirst().orElse(null);
+        int n = 0;
+        for (StepTemplate t : Playbooks.forMechanism(mechanism)) n += promote(borrowerId, c, f, mechanism, t);
+        audit(user, borrowerId, "FIX_PROPOSED", mechanism + ": " + n + " fix step(s) proposed after escalation");
+    }
+
+    /**
+     * A second person checks a sample of clears (Vedant, 1 Oct 2026): every clear whose clues name a large amount
+     * ($500,000 or more by default, set from the dev books), and a random 1 in 10 of the rest. The draw happens after
+     * the clear, and nothing on the officer's case screens shows it: the pick goes to the second-check list and to
+     * the bank-wide audit log, not to the case's own log.
+     */
+    private void pickForSecondCheck(String borrowerId, StepView s, String clearedBy) {
+        long amount = largestAmount(clueTexts(borrowerId, s));
+        String reason = amount >= largeAmount ? "LARGE_AMOUNT" : draw.getAsDouble() < secondCheckRate ? "RANDOM" : null;
+        if (reason == null) return;
+        jdbc.update("INSERT INTO second_check (borrower_id, mechanism, code, reason, amount, cleared_by, picked_at, status) "
+                        + "VALUES (?,?,?,?,?,?,?,?)", borrowerId, s.mechanism(), s.code(), reason, amount > 0 ? amount : null,
+                clearedBy, Timestamp.from(clock.instant()), "WAITING");
+        meters.counter("bt.second_checks", "reason", reason).increment();
+        audit("second-check", null, "SECOND_CHECK_PICKED", borrowerId + " " + s.code() + " (" + reason.toLowerCase(Locale.ROOT) + ")");
+    }
+
+    /** What the cleared check asked about: its clues' own words, or its letter if the case isn't in memory. */
+    private List<String> clueTexts(String borrowerId, StepView s) {
+        String clues = jdbc.queryForObject("SELECT clues FROM fix_step WHERE borrower_id=? AND mechanism=? AND code=?",
+                String.class, borrowerId, s.mechanism(), s.code());
+        Set<String> keys = clues == null ? Set.of() : new HashSet<>(Arrays.asList(clues.split("\n")));
+        CaseIn c = cases.get(borrowerId);
+        List<String> texts = new ArrayList<>();
+        if (c != null && c.signals() != null) {
+            for (SignalIn x : c.signals()) if (keys.contains(Playbooks.clueKey(x))) texts.add(x.explanation());
+        }
+        if (texts.isEmpty() && s.draft() != null) texts.add(s.draft());
+        return texts;
+    }
+
+    /** The largest dollar amount in the texts ("$774,996 (1.7% of inflows) came from …"), or 0. */
+    public static long largestAmount(List<String> texts) {
+        long max = 0;
+        for (String t : texts) {
+            if (t == null) continue;
+            Matcher m = DOLLARS.matcher(t);
+            while (m.find()) max = Math.max(max, Long.parseLong(m.group(1).replace(",", "")));
+        }
+        return max;
+    }
+
+    /** The second-check list, newest first. In a bank only reviewers would see it; that needs the bank's sign-in. */
+    public List<SecondCheckView> secondChecks() {
+        return jdbc.query("SELECT sc.borrower_id, sc.mechanism, sc.code, f.title, sc.reason, sc.amount, sc.cleared_by, f.note, "
+                        + "sc.picked_at, sc.status, sc.reviewer, sc.reviewed_at, sc.note FROM second_check sc JOIN fix_step f "
+                        + "ON f.borrower_id=sc.borrower_id AND f.mechanism=sc.mechanism AND f.code=sc.code "
+                        + "ORDER BY sc.picked_at DESC, sc.borrower_id",
+                (rs, i) -> new SecondCheckView(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4),
+                        rs.getString(5), rs.getObject(6) == null ? null : rs.getLong(6), rs.getString(7), rs.getString(8),
+                        rs.getTimestamp(9).toInstant(), rs.getString(10), rs.getString(11),
+                        rs.getTimestamp(12) == null ? null : rs.getTimestamp(12).toInstant(), rs.getString(13)));
+    }
+
+    /**
+     * The second person agrees with the clear, or disagrees, which escalates the finding to its full fix. The officer
+     * who cleared it can't be its second check, and a disagreement needs a reason.
+     */
+    @Transactional
+    public SecondCheckView review(String borrowerId, String code, DecisionIn in) {
+        String user = realName(in.user());
+        SecondCheckView sc = secondChecks().stream().filter(x -> x.borrowerId().equals(borrowerId) && x.code().equals(code))
+                .findFirst().orElseThrow(() -> new NoSuchElementException("no second check for " + code + " of " + borrowerId));
+        if (!sc.status().equals("WAITING")) throw new IllegalStateException("this second check is already " + sc.status());
+        if (sc.clearedBy().trim().equalsIgnoreCase(user)) {
+            throw new IllegalStateException(sc.clearedBy() + " cleared this, so someone else must be its second check");
+        }
+        String decision = in.decision().toUpperCase(Locale.ROOT);
+        String next = switch (decision) {
+            case "AGREE" -> "AGREED";
+            case "DISAGREE" -> {
+                if (in.note() == null || in.note().isBlank()) throw new IllegalArgumentException("DISAGREE needs a reason in the note");
+                yield "DISAGREED";
+            }
+            default -> throw new IllegalArgumentException("decision must be AGREE or DISAGREE");
+        };
+        Timestamp now = Timestamp.from(clock.instant());
+        jdbc.update("UPDATE second_check SET status=?, reviewer=?, reviewed_at=?, note=? WHERE borrower_id=? AND mechanism=? "
+                + "AND code=?", next, user, now, in.note(), borrowerId, sc.mechanism(), code);
+        meters.counter("bt.second_checks_reviewed", "outcome", next).increment();
+        audit(user, borrowerId, "SECOND_CHECK_" + next, code + (in.note() == null ? "" : " — " + in.note()));
+        if (next.equals("DISAGREED")) {
+            jdbc.update("UPDATE fix_step SET status='ESCALATED', decided_by=?, decided_at=?, note=? WHERE borrower_id=? "
+                    + "AND mechanism=? AND code=?", user, now, "second check disagreed: " + in.note(), borrowerId, sc.mechanism(), code);
+            proposeFix(borrowerId, sc.mechanism(), user);
+        }
+        return secondChecks().stream().filter(x -> x.borrowerId().equals(borrowerId) && x.code().equals(code)).findFirst().orElseThrow();
     }
 
     /**
@@ -199,6 +307,14 @@ public class CaseService {
                     + String.join(" or ", from));
         }
         return to;
+    }
+
+    private static String realName(String name) {
+        String user = name == null ? "" : name.trim();
+        if (user.isEmpty() || user.equalsIgnoreCase("unknown")) {
+            throw new IllegalArgumentException("a decision needs the officer's own name, not '" + user + "'");
+        }
+        return user;
     }
 
     private static StepView fixOnly(StepView s, String decision) {
@@ -248,15 +364,17 @@ public class CaseService {
         for (SignalIn s : c.signals() == null ? List.<SignalIn>of() : c.signals()) {
             if (f.signals() != null && f.signals().contains(s.signalId())) clueOf.put(s.signalId(), Playbooks.clueKey(s));
         }
-        List<Map<String, Object>> rows = jdbc.queryForList("SELECT code, clues FROM fix_step WHERE borrower_id=? AND mechanism=?",
-                c.borrowerId(), f.mechanism());
+        // codes are unique per borrower, so a decision's (borrower, code) names one step: an old lien can sit under
+        // two kinds of finding, and both would otherwise be CHECK_LIEN_RELEASE
+        List<Map<String, Object>> rows = jdbc.queryForList("SELECT code, clues, mechanism FROM fix_step WHERE borrower_id=?",
+                c.borrowerId());
         Set<String> codes = new HashSet<>();
         Set<String> asked = new HashSet<>();
         boolean anyCheck = false;
         for (Map<String, Object> r : rows) {
             String code = (String) r.get("code");
             codes.add(code);
-            if (!Playbooks.isCheck(code)) continue;
+            if (!Playbooks.isCheck(code) || !f.mechanism().equals(r.get("mechanism"))) continue;
             anyCheck = true;
             String clues = (String) r.get("clues");
             if (clues == null) {  // a check made before clues were tracked (1 Oct 2026) covers what the finding holds now
@@ -273,7 +391,7 @@ public class CaseService {
                 f.corroboratedBy(), f.sources(), f.systems(), f.firstMonth());
         StepTemplate t = Playbooks.checkFor(about, c.signals());
         String code = t.code();
-        for (int n = 2; codes.contains(code); n++) code = t.code() + "-" + n;  // asked again: CHECK_LIEN_RELEASE-2
+        for (int n = 2; codes.contains(code); n++) code = t.code() + "-" + n;  // e.g. asked again: CHECK_LIEN_RELEASE-2
         insert(c, about, new StepTemplate(code, t.title(), t.kind(), t.recipient(), t.ask(), t.dueDays()), PROPOSED,
                 String.join("\n", fresh.stream().map(clueOf::get).collect(Collectors.toCollection(LinkedHashSet::new))));
         return 1;

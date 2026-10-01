@@ -58,5 +58,10 @@ public final class Dto {
     public record FeedbackRow(String mechanism, long proposed, long approved, long rejected, long done, long cleared,
                               long escalated) {}
 
+    /** A cleared "worth a look" check picked for a second person: always above the large-amount line, else 1 in 10. */
+    public record SecondCheckView(String borrowerId, String mechanism, String code, String title, String reason, Long amount,
+                                  String clearedBy, String clearNote, Instant pickedAt, String status, String reviewer,
+                                  Instant reviewedAt, String note) {}
+
     public record RunStatus(Integer asOf, Instant receivedAt, Map<String, Object> runMetrics, Map<String, Long> verdicts) {}
 }

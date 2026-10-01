@@ -184,12 +184,100 @@ export async function decide(
   };
   const audit = read<AuditEvent[]>(AUDIT_KEY, []);
   audit.unshift({ id: Date.now(), at: now, actor: who, borrowerId: id, action: `STEP_${r.to}`, detail: step.code + (note ? ` — ${note}` : "") });
-  if (decision === "ESCALATE") {
-    const waiting = all.filter((s) => s.mechanism === step.mechanism && s.status === "STANDBY");
-    for (const s of waiting) overlay[id][s.code] = { status: "PROPOSED", mechanism: s.mechanism, from: "STANDBY" };
-    audit.unshift({ id: Date.now() + 1, at: now, actor: who, borrowerId: id, action: "FIX_PROPOSED", detail: `${step.mechanism}: ${waiting.length} fix step(s) proposed after escalation` });
-  }
+  if (decision === "ESCALATE") proposeFix(overlay, audit, id, step.mechanism, all, who, now);
   write(OVERLAY_KEY, overlay);
+  write(AUDIT_KEY, audit.slice(0, 500));
+  if (decision === "CLEAR") pickForSecondCheck(id, step, who, note, now); // after the clear, never before
+}
+
+/** Demo mode: an escalated finding's waiting fix steps become PROPOSED. */
+function proposeFix(overlay: Overlay, audit: AuditEvent[], id: string, mechanism: string, all: Step[], who: string, now: string) {
+  const waiting = all.filter((s) => s.mechanism === mechanism && s.status === "STANDBY");
+  overlay[id] ??= {};
+  for (const s of waiting) overlay[id][s.code] = { status: "PROPOSED", mechanism: s.mechanism, from: "STANDBY" };
+  audit.unshift({ id: Date.now() + 1, at: now, actor: who, borrowerId: id, action: "FIX_PROPOSED", detail: `${mechanism}: ${waiting.length} fix step(s) proposed after escalation` });
+}
+
+// ---------- second checks on clears ----------
+/** Same as the case service's bt.second-check.large-amount and bt.second-check.rate. */
+export const LARGE_AMOUNT = 500_000;
+export const SECOND_CHECK_RATE = 0.1;
+const SECOND_KEY = "bt-demo-second-checks";
+
+export type SecondCheck = {
+  borrowerId: string;
+  mechanism: string;
+  code: string;
+  title: string;
+  reason: "LARGE_AMOUNT" | "RANDOM";
+  amount: number | null;
+  clearedBy: string;
+  clearNote: string | null;
+  pickedAt: string;
+  status: "WAITING" | "AGREED" | "DISAGREED";
+  reviewer: string | null;
+  reviewedAt: string | null;
+  note: string | null;
+};
+
+/** The largest dollar amount a text names ("$774,996 (1.7% of inflows) came from …"), or 0. */
+export function largestAmount(text: string): number {
+  return Math.max(0, ...[...text.matchAll(/\$([0-9][0-9,]*)/g)].map((m) => Number(m[1].replace(/,/g, ""))));
+}
+
+/** Demo mode: the same draw as the service, made after the clear. The letter lists the clues it asked about. */
+function pickForSecondCheck(id: string, step: Step, who: string, note: string, now: string) {
+  const amount = largestAmount(step.draft ?? "");
+  const draw = crypto.getRandomValues(new Uint32Array(1))[0] / 2 ** 32;
+  const reason = amount >= LARGE_AMOUNT ? "LARGE_AMOUNT" : draw < SECOND_CHECK_RATE ? "RANDOM" : null;
+  if (!reason) return;
+  const list = read<SecondCheck[]>(SECOND_KEY, []);
+  list.unshift({ borrowerId: id, mechanism: step.mechanism, code: step.code, title: step.title, reason, amount: amount || null,
+    clearedBy: who, clearNote: note || null, pickedAt: now, status: "WAITING", reviewer: null, reviewedAt: null, note: null });
+  write(SECOND_KEY, list);
+}
+
+/** Clears picked for a second person, newest first. In a bank only reviewers would see this list. */
+export async function fetchSecondChecks(): Promise<SecondCheck[]> {
+  const rows = await getJSON<SecondCheck[]>("/api/second-checks", "/snapshot/second-checks.json").catch(() => []);
+  return isDemo ? [...read<SecondCheck[]>(SECOND_KEY, []), ...rows] : rows;
+}
+
+export async function reviewSecondCheck(sc: SecondCheck, decision: "AGREE" | "DISAGREE", user: string, note: string) {
+  const who = user.trim();
+  if (!who || who.toLowerCase() === "unknown") throw new Error("Type your name first: a second check needs the reviewer's own name");
+  if (same(sc.clearedBy, who)) throw new Error(`${sc.clearedBy} cleared this, so someone else must be its second check`);
+  if (sc.status !== "WAITING") throw new Error(`This second check is already ${sc.status.toLowerCase()}`);
+  if (decision === "DISAGREE" && !note.trim()) throw new Error("DISAGREE needs a reason in the note");
+  if (!isDemo) {
+    const res = await fetch(`${API}/api/second-checks/${encodeURIComponent(sc.borrowerId)}/${sc.code}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ decision, user: who, note: note || null }),
+    });
+    if (!res.ok) {
+      const body = (await res.json().catch(() => ({}))) as { error?: string };
+      throw new Error(body.error ?? `${res.status} ${res.statusText}`);
+    }
+    return;
+  }
+  const now = new Date().toISOString();
+  const status = decision === "AGREE" ? "AGREED" : "DISAGREED";
+  write(SECOND_KEY, read<SecondCheck[]>(SECOND_KEY, []).map((x) =>
+    x.borrowerId === sc.borrowerId && x.code === sc.code ? { ...x, status, reviewer: who, reviewedAt: now, note: note || null } : x));
+  const audit = read<AuditEvent[]>(AUDIT_KEY, []);
+  audit.unshift({ id: Date.now(), at: now, actor: who, borrowerId: sc.borrowerId, action: `SECOND_CHECK_${status}`, detail: sc.code + (note ? ` — ${note}` : "") });
+  if (status === "DISAGREED") {
+    const d = await fetchCase(sc.borrowerId);
+    const overlay = read<Overlay>(OVERLAY_KEY, {});
+    const prev = overlay[sc.borrowerId]?.[sc.code];
+    overlay[sc.borrowerId] = {
+      ...(overlay[sc.borrowerId] ?? {}),
+      [sc.code]: { ...prev, status: "ESCALATED", decidedBy: who, decidedAt: now, note: `second check disagreed: ${note}`, mechanism: sc.mechanism, from: prev?.from ?? "PROPOSED" },
+    };
+    proposeFix(overlay, audit, sc.borrowerId, sc.mechanism, d.steps, who, now);
+    write(OVERLAY_KEY, overlay);
+  }
   write(AUDIT_KEY, audit.slice(0, 500));
 }
 
@@ -237,4 +325,5 @@ export async function fetchFeedback(): Promise<FeedbackRow[]> {
 export function resetDemo() {
   write(OVERLAY_KEY, {});
   write(AUDIT_KEY, []);
+  write(SECOND_KEY, []);
 }
