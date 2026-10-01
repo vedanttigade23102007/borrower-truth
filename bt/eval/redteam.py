@@ -225,23 +225,27 @@ def briefing(out: str) -> str:
 
 
 # ---------- freeze ----------
-def freeze(zpath: str) -> None:
-    os.makedirs(os.path.dirname(FROZEN), exist_ok=True)
-    rec = dict(tag="redteam-frozen", rule_version=record.rule_version(), code_version=record.code_version(),
-               briefing_zip_sha256=hashlib.sha256(open(zpath, "rb").read()).hexdigest(),
-               briefing_zip_bytes=os.path.getsize(zpath), frozen_at=datetime.date.today().isoformat())
-    json.dump(rec, open(FROZEN, "w"), indent=1)
+def freeze(zpath: str | None, out: str = FROZEN, tag: str = "redteam-frozen", attacks: str | None = None) -> None:
+    os.makedirs(os.path.dirname(out), exist_ok=True)
+    rec = dict(tag=tag, rule_version=record.rule_version(), code_version=record.code_version(),
+               frozen_at=datetime.date.today().isoformat())
+    if zpath:
+        rec.update(briefing_zip_sha256=hashlib.sha256(open(zpath, "rb").read()).hexdigest(),
+                   briefing_zip_bytes=os.path.getsize(zpath))
+    if attacks:
+        rec.update(attacks_zip_sha256=hashlib.sha256(open(attacks, "rb").read()).hexdigest())
+    json.dump(rec, open(out, "w"), indent=1)
     print(json.dumps(rec, indent=1))
 
 
-def check_frozen(test: bool, seeds) -> dict:
+def check_frozen(test: bool, seeds, frozen: str = FROZEN) -> dict:
     if test:
         if not set(seeds) <= set(DEV_SEEDS):
             sys.exit("--test runs only on dev seeds (7, 101-105): fresh seeds are scored once, for real")
         return {}
-    if not os.path.exists(FROZEN):
-        sys.exit(f"{FROZEN} is missing: freeze the rules before the red team starts")
-    rec = json.load(open(FROZEN))
+    if not os.path.exists(frozen):
+        sys.exit(f"{frozen} is missing: freeze the rules before the red team starts")
+    rec = json.load(open(frozen))
     now = record.rule_version()
     if now != rec["rule_version"]:
         sys.exit(f"the rules changed since the freeze ({rec['rule_version']} -> {now}): the score would not be blind")
@@ -342,8 +346,8 @@ def _book_files(src: str, dst: str) -> None:
         shutil.copy2(f, dst)
 
 
-def plant(attacks_zip: str, seeds, root: str, test: bool) -> None:
-    check_frozen(test, seeds)
+def plant(attacks_zip: str, seeds, root: str, test: bool, frozen: str = FROZEN) -> None:
+    check_frozen(test, seeds, frozen)
     from bt.eval.evaluate import ensure_book
     adir = os.path.join(root, "attacks_received")
     if os.path.exists(adir):
@@ -405,8 +409,9 @@ def plant(attacks_zip: str, seeds, root: str, test: bool) -> None:
 
 
 # ---------- scoring, once ----------
-def score(seeds, root: str, report_a: str, report_rt: str, test: bool) -> None:
-    frozen = check_frozen(test, seeds)
+def score(seeds, root: str, report_a: str, report_rt: str, test: bool, frozen_path: str = FROZEN,
+          label: str = "") -> None:
+    frozen = check_frozen(test, seeds, frozen_path)
     from bt.eval.evaluate import main as evaluate
     from bt.pipeline.run import run as pipeline
     evaluate(["--seeds", *map(str, seeds), "--root", os.path.join(root, "A"), "--report", report_a])  # copy A
@@ -439,7 +444,7 @@ def score(seeds, root: str, report_a: str, report_rt: str, test: bool) -> None:
         orig = [b for b, v in labels.items() if v["fraud"]]
         orig_n += len(orig)
         orig_caught += sum(final[b]["verdict"] == "LIKELY_FRAUD" for b in orig)
-    out = dict(frozen=frozen, rule_version=record.rule_version(), code_version=record.code_version(), seeds=list(seeds),
+    out = dict(label=label, frozen=frozen, rule_version=record.rule_version(), code_version=record.code_version(), seeds=list(seeds),
                rows=rows, honest=dict(n=honest_n, flagged_end=honest_end, flagged_ever=honest_ever,
                                       review_per_100=round(100 * honest_review / honest_n, 1) if honest_n else None),
                original_frauds=dict(n=orig_n, caught=orig_caught),
@@ -463,9 +468,14 @@ def redteam_md(r: dict) -> str:
         d = sorted(x["first_flag"] - x["start_month"] for x in xs if x["outcome"] == "caught" and x["first_flag"] is not None)
         return f"{d[len(d) // 2]}" if d else "-"
 
-    lines = [f"# Red team result: seeds {', '.join(map(str, r['seeds']))}, scored once", "",
+    lines = [f"# Red team result: seeds {', '.join(map(str, r['seeds']))}, scored once"
+             + (f" ({r['label']})" if r.get("label") else ""), "",
              "**All data synthetic.** The attacks were designed by an AI red team that had not seen the rules "
-             "(RED-TEAM-PLAN.md). They measure what this red team thought of, not real-world catch rates.", "",
+             "(RED-TEAM-PLAN.md). They measure what this red team thought of, not real-world catch rates.", ""]
+    if r.get("label"):
+        lines += [f"**{r['label']}.** The rules were fixed after round 1 of these same attacks was scored, so this run "
+                  "is not blind: it shows whether the fixes work on fresh books, not how a new attacker would do.", ""]
+    lines += [
              f"Rules version {r['rule_version']} (frozen: {r['frozen'].get('rule_version', 'test run')}); "
              f"code {r['code_version']}.", "",
              f"Counted: frauds gaining at least {SIZE_FLOOR:.0%} of the borrower's credit limit. Smaller ones are shown "
@@ -512,18 +522,23 @@ def main(argv=None):
     p = sub.add_parser("scan")
     p.add_argument("path")
     p = sub.add_parser("freeze")
-    p.add_argument("--zip", required=True)
+    p.add_argument("--zip", default=None, help="the sealed briefing given to the red team")
+    p.add_argument("--attacks", default=None, help="the attacks being re-scored, if any")
+    p.add_argument("--out", default=FROZEN)
+    p.add_argument("--tag", default="redteam-frozen")
     for name in ("plant", "score"):
         p = sub.add_parser(name)
         p.add_argument("--seeds", type=int, nargs="+", default=list(FRESH_SEEDS))
         p.add_argument("--root", default="data/out/redteam")
         p.add_argument("--test", action="store_true", help="dev seeds only, no freeze check: for testing this harness")
+        p.add_argument("--frozen", default=FROZEN, help="the freeze record the rules must match")
         if name == "plant":
             p.add_argument("--attacks", required=True)
             p.add_argument("--i-have-read-them", action="store_true", help="a person read every plant.py first")
         else:
             p.add_argument("--report-a", default="proof/REPORT_seeds501-505.md")
             p.add_argument("--report", default="proof/REDTEAM.md")
+            p.add_argument("--label", default="", help='e.g. "after fixes: these attacks are no longer blind"')
     a = ap.parse_args(argv)
     if a.cmd == "briefing":
         briefing(a.out)
@@ -531,13 +546,13 @@ def main(argv=None):
         res = scan(a.path)
         print(scan_md(res, a.path))
     elif a.cmd == "freeze":
-        freeze(a.zip)
+        freeze(a.zip, a.out, a.tag, a.attacks)
     elif a.cmd == "plant":
         if not a.i_have_read_them:
             sys.exit("read every plant.py first, then pass --i-have-read-them")
-        plant(a.attacks, a.seeds, a.root, a.test)
+        plant(a.attacks, a.seeds, a.root, a.test, a.frozen)
     else:
-        score(a.seeds, a.root, a.report_a, a.report, a.test)
+        score(a.seeds, a.root, a.report_a, a.report, a.test, a.frozen, a.label)
 
 
 if __name__ == "__main__":
