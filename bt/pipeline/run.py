@@ -65,12 +65,21 @@ def _guarded(ctx: Ctx, name: str, fn, simulate_fail: set[str], metrics: dict, mi
         timer.cancel()
 
 
-def run(data_dir: str, as_of: int = 23, simulate_fail: set[str] | None = None, materialize: bool = True):
+def document_model_setting() -> bool:
+    """The optional document module (REVIEW.md gap 7): off unless BT_DOCUMENT_MODEL=on. The rules work without it,
+    so a bank pays for validating a model only if it turns it on."""
+    return os.environ.get("BT_DOCUMENT_MODEL", "off").strip().lower() == "on"
+
+
+def run(data_dir: str, as_of: int = 23, simulate_fail: set[str] | None = None, materialize: bool = True,
+        document_model: bool | None = None):
     simulate_fail = simulate_fail or set()
+    document_model = document_model_setting() if document_model is None else document_model
     t0 = time.perf_counter()
     overrides, dq_report = dq.stage(data_dir)  # quarantine bad files before anything reads them
     ctx = Ctx(data_dir, as_of, materialize=materialize, overrides=overrides)
     ctx.shared["sec_off"] = "SEC" in simulate_fail  # switch-off test for the checks built on public SEC data
+    ctx.shared["document_model"] = document_model
     missing = contract.not_delivered(data_dir, overrides)
     dq_report["not_delivered"] = sorted(contract.INPUTS[f] for f in missing)
     metrics: dict = {"data_quality": dq_report}
@@ -97,16 +106,18 @@ def run(data_dir: str, as_of: int = 23, simulate_fail: set[str] | None = None, m
                 for k, v in metrics.items() if isinstance(v, dict) and "status" in v}
     q = dq_report["quarantined"]
     coverage["data"] = ("quarantined: " + ", ".join(f"{t} ({v['using']})" for t, v in q.items())) if q else "ok"
-    coverage["documents"] = ctx.shared.get("documents", "unavailable (rule checks only)")
+    if document_model:  # off (the default): an optional module that isn't installed is not missing coverage
+        coverage["documents"] = ctx.shared.get("documents", "unavailable (S4 did not run)")
     borrowers = [r["borrower_id"] for r in ctx.rows("SELECT borrower_id FROM borrowers ORDER BY 1")]
     t1 = time.perf_counter()
     cases = build_cases(signals, coverage, ctx.explanations, borrowers)
-    man = record.manifest(data_dir, overrides, as_of)  # replay record: inputs, rules, code
+    man = record.manifest(data_dir, overrides, as_of, document_model)  # replay record: inputs, rules, code, module
     record.stamp(cases, man)
     metrics["manifest"] = man
     metrics["combiner"] = dict(status="ok", seconds=round(time.perf_counter() - t1, 3), cases=len(cases))
     metrics["total_seconds"] = round(time.perf_counter() - t0, 3)
     metrics["as_of"] = as_of
+    metrics["document_model"] = "on" if document_model else "off"
     ctx.con.close()
     return signals, cases, metrics
 
@@ -135,8 +146,11 @@ def main(argv=None):
     ap.add_argument("--out", default=None)
     ap.add_argument("--as-of", type=int, default=23)
     ap.add_argument("--fail", nargs="*", default=[], help="simulate a crash in these systems, e.g. --fail S4")
+    ap.add_argument("--document-model", choices=("on", "off"), default=None,
+                    help="the optional document module (default: BT_DOCUMENT_MODEL, else off)")
     a = ap.parse_args(argv)
-    signals, cases, metrics = run(a.data, a.as_of, set(a.fail))
+    doc = None if a.document_model is None else a.document_model == "on"
+    signals, cases, metrics = run(a.data, a.as_of, set(a.fail), document_model=doc)
     write(a.out or os.path.join(a.data, "run"), signals, cases, metrics)
     if push("borrower_truth_pipeline", pipeline_samples(metrics, cases)):
         print("  metrics pushed to Pushgateway")

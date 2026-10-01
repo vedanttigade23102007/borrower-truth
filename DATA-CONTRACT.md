@@ -52,7 +52,7 @@ The run is monthly ("as of" a month). Payments also stream daily for live alerts
 | PledgeCheck results | whether the same collateral is pledged at other lenders | Setpoint (third party; simulated here) | monthly | only if subscribed |
 | Public securitization reports | loan-level reports of the borrower's own public pools (SEC Form ABS-EE) | SEC EDGAR (public, free; needs a contact email in the request) | monthly | free to fetch |
 | SEC filings | 10-K debt notes and Exhibit 21, 8-K items, XBRL revenue | SEC EDGAR (public, free) | as filed | free to fetch |
-| Invoice document reads | the document model's second read of invoice images | produced in-house from the invoice images | monthly | optional |
+| Invoice document reads | an optional module, off by default: a fine-tuned model reads each invoice image | produced in-house from the invoice images, only if the bank turns the module on | monthly | not needed: the rules work without it |
 
 **Core inputs:** borrowers, the company registry, payments and disclosures.
 - Without them, nothing can be trusted. With no disclosures, for example, every lien and every linked company would look undisclosed.
@@ -69,7 +69,7 @@ The run is monthly ("as of" a month). Payments also stream daily for live alerts
 | **S1 Collateral integrity** | — | Loan tape: duplicate vehicles and public-pool overlap. Pledged invoices: duplicate invoices. PledgeCheck: pledges of the same collateral at other lenders; the "not enrolled" note is dropped, because it would call every borrower unenrolled. Public securitization reports: public-pool overlap. |
 | **S2 Tape vs source** | loan tape | Servicer-system records: the servicer-system pulls. The mismatch findings are dropped, because every pulled loan would look "gone". The other tape checks (current without a payment, impossible jumps, roll rates, rewritten scores) still run. |
 | **S3 Cash provenance** | loan tape and pledged invoices (they say who counts as a customer; without them every payer looks unknown) | Operating-account outflows: round trips. |
-| **S4 Invoice authenticity** | pledged invoices | Invoice document reads: the model's second read. The rules run without it, and every case already says "documents: unavailable (rule checks only)". |
+| **S4 Invoice authenticity** | pledged invoices | Invoice document reads, only if the optional document module is turned on (`BT_DOCUMENT_MODEL=on`). When it is off, the default, cases say nothing about documents. When it is on and the reads are missing, every case says so. |
 | **S5 Hidden debt** | — | Lien filings: liens. Court judgments: judgments. SEC filings: debt named in SEC filings. |
 | **S6 Relationship mapper** | LEI register (without it every company looks unregistered, so shell scores rise) | SEC filings: subsidiaries listed in Exhibit 21. If S6 doesn't run, S1, S3 and S5 search the borrower only, not its linked companies. |
 | **S7 Financial consistency** | financial statements | SEC filings: revenue reported to the SEC. |
@@ -78,7 +78,9 @@ The run is monthly ("as of" a month). Payments also stream daily for live alerts
 
 ## What works on day one
 
-**Before anything runs:** the four core inputs. The bank already holds three of them (borrowers, payments, disclosures). The fourth, a company registry feed, usually has to be bought. Without it there is no run: S3 can't resolve who a payer is, and S6 can't find undisclosed linked companies, which is the point of S6.
+**Before anything runs:** the four core inputs. The bank already holds three of them (borrowers, payments, disclosures). The fourth is company registry data. Without it there is no run: S3 can't resolve who a payer is, and S6 can't find undisclosed linked companies, which is the point of S6.
+
+**How to say it in the pitch (Vedant, 1 Oct 2026):** "It plugs into the company data you already use for KYC. If you don't have a feed, this is what you'd need." There is no starter mode without registry data. Such a mode would miss exactly the hidden companies S6 exists to find.
 
 **Day one, with a registry feed, what the bank already holds** (credit lines, financials, loan tapes, invoices), **and the free public sources** (GLEIF, SEC EDGAR):
 

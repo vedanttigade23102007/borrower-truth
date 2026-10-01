@@ -50,13 +50,16 @@ DOC_READS = "doc_reads.parquet"
 
 def document_check(ctx: Ctx) -> list:
     """Document vs data: the fine-tuned reader's total (after its second look) vs the
-    borrower's invoice record. Reads come from the document batch job
-    (model/kaggle_score); if they are missing, S4 runs on rules alone and every case
-    says so (fallback, design §12)."""
+    borrower's invoice record. An optional module, off by default (BT_DOCUMENT_MODEL=on turns
+    it on): the rules work without it, and it helps only a little (proof/model/MODEL.md).
+    Reads come from the document batch job (model/kaggle_score); if the module is on and they
+    are missing, S4 runs on rules alone and every case says so (fallback, design §12)."""
     import os
+    if not ctx.shared.get("document_model"):
+        return []
     path = os.path.join(ctx.data_dir, DOC_READS)
     if not os.path.exists(path):
-        ctx.shared["documents"] = "unavailable (rule checks only)"
+        ctx.shared["documents"] = "unavailable (module on, but no document reads were delivered)"
         return []
     rows = ctx.rows(f"""
         SELECT d.borrower_id, count(*) AS n, count(*) FILTER (WHERE d.doc_mismatch) AS bad,

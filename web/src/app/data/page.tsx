@@ -66,10 +66,12 @@ export default function DataPage() {
       <section id="documents" className="scroll-mt-6 space-y-3">
         <h2 className="text-lg font-semibold tracking-tight text-zinc-900">Invoice documents</h2>
         <p className="max-w-4xl text-sm text-zinc-600">
-          Invoice-based borrowers pledge invoices. A fine-tuned open document model (Donut) reads the total printed on
-          each invoice image and S4 compares it with the amount the borrower recorded. The model only reads; the rules
-          decide. When a read disagrees, the model takes a second look before anything is flagged. Six samples, including
-          one it got wrong.
+          Invoice-based borrowers pledge invoices. An optional document module, off by default, reads the total printed
+          on each invoice image with a fine-tuned open model (Donut), and S4 compares it with the amount the borrower
+          recorded. It helps only a little: on a held-out book it flagged all 24 tampered invoices but also 15 of 516
+          clean ones, and on this demo it found no fraud the rules missed. The rules work without it, so a bank pays for
+          validating a model only if it turns it on. The model only reads; the rules decide. Six samples, including one
+          it got wrong.
         </p>
         {docs.error ? (
           <ErrorState message={docs.error} onRetry={() => void docs.retry()} />

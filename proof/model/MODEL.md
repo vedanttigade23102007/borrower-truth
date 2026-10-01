@@ -1,5 +1,9 @@
 # Invoice reader: fine-tuned document model (Kaggle, 11 Sep 2026)
 
+**Status (1 Oct 2026): an optional module, off by default** (`BT_DOCUMENT_MODEL=on` turns it on; REVIEW.md gap 7). The rules work without it, so a bank pays for validating a model only if it turns it on. It helps a little, at best:
+- On the held-out book below, it flagged all 24 tampered invoices, and also 15 of 516 clean ones.
+- On the demo book it found no fraud the rules missed. Turning it on added 6 "worth a look" cases, all on honest borrowers.
+
 **What:** Donut (`naver-clova-ix/donut-base`, OCR-free, ~200M params), fine-tuned to read five fields from invoice images: invoice number, PO number, bill-to, date, total. S4 then compares the document with the borrower's data record. A mismatch is a tampering flag, sent to a human to confirm.
 
 **Training:**

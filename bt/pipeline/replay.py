@@ -24,9 +24,11 @@ def replay(data_dir: str, run_dir: str) -> dict:
     man = json.load(open(os.path.join(run_dir, "manifest.json")))
     recs = {r["borrower_id"]: r for r in map(json.loads, open(os.path.join(run_dir, "decision_records.jsonl")))}
     overrides, _ = dq.stage(data_dir)
-    now = record.manifest(data_dir, overrides, man["as_of"])
+    # replay with the document module set as it was recorded (older records: on if they read the document file)
+    doc = man.get("document_model", man["inputs"].get("doc_reads", "absent") != "absent")
+    now = record.manifest(data_dir, overrides, man["as_of"], doc)
     inputs_changed = sorted(k for k in man["inputs"] if man["inputs"][k] != now["inputs"].get(k))
-    _, cases, _ = pipeline(data_dir, man["as_of"])
+    _, cases, _ = pipeline(data_dir, man["as_of"], document_model=doc)
     new = {c["borrower_id"]: c for c in cases}
     diffs = []
     for b, r in sorted(recs.items()):

@@ -39,9 +39,9 @@ def file_sha(path: str) -> str:
     return _hash_cache[key]
 
 
-def input_fingerprints(data_dir: str, overrides: dict[str, str]) -> dict[str, str]:
+def input_fingerprints(data_dir: str, overrides: dict[str, str], document_model: bool = False) -> dict[str, str]:
     out = {}
-    for name in sorted({f for f, _ in VIEWS.values()} | set(EXTRA_INPUTS)):
+    for name in sorted({f for f, _ in VIEWS.values()} | (set(EXTRA_INPUTS) if document_model else set())):
         path = overrides.get(name, os.path.join(data_dir, f"{name}.parquet"))
         if name in overrides and not path:
             out[name] = "quarantined:empty"
@@ -83,9 +83,9 @@ def result_digest(c: dict) -> str:
     return hashlib.sha256(json.dumps(case_core(c), sort_keys=True).encode()).hexdigest()[:12]
 
 
-def manifest(data_dir: str, overrides: dict[str, str], as_of: int) -> dict:
-    fp = input_fingerprints(data_dir, overrides)
-    return {"as_of": as_of, "inputs": fp,
+def manifest(data_dir: str, overrides: dict[str, str], as_of: int, document_model: bool = False) -> dict:
+    fp = input_fingerprints(data_dir, overrides, document_model)
+    return {"as_of": as_of, "inputs": fp, "document_model": document_model,
             "inputs_digest": hashlib.sha256(json.dumps(fp, sort_keys=True).encode()).hexdigest()[:12],
             "rule_version": rule_version(), "code_version": code_version()}
 

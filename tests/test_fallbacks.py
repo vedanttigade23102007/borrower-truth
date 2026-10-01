@@ -85,6 +85,20 @@ def test_a_missing_core_input_stops_the_run(book):
         pipeline(str(book), 23)
 
 
+def test_the_document_module_is_off_by_default(book):
+    import pyarrow as pa
+    inv = pq.read_table(book / "invoices.parquet").slice(0, 3).to_pylist()
+    reads = [dict(invoice_id=r["invoice_id"], borrower_id=r["borrower_id"], doc_mismatch=True, reads_agree=True) for r in inv]
+    pq.write_table(pa.Table.from_pylist(reads), book / "doc_reads.parquet")
+    sigs, cases, m = pipeline(str(book), 23)
+    assert m["document_model"] == "off" and "documents" not in cases[0]["coverage"]
+    assert not any(s.type == "DOC_DATA_MISMATCH" for s in sigs)  # the reads are there, but the module is off
+    sigs, cases, m = pipeline(str(book), 23, document_model=True)
+    assert m["document_model"] == "on" and cases[0]["coverage"]["documents"].startswith("ok")
+    assert any(s.type == "DOC_DATA_MISMATCH" for s in sigs)
+    assert m["manifest"]["document_model"] is True and "doc_reads" in m["manifest"]["inputs"]
+
+
 def test_command_line_runs_end_to_end(book, capsys):
     """The CLI (what demo.sh and Airflow call) must complete and print its summary."""
     from bt.pipeline.run import main as cli
