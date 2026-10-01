@@ -1,0 +1,9 @@
+{
+ "tag": "redteam-round2-frozen",
+ "rule_version": "cdf8b9b94a09",
+ "code_version": "0639cf4",
+ "frozen_at": "2026-10-02",
+ "payer_rule": true,
+ "briefing_zip_sha256": "e8068ee87807425b37e1b2e6f11354a0456f4f096d90e02cdcb0c74326b98dcc",
+ "briefing_zip_bytes": 2098356
+}
