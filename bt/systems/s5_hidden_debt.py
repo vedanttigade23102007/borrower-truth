@@ -54,6 +54,13 @@ def core(name: str) -> str:
     return " ".join(t for t in toks if t not in SUFFIXES)
 
 
+def lender_ids(name: str, exact: dict[str, set], by_core: dict[str, set]) -> set:
+    """Registry companies a lien's secured-party name can mean. The full legal name decides first:
+    "Silverline Credit Fund LP" and "Silverline Credit Fund LLC" are different funds, and treating them as one
+    reported disclosed loans as "never disclosed". The shortened name is only a fallback."""
+    return set(exact.get(norm_addr(name)) or by_core.get(core(name)) or ())
+
+
 def run(ctx: Ctx):
     scope = ctx.rows("""
         SELECT b.borrower_id, b.entity_id, e.name, e.address, 'borrower' AS role
@@ -68,7 +75,11 @@ def run(ctx: Ctx):
     by_addr: dict[str, list[dict]] = {}
     for r in scope:
         by_addr.setdefault(norm_addr(r["address"]), []).append(r)
-    registry = {core(r["name"]): r["entity_id"] for r in ctx.rows("SELECT entity_id, name FROM entities")}
+    exact: dict[str, set] = {}  # full legal name, suffix included -> registry entities
+    by_core: dict[str, set] = {}  # shortened name -> registry entities (can be several)
+    for r in ctx.rows("SELECT entity_id, name FROM entities"):
+        exact.setdefault(norm_addr(r["name"]), set()).add(r["entity_id"])
+        by_core.setdefault(core(r["name"]), set()).add(r["entity_id"])
     disclosed = {(r["borrower_id"], r["counterparty_entity_id"]) for r in ctx.rows(
         "SELECT borrower_id, counterparty_entity_id FROM disclosures WHERE kind = 'debt'")}
 
@@ -94,10 +105,11 @@ def run(ctx: Ctx):
                 targets = [t for t in by_addr.get(addr, []) if k.split()[:1] == core(t["name"]).split()[:1]
                            and fuzz.token_set_ratio(k, core(t["name"])) >= ADDRESS_NAME_FLOOR]
                 by_address, score = bool(targets), 90
-        lender = registry.get(core(u["secured_party_name"]))
+        lenders = lender_ids(u["secured_party_name"], exact, by_core)
+        lender = next(iter(lenders)) if len(lenders) == 1 else None
         for t in targets:
             b = t["borrower_id"]
-            if (b, lender) in disclosed:
+            if any((b, x) in disclosed for x in lenders):  # can't say "never disclosed" if it may have been
                 continue
             overlap = bool(COLLATERAL_OVERLAP.search(u["collateral_desc"]))
             stale = u["filed_month"] < 0
@@ -115,9 +127,6 @@ def run(ctx: Ctx):
             out.append(s)
             if not stale:
                 undisclosed.setdefault(b, []).append(s.signal_id)
-    exact: dict[str, set] = {}  # full legal name, suffix included -> registry entities
-    for r in ctx.rows("SELECT entity_id, name FROM entities"):
-        exact.setdefault(norm_addr(r["name"]), set()).add(r["entity_id"])
     for c in ctx.rows("SELECT * FROM courts"):
         targets, score = match(c["defendant_name"])
         owners = exact.get(norm_addr(c["defendant_name"]), set())
