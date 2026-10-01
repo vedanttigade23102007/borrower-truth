@@ -1,0 +1,8 @@
+{
+ "tag": "redteam-frozen",
+ "rule_version": "614d4a97ea9e",
+ "code_version": "bb965ca",
+ "briefing_zip_sha256": "c5ebf6dd62fa850fcb2dd5f3ad90b516381cbc5426a4bd9e204823ac36c2629c",
+ "briefing_zip_bytes": 1942743,
+ "frozen_at": "2026-10-01"
+}
