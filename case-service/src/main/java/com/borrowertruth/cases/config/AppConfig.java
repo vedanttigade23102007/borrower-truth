@@ -16,10 +16,11 @@ public class AppConfig {
         return Clock.systemUTC();
     }
 
-    /** bt.model-url empty => template drafts only (the always-available fallback). */
+    /** bt.model-url empty => template drafts only (the always-available fallback). Letters are signed by bt.bank-name. */
     @Bean
     DraftWriter draftWriter(@Value("${bt.model-url:}") String modelUrl,
-                            @Value("${bt.model-timeout-seconds:8}") long timeoutSeconds) {
-        return new FallbackDraftWriter(modelUrl, Duration.ofSeconds(timeoutSeconds));
+                            @Value("${bt.model-timeout-seconds:8}") long timeoutSeconds,
+                            @Value("${bt.bank-name:Wells Fargo}") String bankName) {
+        return new FallbackDraftWriter(modelUrl, Duration.ofSeconds(timeoutSeconds), bankName);
     }
 }

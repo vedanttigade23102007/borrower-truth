@@ -19,12 +19,17 @@ import java.time.LocalDate;
 public class FallbackDraftWriter implements DraftWriter {
     private final String modelUrl;
     private final Duration timeout;
-    private final TemplateDraftWriter template = new TemplateDraftWriter();
+    private final TemplateDraftWriter template;
     private final HttpClient http = HttpClient.newBuilder().connectTimeout(Duration.ofSeconds(2)).build();
 
     public FallbackDraftWriter(String modelUrl, Duration timeout) {
+        this(modelUrl, timeout, TemplateDraftWriter.DEFAULT_BANK);
+    }
+
+    public FallbackDraftWriter(String modelUrl, Duration timeout, String bank) {
         this.modelUrl = modelUrl == null || modelUrl.isBlank() ? null : modelUrl;
         this.timeout = timeout;
+        this.template = new TemplateDraftWriter(bank);
     }
 
     @Override

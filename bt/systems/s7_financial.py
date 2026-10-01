@@ -18,6 +18,7 @@ and its own                -> COVENANT_EDGE_PATTERN (repeatedly just clearing th
 """
 import statistics
 
+from bt.common import bank
 from bt.systems.base import Ctx, sig
 
 FILED_GAP = 0.05  # the package and the 10-Q come from the same books: 5% apart is not rounding
@@ -73,11 +74,11 @@ def run(ctx: Ctx, upstream: dict):
             q, g = qs[-1]
             out.append(sig("S7", b, "FILED_VS_REPORTED", min(1.0, 0.6 + abs(g)), 0.9,
                            [f"financials:{b}:Q{x}" for x, _ in qs[-2:]] + [f"sec_filing:{b}:xbrl_revenue:Q{x}" for x, _ in qs[-2:]],
-                           f"Revenue sent to Wells Fargo for Q{q} is {g:+.0%} off what the borrower reported to the SEC for "
+                           f"Revenue sent to {bank.NAME} for Q{q} is {g:+.0%} off what the borrower reported to the SEC for "
                            f"the same quarter ({len(qs)} quarter{'s' if len(qs) > 1 else ''} differ)", qs[0][0] * 3 + 2))
     for b, ids in upstream.get("s5_undisclosed", {}).items():
         out.append(sig("S7", b, "DEBT_GAP", 0.7, 0.8, [f"signal:{i}" for i in ids[:3]] + [f"financials:{b}:debt_reported"],
-                       f"Debt reported to Wells Fargo omits {len(ids)} secured lender(s) found in public lien filings",
+                       f"Debt reported to {bank.NAME} omits {len(ids)} secured lender(s) found in public lien filings",
                        ctx.as_of))
     for b, ids in upstream.get("s4_flags", {}).items():
         out.append(sig("S7", b, "RECEIVABLES_QUALITY", 0.5, 0.7, [f"signal:{i}" for i in ids[:3]],

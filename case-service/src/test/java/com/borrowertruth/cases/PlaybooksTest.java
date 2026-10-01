@@ -103,6 +103,20 @@ class PlaybooksTest {
     }
 
     @Test
+    void lettersAreSignedByTheBankThatRunsIt() {
+        CaseIn c = sampleCase();
+        var step = Playbooks.forMechanism("HIDDEN_DEBT").get(2);  // a letter to the borrower
+        String demo = new TemplateDraftWriter().write(c, c.findings().get(0), step, LocalDate.of(2026, 10, 1)).text();
+        String other = new TemplateDraftWriter("First Example Bank").write(c, c.findings().get(0), step, LocalDate.of(2026, 10, 1)).text();
+        assertTrue(demo.contains("[Credit officer], Wells Fargo"));  // the worked example stays the default
+        assertTrue(other.contains("[Credit officer], First Example Bank"));
+        assertFalse(other.contains("Wells Fargo"));
+        for (var steps : Playbooks.BY_MECHANISM.values()) {  // no step text names a particular bank
+            for (var t : steps) assertFalse(t.ask().contains("WF") || t.ask().contains("Wells Fargo"), t.code());
+        }
+    }
+
+    @Test
     void modelDownFallsBackToTemplate() {
         CaseIn c = sampleCase();
         var step = Playbooks.forMechanism("HIDDEN_DEBT").get(0);

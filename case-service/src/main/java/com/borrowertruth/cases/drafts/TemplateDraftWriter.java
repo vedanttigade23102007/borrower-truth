@@ -18,6 +18,17 @@ import java.util.regex.Pattern;
  */
 public class TemplateDraftWriter implements DraftWriter {
     private static final Pattern QUOTED = Pattern.compile("'([^']+)'");
+    /** The worked example (Vedant, 1 Oct 2026); another bank sets bt.bank-name. */
+    public static final String DEFAULT_BANK = "Wells Fargo";
+    private final String bank;
+
+    public TemplateDraftWriter() {
+        this(DEFAULT_BANK);
+    }
+
+    public TemplateDraftWriter(String bank) {
+        this.bank = bank == null || bank.isBlank() ? DEFAULT_BANK : bank;
+    }
 
     @Override
     public Draft write(CaseIn c, FindingIn f, StepTemplate step, LocalDate due) {
@@ -52,9 +63,9 @@ public class TemplateDraftWriter implements DraftWriter {
 
                 This letter requests information to reconcile our records. It does not allege wrongdoing by any party.
 
-                [Credit officer], Wells Fargo
+                [Credit officer], %s
                 [DRAFT — requires approval; synthetic demonstration data]
-                """.formatted(step.title(), recipient, c.borrowerId(), bullets, step.ask(), due), "TEMPLATE");
+                """.formatted(step.title(), recipient, c.borrowerId(), bullets, step.ask(), due, bank), "TEMPLATE");
     }
 
     private static String recipient(String role, List<SignalIn> evidence, String borrowerId) {

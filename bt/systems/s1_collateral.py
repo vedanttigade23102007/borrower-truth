@@ -22,6 +22,7 @@ First Brands F1).
    a single loan 99.99% of the time. It opens a question (ask for the VINs), never
    closes one.
 """
+from bt.common import bank
 from bt.systems.base import Ctx, sig
 
 OVERLAP = """
@@ -100,12 +101,12 @@ def run(ctx: Ctx):
     for r in ctx.rows(TAPE_DUP, [lo, ctx.as_of]):
         out.append(sig("S1", r["borrower_id"], "DUPLICATE_ASSET", 0.9, min(0.99, 0.6 + 0.05 * r["n_dup"]),
                        [f"tape:vin:{v}" for v in r["ex"]] + [f"count:{r['n_dup']}"],
-                       f"{r['n_dup']} vehicles (matched by VIN) are pledged in two Wells Fargo facilities at once",
+                       f"{r['n_dup']} vehicles (matched by VIN) are pledged in two {bank.NAME} facilities at once",
                        r["first_m"]))
     for r in ctx.rows(INV_DUP):
         out.append(sig("S1", r["borrower_id"], "DUPLICATE_ASSET", 0.9, min(0.99, 0.6 + 0.05 * r["n_dup"]),
                        [f"invoice:{n}" for n in r["ex"]] + [f"count:{r['n_dup']}"],
-                       f"{r['n_dup']} identical invoices are pledged in two Wells Fargo facilities at once",
+                       f"{r['n_dup']} identical invoices are pledged in two {bank.NAME} facilities at once",
                        r["first_m"]))
     tape_cols = {c[0] for c in ctx.con.execute("DESCRIBE tape").fetchall()}
     if not ctx.shared.get("sec_off") and {"make", "credit_score"} <= tape_cols:  # older books lack loan attributes
@@ -115,7 +116,7 @@ def run(ctx: Ctx):
                 continue
             out.append(sig("S1", r["borrower_id"], "PUBLIC_POOL_OVERLAP", 0.85, 0.8,
                            [f"tape:asset:{x}" for x in r["ex"]] + [f"public_abs:{r['pool']}", f"count:{r['n']}"],
-                           f"{r['n']} loans pledged to Wells Fargo match, field for field, loans that the borrower's own "
+                           f"{r['n']} loans pledged to {bank.NAME} match, field for field, loans that the borrower's own "
                            f"public securitization ({r['pool']}) reports to investors, two months running. The SEC data has "
                            f"no VIN: ask for the VINs and titles to settle it", r["first_m"]))
             # a loan can only pay one servicer account: if the matched loans stopped paying Wells Fargo, the trust collects them
@@ -124,7 +125,7 @@ def run(ctx: Ctx):
                 out.append(sig("S1", r["borrower_id"], "POOL_LOANS_PAID_ELSEWHERE", 0.85, 0.9,
                                [f"payments:{r['borrower_id']}:months={max(0, a - 2)}-{a}:unpaid={u}/{r['n']}",
                                 f"public_abs:{r['pool']}"],
-                               f"{u} of the {r['n']} loans that also sit in the public trust paid nothing into the Wells Fargo "
+                               f"{u} of the {r['n']} loans that also sit in the public trust paid nothing into the {bank.NAME} "
                                f"collection account in the last three months, though they are still on the tape: their "
                                f"payments are going somewhere else", r["first_m"]))
     return out

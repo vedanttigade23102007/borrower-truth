@@ -18,6 +18,7 @@ phone or agent (a nominee can hide those; an audited filing can't leave it out).
 publicly listed is not concealment, so a listing alone is never scored as shell-like:
 it matters when that company also pays the borrower or holds a lien.
 """
+from bt.common import bank
 from bt.systems.base import Ctx, sig
 
 PERSONAL_AGENT_MAX = 3  # an agent serving more companies than this is a commercial registered-agent service
@@ -91,7 +92,7 @@ def run(ctx: Ctx):
             out.append(sig("S6", r["borrower_id"], "RELATED_ENTITY", 0.35, 0.9,
                            [f"registry:{r['entity_id']}", f"sec_filing:{r['borrower_id']}:10-K_exhibit_21"],
                            f"'{r['name']}' is listed as a subsidiary in the borrower's 10-K (Exhibit 21) but was not "
-                           f"disclosed to Wells Fargo as a related party", month, [r["entity_id"]]))
+                           f"disclosed to {bank.NAME} as a related party", month, [r["entity_id"]]))
             continue  # publicly listed: not concealment, so never scored as shell-like on its own
         indicators = []
         if not r["has_operations"]:

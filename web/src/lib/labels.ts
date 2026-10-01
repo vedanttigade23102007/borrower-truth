@@ -21,8 +21,11 @@ export const SYSTEM: Record<string, string> = {
   combiner: "Combiner",
 };
 
+/** The bank running it. Wells Fargo is the worked example; NEXT_PUBLIC_BANK_NAME sets another. */
+export const BANK = process.env.NEXT_PUBLIC_BANK_NAME || "Wells Fargo";
+
 export const SOURCE: Record<string, string> = {
-  wf_facilities: "WF facilities",
+  wf_facilities: `${BANK}'s own facilities`, // the key stays: it is part of recorded decisions
   pledgecheck: "PledgeCheck",
   payments: "bank payments",
   tape_flags: "tape flags",

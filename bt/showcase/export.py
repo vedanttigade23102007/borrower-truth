@@ -19,8 +19,10 @@ import shutil
 
 import duckdb
 
+from bt.common import bank
+
 TABLES = {
-    "borrowers": ("Borrowers", "The finance companies Wells Fargo lends to (car lenders, invoice-based businesses, mortgage lenders).",
+    "borrowers": ("Borrowers", f"The finance companies {bank.NAME} lends to (car lenders, invoice-based businesses, mortgage lenders).",
                   {"borrower_id": "ID used everywhere", "name": "company name", "btype": "kind of lending business",
                    "state": "US state", "facility_limit": "size of the credit line ($)"}),
     "entities": ("Company registry", "Every company the system knows about: borrowers, their affiliates, lenders, customers. Like a state business register.",
@@ -29,14 +31,14 @@ TABLES = {
                   "registered_agent": "who receives legal papers for it (a service, or a person)",
                   "formed_month": "when it was formed (month of the timeline)", "has_operations": "does it actually do business?"}),
     "tape": ("Loan file (tape)", "What the borrower reports each month about the loans it pledged as collateral.",
-             {"month": "month of the timeline (0-23)", "facility_id": "which Wells Fargo credit line", "asset_id": "loan ID",
+             {"month": "month of the timeline (0-23)", "facility_id": f"which {bank.NAME} credit line", "asset_id": "loan ID",
               "vin": "vehicle ID (synthetic, starts with SYN)", "balance": "amount owed ($)",
               "credit_score": "borrower's credit score at origination (600+ needed to count as collateral)",
               "dpd_bucket_reported": "reported lateness: 0 current, 1 = 30 days, 2 = 60, 3 = 90+",
               "deferred_flag": "payment pause reported", "eligible_reported": "counts toward borrowing"}),
     "source_truth": ("Servicer system", "What the borrower's own loan system really says. The system samples it the way an auditor would.",
                      {"month": "month", "asset_id": "loan ID", "dpd_bucket_true": "real lateness", "balance_true": "real balance ($)"}),
-    "payments": ("Bank payments", "Money arriving in the collection account Wells Fargo controls.",
+    "payments": ("Bank payments", f"Money arriving in the collection account {bank.NAME} controls.",
                  {"txn_id": "transaction ID", "month": "month", "payer_name": "who sent it (as the bank sees it)",
                   "amount": "amount ($)", "memo": "reference text", "ref": "loan or invoice it pays"}),
     "outflows": ("Operating-account payments", "Money leaving the borrower's own operating account: payroll, rent, suppliers, debt service.",
@@ -55,7 +57,7 @@ TABLES = {
                    {"quarter": "quarter (0-7)", "revenue_reported": "revenue ($)", "receivables_reported": "receivables ($)",
                     "debt_reported": "debt ($)", "covenant_metric_reported": "covenant ratio",
                     "covenant_threshold": "minimum allowed"}),
-    "disclosures": ("Disclosures", "What the borrower told Wells Fargo: its debts, affiliates, payment-pause programmes.",
+    "disclosures": ("Disclosures", f"What the borrower told {bank.NAME}: its debts, affiliates, payment-pause programmes.",
                     {"kind": "debt / related_party / deferment_program", "counterparty_entity_id": "who", "note": "detail"}),
     "pledgecheck": ("PledgeCheck results (simulated)", "Setpoint PledgeCheck's four published checks, for borrowers enrolled in it.",
                     {"month": "month", "uniqueness": "collateral in only one facility?", "completeness": "collections match reports?"}),

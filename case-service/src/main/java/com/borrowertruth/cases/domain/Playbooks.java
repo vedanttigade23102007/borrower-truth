@@ -40,7 +40,7 @@ public final class Playbooks {
             new StepTemplate("PAYER_EXPLANATION", "Ask the borrower to explain each non-customer payer", Kind.LETTER, "BORROWER",
                 "an explanation and supporting documents for each listed payment, including the relationship between you and each payer", 5),
             new StepTemplate("TRACE_FLOWS", "Trace the flows back to their origin", Kind.ACTION, null,
-                "Trace each listed inflow to its originating account, the same money-trail review WF ran by hand after its Q1 2026 loss, now for this case only.", 7),
+                "Trace each listed inflow back to the account it came from.", 7),
             new StepTemplate("TIGHTEN_CASH_DOMINION", "Tighten cash dominion on the collection account", Kind.ACTION, null,
                 "Require that only obligor or debtor payments are credited to eligible collections; route other inflows to a suspense account.", 5)),
         "FAKE_INVOICES", List.of(

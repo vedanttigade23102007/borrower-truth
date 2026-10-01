@@ -24,6 +24,7 @@ import re
 
 from rapidfuzz import fuzz, process
 
+from bt.common import bank
 from bt.systems.base import Ctx, sig
 
 COLLATERAL_OVERLAP = re.compile(r"receivable|chattel|inventory|all assets", re.I)
@@ -38,9 +39,9 @@ FILING_GRACE = 2  # months a borrower has to tell the bank about debt it announc
 FILED_DEBT = """
 SELECT borrower_id, counterparty_entity_id AS lender, any_value(counterparty_name) AS name, min(filed_month) AS first_m,
        list(DISTINCT form || ' ' || item ORDER BY form || ' ' || item) AS forms
-FROM sec_filings WHERE item IN ('debt', '2.03') AND coalesce(counterparty_entity_id, '') NOT IN ('', 'E_WF')
+FROM sec_filings WHERE item IN ('debt', '2.03') AND coalesce(counterparty_entity_id, '') NOT IN ('', ?)
 GROUP BY 1, 2
-"""
+"""  # ? = the bank's own entity ID: its own lending is not hidden debt
 ADDRESS_NAME_FLOOR = 60  # a filing at a company's exact registered address still needs a broadly similar name
 
 
@@ -92,7 +93,7 @@ def run(ctx: Ctx):
 
     out, undisclosed = [], {}
     for u in ctx.rows("SELECT * FROM ucc ORDER BY filed_month"):
-        if "WELLS FARGO" in u["secured_party_name"].upper():
+        if bank.is_bank(u["secured_party_name"]):  # the bank's own lien
             continue
         targets, score = match(u["debtor_name"])
         by_address = False
@@ -139,7 +140,7 @@ def run(ctx: Ctx):
                            f"Judgment of ${c['amount']:,.0f} against '{c['defendant_name']}' in favour of {c['plaintiff']}",
                            c["month"], [t["entity_id"]]))
     if not ctx.shared.get("sec_off"):
-        for f in ctx.rows(FILED_DEBT):
+        for f in ctx.rows(FILED_DEBT, [bank.ENTITY_ID]):
             b = f["borrower_id"]
             if (b, f["lender"]) in disclosed or f["first_m"] > ctx.as_of - FILING_GRACE:
                 continue
@@ -147,7 +148,7 @@ def run(ctx: Ctx):
             s = sig("S5", b, "FILED_DEBT_UNDISCLOSED", 0.85, 0.9,
                     [f"sec_filing:{b}:{x.replace(' ', '_')}" for x in f["forms"]] + [f"disclosures:{b}#debt"],
                     f"The borrower's own SEC filings ({forms}) name '{f['name']}' as a lender, but that debt was never "
-                    f"disclosed to Wells Fargo", f["first_m"], [f["lender"]])
+                    f"disclosed to {bank.NAME}", f["first_m"], [f["lender"]])
             out.append(s)
             undisclosed.setdefault(b, []).append(s.signal_id)
         for e in ctx.rows("SELECT * FROM sec_filings WHERE item = '2.04' ORDER BY filed_month"):
