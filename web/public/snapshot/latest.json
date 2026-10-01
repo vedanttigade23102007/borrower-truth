@@ -1,6 +1,6 @@
 {
  "asOf": 23,
- "receivedAt": "2026-09-14T11:43:11.493934Z",
+ "receivedAt": "2026-10-01T05:53:37.234531Z",
  "runMetrics": {
   "data_quality": {
    "quarantined": {},
@@ -8,38 +8,38 @@
   },
   "S6": {
    "status": "ok",
-   "seconds": 0.012,
+   "seconds": 0.024,
    "signals": 93
   },
   "S1": {
    "status": "ok",
-   "seconds": 0.089,
+   "seconds": 0.082,
    "signals": 74
   },
   "S2": {
    "status": "ok",
-   "seconds": 0.116,
+   "seconds": 0.096,
    "signals": 61
   },
   "S3": {
    "status": "ok",
-   "seconds": 0.311,
+   "seconds": 0.316,
    "signals": 24
   },
   "S4": {
    "status": "ok",
-   "seconds": 0.05,
+   "seconds": 0.04,
    "signals": 29
   },
   "S5": {
    "status": "ok",
-   "seconds": 0.012,
-   "signals": 67
+   "seconds": 0.009,
+   "signals": 48
   },
   "S7": {
    "status": "ok",
    "seconds": 0.004,
-   "signals": 73
+   "signals": 70
   },
   "manifest": {
    "as_of": 23,
@@ -64,21 +64,21 @@
     "ucc_filings": "dc69464a1eac5eca"
    },
    "inputs_digest": "ceddf15cfd0b",
-   "rule_version": "ffff5f535c8f",
-   "code_version": "ecbabc3+local-changes"
+   "rule_version": "374453295f68",
+   "code_version": "0baab5b"
   },
   "combiner": {
    "status": "ok",
-   "seconds": 0.099,
+   "seconds": 0.078,
    "cases": 120
   },
-  "total_seconds": 1.425,
+  "total_seconds": 1.461,
   "as_of": 23
  },
  "verdicts": {
-  "EXPLAINED": 6,
+  "EXPLAINED": 7,
   "LIKELY_FRAUD": 50,
-  "NEEDS_MORE_EVIDENCE": 32,
-  "NO_ISSUE": 32
+  "NEEDS_MORE_EVIDENCE": 20,
+  "NO_ISSUE": 43
  }
 }

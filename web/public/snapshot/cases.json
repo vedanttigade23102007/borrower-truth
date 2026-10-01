@@ -13,18 +13,6 @@
   "liveAlerts": 0
  },
  {
-  "borrowerId": "B0031",
-  "verdict": "LIKELY_FRAUD",
-  "headline": "Likely: bad loans are being reported as good ones",
-  "priority": 1.0,
-  "mechanisms": [
-   "TAPE_DRESSUP"
-  ],
-  "openSteps": 3,
-  "caseStatus": "AWAITING_APPROVAL",
-  "liveAlerts": 0
- },
- {
   "borrowerId": "B0034",
   "verdict": "LIKELY_FRAUD",
   "headline": "Likely: invoices are fake, inflated or altered",
@@ -72,7 +60,7 @@
    "DISGUISED_RECEIPTS",
    "RELATED_SHELLS"
   ],
-  "openSteps": 5,
+  "openSteps": 6,
   "caseStatus": "IN_PROGRESS",
   "liveAlerts": 0
  },
@@ -84,7 +72,7 @@
   "mechanisms": [
    "DOUBLE_PLEDGE"
   ],
-  "openSteps": 3,
+  "openSteps": 4,
   "caseStatus": "AWAITING_APPROVAL",
   "liveAlerts": 0
  },
@@ -96,7 +84,7 @@
   "mechanisms": [
    "DOUBLE_PLEDGE"
   ],
-  "openSteps": 3,
+  "openSteps": 5,
   "caseStatus": "AWAITING_APPROVAL",
   "liveAlerts": 0
  },
@@ -109,7 +97,7 @@
    "HIDDEN_DEBT",
    "RELATED_SHELLS"
   ],
-  "openSteps": 5,
+  "openSteps": 6,
   "caseStatus": "AWAITING_APPROVAL",
   "liveAlerts": 0
  },
@@ -130,26 +118,6 @@
   "liveAlerts": 0
  },
  {
-  "borrowerId": "B0054",
-  "verdict": "NEEDS_MORE_EVIDENCE",
-  "headline": "Worth a look: invoices are fake, inflated or altered",
-  "priority": 1.0,
-  "mechanisms": [],
-  "openSteps": 0,
-  "caseStatus": "NO_ACTION",
-  "liveAlerts": 0
- },
- {
-  "borrowerId": "B0055",
-  "verdict": "NEEDS_MORE_EVIDENCE",
-  "headline": "Worth a look: money from lenders or linked companies is arriving dressed up as customer payments",
-  "priority": 1.0,
-  "mechanisms": [],
-  "openSteps": 0,
-  "caseStatus": "NO_ACTION",
-  "liveAlerts": 0
- },
- {
   "borrowerId": "B0042",
   "verdict": "LIKELY_FRAUD",
   "headline": "Likely: bad loans are being reported as good ones",
@@ -159,7 +127,7 @@
    "DOUBLE_PLEDGE",
    "FIN_MANIPULATION"
   ],
-  "openSteps": 9,
+  "openSteps": 10,
   "caseStatus": "AWAITING_APPROVAL",
   "liveAlerts": 0
  },
@@ -242,7 +210,7 @@
   "mechanisms": [
    "DOUBLE_PLEDGE"
   ],
-  "openSteps": 3,
+  "openSteps": 5,
   "caseStatus": "AWAITING_APPROVAL",
   "liveAlerts": 0
  },
@@ -278,7 +246,7 @@
   "mechanisms": [
    "DOUBLE_PLEDGE"
   ],
-  "openSteps": 3,
+  "openSteps": 5,
   "caseStatus": "AWAITING_APPROVAL",
   "liveAlerts": 0
  },
@@ -290,7 +258,7 @@
   "mechanisms": [
    "FAKE_INVOICES"
   ],
-  "openSteps": 3,
+  "openSteps": 4,
   "caseStatus": "AWAITING_APPROVAL",
   "liveAlerts": 0
  },
@@ -333,7 +301,17 @@
    "FIN_MANIPULATION",
    "TAPE_DRESSUP"
   ],
-  "openSteps": 9,
+  "openSteps": 10,
+  "caseStatus": "AWAITING_APPROVAL",
+  "liveAlerts": 0
+ },
+ {
+  "borrowerId": "B0055",
+  "verdict": "NEEDS_MORE_EVIDENCE",
+  "headline": "Worth a look: money from lenders or linked companies is arriving dressed up as customer payments",
+  "priority": 0.999,
+  "mechanisms": [],
+  "openSteps": 2,
   "caseStatus": "AWAITING_APPROVAL",
   "liveAlerts": 0
  },
@@ -345,18 +323,8 @@
   "mechanisms": [
    "DOUBLE_PLEDGE"
   ],
-  "openSteps": 3,
+  "openSteps": 4,
   "caseStatus": "AWAITING_APPROVAL",
-  "liveAlerts": 0
- },
- {
-  "borrowerId": "B0012",
-  "verdict": "NEEDS_MORE_EVIDENCE",
-  "headline": "Worth a look: the borrower has debt it has not disclosed",
-  "priority": 0.98,
-  "mechanisms": [],
-  "openSteps": 0,
-  "caseStatus": "NO_ACTION",
   "liveAlerts": 0
  },
  {
@@ -367,7 +335,17 @@
   "mechanisms": [
    "TAPE_DRESSUP"
   ],
-  "openSteps": 3,
+  "openSteps": 4,
+  "caseStatus": "AWAITING_APPROVAL",
+  "liveAlerts": 0
+ },
+ {
+  "borrowerId": "B0054",
+  "verdict": "NEEDS_MORE_EVIDENCE",
+  "headline": "Worth a look: invoices are fake, inflated or altered",
+  "priority": 0.966,
+  "mechanisms": [],
+  "openSteps": 1,
   "caseStatus": "AWAITING_APPROVAL",
   "liveAlerts": 0
  },
@@ -377,8 +355,8 @@
   "headline": "Worth a look: invoices are fake, inflated or altered",
   "priority": 0.966,
   "mechanisms": [],
-  "openSteps": 0,
-  "caseStatus": "NO_ACTION",
+  "openSteps": 1,
+  "caseStatus": "AWAITING_APPROVAL",
   "liveAlerts": 0
  },
  {
@@ -386,6 +364,18 @@
   "verdict": "LIKELY_FRAUD",
   "headline": "Likely: bad loans are being reported as good ones",
   "priority": 0.96,
+  "mechanisms": [
+   "TAPE_DRESSUP"
+  ],
+  "openSteps": 4,
+  "caseStatus": "AWAITING_APPROVAL",
+  "liveAlerts": 0
+ },
+ {
+  "borrowerId": "B0031",
+  "verdict": "LIKELY_FRAUD",
+  "headline": "Likely: bad loans are being reported as good ones",
+  "priority": 0.95,
   "mechanisms": [
    "TAPE_DRESSUP"
   ],
@@ -500,7 +490,7 @@
   "mechanisms": [
    "TAPE_DRESSUP"
   ],
-  "openSteps": 3,
+  "openSteps": 4,
   "caseStatus": "AWAITING_APPROVAL",
   "liveAlerts": 0
  },
@@ -525,7 +515,7 @@
   "mechanisms": [
    "DISGUISED_RECEIPTS"
   ],
-  "openSteps": 3,
+  "openSteps": 4,
   "caseStatus": "AWAITING_APPROVAL",
   "liveAlerts": 0
  },
@@ -585,8 +575,8 @@
   "headline": "Worth a look: invoices are fake, inflated or altered",
   "priority": 0.92,
   "mechanisms": [],
-  "openSteps": 0,
-  "caseStatus": "NO_ACTION",
+  "openSteps": 2,
+  "caseStatus": "AWAITING_APPROVAL",
   "liveAlerts": 0
  },
  {
@@ -607,8 +597,8 @@
   "headline": "Worth a look: invoices are fake, inflated or altered",
   "priority": 0.878,
   "mechanisms": [],
-  "openSteps": 0,
-  "caseStatus": "NO_ACTION",
+  "openSteps": 1,
+  "caseStatus": "AWAITING_APPROVAL",
   "liveAlerts": 0
  },
  {
@@ -636,26 +626,6 @@
   "liveAlerts": 0
  },
  {
-  "borrowerId": "B0017",
-  "verdict": "NEEDS_MORE_EVIDENCE",
-  "headline": "Worth a look: the borrower has debt it has not disclosed",
-  "priority": 0.866,
-  "mechanisms": [],
-  "openSteps": 0,
-  "caseStatus": "NO_ACTION",
-  "liveAlerts": 0
- },
- {
-  "borrowerId": "B0006",
-  "verdict": "NEEDS_MORE_EVIDENCE",
-  "headline": "Worth a look: the borrower has debt it has not disclosed",
-  "priority": 0.866,
-  "mechanisms": [],
-  "openSteps": 0,
-  "caseStatus": "NO_ACTION",
-  "liveAlerts": 0
- },
- {
   "borrowerId": "B0005",
   "verdict": "LIKELY_FRAUD",
   "headline": "Likely: the same collateral is pledged to more than one lender",
@@ -665,16 +635,6 @@
   ],
   "openSteps": 3,
   "caseStatus": "AWAITING_APPROVAL",
-  "liveAlerts": 0
- },
- {
-  "borrowerId": "B0078",
-  "verdict": "NEEDS_MORE_EVIDENCE",
-  "headline": "Worth a look: the borrower has debt it has not disclosed",
-  "priority": 0.866,
-  "mechanisms": [],
-  "openSteps": 0,
-  "caseStatus": "NO_ACTION",
   "liveAlerts": 0
  },
  {
@@ -695,8 +655,8 @@
   "headline": "Worth a look: invoices are fake, inflated or altered",
   "priority": 0.85,
   "mechanisms": [],
-  "openSteps": 0,
-  "caseStatus": "NO_ACTION",
+  "openSteps": 1,
+  "caseStatus": "AWAITING_APPROVAL",
   "liveAlerts": 0
  },
  {
@@ -705,8 +665,8 @@
   "headline": "Worth a look: invoices are fake, inflated or altered",
   "priority": 0.85,
   "mechanisms": [],
-  "openSteps": 0,
-  "caseStatus": "NO_ACTION",
+  "openSteps": 1,
+  "caseStatus": "AWAITING_APPROVAL",
   "liveAlerts": 0
  },
  {
@@ -715,8 +675,8 @@
   "headline": "Worth a look: invoices are fake, inflated or altered",
   "priority": 0.85,
   "mechanisms": [],
-  "openSteps": 0,
-  "caseStatus": "NO_ACTION",
+  "openSteps": 1,
+  "caseStatus": "AWAITING_APPROVAL",
   "liveAlerts": 0
  },
  {
@@ -725,8 +685,8 @@
   "headline": "Worth a look: the same collateral is pledged to more than one lender",
   "priority": 0.68,
   "mechanisms": [],
-  "openSteps": 0,
-  "caseStatus": "NO_ACTION",
+  "openSteps": 1,
+  "caseStatus": "AWAITING_APPROVAL",
   "liveAlerts": 0
  },
  {
@@ -737,7 +697,7 @@
   "mechanisms": [
    "FIN_MANIPULATION"
   ],
-  "openSteps": 3,
+  "openSteps": 4,
   "caseStatus": "AWAITING_APPROVAL",
   "liveAlerts": 0
  },
@@ -747,8 +707,8 @@
   "headline": "Worth a look: bad loans are being reported as good ones",
   "priority": 0.595,
   "mechanisms": [],
-  "openSteps": 0,
-  "caseStatus": "NO_ACTION",
+  "openSteps": 1,
+  "caseStatus": "AWAITING_APPROVAL",
   "liveAlerts": 0
  },
  {
@@ -757,8 +717,8 @@
   "headline": "Worth a look: bad loans are being reported as good ones",
   "priority": 0.595,
   "mechanisms": [],
-  "openSteps": 0,
-  "caseStatus": "NO_ACTION",
+  "openSteps": 1,
+  "caseStatus": "AWAITING_APPROVAL",
   "liveAlerts": 0
  },
  {
@@ -767,8 +727,8 @@
   "headline": "Worth a look: the borrower has debt it has not disclosed",
   "priority": 0.594,
   "mechanisms": [],
-  "openSteps": 0,
-  "caseStatus": "NO_ACTION",
+  "openSteps": 2,
+  "caseStatus": "AWAITING_APPROVAL",
   "liveAlerts": 0
  },
  {
@@ -777,18 +737,8 @@
   "headline": "Worth a look: money from lenders or linked companies is arriving dressed up as customer payments",
   "priority": 0.548,
   "mechanisms": [],
-  "openSteps": 0,
-  "caseStatus": "NO_ACTION",
-  "liveAlerts": 0
- },
- {
-  "borrowerId": "B0052",
-  "verdict": "NEEDS_MORE_EVIDENCE",
-  "headline": "Worth a look: the borrower has debt it has not disclosed",
-  "priority": 0.541,
-  "mechanisms": [],
-  "openSteps": 0,
-  "caseStatus": "NO_ACTION",
+  "openSteps": 2,
+  "caseStatus": "AWAITING_APPROVAL",
   "liveAlerts": 0
  },
  {
@@ -797,8 +747,8 @@
   "headline": "Worth a look: the borrower has debt it has not disclosed",
   "priority": 0.541,
   "mechanisms": [],
-  "openSteps": 0,
-  "caseStatus": "NO_ACTION",
+  "openSteps": 1,
+  "caseStatus": "AWAITING_APPROVAL",
   "liveAlerts": 0
  },
  {
@@ -831,68 +781,18 @@
   "headline": "Worth a look: the borrower has debt it has not disclosed",
   "priority": 0.36,
   "mechanisms": [],
-  "openSteps": 0,
-  "caseStatus": "NO_ACTION",
+  "openSteps": 1,
+  "caseStatus": "AWAITING_APPROVAL",
   "liveAlerts": 0
  },
  {
-  "borrowerId": "B0047",
+  "borrowerId": "B0006",
   "verdict": "NEEDS_MORE_EVIDENCE",
   "headline": "Worth a look: the borrower has debt it has not disclosed",
   "priority": 0.36,
   "mechanisms": [],
-  "openSteps": 0,
-  "caseStatus": "NO_ACTION",
-  "liveAlerts": 0
- },
- {
-  "borrowerId": "B0112",
-  "verdict": "NEEDS_MORE_EVIDENCE",
-  "headline": "Worth a look: the borrower has debt it has not disclosed",
-  "priority": 0.36,
-  "mechanisms": [],
-  "openSteps": 0,
-  "caseStatus": "NO_ACTION",
-  "liveAlerts": 0
- },
- {
-  "borrowerId": "B0107",
-  "verdict": "NEEDS_MORE_EVIDENCE",
-  "headline": "Worth a look: the borrower has debt it has not disclosed",
-  "priority": 0.36,
-  "mechanisms": [],
-  "openSteps": 0,
-  "caseStatus": "NO_ACTION",
-  "liveAlerts": 0
- },
- {
-  "borrowerId": "B0082",
-  "verdict": "NEEDS_MORE_EVIDENCE",
-  "headline": "Worth a look: the borrower has debt it has not disclosed",
-  "priority": 0.36,
-  "mechanisms": [],
-  "openSteps": 0,
-  "caseStatus": "NO_ACTION",
-  "liveAlerts": 0
- },
- {
-  "borrowerId": "B0083",
-  "verdict": "NEEDS_MORE_EVIDENCE",
-  "headline": "Worth a look: the borrower has debt it has not disclosed",
-  "priority": 0.36,
-  "mechanisms": [],
-  "openSteps": 0,
-  "caseStatus": "NO_ACTION",
-  "liveAlerts": 0
- },
- {
-  "borrowerId": "B0079",
-  "verdict": "NEEDS_MORE_EVIDENCE",
-  "headline": "Worth a look: the borrower has debt it has not disclosed",
-  "priority": 0.36,
-  "mechanisms": [],
-  "openSteps": 0,
-  "caseStatus": "NO_ACTION",
+  "openSteps": 1,
+  "caseStatus": "AWAITING_APPROVAL",
   "liveAlerts": 0
  },
  {
@@ -901,28 +801,8 @@
   "headline": "Worth a look: the borrower has debt it has not disclosed",
   "priority": 0.36,
   "mechanisms": [],
-  "openSteps": 0,
-  "caseStatus": "NO_ACTION",
-  "liveAlerts": 0
- },
- {
-  "borrowerId": "B0098",
-  "verdict": "NEEDS_MORE_EVIDENCE",
-  "headline": "Worth a look: the borrower has debt it has not disclosed",
-  "priority": 0.36,
-  "mechanisms": [],
-  "openSteps": 0,
-  "caseStatus": "NO_ACTION",
-  "liveAlerts": 0
- },
- {
-  "borrowerId": "B0094",
-  "verdict": "NEEDS_MORE_EVIDENCE",
-  "headline": "Worth a look: the borrower has debt it has not disclosed",
-  "priority": 0.36,
-  "mechanisms": [],
-  "openSteps": 0,
-  "caseStatus": "NO_ACTION",
+  "openSteps": 1,
+  "caseStatus": "AWAITING_APPROVAL",
   "liveAlerts": 0
  },
  {
@@ -931,8 +811,8 @@
   "headline": "Worth a look: the borrower is connected to undisclosed shell companies",
   "priority": 0.332,
   "mechanisms": [],
-  "openSteps": 0,
-  "caseStatus": "NO_ACTION",
+  "openSteps": 1,
+  "caseStatus": "AWAITING_APPROVAL",
   "liveAlerts": 0
  },
  {
@@ -961,8 +841,8 @@
   "headline": "Worth a look: the borrower is connected to undisclosed shell companies",
   "priority": 0.24,
   "mechanisms": [],
-  "openSteps": 0,
-  "caseStatus": "NO_ACTION",
+  "openSteps": 1,
+  "caseStatus": "AWAITING_APPROVAL",
   "liveAlerts": 0
  },
  {
@@ -971,8 +851,8 @@
   "headline": "Worth a look: the borrower is connected to undisclosed shell companies",
   "priority": 0.24,
   "mechanisms": [],
-  "openSteps": 0,
-  "caseStatus": "NO_ACTION",
+  "openSteps": 1,
+  "caseStatus": "AWAITING_APPROVAL",
   "liveAlerts": 0
  },
  {
@@ -1016,6 +896,16 @@
   "liveAlerts": 0
  },
  {
+  "borrowerId": "B0052",
+  "verdict": "NO_ISSUE",
+  "headline": "No issues found",
+  "priority": 0.157,
+  "mechanisms": [],
+  "openSteps": 0,
+  "caseStatus": "NO_ACTION",
+  "liveAlerts": 0
+ },
+ {
   "borrowerId": "B0118",
   "verdict": "NO_ISSUE",
   "headline": "No issues found",
@@ -1027,6 +917,16 @@
  },
  {
   "borrowerId": "B0115",
+  "verdict": "NO_ISSUE",
+  "headline": "No issues found",
+  "priority": 0.157,
+  "mechanisms": [],
+  "openSteps": 0,
+  "caseStatus": "NO_ACTION",
+  "liveAlerts": 0
+ },
+ {
+  "borrowerId": "B0012",
   "verdict": "NO_ISSUE",
   "headline": "No issues found",
   "priority": 0.157,
@@ -1087,6 +987,16 @@
  },
  {
   "borrowerId": "B0046",
+  "verdict": "NO_ISSUE",
+  "headline": "No issues found",
+  "priority": 0.122,
+  "mechanisms": [],
+  "openSteps": 0,
+  "caseStatus": "NO_ACTION",
+  "liveAlerts": 0
+ },
+ {
+  "borrowerId": "B0094",
   "verdict": "NO_ISSUE",
   "headline": "No issues found",
   "priority": 0.122,
@@ -1186,6 +1096,16 @@
   "liveAlerts": 0
  },
  {
+  "borrowerId": "B0047",
+  "verdict": "NO_ISSUE",
+  "headline": "No issues found",
+  "priority": 0.0,
+  "mechanisms": [],
+  "openSteps": 0,
+  "caseStatus": "NO_ACTION",
+  "liveAlerts": 0
+ },
+ {
   "borrowerId": "B0048",
   "verdict": "NO_ISSUE",
   "headline": "No issues found",
@@ -1216,6 +1136,16 @@
   "liveAlerts": 0
  },
  {
+  "borrowerId": "B0112",
+  "verdict": "NO_ISSUE",
+  "headline": "No issues found",
+  "priority": 0.0,
+  "mechanisms": [],
+  "openSteps": 0,
+  "caseStatus": "NO_ACTION",
+  "liveAlerts": 0
+ },
+ {
   "borrowerId": "B0114",
   "verdict": "NO_ISSUE",
   "headline": "No issues found",
@@ -1236,7 +1166,27 @@
   "liveAlerts": 0
  },
  {
+  "borrowerId": "B0107",
+  "verdict": "NO_ISSUE",
+  "headline": "No issues found",
+  "priority": 0.0,
+  "mechanisms": [],
+  "openSteps": 0,
+  "caseStatus": "NO_ACTION",
+  "liveAlerts": 0
+ },
+ {
   "borrowerId": "B0108",
+  "verdict": "NO_ISSUE",
+  "headline": "No issues found",
+  "priority": 0.0,
+  "mechanisms": [],
+  "openSteps": 0,
+  "caseStatus": "NO_ACTION",
+  "liveAlerts": 0
+ },
+ {
+  "borrowerId": "B0017",
   "verdict": "NO_ISSUE",
   "headline": "No issues found",
   "priority": 0.0,
@@ -1286,6 +1236,46 @@
   "liveAlerts": 0
  },
  {
+  "borrowerId": "B0082",
+  "verdict": "NO_ISSUE",
+  "headline": "No issues found",
+  "priority": 0.0,
+  "mechanisms": [],
+  "openSteps": 0,
+  "caseStatus": "NO_ACTION",
+  "liveAlerts": 0
+ },
+ {
+  "borrowerId": "B0083",
+  "verdict": "EXPLAINED",
+  "headline": "Checks fired, but disclosures explain them",
+  "priority": 0.0,
+  "mechanisms": [],
+  "openSteps": 0,
+  "caseStatus": "NO_ACTION",
+  "liveAlerts": 0
+ },
+ {
+  "borrowerId": "B0078",
+  "verdict": "NO_ISSUE",
+  "headline": "No issues found",
+  "priority": 0.0,
+  "mechanisms": [],
+  "openSteps": 0,
+  "caseStatus": "NO_ACTION",
+  "liveAlerts": 0
+ },
+ {
+  "borrowerId": "B0079",
+  "verdict": "NO_ISSUE",
+  "headline": "No issues found",
+  "priority": 0.0,
+  "mechanisms": [],
+  "openSteps": 0,
+  "caseStatus": "NO_ACTION",
+  "liveAlerts": 0
+ },
+ {
   "borrowerId": "B0073",
   "verdict": "EXPLAINED",
   "headline": "Checks fired, but disclosures explain them",
@@ -1297,6 +1287,16 @@
  },
  {
   "borrowerId": "B0064",
+  "verdict": "NO_ISSUE",
+  "headline": "No issues found",
+  "priority": 0.0,
+  "mechanisms": [],
+  "openSteps": 0,
+  "caseStatus": "NO_ACTION",
+  "liveAlerts": 0
+ },
+ {
+  "borrowerId": "B0098",
   "verdict": "NO_ISSUE",
   "headline": "No issues found",
   "priority": 0.0,

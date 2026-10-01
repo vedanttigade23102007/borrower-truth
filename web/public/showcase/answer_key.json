@@ -1,8 +1,8 @@
 {
  "counts": {
-  "cleared": 38,
+  "cleared": 50,
   "caught": 50,
-  "worth a look (honest)": 32
+  "worth a look (honest)": 20
  },
  "borrowers": [
   {
@@ -97,7 +97,7 @@
    "found": [],
    "right_mechanisms": [],
    "status": "worth a look (honest)",
-   "priority": 0.866
+   "priority": 0.36
   },
   {
    "borrower_id": "B0007",
@@ -185,11 +185,11 @@
     "TWO_WAY_TRADE",
     "VIRTUAL_OFFICE"
    ],
-   "verdict": "NEEDS_MORE_EVIDENCE",
+   "verdict": "NO_ISSUE",
    "found": [],
    "right_mechanisms": [],
-   "status": "worth a look (honest)",
-   "priority": 0.98
+   "status": "cleared",
+   "priority": 0.157
   },
   {
    "borrower_id": "B0013",
@@ -264,11 +264,11 @@
     "NAME_TYPO",
     "UNDISCLOSED_DEFERRAL"
    ],
-   "verdict": "NEEDS_MORE_EVIDENCE",
+   "verdict": "NO_ISSUE",
    "found": [],
    "right_mechanisms": [],
-   "status": "worth a look (honest)",
-   "priority": 0.866
+   "status": "cleared",
+   "priority": 0.0
   },
   {
    "borrower_id": "B0018",
@@ -512,7 +512,7 @@
     "TAPE_DRESSUP"
    ],
    "status": "caught",
-   "priority": 1.0
+   "priority": 0.95
   },
   {
    "borrower_id": "B0032",
@@ -756,11 +756,11 @@
    "lookalikes": [
     "NAME_TYPO"
    ],
-   "verdict": "NEEDS_MORE_EVIDENCE",
+   "verdict": "NO_ISSUE",
    "found": [],
    "right_mechanisms": [],
-   "status": "worth a look (honest)",
-   "priority": 0.36
+   "status": "cleared",
+   "priority": 0.0
   },
   {
    "borrower_id": "B0048",
@@ -821,11 +821,11 @@
    "lookalikes": [
     "NEW_AFFILIATE"
    ],
-   "verdict": "NEEDS_MORE_EVIDENCE",
+   "verdict": "NO_ISSUE",
    "found": [],
    "right_mechanisms": [],
-   "status": "worth a look (honest)",
-   "priority": 0.541
+   "status": "cleared",
+   "priority": 0.157
   },
   {
    "borrower_id": "B0053",
@@ -850,7 +850,7 @@
    "found": [],
    "right_mechanisms": [],
    "status": "worth a look (honest)",
-   "priority": 1.0
+   "priority": 0.966
   },
   {
    "borrower_id": "B0055",
@@ -862,7 +862,7 @@
    "found": [],
    "right_mechanisms": [],
    "status": "worth a look (honest)",
-   "priority": 1.0
+   "priority": 0.999
   },
   {
    "borrower_id": "B0056",
@@ -1243,21 +1243,21 @@
    "lookalikes": [
     "DISCLOSED_EQUIPMENT_LIEN"
    ],
-   "verdict": "NEEDS_MORE_EVIDENCE",
+   "verdict": "NO_ISSUE",
    "found": [],
    "right_mechanisms": [],
-   "status": "worth a look (honest)",
-   "priority": 0.866
+   "status": "cleared",
+   "priority": 0.0
   },
   {
    "borrower_id": "B0079",
    "planted": [],
    "lookalikes": [],
-   "verdict": "NEEDS_MORE_EVIDENCE",
+   "verdict": "NO_ISSUE",
    "found": [],
    "right_mechanisms": [],
-   "status": "worth a look (honest)",
-   "priority": 0.36
+   "status": "cleared",
+   "priority": 0.0
   },
   {
    "borrower_id": "B0080",
@@ -1297,11 +1297,11 @@
     "DISCLOSED_EQUIPMENT_LIEN",
     "LATE_TAPE"
    ],
-   "verdict": "NEEDS_MORE_EVIDENCE",
+   "verdict": "NO_ISSUE",
    "found": [],
    "right_mechanisms": [],
-   "status": "worth a look (honest)",
-   "priority": 0.36
+   "status": "cleared",
+   "priority": 0.0
   },
   {
    "borrower_id": "B0083",
@@ -1309,11 +1309,11 @@
    "lookalikes": [
     "DEFERMENT_PROGRAM"
    ],
-   "verdict": "NEEDS_MORE_EVIDENCE",
+   "verdict": "EXPLAINED",
    "found": [],
    "right_mechanisms": [],
-   "status": "worth a look (honest)",
-   "priority": 0.36
+   "status": "cleared",
+   "priority": 0.0
   },
   {
    "borrower_id": "B0084",
@@ -1456,11 +1456,11 @@
    "lookalikes": [
     "UNDISCLOSED_DEFERRAL"
    ],
-   "verdict": "NEEDS_MORE_EVIDENCE",
+   "verdict": "NO_ISSUE",
    "found": [],
    "right_mechanisms": [],
-   "status": "worth a look (honest)",
-   "priority": 0.36
+   "status": "cleared",
+   "priority": 0.122
   },
   {
    "borrower_id": "B0095",
@@ -1516,11 +1516,11 @@
    "lookalikes": [
     "NAME_TYPO"
    ],
-   "verdict": "NEEDS_MORE_EVIDENCE",
+   "verdict": "NO_ISSUE",
    "found": [],
    "right_mechanisms": [],
-   "status": "worth a look (honest)",
-   "priority": 0.36
+   "status": "cleared",
+   "priority": 0.0
   },
   {
    "borrower_id": "B0099",
@@ -1677,11 +1677,11 @@
    "lookalikes": [
     "DEFERMENT_PROGRAM"
    ],
-   "verdict": "NEEDS_MORE_EVIDENCE",
+   "verdict": "NO_ISSUE",
    "found": [],
    "right_mechanisms": [],
-   "status": "worth a look (honest)",
-   "priority": 0.36
+   "status": "cleared",
+   "priority": 0.0
   },
   {
    "borrower_id": "B0108",
@@ -1768,11 +1768,11 @@
     "DISCLOSED_EQUIPMENT_LIEN",
     "NAME_TYPO"
    ],
-   "verdict": "NEEDS_MORE_EVIDENCE",
+   "verdict": "NO_ISSUE",
    "found": [],
    "right_mechanisms": [],
-   "status": "worth a look (honest)",
-   "priority": 0.36
+   "status": "cleared",
+   "priority": 0.0
   },
   {
    "borrower_id": "B0113",

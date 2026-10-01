@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { use, useCallback, useEffect, useMemo, useState } from "react";
 import { Badge, Button, Card, ConfidencePill, ErrorState, Skeleton, StatusPill, VerdictBadge } from "@/components/ui";
-import { allowed, decide, fetchCase, isDemo } from "@/lib/api";
+import { allowed, decide, fetchCase, isDemo, needsReason } from "@/lib/api";
 import { MECHANISM, SOURCE, SYSTEM, fmtDate, signalLabel } from "@/lib/labels";
 import { useStatic, type AgentRun, type Replay } from "@/lib/showcase";
 import type { CaseData, CaseDetail, Decision, Finding, Signal, Step } from "@/lib/types";
@@ -121,6 +121,9 @@ export default function CasePage({ params }: { params: Promise<{ id: string }> }
       {context.length > 0 && (
         <Card className="p-4">
           <h2 className="text-sm font-medium text-zinc-900">Worth a look (not enough on its own)</h2>
+          <p className="mt-0.5 text-xs text-zinc-500">
+            Each one has a step below that can clear it. Mark it cleared, with the reason, or escalate it to the full fix.
+          </p>
           <ul className="mt-2 space-y-1 text-sm text-zinc-600">
             {context.map((f) => (
               <li key={f.mechanism}>
@@ -396,7 +399,7 @@ function FixSteps({
     setBusy(step.code + d);
     setErr(null);
     try {
-      await decide(id, step, d, user.trim() || "unknown", notes[step.code] ?? "");
+      await decide(id, step, d, user.trim() || "unknown", notes[step.code] ?? "", steps);
       onChange();
     } catch (e) {
       setErr(e instanceof Error ? e.message : String(e));
@@ -405,7 +408,8 @@ function FixSteps({
     }
   }
 
-  if (steps.length === 0) {
+  const shown = steps.filter((s) => s.status !== "STANDBY");
+  if (shown.length === 0) {
     return (
       <Card className="p-4 text-sm text-zinc-600">
         No fix steps: nothing here is strong enough to act on. It stays under monitoring.
@@ -413,10 +417,14 @@ function FixSteps({
     );
   }
 
-  const groups = steps.reduce<Record<string, Step[]>>((acc, s) => {
+  const groups = shown.reduce<Record<string, Step[]>>((acc, s) => {
     (acc[s.mechanism] ??= []).push(s);
     return acc;
   }, {});
+  for (const list of Object.values(groups)) list.sort((a, b) => Number(b.check) - Number(a.check)); // the check first
+  // fix steps waiting for a "worth a look" check to be escalated
+  const waiting = steps.filter((s) => s.status === "STANDBY");
+  const reason = (s: Step) => (notes[s.code] ?? "").trim();
 
   return (
     <Card className="overflow-hidden">
@@ -453,6 +461,14 @@ function FixSteps({
         <div key={mech} className="border-b border-zinc-100 last:border-0">
           <h3 className="bg-zinc-50/60 px-4 py-2 text-xs font-medium uppercase tracking-wide text-zinc-500">
             {MECHANISM[mech] ?? mech}
+            {list.some((s) => s.check) && (
+              <span className="normal-case tracking-normal">
+                {" "}
+                · worth a look
+                {{ CLEARED: ", cleared", ESCALATED: ", escalated to the full fix" }[list.find((s) => s.check)!.status as string] ??
+                  ": one step to clear it"}
+              </span>
+            )}
           </h3>
           <ul className="divide-y divide-zinc-100">
             {list.map((s) => (
@@ -467,12 +483,27 @@ function FixSteps({
                     <Button variant="primary" disabled={!allowed(s, "APPROVE") || busy !== null} onClick={() => void act(s, "APPROVE")}>
                       {busy === s.code + "APPROVE" ? "Approving…" : "Approve"}
                     </Button>
-                    <Button variant="danger" disabled={!allowed(s, "REJECT") || busy !== null} onClick={() => void act(s, "REJECT")}>
-                      Reject
-                    </Button>
-                    <Button disabled={!allowed(s, "DONE") || busy !== null} onClick={() => void act(s, "DONE")}>
-                      Mark done
-                    </Button>
+                    {s.check ? (
+                      (["CLEAR", "ESCALATE"] as const).map((d) => (
+                        <Button
+                          key={d}
+                          variant={d === "ESCALATE" ? "danger" : "secondary"}
+                          disabled={!allowed(s, d) || busy !== null || (needsReason(d) && !reason(s))}
+                          onClick={() => void act(s, d)}
+                        >
+                          {d === "CLEAR" ? "Clear" : "Escalate"}
+                        </Button>
+                      ))
+                    ) : (
+                      <>
+                        <Button variant="danger" disabled={!allowed(s, "REJECT") || busy !== null} onClick={() => void act(s, "REJECT")}>
+                          Reject
+                        </Button>
+                        <Button disabled={!allowed(s, "DONE") || busy !== null} onClick={() => void act(s, "DONE")}>
+                          Mark done
+                        </Button>
+                      </>
+                    )}
                   </div>
                 </div>
                 {s.decidedBy && (
@@ -481,13 +512,24 @@ function FixSteps({
                     {s.note ? ` · “${s.note}”` : ""}
                   </p>
                 )}
-                {s.status === "PROPOSED" && (
+                {(s.status === "PROPOSED" || (s.check && allowed(s, "CLEAR"))) && (
                   <input
-                    placeholder="Note for the audit log (optional)"
+                    aria-label={s.check ? `Reason for clearing or escalating ${s.title}` : `Note for ${s.title}`}
+                    placeholder={s.check ? "Reason (needed to clear or escalate): what you checked and what you found" : "Note for the audit log (optional)"}
                     value={notes[s.code] ?? ""}
                     onChange={(e) => setNotes({ ...notes, [s.code]: e.target.value })}
                     className="mt-2 h-8 w-full max-w-md rounded-md border border-zinc-300 px-2 text-sm focus-visible:outline-2 focus-visible:outline-blue-600"
                   />
+                )}
+                {s.check && allowed(s, "ESCALATE") && waiting.some((w) => w.mechanism === s.mechanism) && (
+                  <p className="mt-1 text-xs text-zinc-500">
+                    If it doesn&apos;t clear, Escalate proposes the full fix:{" "}
+                    {waiting
+                      .filter((w) => w.mechanism === s.mechanism)
+                      .map((w) => w.title.toLowerCase())
+                      .join("; ")}
+                    .
+                  </p>
                 )}
                 <details className="mt-2">
                   <summary className="cursor-pointer rounded text-sm text-blue-700 hover:underline focus-visible:outline-2 focus-visible:outline-blue-600">

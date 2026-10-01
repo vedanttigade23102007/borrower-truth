@@ -1,51 +1,65 @@
 [
  {
   "mechanism": "DISGUISED_RECEIPTS",
-  "proposed": 47,
+  "proposed": 51,
   "approved": 1,
   "rejected": 0,
-  "done": 0
+  "done": 0,
+  "cleared": 0,
+  "escalated": 0
  },
  {
   "mechanism": "DOUBLE_PLEDGE",
-  "proposed": 39,
+  "proposed": 40,
   "approved": 0,
   "rejected": 0,
-  "done": 0
+  "done": 0,
+  "cleared": 0,
+  "escalated": 0
  },
  {
   "mechanism": "FAKE_INVOICES",
-  "proposed": 15,
+  "proposed": 24,
   "approved": 0,
   "rejected": 0,
-  "done": 0
+  "done": 0,
+  "cleared": 0,
+  "escalated": 0
  },
  {
   "mechanism": "FIN_MANIPULATION",
-  "proposed": 39,
+  "proposed": 43,
   "approved": 0,
   "rejected": 0,
-  "done": 0
+  "done": 0,
+  "cleared": 0,
+  "escalated": 0
  },
  {
   "mechanism": "HIDDEN_DEBT",
-  "proposed": 36,
+  "proposed": 47,
   "approved": 0,
   "rejected": 0,
-  "done": 0
+  "done": 0,
+  "cleared": 0,
+  "escalated": 0
  },
  {
   "mechanism": "RELATED_SHELLS",
-  "proposed": 28,
+  "proposed": 34,
   "approved": 0,
   "rejected": 0,
-  "done": 0
+  "done": 0,
+  "cleared": 0,
+  "escalated": 0
  },
  {
   "mechanism": "TAPE_DRESSUP",
-  "proposed": 39,
+  "proposed": 46,
   "approved": 0,
   "rejected": 0,
-  "done": 0
+  "done": 0,
+  "cleared": 0,
+  "escalated": 0
  }
 ]

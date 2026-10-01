@@ -1,7 +1,8 @@
 export type Verdict = "LIKELY_FRAUD" | "NEEDS_MORE_EVIDENCE" | "EXPLAINED" | "NO_ISSUE";
 export type Confidence = "high" | "medium" | "low";
-export type StepStatus = "PROPOSED" | "APPROVED" | "REJECTED" | "DONE";
-export type Decision = "APPROVE" | "REJECT" | "DONE";
+// STANDBY: a fix step waiting, unseen, until its "worth a look" check is escalated (or the evidence grows)
+export type StepStatus = "PROPOSED" | "APPROVED" | "REJECTED" | "DONE" | "CLEARED" | "ESCALATED" | "STANDBY";
+export type Decision = "APPROVE" | "REJECT" | "DONE" | "CLEAR" | "ESCALATE";
 
 export type Signal = {
   signalId: string;
@@ -59,6 +60,8 @@ export type Step = {
   decidedBy: string | null;
   decidedAt: string | null;
   note: string | null;
+  /** the one step that can clear a "worth a look" finding: it ends in CLEARED or ESCALATED */
+  check: boolean;
 };
 
 export type AuditEvent = {

@@ -33,6 +33,44 @@ class PlaybooksTest {
         for (String m : MECHANISMS) assertFalse(Playbooks.forMechanism(m).isEmpty(), m);
     }
 
+    /** A "worth a look" case: one old lien, filed before onboarding (S5 dates it before month 0). */
+    static CaseIn lowCase() {
+        SignalIn s = new SignalIn("S5-B0002-COMPETING_LIEN-old", "B0002", "S5", "COMPETING_LIEN", 0.8, 0.5,
+                List.of("ucc:TX-UCC-000002"), "'Prairie Capital Partners LLC' holds a lien on the borrower that the borrower "
+                + "never disclosed (filed before onboarding: may be a stale filing)", -10, List.of());
+        FindingIn f = new FindingIn("HIDDEN_DEBT", "low", "the borrower has debt it has not disclosed",
+                List.of(s.signalId()), List.of(), List.of(), List.of("S5"), -10);
+        return new CaseIn("B0002", "NEEDS_MORE_EVIDENCE", "Worth a look: hidden debt", 0.32, List.of(f), List.of(s),
+                List.of(), Map.of("S5", "ok"), null);
+    }
+
+    @Test
+    void everyDocumentedMechanismHasOneCheckThatCanClearIt() {
+        for (String m : MECHANISMS) {
+            var f = new FindingIn(m, "low", "", List.of(), List.of(), List.of(), List.of(), 0);
+            var t = Playbooks.checkFor(f, List.of());
+            assertNotEquals(Playbooks.EXPLAIN, t, m);  // a specific ask, not the generic fallback
+            assertTrue(Playbooks.isCheck(t.code()), t.code());
+            assertTrue(Playbooks.forMechanism(m).stream().noneMatch(x -> Playbooks.isCheck(x.code())), m);
+        }
+        var unknown = new FindingIn("SOMETHING_NEW", "low", "", List.of(), List.of(), List.of(), List.of(), 0);
+        assertEquals(Playbooks.EXPLAIN, Playbooks.checkFor(unknown, List.of()));  // never a finding without a step
+    }
+
+    @Test
+    void anOldLienAsksForItsRelease() {
+        CaseIn c = lowCase();
+        var t = Playbooks.checkFor(c.findings().get(0), c.signals());
+        assertEquals("CHECK_LIEN_RELEASE", t.code());
+        DraftWriter.Draft d = new TemplateDraftWriter().write(c, c.findings().get(0), t, LocalDate.of(2026, 10, 11));
+        assertTrue(d.text().contains("termination statement (UCC-3)"));
+        assertTrue(d.text().contains("[ref S5-B0002-COMPETING_LIEN-old]"));
+        assertTrue(d.text().contains("does not allege wrongdoing"));
+        // the same lien filed after onboarding is not "old": it gets the general hidden-debt question
+        CaseIn recent = PlaybooksTest.sampleCase();
+        assertEquals("CHECK_DEBT_EXPLANATION", Playbooks.checkFor(recent.findings().get(0), recent.signals()).code());
+    }
+
     @Test
     void lettersCiteEvidenceAndNeverAllege() {
         CaseIn c = sampleCase();

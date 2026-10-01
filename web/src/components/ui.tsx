@@ -33,10 +33,19 @@ export function ConfidencePill({ level }: { level: Confidence }) {
   return <Badge tone={tone}>{level} confidence</Badge>;
 }
 
+const STEP_STATUS: Record<StepStatus, { label: string; tone: Tone }> = {
+  PROPOSED: { label: "Awaiting approval", tone: "amber" },
+  APPROVED: { label: "Approved", tone: "blue" },
+  DONE: { label: "Done", tone: "emerald" },
+  REJECTED: { label: "Rejected", tone: "zinc" },
+  CLEARED: { label: "Cleared", tone: "emerald" },
+  ESCALATED: { label: "Escalated", tone: "red" },
+  STANDBY: { label: "Waiting", tone: "zinc" },
+};
+
 export function StatusPill({ status }: { status: StepStatus }) {
-  const tone: Tone = status === "APPROVED" ? "blue" : status === "DONE" ? "emerald" : status === "REJECTED" ? "zinc" : "amber";
-  const label = { PROPOSED: "Awaiting approval", APPROVED: "Approved", DONE: "Done", REJECTED: "Rejected" }[status];
-  return <Badge tone={tone}>{label}</Badge>;
+  const s = STEP_STATUS[status];
+  return <Badge tone={s.tone}>{s.label}</Badge>;
 }
 
 export function Skeleton({ className = "" }: { className?: string }) {

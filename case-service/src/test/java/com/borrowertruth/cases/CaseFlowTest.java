@@ -66,6 +66,84 @@ class CaseFlowTest {
         assertEquals(steps.size() - 2, f.proposed());
     }
 
+    RunIn lowRun() {
+        return new RunIn(23, Map.of("total_seconds", 1.0), List.of(PlaybooksTest.lowCase()));
+    }
+
+    static List<StepView> visible(CaseDetail d) {
+        return d.steps().stream().filter(s -> !s.status().equals("STANDBY")).toList();
+    }
+
+    @Test
+    void worthALookGetsOneCheckAndItsFixStepsWait() {
+        RunAck ack = service.ingest(lowRun());
+        assertEquals(1, ack.stepsCreated());  // the waiting fix steps are not proposed
+        CaseDetail d = service.detail("B0002").orElseThrow();
+        assertEquals(List.of("CHECK_LIEN_RELEASE"), visible(d).stream().map(StepView::code).toList());
+        assertTrue(visible(d).get(0).check());
+        assertEquals(3, d.steps().stream().filter(s -> s.status().equals("STANDBY")).count());
+        assertEquals("AWAITING_APPROVAL", d.caseStatus());
+        assertEquals(1, service.list(null).get(0).openSteps());
+        service.ingest(lowRun());  // a re-run never adds a second check for the same finding
+        assertEquals(1, visible(service.detail("B0002").orElseThrow()).size());
+    }
+
+    @Test
+    void clearingNeedsAReasonAndIsCounted() {
+        service.ingest(lowRun());
+        assertThrows(IllegalArgumentException.class,
+                () -> service.decide("B0002", "CHECK_LIEN_RELEASE", new DecisionIn("CLEAR", "officer.a", " ")));
+        StepView s = service.decide("B0002", "CHECK_LIEN_RELEASE",
+                new DecisionIn("CLEAR", "officer.a", "UCC-3 on file: Prairie loan repaid in 2024"));
+        assertEquals("CLEARED", s.status());
+        CaseDetail d = service.detail("B0002").orElseThrow();
+        assertEquals("RESOLVED", d.caseStatus());
+        assertTrue(d.audit().stream().anyMatch(a -> a.action().equals("STEP_CLEARED") && a.detail().contains("UCC-3 on file")));
+        FeedbackRow f = service.feedback().stream().filter(r -> r.mechanism().equals("HIDDEN_DEBT")).findFirst().orElseThrow();
+        assertEquals(1, f.cleared());
+        assertEquals(0, f.proposed());  // waiting fix steps are not counted as proposed
+    }
+
+    @Test
+    void escalatingProposesTheFullFix() {
+        service.ingest(lowRun());
+        service.decide("B0002", "CHECK_LIEN_RELEASE", new DecisionIn("APPROVE", "officer.a", null));
+        assertThrows(IllegalArgumentException.class,
+                () -> service.decide("B0002", "CHECK_LIEN_RELEASE", new DecisionIn("ESCALATE", "officer.a", null)));
+        service.decide("B0002", "CHECK_LIEN_RELEASE", new DecisionIn("ESCALATE", "officer.a", "no release after 10 days"));
+        CaseDetail d = service.detail("B0002").orElseThrow();
+        assertEquals(4, visible(d).size());
+        assertEquals(3, visible(d).stream().filter(s -> s.status().equals("PROPOSED") && !s.check()).count());
+        assertEquals("IN_PROGRESS", d.caseStatus());
+        assertTrue(d.audit().stream().anyMatch(a -> a.action().equals("FIX_PROPOSED")));
+        assertEquals(1, service.feedback().stream().filter(r -> r.mechanism().equals("HIDDEN_DEBT")).findFirst()
+                .orElseThrow().escalated());
+    }
+
+    @Test
+    void checksAndFixesKeepTheirOwnDecisions() {
+        service.ingest(run());
+        service.ingest(new RunIn(23, Map.of(), List.of(PlaybooksTest.sampleCase(), PlaybooksTest.lowCase())));
+        String fix = service.detail("B0001").orElseThrow().steps().get(0).code();
+        assertThrows(IllegalArgumentException.class, () -> service.decide("B0001", fix, new DecisionIn("CLEAR", "t", "fine")));
+        assertThrows(IllegalArgumentException.class,
+                () -> service.decide("B0002", "CHECK_LIEN_RELEASE", new DecisionIn("REJECT", "t", "no")));
+        assertThrows(IllegalStateException.class,  // a waiting fix step can't be approved before escalation
+                () -> service.decide("B0002", "ESTOPPEL_LETTER", new DecisionIn("APPROVE", "t", null)));
+    }
+
+    @Test
+    void aFindingThatGrowsBringsItsFixStepsForward() {
+        service.ingest(lowRun());
+        CaseIn low = PlaybooksTest.lowCase();
+        FindingIn medium = new FindingIn("HIDDEN_DEBT", "medium", low.findings().get(0).plain(), low.findings().get(0).signals(),
+                List.of(), List.of("ucc", "courts"), List.of("S5"), -10);
+        CaseIn grown = new CaseIn("B0002", "LIKELY_FRAUD", "Likely: hidden debt", 0.7, List.of(medium), low.signals(),
+                List.of(), low.coverage(), null);
+        assertEquals(3, service.ingest(new RunIn(23, Map.of(), List.of(grown))).stepsCreated());
+        assertEquals(4, visible(service.detail("B0002").orElseThrow()).size());  // the check stays, the fix arrives
+    }
+
     @Test
     void liveAlertsAttachToTheCaseAndAreCapped() {
         service.ingest(run());

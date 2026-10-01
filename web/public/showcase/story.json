@@ -160,6 +160,7 @@
     "S3-B0028-RELATED_PARTY_INFLOW-27aa045b"
    ],
    "corroborated_by": [
+    "S5-B0028-COMPETING_LIEN-9f05809d",
     "S6-B0028-SHELL_INDICATORS-a80898c9",
     "S5-B0028-JUDGMENT-5c5e0929",
     "S6-B0028-RELATED_ENTITY-f7cb7314"
@@ -167,7 +168,8 @@
    "sources": [
     "courts",
     "payments",
-    "registry"
+    "registry",
+    "ucc"
    ],
    "systems": [
     "S3"
@@ -179,6 +181,8 @@
    "confidence": "high",
    "plain": "the borrower has debt it has not disclosed",
    "signals": [
+    "S5-B0028-COMPETING_LIEN-9f05809d",
+    "S7-B0028-DEBT_GAP-796a46ff",
     "S5-B0028-JUDGMENT-5c5e0929"
    ],
    "corroborated_by": [
@@ -189,12 +193,14 @@
    "sources": [
     "courts",
     "payments",
-    "registry"
+    "registry",
+    "ucc"
    ],
    "systems": [
-    "S5"
+    "S5",
+    "S7"
    ],
-   "first_month": 22
+   "first_month": 8
   },
   {
    "mechanism": "RELATED_SHELLS",
@@ -209,13 +215,15 @@
     "S6-B0028-RELATED_ENTITY-26978907"
    ],
    "corroborated_by": [
+    "S5-B0028-COMPETING_LIEN-9f05809d",
     "S3-B0028-RELATED_PARTY_INFLOW-27aa045b",
     "S5-B0028-JUDGMENT-5c5e0929"
    ],
    "sources": [
     "courts",
     "payments",
-    "registry"
+    "registry",
+    "ucc"
    ],
    "systems": [
     "S6"
@@ -243,6 +251,24 @@
  ],
  "signals": [
   {
+   "signal_id": "S5-B0028-COMPETING_LIEN-9f05809d",
+   "entity_id": "B0028",
+   "system": "S5",
+   "type": "COMPETING_LIEN",
+   "severity": 0.9,
+   "confidence": 0.85,
+   "evidence": [
+    "ucc:AZ-UCC-000059",
+    "disclosures:B0028#debt"
+   ],
+   "explanation": "'Silverline Credit Fund LP' holds a lien on a related company ('Lakeshore Receivables LLC': all assets of the debtor) that the borrower never disclosed",
+   "observed_month": 8,
+   "related_entities": [
+    "E000005",
+    "E000370"
+   ]
+  },
+  {
    "signal_id": "S3-B0028-RELATED_PARTY_INFLOW-27aa045b",
    "entity_id": "B0028",
    "system": "S3",
@@ -261,6 +287,21 @@
    "related_entities": [
     "E000370"
    ]
+  },
+  {
+   "signal_id": "S7-B0028-DEBT_GAP-796a46ff",
+   "entity_id": "B0028",
+   "system": "S7",
+   "type": "DEBT_GAP",
+   "severity": 0.7,
+   "confidence": 0.8,
+   "evidence": [
+    "signal:S5-B0028-COMPETING_LIEN-9f05809d",
+    "financials:B0028:debt_reported"
+   ],
+   "explanation": "Debt reported to Wells Fargo omits 1 secured lender(s) found in public lien filings",
+   "observed_month": 23,
+   "related_entities": []
   },
   {
    "signal_id": "S6-B0028-SHELL_INDICATORS-a80898c9",
@@ -441,11 +482,11 @@
   }
  ],
  "decision": {
-  "decision_id": "B0028-m23-63b7034fcf0e",
-  "result_digest": "63b7034fcf0e",
+  "decision_id": "B0028-m23-57a795803fa4",
+  "result_digest": "57a795803fa4",
   "inputs_digest": "ceddf15cfd0b",
-  "rule_version": "ffff5f535c8f",
-  "code_version": "ecbabc3+local-changes",
+  "rule_version": "374453295f68",
+  "code_version": "0baab5b",
   "as_of": 23
  }
 }

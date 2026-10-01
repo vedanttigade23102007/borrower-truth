@@ -32,9 +32,11 @@ public final class Dto {
     public record DecisionIn(@NotBlank @Size(max = 16) String decision, @NotBlank @Size(max = 80) String user,
                              @Size(max = 500) String note) {}
 
+    /** {@code check}: the one step that can clear a "worth a look" finding (it ends in CLEARED or ESCALATED).
+     *  Status STANDBY is a fix step waiting until that check is escalated or the evidence grows. */
     public record StepView(String mechanism, String code, String title, String kind, String status, String draft,
                            String draftSource, String owner, LocalDate dueDate, String decidedBy, Instant decidedAt,
-                           String note) {}
+                           String note, boolean check) {}
 
     public record CaseSummary(String borrowerId, String verdict, String headline, double priority,
                               List<String> mechanisms, long openSteps, String caseStatus, int liveAlerts) {}
@@ -51,8 +53,9 @@ public final class Dto {
 
     public record AuditView(long id, Instant at, String actor, String borrowerId, String action, String detail) {}
 
-    /** How officers treated one finding type's suggested fixes: what a rules owner reviews. */
-    public record FeedbackRow(String mechanism, long proposed, long approved, long rejected, long done) {}
+    /** How officers treated one finding type's suggested fixes and "worth a look" checks: what a rules owner reviews. */
+    public record FeedbackRow(String mechanism, long proposed, long approved, long rejected, long done, long cleared,
+                              long escalated) {}
 
     public record RunStatus(Integer asOf, Instant receivedAt, Map<String, Object> runMetrics, Map<String, Long> verdicts) {}
 }

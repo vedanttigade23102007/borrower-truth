@@ -155,12 +155,17 @@ export default function OpsPage() {
                   <th className="px-4 py-2 text-right font-medium">Done</th>
                   <th className="px-4 py-2 text-right font-medium">Rejected</th>
                   <th className="px-4 py-2 text-right font-medium">Rejected share of decided</th>
+                  <th className="px-4 py-2 text-right font-medium">Cleared</th>
+                  <th className="px-4 py-2 text-right font-medium">Escalated</th>
+                  <th className="px-4 py-2 text-right font-medium">Cleared share of checks</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-zinc-100 tabular-nums">
                 {feedback.map((f) => {
                   const decided = f.approved + f.done + f.rejected;
                   const rate = decided ? f.rejected / decided : null;
+                  const checked = f.cleared + f.escalated;
+                  const clearRate = checked ? f.cleared / checked : null;
                   return (
                     <tr key={f.mechanism}>
                       <td className="px-4 py-2 text-zinc-900">{MECHANISM[f.mechanism] ?? f.mechanism}</td>
@@ -171,6 +176,15 @@ export default function OpsPage() {
                       <td className="px-4 py-2 text-right">
                         {rate === null ? "—" : <Badge tone={rate >= 0.3 && decided >= 5 ? "amber" : "zinc"}>{Math.round(rate * 100)}%</Badge>}
                       </td>
+                      <td className="px-4 py-2 text-right">{f.cleared}</td>
+                      <td className="px-4 py-2 text-right">{f.escalated}</td>
+                      <td className="px-4 py-2 text-right">
+                        {clearRate === null ? (
+                          "—"
+                        ) : (
+                          <Badge tone={clearRate >= 0.8 && checked >= 5 ? "amber" : "zinc"}>{Math.round(clearRate * 100)}%</Badge>
+                        )}
+                      </td>
                     </tr>
                   );
                 })}
@@ -180,7 +194,9 @@ export default function OpsPage() {
         )}
         <p className="border-t border-zinc-100 px-4 py-2 text-xs text-zinc-500">
           This is the learning loop, kept human. A finding type whose fixes officers keep rejecting (amber: 30% or more
-          of at least 5 decisions) goes to the person who owns the rules. The rules never change themselves: that would
+          of at least 5 decisions) goes to the person who owns the rules. So does a &ldquo;worth a look&rdquo; type that
+          officers clear almost every time (amber: 80% or more of at least 5 checks): the rules owner reads the reasons
+          and decides whether it is noise or a cheap check worth keeping. The rules never change themselves: that would
           be an unvalidated model change.
         </p>
       </Card>

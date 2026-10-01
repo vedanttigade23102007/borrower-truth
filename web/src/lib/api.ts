@@ -17,7 +17,10 @@ async function getJSON<T>(apiPath: string, snapshotPath: string): Promise<T> {
 // ---------- demo overlay (browser only) ----------
 type Overlay = Record<
   string,
-  Record<string, { status: StepStatus; decidedBy: string; decidedAt: string; note: string | null; mechanism?: string; from?: StepStatus }>
+  Record<
+    string,
+    { status: StepStatus; decidedBy?: string; decidedAt?: string; note?: string | null; mechanism?: string; from?: StepStatus }
+  >
 >;
 const OVERLAY_KEY = "bt-demo-decisions";
 const AUDIT_KEY = "bt-demo-audit";
@@ -39,10 +42,15 @@ function write(key: string, value: unknown) {
   }
 }
 
-function caseStatus(steps: Step[]): string {
+const CLOSED: StepStatus[] = ["DONE", "REJECTED", "CLEARED", "ESCALATED"];
+const STARTED: StepStatus[] = ["APPROVED", "DONE", "CLEARED", "ESCALATED"];
+const isOpen = (s?: StepStatus) => s === "PROPOSED" || s === "APPROVED";
+
+function caseStatus(all: Step[]): string {
+  const steps = all.filter((s) => s.status !== "STANDBY");
   if (steps.length === 0) return "NO_ACTION";
-  if (steps.every((s) => s.status === "DONE" || s.status === "REJECTED")) return "RESOLVED";
-  if (steps.some((s) => s.status === "APPROVED" || s.status === "DONE")) return "IN_PROGRESS";
+  if (steps.every((s) => CLOSED.includes(s.status))) return "RESOLVED";
+  if (steps.some((s) => STARTED.includes(s.status))) return "IN_PROGRESS";
   return "AWAITING_APPROVAL";
 }
 
@@ -65,10 +73,17 @@ export async function fetchCases(): Promise<CaseSummary[]> {
   if (!isDemo) return cases;
   const overlay = read<Overlay>(OVERLAY_KEY, {});
   return cases.map((c) => {
-    const closed = Object.values(overlay[c.borrowerId] ?? {}).filter(
-      (s) => s.status === "DONE" || s.status === "REJECTED",
-    ).length;
-    return { ...c, openSteps: Math.max(0, c.openSteps - closed) };
+    const mine = Object.values(overlay[c.borrowerId] ?? {});
+    if (mine.length === 0) return c;
+    const openSteps = Math.max(0, c.openSteps + mine.reduce((n, s) => n + Number(isOpen(s.status)) - Number(isOpen(s.from)), 0));
+    // same rule as caseStatus(): no open step left means every visible step is closed
+    const caseStatus =
+      openSteps === 0
+        ? "RESOLVED"
+        : c.caseStatus === "IN_PROGRESS" || mine.some((s) => STARTED.includes(s.status))
+          ? "IN_PROGRESS"
+          : "AWAITING_APPROVAL";
+    return { ...c, openSteps, caseStatus };
   });
 }
 
@@ -80,20 +95,43 @@ export async function fetchCase(id: string): Promise<CaseDetail> {
   return applyOverlay(d);
 }
 
-const NEXT: Record<Decision, { from: StepStatus; to: StepStatus }> = {
-  APPROVE: { from: "PROPOSED", to: "APPROVED" },
-  REJECT: { from: "PROPOSED", to: "REJECTED" },
-  DONE: { from: "APPROVED", to: "DONE" },
+// the same rules the case service enforces. `check`: only for (true) or never for (false) a "worth a look" check
+const NEXT: Record<Decision, { from: StepStatus[]; to: StepStatus; check?: boolean; reason?: boolean }> = {
+  APPROVE: { from: ["PROPOSED"], to: "APPROVED" },
+  REJECT: { from: ["PROPOSED"], to: "REJECTED", check: false },
+  DONE: { from: ["APPROVED"], to: "DONE", check: false },
+  CLEAR: { from: ["PROPOSED", "APPROVED"], to: "CLEARED", check: true, reason: true },
+  ESCALATE: { from: ["PROPOSED", "APPROVED"], to: "ESCALATED", check: true, reason: true },
 };
 
 export function allowed(step: Step, decision: Decision): boolean {
-  return step.status === NEXT[decision].from;
+  const r = NEXT[decision];
+  return r.from.includes(step.status) && (r.check === undefined || r.check === step.check);
 }
 
-export async function decide(id: string, step: Step, decision: Decision, user: string, note: string): Promise<void> {
-  if (!allowed(step, decision)) {
-    throw new Error(`${step.code} is ${step.status}; ${NEXT[decision].to} needs ${NEXT[decision].from}`);
+export const needsReason = (decision: Decision) => Boolean(NEXT[decision].reason);
+
+/** `all`: every step of the case, so a demo-mode escalation can bring the waiting fix steps forward. */
+export async function decide(
+  id: string,
+  step: Step,
+  decision: Decision,
+  user: string,
+  note: string,
+  all: Step[] = [],
+): Promise<void> {
+  const r = NEXT[decision];
+  if (r.check !== undefined && r.check !== step.check) {
+    throw new Error(
+      step.check
+        ? `${step.code} is a check: it ends in CLEAR or ESCALATE, not ${decision}`
+        : `${decision} applies to a 'worth a look' check, not to fix step ${step.code}`,
+    );
   }
+  if (!r.from.includes(step.status)) {
+    throw new Error(`${step.code} is ${step.status}; ${r.to} needs ${r.from.join(" or ")}`);
+  }
+  if (r.reason && !note.trim()) throw new Error(`${decision} needs a reason in the note`);
   if (!isDemo) {
     const res = await fetch(`${API}/api/cases/${encodeURIComponent(id)}/steps/${step.code}/decision`, {
       method: "POST",
@@ -112,7 +150,7 @@ export async function decide(id: string, step: Step, decision: Decision, user: s
   overlay[id] = {
     ...(overlay[id] ?? {}),
     [step.code]: {
-      status: NEXT[decision].to,
+      status: r.to,
       decidedBy: user,
       decidedAt: now,
       note: note || null,
@@ -120,31 +158,53 @@ export async function decide(id: string, step: Step, decision: Decision, user: s
       from: prev?.from ?? step.status, // the status in the snapshot, for the feedback counts
     },
   };
-  write(OVERLAY_KEY, overlay);
   const audit = read<AuditEvent[]>(AUDIT_KEY, []);
-  audit.unshift({ id: Date.now(), at: now, actor: user, borrowerId: id, action: `STEP_${NEXT[decision].to}`, detail: step.code + (note ? ` — ${note}` : "") });
+  audit.unshift({ id: Date.now(), at: now, actor: user, borrowerId: id, action: `STEP_${r.to}`, detail: step.code + (note ? ` — ${note}` : "") });
+  if (decision === "ESCALATE") {
+    const waiting = all.filter((s) => s.mechanism === step.mechanism && s.status === "STANDBY");
+    for (const s of waiting) overlay[id][s.code] = { status: "PROPOSED", mechanism: s.mechanism, from: "STANDBY" };
+    audit.unshift({ id: Date.now() + 1, at: now, actor: user, borrowerId: id, action: "FIX_PROPOSED", detail: `${step.mechanism}: ${waiting.length} fix step(s) proposed after escalation` });
+  }
+  write(OVERLAY_KEY, overlay);
   write(AUDIT_KEY, audit.slice(0, 500));
 }
 
-export type FeedbackRow = { mechanism: string; proposed: number; approved: number; rejected: number; done: number };
+export type FeedbackRow = {
+  mechanism: string;
+  proposed: number;
+  approved: number;
+  rejected: number;
+  done: number;
+  cleared: number;
+  escalated: number;
+};
 
 /** Officers' decisions per finding type. Demo mode adds this browser's own decisions to the snapshot counts. */
 export async function fetchFeedback(): Promise<FeedbackRow[]> {
   const rows = await getJSON<FeedbackRow[]>("/api/feedback", "/snapshot/feedback.json");
   if (!isDemo) return rows;
   const byM = new Map(rows.map((r) => [r.mechanism, { ...r }]));
-  const key: Record<StepStatus, "proposed" | "approved" | "rejected" | "done"> = {
+  type Column = Exclude<keyof FeedbackRow, "mechanism">;
+  const key: Record<StepStatus, Column | null> = {
     PROPOSED: "proposed",
     APPROVED: "approved",
     REJECTED: "rejected",
     DONE: "done",
+    CLEARED: "cleared",
+    ESCALATED: "escalated",
+    STANDBY: null, // waiting fix steps are not counted
   };
   for (const steps of Object.values(read<Overlay>(OVERLAY_KEY, {}))) {
     for (const s of Object.values(steps)) {
-      const r = s.mechanism && s.from ? byM.get(s.mechanism) : undefined;
-      if (!r || !s.from) continue;
-      r[key[s.from]] = Math.max(0, r[key[s.from]] - 1);
-      r[key[s.status]] += 1;
+      if (!s.mechanism || !s.from) continue;
+      if (!byM.has(s.mechanism)) {
+        byM.set(s.mechanism, { mechanism: s.mechanism, proposed: 0, approved: 0, rejected: 0, done: 0, cleared: 0, escalated: 0 });
+      }
+      const r = byM.get(s.mechanism)!;
+      const was = key[s.from];
+      const now = key[s.status];
+      if (was) r[was] = Math.max(0, r[was] - 1);
+      if (now) r[now] += 1;
     }
   }
   return [...byM.values()];

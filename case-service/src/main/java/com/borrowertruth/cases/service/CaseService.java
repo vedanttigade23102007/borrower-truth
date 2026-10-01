@@ -25,6 +25,11 @@ import java.util.stream.Collectors;
 @Service
 public class CaseService {
     public static final Set<String> ACTIONABLE = Set.of("high", "medium");
+    private static final String PROPOSED = "PROPOSED";
+    /** A fix step for a "worth a look" finding, waiting unseen until an officer escalates or the evidence grows. */
+    private static final String STANDBY = "STANDBY";
+    private static final Set<String> CLOSED = Set.of("DONE", "REJECTED", "CLEARED", "ESCALATED");
+    private static final Set<String> STARTED = Set.of("APPROVED", "DONE", "CLEARED", "ESCALATED");
 
     private final JdbcTemplate jdbc;
     private final DraftWriter drafts;
@@ -51,21 +56,16 @@ public class CaseService {
             fresh.put(c.borrowerId(), c);
             if (c.findings() == null) continue;
             for (FindingIn f : c.findings()) {
-                if (!ACTIONABLE.contains(f.confidence())) continue;
-                for (StepTemplate t : Playbooks.forMechanism(f.mechanism())) {
-                    Integer exists = jdbc.queryForObject(
-                            "SELECT count(*) FROM fix_step WHERE borrower_id=? AND mechanism=? AND code=?",
-                            Integer.class, c.borrowerId(), f.mechanism(), t.code());
-                    if (exists != null && exists > 0) continue;
-                    LocalDate due = LocalDate.now(clock).plusDays(t.dueDays());
-                    DraftWriter.Draft d = drafts.write(c, f, t, due);
-                    jdbc.update("INSERT INTO fix_step (borrower_id, mechanism, code, title, kind, status, draft, draft_source, "
-                                    + "owner, due_date, created_at) VALUES (?,?,?,?,?,?,?,?,?,?,?)",
-                            c.borrowerId(), f.mechanism(), t.code(), t.title(), t.kind().name(), "PROPOSED",
-                            d.text(), d.source(), "credit-officer (unassigned)", due, Timestamp.from(clock.instant()));
-                    meters.counter("bt.drafts", "source", d.source()).increment();
-                    created++;
+                if (ACTIONABLE.contains(f.confidence())) {
+                    // also brings forward fix steps that were waiting while this finding was only "worth a look"
+                    for (StepTemplate t : Playbooks.forMechanism(f.mechanism())) created += propose(c, f, t, PROPOSED);
+                    continue;
                 }
+                // "worth a look": one step that can clear it; the fix steps wait until an officer escalates
+                boolean checked = jdbc.queryForList("SELECT code FROM fix_step WHERE borrower_id=? AND mechanism=?",
+                        String.class, c.borrowerId(), f.mechanism()).stream().anyMatch(Playbooks::isCheck);
+                if (!checked) created += propose(c, f, Playbooks.checkFor(f, c.signals()), PROPOSED);
+                for (StepTemplate t : Playbooks.forMechanism(f.mechanism())) propose(c, f, t, STANDBY);
             }
         }
         cases.clear();
@@ -121,23 +121,38 @@ public class CaseService {
                 List.copyOf(live.getOrDefault(borrowerId, new ArrayDeque<>()))));
     }
 
-    /** One-click decisions. DONE is only allowed after APPROVE: nothing is carried out unapproved. */
+    /**
+     * One-click decisions. DONE is only allowed after APPROVE: nothing is carried out unapproved.
+     * A "worth a look" check ends in CLEAR or ESCALATE, and both need a reason: "checked, it's fine, because …"
+     * is what an auditor and the rules owner read later. ESCALATE proposes the finding's full fix steps.
+     */
     @Transactional
     public StepView decide(String borrowerId, String code, DecisionIn in) {
         List<StepView> matches = steps(borrowerId).stream().filter(s -> s.code().equals(code)).toList();
         if (matches.isEmpty()) throw new NoSuchElementException("no step " + code + " for " + borrowerId);
         StepView s = matches.get(0);
-        String next = switch (in.decision().toUpperCase(Locale.ROOT)) {
-            case "APPROVE" -> require(s, "PROPOSED", "APPROVED");
-            case "REJECT" -> require(s, "PROPOSED", "REJECTED");
-            case "DONE" -> require(s, "APPROVED", "DONE");
-            default -> throw new IllegalArgumentException("decision must be APPROVE, REJECT or DONE");
+        String decision = in.decision().toUpperCase(Locale.ROOT);
+        String next = switch (decision) {
+            case "APPROVE" -> require(s, "APPROVED", PROPOSED);
+            case "REJECT" -> require(fixOnly(s, decision), "REJECTED", PROPOSED);
+            case "DONE" -> require(fixOnly(s, decision), "DONE", "APPROVED");
+            case "CLEAR" -> require(withReason(checkOnly(s, decision), in), "CLEARED", PROPOSED, "APPROVED");
+            case "ESCALATE" -> require(withReason(checkOnly(s, decision), in), "ESCALATED", PROPOSED, "APPROVED");
+            default -> throw new IllegalArgumentException("decision must be APPROVE, REJECT, DONE, CLEAR or ESCALATE");
         };
         jdbc.update("UPDATE fix_step SET status=?, decided_by=?, decided_at=?, note=? "
                         + "WHERE borrower_id=? AND mechanism=? AND code=?",
                 next, in.user(), Timestamp.from(clock.instant()), in.note(), borrowerId, s.mechanism(), code);
         meters.counter("bt.decisions", "decision", next).increment();
         audit(in.user(), borrowerId, "STEP_" + next, code + (in.note() == null ? "" : " — " + in.note()));
+        if (next.equals("ESCALATED")) {
+            CaseIn c = cases.get(borrowerId);
+            FindingIn f = c == null || c.findings() == null ? null
+                    : c.findings().stream().filter(x -> x.mechanism().equals(s.mechanism())).findFirst().orElse(null);
+            int n = 0;
+            for (StepTemplate t : Playbooks.forMechanism(s.mechanism())) n += promote(borrowerId, c, f, s.mechanism(), t);
+            audit(in.user(), borrowerId, "FIX_PROPOSED", s.mechanism() + ": " + n + " fix step(s) proposed after escalation");
+        }
         return steps(borrowerId).stream().filter(x -> x.code().equals(code)).findFirst().orElseThrow();
     }
 
@@ -149,9 +164,11 @@ public class CaseService {
     public List<FeedbackRow> feedback() {
         return jdbc.query("SELECT mechanism, "
                         + "SUM(CASE WHEN status='PROPOSED' THEN 1 ELSE 0 END), SUM(CASE WHEN status='APPROVED' THEN 1 ELSE 0 END), "
-                        + "SUM(CASE WHEN status='REJECTED' THEN 1 ELSE 0 END), SUM(CASE WHEN status='DONE' THEN 1 ELSE 0 END) "
-                        + "FROM fix_step GROUP BY mechanism ORDER BY mechanism",
-                (rs, i) -> new FeedbackRow(rs.getString(1), rs.getLong(2), rs.getLong(3), rs.getLong(4), rs.getLong(5)));
+                        + "SUM(CASE WHEN status='REJECTED' THEN 1 ELSE 0 END), SUM(CASE WHEN status='DONE' THEN 1 ELSE 0 END), "
+                        + "SUM(CASE WHEN status='CLEARED' THEN 1 ELSE 0 END), SUM(CASE WHEN status='ESCALATED' THEN 1 ELSE 0 END) "
+                        + "FROM fix_step WHERE status <> 'STANDBY' GROUP BY mechanism ORDER BY mechanism",
+                (rs, i) -> new FeedbackRow(rs.getString(1), rs.getLong(2), rs.getLong(3), rs.getLong(4), rs.getLong(5),
+                        rs.getLong(6), rs.getLong(7)));
     }
 
     public RunStatus status() {
@@ -169,11 +186,62 @@ public class CaseService {
                 rs.getString(4), rs.getString(5), rs.getString(6)), args);
     }
 
-    private static String require(StepView s, String from, String to) {
-        if (!from.equals(s.status())) {
-            throw new IllegalStateException("step " + s.code() + " is " + s.status() + "; " + to + " needs " + from);
+    private static String require(StepView s, String to, String... from) {
+        if (!Arrays.asList(from).contains(s.status())) {
+            throw new IllegalStateException("step " + s.code() + " is " + s.status() + "; " + to + " needs "
+                    + String.join(" or ", from));
         }
         return to;
+    }
+
+    private static StepView fixOnly(StepView s, String decision) {
+        if (s.check()) throw new IllegalArgumentException(s.code() + " is a check: it ends in CLEAR or ESCALATE, not " + decision);
+        return s;
+    }
+
+    private static StepView checkOnly(StepView s, String decision) {
+        if (!s.check()) throw new IllegalArgumentException(decision + " applies to a 'worth a look' check, not to fix step " + s.code());
+        return s;
+    }
+
+    private static StepView withReason(StepView s, DecisionIn in) {
+        if (in.note() == null || in.note().isBlank()) {
+            throw new IllegalArgumentException(in.decision().toUpperCase(Locale.ROOT) + " needs a reason in the note");
+        }
+        return s;
+    }
+
+    /** Creates a step in the given status, or brings a waiting (STANDBY) step forward. Returns 1 if a step was proposed. */
+    private int propose(CaseIn c, FindingIn f, StepTemplate t, String status) {
+        List<String> current = jdbc.queryForList("SELECT status FROM fix_step WHERE borrower_id=? AND mechanism=? AND code=?",
+                String.class, c.borrowerId(), f.mechanism(), t.code());
+        if (!current.isEmpty()) {
+            boolean waiting = current.get(0).equals(STANDBY);
+            return waiting && PROPOSED.equals(status) ? promote(c.borrowerId(), c, f, f.mechanism(), t) : 0;
+        }
+        LocalDate due = LocalDate.now(clock).plusDays(t.dueDays());
+        DraftWriter.Draft d = drafts.write(c, f, t, due);
+        jdbc.update("INSERT INTO fix_step (borrower_id, mechanism, code, title, kind, status, draft, draft_source, "
+                        + "owner, due_date, created_at) VALUES (?,?,?,?,?,?,?,?,?,?,?)",
+                c.borrowerId(), f.mechanism(), t.code(), t.title(), t.kind().name(), status,
+                d.text(), d.source(), "credit-officer (unassigned)", due, Timestamp.from(clock.instant()));
+        meters.counter("bt.drafts", "source", d.source()).increment();
+        return PROPOSED.equals(status) ? 1 : 0;
+    }
+
+    /** A waiting fix step becomes PROPOSED, with a fresh due date and a draft written from today's evidence. */
+    private int promote(String borrowerId, CaseIn c, FindingIn f, String mechanism, StepTemplate t) {
+        LocalDate due = LocalDate.now(clock).plusDays(t.dueDays());
+        if (c == null || f == null) {  // the case isn't in this run's memory: keep the stored draft
+            return jdbc.update("UPDATE fix_step SET status=?, due_date=? WHERE borrower_id=? AND mechanism=? AND code=? "
+                    + "AND status=?", PROPOSED, due, borrowerId, mechanism, t.code(), STANDBY);
+        }
+        DraftWriter.Draft d = drafts.write(c, f, t, due);
+        int n = jdbc.update("UPDATE fix_step SET status=?, due_date=?, draft=?, draft_source=? WHERE borrower_id=? "
+                + "AND mechanism=? AND code=? AND status=?", PROPOSED, due, d.text(), d.source(), borrowerId, mechanism,
+                t.code(), STANDBY);
+        if (n > 0) meters.counter("bt.drafts", "source", d.source()).increment();
+        return n;
     }
 
     private List<StepView> steps(String borrowerId) {
@@ -182,15 +250,16 @@ public class CaseService {
                 (rs, i) -> new StepView(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4),
                         rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8),
                         rs.getDate(9) == null ? null : rs.getDate(9).toLocalDate(), rs.getString(10),
-                        rs.getTimestamp(11) == null ? null : rs.getTimestamp(11).toInstant(), rs.getString(12)),
+                        rs.getTimestamp(11) == null ? null : rs.getTimestamp(11).toInstant(), rs.getString(12),
+                        Playbooks.isCheck(rs.getString(2))),
                 borrowerId);
     }
 
     private String caseStatus(String borrowerId) {
-        List<StepView> st = steps(borrowerId);
+        List<StepView> st = steps(borrowerId).stream().filter(s -> !s.status().equals(STANDBY)).toList();
         if (st.isEmpty()) return "NO_ACTION";
-        if (st.stream().allMatch(s -> s.status().equals("DONE") || s.status().equals("REJECTED"))) return "RESOLVED";
-        if (st.stream().anyMatch(s -> s.status().equals("APPROVED") || s.status().equals("DONE"))) return "IN_PROGRESS";
+        if (st.stream().allMatch(s -> CLOSED.contains(s.status()))) return "RESOLVED";
+        if (st.stream().anyMatch(s -> STARTED.contains(s.status()))) return "IN_PROGRESS";
         return "AWAITING_APPROVAL";
     }
 

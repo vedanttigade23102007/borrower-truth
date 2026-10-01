@@ -1,7 +1,11 @@
 package com.borrowertruth.cases.domain;
 
+import com.borrowertruth.cases.api.Dto.FindingIn;
+import com.borrowertruth.cases.api.Dto.SignalIn;
+
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * The "suggested fix": one deterministic playbook per documented mechanism
@@ -68,5 +72,62 @@ public final class Playbooks {
 
     public static List<StepTemplate> forMechanism(String mechanism) {
         return BY_MECHANISM.getOrDefault(mechanism, List.of());
+    }
+
+    /**
+     * "Worth a look" findings (low confidence) get one cheap step that can clear them. The officer then marks
+     * the finding Cleared (with a reason) or Escalated, which proposes the mechanism's full playbook above.
+     * Without this, a low finding had clues but no next action and no way to record "checked, it's fine".
+     */
+    public static final String CHECK_PREFIX = "CHECK_";
+
+    public static final StepTemplate LIEN_RELEASE = new StepTemplate("CHECK_LIEN_RELEASE",
+            "Ask for the lien release or a payoff letter", Kind.LETTER, "BORROWER",
+            "for each listed filing, a copy of its termination statement (UCC-3) or a payoff letter from the secured party "
+                    + "showing the debt was repaid, and for any listed judgment, evidence that it has been paid", 10);
+
+    public static final Map<String, StepTemplate> CHECK_BY_MECHANISM = Map.of(
+        "DOUBLE_PLEDGE", new StepTemplate("CHECK_COLLATERAL_IDS", "Ask for the identifiers of the listed collateral",
+            Kind.LETTER, "BORROWER",
+            "the VINs and title documents (or other unique identifiers) for the listed assets, and every facility or trust "
+                    + "they have been pledged or sold to", 10),
+        "TAPE_DRESSUP", new StepTemplate("CHECK_SERVICER_RECORDS", "Check the listed loans in the servicer system",
+            Kind.ACTION, null,
+            "Pull the listed loans' payment history from the servicer system and confirm the payments that kept them "
+                    + "current, or the written deferment programme that covers them.", 5),
+        "DISGUISED_RECEIPTS", new StepTemplate("CHECK_PAYER", "Ask who the listed payer is paying for", Kind.LETTER, "BORROWER",
+            "for each listed payer, the customer it paid on behalf of and the arrangement that lets it pay "
+                    + "(for example a parent company, an insurer or a factor)", 10),
+        "FAKE_INVOICES", new StepTemplate("CHECK_INVOICE_SUPPORT", "Ask for proof of delivery for the listed invoices",
+            Kind.LETTER, "BORROWER", "proof of delivery and the customer's purchase order for each listed invoice", 10),
+        "HIDDEN_DEBT", new StepTemplate("CHECK_DEBT_EXPLANATION", "Ask the borrower about the listed filing",
+            Kind.LETTER, "BORROWER",
+            "for each listed filing or judgment, the agreement behind it and the amount outstanding, or evidence that it "
+                    + "has been repaid", 10),
+        "RELATED_SHELLS", new StepTemplate("CHECK_OWNERSHIP", "Ask how the borrower is connected to the listed companies",
+            Kind.LETTER, "BORROWER",
+            "an ownership chart showing how you are connected to each listed company, and any payments or contracts "
+                    + "between you and them", 10),
+        "FIN_MANIPULATION", new StepTemplate("CHECK_WORKINGS", "Ask for the workings behind the listed figures",
+            Kind.LETTER, "BORROWER",
+            "the covenant calculation and a reconciliation of reported revenue to customer cash received for the listed "
+                    + "quarters", 10)
+    );
+
+    public static final StepTemplate EXPLAIN = new StepTemplate("CHECK_EXPLAIN", "Ask the borrower to explain the listed items",
+            Kind.LETTER, "BORROWER", "an explanation of each listed item, with supporting documents", 10);
+
+    private static final Set<String> LIEN_TYPES = Set.of("COMPETING_LIEN", "UNDISCLOSED_SECURED_PARTY");
+
+    /** The one step that can clear a "worth a look" finding. A lien filed before onboarding (S5 dates it before
+     *  month 0) is most often a repaid loan whose filing was never terminated, so the release is what to ask for. */
+    public static StepTemplate checkFor(FindingIn finding, List<SignalIn> signals) {
+        boolean staleLien = signals != null && finding.signals() != null && signals.stream()
+                .anyMatch(s -> finding.signals().contains(s.signalId()) && LIEN_TYPES.contains(s.type()) && s.observedMonth() < 0);
+        return staleLien ? LIEN_RELEASE : CHECK_BY_MECHANISM.getOrDefault(finding.mechanism(), EXPLAIN);
+    }
+
+    public static boolean isCheck(String code) {
+        return code != null && code.startsWith(CHECK_PREFIX);
     }
 }
