@@ -98,7 +98,36 @@ class CaseFlowTest {
     }
 
     static List<StepView> visible(CaseDetail d) {
-        return d.steps().stream().filter(s -> !s.status().equals("STANDBY")).toList();
+        return d.steps().stream().filter(s -> !s.status().equals("STANDBY") && !s.status().equals("WITHDRAWN")).toList();
+    }
+
+    static RunIn noFindings() {
+        return new RunIn(23, Map.of(), List.of(new CaseIn("B0002", "NO_ISSUE", "No issues found", 0.0, List.of(), List.of(),
+                List.of(), Map.of(), null)));
+    }
+
+    @Test
+    void aFindingThatDisappearsWithdrawsItsUndecidedStepsAndTheyComeBackWithIt() {
+        service.ingest(lowRun());
+        service.ingest(noFindings());  // the evidence changed: no finding this month
+        CaseDetail d = service.detail("B0002").orElseThrow();
+        assertTrue(visible(d).isEmpty());
+        assertEquals("NO_ACTION", d.caseStatus());
+        assertEquals(0, service.list(null).get(0).openSteps());
+        assertTrue(d.audit().stream().anyMatch(a -> a.action().equals("STEP_WITHDRAWN")));
+        assertEquals(1, service.ingest(lowRun()).stepsCreated());  // back, under the same code, not "asked again"
+        assertEquals(List.of("CHECK_LIEN_RELEASE"), visible(service.detail("B0002").orElseThrow()).stream().map(StepView::code).toList());
+    }
+
+    @Test
+    void decidedStepsStayWhenTheFindingDisappears() {
+        service.ingest(run());
+        service.decide("B0001", "ESTOPPEL_LETTER", new DecisionIn("APPROVE", "officer.a", "sent"));
+        service.ingest(new RunIn(23, Map.of(), List.of(new CaseIn("B0001", "NO_ISSUE", "No issues found", 0.0, List.of(),
+                List.of(), List.of(), Map.of(), null))));
+        List<StepView> left = visible(service.detail("B0001").orElseThrow());
+        assertEquals(List.of("ESTOPPEL_LETTER"), left.stream().map(StepView::code).toList());  // a letter already in flight
+        assertEquals("APPROVED", left.get(0).status());
     }
 
     @Test

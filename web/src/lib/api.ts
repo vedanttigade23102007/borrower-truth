@@ -1,4 +1,4 @@
-import type { AuditEvent, CaseDetail, CaseSummary, Decision, RunStatus, Step, StepStatus } from "./types";
+import { HIDDEN, type AuditEvent, type CaseDetail, type CaseSummary, type Decision, type RunStatus, type Step, type StepStatus } from "./types";
 
 /**
  * Live mode: NEXT_PUBLIC_API_URL points at the Java case service.
@@ -55,7 +55,7 @@ const STARTED: StepStatus[] = ["APPROVED", "DONE", "CLEARED", "ESCALATED"];
 const isOpen = (s?: StepStatus) => s === "PROPOSED" || s === "APPROVED";
 
 function caseStatus(all: Step[]): string {
-  const steps = all.filter((s) => s.status !== "STANDBY");
+  const steps = all.filter((s) => !HIDDEN.includes(s.status));
   if (steps.length === 0) return "NO_ACTION";
   if (steps.every((s) => CLOSED.includes(s.status))) return "RESOLVED";
   if (steps.some((s) => STARTED.includes(s.status))) return "IN_PROGRESS";
@@ -304,7 +304,8 @@ export async function fetchFeedback(): Promise<FeedbackRow[]> {
     DONE: "done",
     CLEARED: "cleared",
     ESCALATED: "escalated",
-    STANDBY: null, // waiting fix steps are not counted
+    STANDBY: null, // waiting and withdrawn steps are not counted
+    WITHDRAWN: null,
   };
   for (const steps of Object.values(read<Overlay>(OVERLAY_KEY, {}))) {
     for (const s of Object.values(steps)) {

@@ -33,6 +33,8 @@ public class CaseService {
     private static final String PROPOSED = "PROPOSED";
     /** A fix step for a "worth a look" finding, waiting unseen until an officer escalates or the evidence grows. */
     private static final String STANDBY = "STANDBY";
+    /** An undecided step whose finding is gone from the latest run. Hidden; it comes back if the finding does. */
+    private static final String WITHDRAWN = "WITHDRAWN";
     private static final Set<String> CLOSED = Set.of("DONE", "REJECTED", "CLEARED", "ESCALATED");
     private static final Set<String> STARTED = Set.of("APPROVED", "DONE", "CLEARED", "ESCALATED");
 
@@ -83,6 +85,7 @@ public class CaseService {
                 created += checkNewClues(c, f);
                 for (StepTemplate t : Playbooks.forMechanism(f.mechanism())) propose(c, f, t, STANDBY);
             }
+            withdrawGone(c, run.asOf());
         }
         cases.clear();
         cases.putAll(fresh);
@@ -281,7 +284,7 @@ public class CaseService {
                         + "SUM(CASE WHEN status='PROPOSED' THEN 1 ELSE 0 END), SUM(CASE WHEN status='APPROVED' THEN 1 ELSE 0 END), "
                         + "SUM(CASE WHEN status='REJECTED' THEN 1 ELSE 0 END), SUM(CASE WHEN status='DONE' THEN 1 ELSE 0 END), "
                         + "SUM(CASE WHEN status='CLEARED' THEN 1 ELSE 0 END), SUM(CASE WHEN status='ESCALATED' THEN 1 ELSE 0 END) "
-                        + "FROM fix_step WHERE status <> 'STANDBY' GROUP BY mechanism ORDER BY mechanism",
+                        + "FROM fix_step WHERE status NOT IN ('STANDBY','WITHDRAWN') GROUP BY mechanism ORDER BY mechanism",
                 (rs, i) -> new FeedbackRow(rs.getString(1), rs.getLong(2), rs.getLong(3), rs.getLong(4), rs.getLong(5),
                         rs.getLong(6), rs.getLong(7)));
     }
@@ -343,13 +346,39 @@ public class CaseService {
         return s;
     }
 
-    /** Creates a step in the given status, or brings a waiting (STANDBY) step forward. Returns 1 if a step was proposed. */
+    /**
+     * Undecided steps whose finding is gone from this run (the evidence changed, or an optional module was turned off)
+     * are withdrawn, so nobody works on a finding that no longer exists. Steps already approved or decided stay.
+     */
+    private void withdrawGone(CaseIn c, int asOf) {
+        Set<String> present = c.findings() == null ? Set.of()
+                : c.findings().stream().map(FindingIn::mechanism).collect(Collectors.toSet());
+        for (Map<String, Object> r : jdbc.queryForList("SELECT mechanism, SUM(CASE WHEN status='PROPOSED' THEN 1 ELSE 0 END) n "
+                + "FROM fix_step WHERE borrower_id=? AND status IN ('PROPOSED','STANDBY') GROUP BY mechanism", c.borrowerId())) {
+            String m = (String) r.get("mechanism");
+            if (present.contains(m)) continue;
+            jdbc.update("UPDATE fix_step SET status=?, decided_by='pipeline', decided_at=?, note=? WHERE borrower_id=? "
+                            + "AND mechanism=? AND status IN ('PROPOSED','STANDBY')", WITHDRAWN, Timestamp.from(clock.instant()),
+                    "the finding is no longer present (run as of month " + (asOf + 1) + ")", c.borrowerId(), m);
+            long n = ((Number) r.get("n")).longValue();
+            if (n > 0) audit("pipeline", c.borrowerId(), "STEP_WITHDRAWN", m + ": " + n + " undecided step(s); the finding is no longer present");
+        }
+    }
+
+    /** Creates a step in the given status, or brings a waiting or withdrawn step back. Returns 1 if a step was proposed. */
     private int propose(CaseIn c, FindingIn f, StepTemplate t, String status) {
         List<String> current = jdbc.queryForList("SELECT status FROM fix_step WHERE borrower_id=? AND mechanism=? AND code=?",
                 String.class, c.borrowerId(), f.mechanism(), t.code());
         if (!current.isEmpty()) {
-            boolean waiting = current.get(0).equals(STANDBY);
-            return waiting && PROPOSED.equals(status) ? promote(c.borrowerId(), c, f, f.mechanism(), t) : 0;
+            String now = current.get(0);
+            if (PROPOSED.equals(status) && (now.equals(STANDBY) || now.equals(WITHDRAWN))) {
+                return promote(c.borrowerId(), c, f, f.mechanism(), t);
+            }
+            if (STANDBY.equals(status) && now.equals(WITHDRAWN)) {  // the finding is back, still only "worth a look"
+                jdbc.update("UPDATE fix_step SET status=?, decided_by=NULL, decided_at=NULL, note=NULL WHERE borrower_id=? "
+                        + "AND mechanism=? AND code=?", STANDBY, c.borrowerId(), f.mechanism(), t.code());
+            }
+            return 0;
         }
         insert(c, f, t, status, null);
         return PROPOSED.equals(status) ? 1 : 0;
@@ -366,15 +395,20 @@ public class CaseService {
         }
         // codes are unique per borrower, so a decision's (borrower, code) names one step: an old lien can sit under
         // two kinds of finding, and both would otherwise be CHECK_LIEN_RELEASE
-        List<Map<String, Object>> rows = jdbc.queryForList("SELECT code, clues, mechanism FROM fix_step WHERE borrower_id=?",
+        List<Map<String, Object>> rows = jdbc.queryForList("SELECT code, clues, mechanism, status FROM fix_step WHERE borrower_id=?",
                 c.borrowerId());
         Set<String> codes = new HashSet<>();
         Set<String> asked = new HashSet<>();
         boolean anyCheck = false;
+        String reopen = null;  // a check withdrawn before anyone answered it: asked again under its own code
         for (Map<String, Object> r : rows) {
             String code = (String) r.get("code");
             codes.add(code);
             if (!Playbooks.isCheck(code) || !f.mechanism().equals(r.get("mechanism"))) continue;
+            if (WITHDRAWN.equals(r.get("status"))) {
+                if (reopen == null) reopen = code;
+                continue;
+            }
             anyCheck = true;
             String clues = (String) r.get("clues");
             if (clues == null) {  // a check made before clues were tracked (1 Oct 2026) covers what the finding holds now
@@ -390,10 +424,19 @@ public class CaseService {
         FindingIn about = fresh.isEmpty() ? f : new FindingIn(f.mechanism(), f.confidence(), f.plain(), fresh,
                 f.corroboratedBy(), f.sources(), f.systems(), f.firstMonth());
         StepTemplate t = Playbooks.checkFor(about, c.signals());
+        String clues = String.join("\n", fresh.stream().map(clueOf::get).collect(Collectors.toCollection(LinkedHashSet::new)));
+        if (reopen != null) {
+            StepTemplate named = new StepTemplate(reopen, t.title(), t.kind(), t.recipient(), t.ask(), t.dueDays());
+            LocalDate due = LocalDate.now(clock).plusDays(t.dueDays());
+            DraftWriter.Draft d = drafts.write(c, about, named, due);
+            jdbc.update("UPDATE fix_step SET status=?, title=?, kind=?, draft=?, draft_source=?, due_date=?, clues=?, "
+                            + "decided_by=NULL, decided_at=NULL, note=NULL WHERE borrower_id=? AND mechanism=? AND code=?",
+                    PROPOSED, t.title(), t.kind().name(), d.text(), d.source(), due, clues, c.borrowerId(), f.mechanism(), reopen);
+            return 1;
+        }
         String code = t.code();
         for (int n = 2; codes.contains(code); n++) code = t.code() + "-" + n;  // e.g. asked again: CHECK_LIEN_RELEASE-2
-        insert(c, about, new StepTemplate(code, t.title(), t.kind(), t.recipient(), t.ask(), t.dueDays()), PROPOSED,
-                String.join("\n", fresh.stream().map(clueOf::get).collect(Collectors.toCollection(LinkedHashSet::new))));
+        insert(c, about, new StepTemplate(code, t.title(), t.kind(), t.recipient(), t.ask(), t.dueDays()), PROPOSED, clues);
         return 1;
     }
 
@@ -411,13 +454,14 @@ public class CaseService {
     private int promote(String borrowerId, CaseIn c, FindingIn f, String mechanism, StepTemplate t) {
         LocalDate due = LocalDate.now(clock).plusDays(t.dueDays());
         if (c == null || f == null) {  // the case isn't in this run's memory: keep the stored draft
-            return jdbc.update("UPDATE fix_step SET status=?, due_date=? WHERE borrower_id=? AND mechanism=? AND code=? "
-                    + "AND status=?", PROPOSED, due, borrowerId, mechanism, t.code(), STANDBY);
+            return jdbc.update("UPDATE fix_step SET status=?, due_date=?, decided_by=NULL, decided_at=NULL, note=NULL "
+                    + "WHERE borrower_id=? AND mechanism=? AND code=? AND status IN (?,?)", PROPOSED, due, borrowerId,
+                    mechanism, t.code(), STANDBY, WITHDRAWN);
         }
         DraftWriter.Draft d = drafts.write(c, f, t, due);
-        int n = jdbc.update("UPDATE fix_step SET status=?, due_date=?, draft=?, draft_source=? WHERE borrower_id=? "
-                + "AND mechanism=? AND code=? AND status=?", PROPOSED, due, d.text(), d.source(), borrowerId, mechanism,
-                t.code(), STANDBY);
+        int n = jdbc.update("UPDATE fix_step SET status=?, due_date=?, draft=?, draft_source=?, decided_by=NULL, "
+                + "decided_at=NULL, note=NULL WHERE borrower_id=? AND mechanism=? AND code=? AND status IN (?,?)", PROPOSED,
+                due, d.text(), d.source(), borrowerId, mechanism, t.code(), STANDBY, WITHDRAWN);
         if (n > 0) meters.counter("bt.drafts", "source", d.source()).increment();
         return n;
     }
@@ -434,7 +478,7 @@ public class CaseService {
     }
 
     private String caseStatus(String borrowerId) {
-        List<StepView> st = steps(borrowerId).stream().filter(s -> !s.status().equals(STANDBY)).toList();
+        List<StepView> st = steps(borrowerId).stream().filter(s -> !s.status().equals(STANDBY) && !s.status().equals(WITHDRAWN)).toList();
         if (st.isEmpty()) return "NO_ACTION";
         if (st.stream().allMatch(s -> CLOSED.contains(s.status()))) return "RESOLVED";
         if (st.stream().anyMatch(s -> STARTED.contains(s.status()))) return "IN_PROGRESS";

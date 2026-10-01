@@ -41,6 +41,7 @@ const STEP_STATUS: Record<StepStatus, { label: string; tone: Tone }> = {
   CLEARED: { label: "Cleared", tone: "emerald" },
   ESCALATED: { label: "Escalated", tone: "red" },
   STANDBY: { label: "Waiting", tone: "zinc" },
+  WITHDRAWN: { label: "Withdrawn", tone: "zinc" },
 };
 
 export function StatusPill({ status }: { status: StepStatus }) {

@@ -6,7 +6,7 @@ import { Badge, Button, Card, ConfidencePill, ErrorState, Skeleton, StatusPill, 
 import { allowed, approverOf, decide, fetchCase, isDemo, needsReason, needsSecondPerson } from "@/lib/api";
 import { MECHANISM, SOURCE, SYSTEM, fmtDate, signalLabel } from "@/lib/labels";
 import { useStatic, type AgentRun, type Replay } from "@/lib/showcase";
-import type { CaseData, CaseDetail, Decision, Finding, Signal, Step } from "@/lib/types";
+import { HIDDEN, type CaseData, type CaseDetail, type Decision, type Finding, type Signal, type Step } from "@/lib/types";
 
 const USER_KEY = "bt-user";
 
@@ -408,7 +408,7 @@ function FixSteps({
     }
   }
 
-  const shown = steps.filter((s) => s.status !== "STANDBY");
+  const shown = steps.filter((s) => !HIDDEN.includes(s.status));
   if (shown.length === 0) {
     return (
       <Card className="p-4 text-sm text-zinc-600">

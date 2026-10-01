@@ -1,7 +1,9 @@
 export type Verdict = "LIKELY_FRAUD" | "NEEDS_MORE_EVIDENCE" | "EXPLAINED" | "NO_ISSUE";
 export type Confidence = "high" | "medium" | "low";
-// STANDBY: a fix step waiting, unseen, until its "worth a look" check is escalated (or the evidence grows)
-export type StepStatus = "PROPOSED" | "APPROVED" | "REJECTED" | "DONE" | "CLEARED" | "ESCALATED" | "STANDBY";
+// STANDBY: a fix step waiting, unseen, until its "worth a look" check is escalated (or the evidence grows).
+// WITHDRAWN: an undecided step whose finding is gone from the latest run; hidden, and back if the finding returns.
+export type StepStatus = "PROPOSED" | "APPROVED" | "REJECTED" | "DONE" | "CLEARED" | "ESCALATED" | "STANDBY" | "WITHDRAWN";
+export const HIDDEN: StepStatus[] = ["STANDBY", "WITHDRAWN"];
 export type Decision = "APPROVE" | "REJECT" | "DONE" | "CLEAR" | "ESCALATE";
 
 export type Signal = {
