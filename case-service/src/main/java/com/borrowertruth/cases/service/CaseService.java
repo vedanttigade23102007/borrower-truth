@@ -62,9 +62,7 @@ public class CaseService {
                     continue;
                 }
                 // "worth a look": one step that can clear it; the fix steps wait until an officer escalates
-                boolean checked = jdbc.queryForList("SELECT code FROM fix_step WHERE borrower_id=? AND mechanism=?",
-                        String.class, c.borrowerId(), f.mechanism()).stream().anyMatch(Playbooks::isCheck);
-                if (!checked) created += propose(c, f, Playbooks.checkFor(f, c.signals()), PROPOSED);
+                created += checkNewClues(c, f);
                 for (StepTemplate t : Playbooks.forMechanism(f.mechanism())) propose(c, f, t, STANDBY);
             }
         }
@@ -219,14 +217,58 @@ public class CaseService {
             boolean waiting = current.get(0).equals(STANDBY);
             return waiting && PROPOSED.equals(status) ? promote(c.borrowerId(), c, f, f.mechanism(), t) : 0;
         }
+        insert(c, f, t, status, null);
+        return PROPOSED.equals(status) ? 1 : 0;
+    }
+
+    /**
+     * A "worth a look" finding gets a check for every clue no check has asked about yet: the first time, all of them;
+     * after that, only a new clue (a new filing, a new lender), never the same one again. Returns 1 if a check was proposed.
+     */
+    private int checkNewClues(CaseIn c, FindingIn f) {
+        Map<String, String> clueOf = new LinkedHashMap<>();  // this finding's signal id -> what the clue is about
+        for (SignalIn s : c.signals() == null ? List.<SignalIn>of() : c.signals()) {
+            if (f.signals() != null && f.signals().contains(s.signalId())) clueOf.put(s.signalId(), Playbooks.clueKey(s));
+        }
+        List<Map<String, Object>> rows = jdbc.queryForList("SELECT code, clues FROM fix_step WHERE borrower_id=? AND mechanism=?",
+                c.borrowerId(), f.mechanism());
+        Set<String> codes = new HashSet<>();
+        Set<String> asked = new HashSet<>();
+        boolean anyCheck = false;
+        for (Map<String, Object> r : rows) {
+            String code = (String) r.get("code");
+            codes.add(code);
+            if (!Playbooks.isCheck(code)) continue;
+            anyCheck = true;
+            String clues = (String) r.get("clues");
+            if (clues == null) {  // a check made before clues were tracked (1 Oct 2026) covers what the finding holds now
+                clues = String.join("\n", new LinkedHashSet<>(clueOf.values()));
+                jdbc.update("UPDATE fix_step SET clues=? WHERE borrower_id=? AND mechanism=? AND code=?",
+                        clues, c.borrowerId(), f.mechanism(), code);
+            }
+            asked.addAll(Arrays.asList(clues.split("\n")));
+        }
+        List<String> fresh = clueOf.entrySet().stream().filter(e -> !asked.contains(e.getValue())).map(Map.Entry::getKey).toList();
+        if (anyCheck && fresh.isEmpty()) return 0;
+        // the letter is about the new clues only
+        FindingIn about = fresh.isEmpty() ? f : new FindingIn(f.mechanism(), f.confidence(), f.plain(), fresh,
+                f.corroboratedBy(), f.sources(), f.systems(), f.firstMonth());
+        StepTemplate t = Playbooks.checkFor(about, c.signals());
+        String code = t.code();
+        for (int n = 2; codes.contains(code); n++) code = t.code() + "-" + n;  // asked again: CHECK_LIEN_RELEASE-2
+        insert(c, about, new StepTemplate(code, t.title(), t.kind(), t.recipient(), t.ask(), t.dueDays()), PROPOSED,
+                String.join("\n", fresh.stream().map(clueOf::get).collect(Collectors.toCollection(LinkedHashSet::new))));
+        return 1;
+    }
+
+    private void insert(CaseIn c, FindingIn f, StepTemplate t, String status, String clues) {
         LocalDate due = LocalDate.now(clock).plusDays(t.dueDays());
         DraftWriter.Draft d = drafts.write(c, f, t, due);
         jdbc.update("INSERT INTO fix_step (borrower_id, mechanism, code, title, kind, status, draft, draft_source, "
-                        + "owner, due_date, created_at) VALUES (?,?,?,?,?,?,?,?,?,?,?)",
+                        + "owner, due_date, created_at, clues) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)",
                 c.borrowerId(), f.mechanism(), t.code(), t.title(), t.kind().name(), status,
-                d.text(), d.source(), "credit-officer (unassigned)", due, Timestamp.from(clock.instant()));
+                d.text(), d.source(), "credit-officer (unassigned)", due, Timestamp.from(clock.instant()), clues);
         meters.counter("bt.drafts", "source", d.source()).increment();
-        return PROPOSED.equals(status) ? 1 : 0;
     }
 
     /** A waiting fix step becomes PROPOSED, with a fresh due date and a draft written from today's evidence. */

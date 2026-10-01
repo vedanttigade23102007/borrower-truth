@@ -144,6 +144,62 @@ class CaseFlowTest {
         assertEquals(4, visible(service.detail("B0002").orElseThrow()).size());  // the check stays, the fix arrives
     }
 
+    static SignalIn oldLien(String id, String filing) {
+        return new SignalIn(id, "B0002", "S5", "COMPETING_LIEN", 0.8, 0.5, List.of("ucc:" + filing, "disclosures:B0002#debt"),
+                "'Lender " + filing + "' holds a lien on the borrower that the borrower never disclosed (filed before "
+                + "onboarding: may be a stale filing)", -10, List.of());
+    }
+
+    static RunIn lowRun(String mechanism, SignalIn... sigs) {
+        List<SignalIn> list = List.of(sigs);
+        FindingIn f = new FindingIn(mechanism, "low", "worth a look", list.stream().map(SignalIn::signalId).toList(),
+                List.of(), List.of(), List.of(list.get(0).system()), 0);
+        return new RunIn(23, Map.of(), List.of(new CaseIn("B0002", "NEEDS_MORE_EVIDENCE", "Worth a look", 0.3, List.of(f),
+                list, List.of(), Map.of(), null)));
+    }
+
+    @Test
+    void aClearedCheckIsAskedAgainOnlyForANewClue() {
+        service.ingest(lowRun());
+        service.decide("B0002", "CHECK_LIEN_RELEASE", new DecisionIn("CLEAR", "officer.a", "UCC-3 on file"));
+        service.ingest(lowRun());  // the same old lien next month: never asked again
+        assertEquals(1, visible(service.detail("B0002").orElseThrow()).size());
+        assertEquals("RESOLVED", service.detail("B0002").orElseThrow().caseStatus());
+
+        SignalIn same = PlaybooksTest.lowCase().signals().get(0);
+        SignalIn other = oldLien("S5-B0002-COMPETING_LIEN-new", "NY-UCC-000777");  // a different lender's filing
+        assertEquals(1, service.ingest(lowRun("HIDDEN_DEBT", same, other)).stepsCreated());
+        CaseDetail d = service.detail("B0002").orElseThrow();
+        StepView again = visible(d).stream().filter(s -> s.code().equals("CHECK_LIEN_RELEASE-2")).findFirst().orElseThrow();
+        assertEquals("PROPOSED", again.status());
+        assertTrue(again.draft().contains("[ref S5-B0002-COMPETING_LIEN-new]"));
+        assertFalse(again.draft().contains("[ref " + same.signalId() + "]"));  // the letter is about the new clue only
+        assertEquals("IN_PROGRESS", d.caseStatus());
+        service.ingest(lowRun("HIDDEN_DEBT", same, other));  // and that new clue is asked about once
+        assertEquals(2, visible(service.detail("B0002").orElseThrow()).size());
+    }
+
+    @Test
+    void aPatternInANewMonthIsTheSameClue() {
+        SignalIn q5 = new SignalIn("S7-B0002-COVENANT_EDGE_PATTERN-a", "B0002", "S7", "COVENANT_EDGE_PATTERN", 0.6, 0.6,
+                List.of("financials:B0002:Q4:covenant=1.02", "financials:B0002:Q5:covenant=1.03"),
+                "Covenant metric landed within 5% above the threshold two quarters running", 20, List.of());
+        SignalIn q6 = new SignalIn("S7-B0002-COVENANT_EDGE_PATTERN-b", "B0002", "S7", "COVENANT_EDGE_PATTERN", 0.6, 0.6,
+                List.of("financials:B0002:Q5:covenant=1.03", "financials:B0002:Q6:covenant=1.01"),
+                "Covenant metric landed within 5% above the threshold two quarters running", 23, List.of());
+        service.ingest(lowRun("FIN_MANIPULATION", q5));
+        service.decide("B0002", "CHECK_WORKINGS", new DecisionIn("CLEAR", "officer.a", "seasonal; workings on file"));
+        assertEquals(0, service.ingest(lowRun("FIN_MANIPULATION", q6)).stepsCreated());
+    }
+
+    @Test
+    void checksMadeBeforeClueTrackingAreNotAskedAgain() {
+        service.ingest(lowRun());
+        jdbc.update("UPDATE fix_step SET clues = NULL");
+        assertEquals(0, service.ingest(lowRun()).stepsCreated());
+        assertNotNull(jdbc.queryForObject("SELECT clues FROM fix_step WHERE code='CHECK_LIEN_RELEASE'", String.class));
+    }
+
     @Test
     void liveAlertsAttachToTheCaseAndAreCapped() {
         service.ingest(run());

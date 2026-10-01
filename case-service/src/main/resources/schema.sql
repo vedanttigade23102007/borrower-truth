@@ -13,8 +13,11 @@ CREATE TABLE IF NOT EXISTS fix_step (
     decided_at   TIMESTAMP,
     note         VARCHAR(1000),
     created_at   TIMESTAMP    NOT NULL,
+    clues        VARCHAR(4000),  -- for a "worth a look" check: the clues it asked about, one per line
     PRIMARY KEY (borrower_id, mechanism, code)
 );
+-- databases created before clue tracking (1 Oct 2026)
+ALTER TABLE fix_step ADD COLUMN IF NOT EXISTS clues VARCHAR(4000);
 
 CREATE TABLE IF NOT EXISTS audit_event (
     id          BIGINT AUTO_INCREMENT PRIMARY KEY,

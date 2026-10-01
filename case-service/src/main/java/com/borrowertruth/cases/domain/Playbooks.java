@@ -6,6 +6,7 @@ import com.borrowertruth.cases.api.Dto.SignalIn;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * The "suggested fix": one deterministic playbook per documented mechanism
@@ -129,5 +130,20 @@ public final class Playbooks {
 
     public static boolean isCheck(String code) {
         return code != null && code.startsWith(CHECK_PREFIX);
+    }
+
+    /** Evidence that names a thing: a lien filing, a court case, a linked company, a payer, a public trust. */
+    private static final List<String> NAMED = List.of("ucc:", "court:", "registry:", "payer:", "public_abs:");
+
+    /**
+     * What a clue is about, so a cleared check is asked again only for a new clue. A clue about a named thing is new
+     * when the thing is new (a new filing, a new lender, a new payer). A pattern in the borrower's own numbers (a
+     * covenant at the edge, revenue ahead of cash) names its months in the evidence, so it would look new every
+     * month: it counts as one clue per type.
+     */
+    public static String clueKey(SignalIn s) {
+        String named = s.evidence() == null ? "" : s.evidence().stream()
+                .filter(e -> NAMED.stream().anyMatch(e::startsWith)).sorted().collect(Collectors.joining(","));
+        return named.isEmpty() ? s.type() : s.type() + "|" + named;
     }
 }

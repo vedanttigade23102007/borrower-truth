@@ -465,8 +465,11 @@ function FixSteps({
               <span className="normal-case tracking-normal">
                 {" "}
                 · worth a look
-                {{ CLEARED: ", cleared", ESCALATED: ", escalated to the full fix" }[list.find((s) => s.check)!.status as string] ??
-                  ": one step to clear it"}
+                {list.some((s) => s.check && allowed(s, "CLEAR"))
+                  ? ": one step to clear it"
+                  : list.some((s) => s.status === "ESCALATED")
+                    ? ", escalated to the full fix"
+                    : ", cleared"}
               </span>
             )}
           </h3>
@@ -476,6 +479,7 @@ function FixSteps({
                 <div className="flex flex-wrap items-center gap-2">
                   <span className="font-medium text-zinc-900">{s.title}</span>
                   <Badge>{s.kind === "LETTER" ? "letter" : "internal action"}</Badge>
+                  {s.check && /-\d+$/.test(s.code) && <Badge tone="blue">asked again: new clue</Badge>}
                   <StatusPill status={s.status} />
                   <span className="text-xs text-zinc-500">due {s.dueDate ?? "—"}</span>
                   {s.draftSource !== "TEMPLATE" && <Badge tone="blue">{s.draftSource.toLowerCase().replace("_", " ")}</Badge>}

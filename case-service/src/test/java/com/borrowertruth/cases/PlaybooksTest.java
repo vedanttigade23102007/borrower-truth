@@ -72,6 +72,19 @@ class PlaybooksTest {
     }
 
     @Test
+    void aClueIsWhatItIsAbout() {
+        SignalIn lien = lowCase().signals().get(0);
+        assertEquals("COMPETING_LIEN|ucc:TX-UCC-000002", Playbooks.clueKey(lien));
+        SignalIn payer = new SignalIn("S3-x", "B0002", "S3", "NON_OBLIGOR_PAYER", 0.5, 0.6,
+                List.of("payment:T1", "payment:T2", "payer:Summit Property Partners LLC", "total:$774,996 in 2 payments"),
+                "", 3, List.of());
+        assertEquals("NON_OBLIGOR_PAYER|payer:Summit Property Partners LLC", Playbooks.clueKey(payer));
+        SignalIn pattern = new SignalIn("S7-x", "B0002", "S7", "CASH_REVENUE_GAP", 0.6, 0.6,
+                List.of("financials:B0002:Q4", "financials:B0002:Q5"), "", 20, List.of());
+        assertEquals("CASH_REVENUE_GAP", Playbooks.clueKey(pattern));  // its months change; the clue doesn't
+    }
+
+    @Test
     void lettersCiteEvidenceAndNeverAllege() {
         CaseIn c = sampleCase();
         var step = Playbooks.forMechanism("HIDDEN_DEBT").get(0);
