@@ -82,7 +82,8 @@ AGE_EDGES, AGE_NAMES = (12, 24), ("0-11m", "12-23m", "24m+")
 CAL_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "data", "calibration")
 GEN_V3 = ("v3: honest auto loans drawn from, and moving month to month like, real public auto loans (SEC ABS-EE "
           "calibration); SEC filers (10-K, 8-K, XBRL revenue); public securitization pools; three harder variants "
-          "(public-pool double pledge, self-funded payments, debt disclosed only to the SEC). Own random stream.")
+          "(public-pool double pledge, self-funded payments, debt disclosed only to the SEC). Own random stream. "
+          "Credit limits sized to each borrower's own collateral (2 Oct 2026).")
 SEC_SCHEMA = pa.schema([("borrower_id", pa.string()), ("form", pa.string()), ("filed_month", pa.int64()),
                         ("item", pa.string()), ("counterparty_entity_id", pa.string()), ("counterparty_name", pa.string()),
                         ("amount", pa.float64()), ("quarter", pa.int64()), ("note", pa.string())])
@@ -1182,6 +1183,8 @@ class Book:
             tbl = pa.table({c: pa.array(np.concatenate([ch[c] for ch in chunks])) for c in cols})
             pq.write_table(tbl, os.path.join(out, f"{name}.parquet"), compression="zstd")
             counts[name] = tbl.num_rows
+        if self.v3:
+            size_limits(out, self.seed)
         with open(os.path.join(out, "labels.json"), "w") as f:
             json.dump(self.labels, f, indent=1)
         manifest = dict(SYNTHETIC="All data in this folder is synthetic. No real company, person or loan.",
@@ -1193,6 +1196,36 @@ class Book:
         with open(os.path.join(out, "manifest.json"), "w") as f:
             json.dump(manifest, f, indent=1)
         return counts
+
+
+def size_limits(out: str, seed: int) -> None:
+    """Credit limits sized to each borrower's own collateral, as a bank sizes a warehouse line: the peak borrowing
+    base (eligible collateral times the advance rate) uses 60-90% of the line. Before 2 Oct 2026 the limit was drawn
+    on its own (a median $150M), so the median borrower used about 4% of its line; the blind red team pointed it
+    out. Only the written limits change: the internal draw that sizes disclosed debt is untouched, and the
+    utilisation comes from its own random stream, so every other table stays byte-identical."""
+    import duckdb
+    p = lambda t: f"read_parquet('{os.path.join(out, t)}.parquet')"  # noqa: E731
+    con = duckdb.connect()
+    base = dict(con.execute(f"""
+        WITH ar AS (SELECT borrower_id, max(advance_rate) AS ar FROM {p('facilities')} WHERE kind = 'warehouse' GROUP BY 1),
+        tape AS (SELECT borrower_id, month, sum(balance) FILTER (WHERE eligible_reported) AS e FROM {p('tape')} GROUP BY 1, 2),
+        inv AS (SELECT i.borrower_id, m.month, sum(i.amount) AS e FROM {p('invoices')} i, range(0, {MONTHS}) m(month)
+                WHERE i.pledged_month <= m.month AND m.month <= i.issue_month + ceil(i.due_days / 30.0) GROUP BY 1, 2),
+        peak AS (SELECT borrower_id, max(e) AS pk FROM (SELECT * FROM tape UNION ALL SELECT * FROM inv) GROUP BY 1)
+        SELECT b.borrower_id, coalesce(pk, 0) * coalesce(ar, 0.85) FROM {p('borrowers')} b
+        LEFT JOIN peak USING (borrower_id) LEFT JOIN ar USING (borrower_id) ORDER BY 1""").fetchall())
+    r = np.random.default_rng([seed, 2027])
+    limit = {b: max(1e6, round(v / r.uniform(0.6, 0.9) / 1e5) * 1e5) for b, v in base.items()}
+    for t, col in (("borrowers", "facility_limit"), ("facilities", "limit")):
+        tbl = pq.read_table(os.path.join(out, f"{t}.parquet"))
+        rows = tbl.to_pylist()
+        for row in rows:
+            if t == "borrowers":
+                row[col] = limit[row["borrower_id"]]
+            else:  # the term line keeps its 40% of the warehouse line
+                row[col] = limit[row["borrower_id"]] * (1.0 if row["kind"] == "warehouse" else 0.4)
+        pq.write_table(pa.Table.from_pylist(rows, schema=tbl.schema), os.path.join(out, f"{t}.parquet"))
 
 
 def main(argv=None):
