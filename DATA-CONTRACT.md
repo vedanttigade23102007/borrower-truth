@@ -68,7 +68,7 @@ The run is monthly ("as of" a month). Payments also stream daily for live alerts
 |---|---|---|
 | **S1 Collateral integrity** | — | Loan tape: duplicate vehicles and public-pool overlap. Pledged invoices: duplicate invoices. PledgeCheck: pledges of the same collateral at other lenders; the "not enrolled" note is dropped, because it would call every borrower unenrolled. Public securitization reports: public-pool overlap. |
 | **S2 Tape vs source** | loan tape | Servicer-system records: the servicer-system pulls. The mismatch findings are dropped, because every pulled loan would look "gone". The other tape checks (current without a payment, impossible jumps, roll rates, rewritten scores) still run. |
-| **S3 Cash provenance** | loan tape and pledged invoices (they say who counts as a customer; without them every payer looks unknown) | Operating-account outflows: round trips. |
+| **S3 Cash provenance** | loan tape and pledged invoices (they say who counts as a customer; without them every payer looks unknown) | Operating-account outflows: round trips, and who the borrower pays (undisclosed debt service, cash leakage to new payees). |
 | **S4 Invoice authenticity** | pledged invoices | Invoice document reads, only if the optional document module is turned on (`BT_DOCUMENT_MODEL=on`). When it is off, the default, cases say nothing about documents. When it is on and the reads are missing, every case says so. |
 | **S5 Hidden debt** | — | Lien filings: liens. Court judgments: judgments. SEC filings: debt named in SEC filings. |
 | **S6 Relationship mapper** | LEI register (without it every company looks unregistered, so shell scores rise) | SEC filings: subsidiaries listed in Exhibit 21. If S6 doesn't run, S1, S3 and S5 search the borrower only, not its linked companies. |
@@ -93,6 +93,12 @@ The run is monthly ("as of" a month). Payments also stream daily for live alerts
 | S5 | partial: debt named in SEC filings runs, for borrowers that file; liens and judgments need the vendor feeds |
 | S6 | runs |
 | S7 | runs |
+
+**Recommended, because no table here can show it (found by the blind red team, 1 Oct 2026):** loans invented and kept consistent across the tape, the servicer system and the payments can't be told apart from real ones using the borrower's own data. Two outside sources can:
+- **Vehicle title and registration records**, to show that the vehicle exists and that the lien is noted on the title.
+- **Confirming a sample of customers directly**, the way receivables are confirmed with debtors.
+
+Both are outside this data contract today, and both are pilot items.
 
 **What to add next, in order of value:**
 1. A monthly lien feed (S5 liens).

@@ -20,7 +20,15 @@ First Brands F1).
    fingerprint (origination month, amount, term, rate, make, model, year, state,
    credit score). Measured on 787,944 real public loans, that fingerprint pointed at
    a single loan 99.99% of the time. It opens a question (ask for the VINs), never
-   closes one.
+   closes one. Since 2 Oct 2026 the match allows the small differences one loan shows
+   in two reports (amount within 2%, credit score within 10 points): an exact match
+   was beaten by nudging those two fields (blind red team). On the same real loans,
+   that tolerance joined no two different loans of the same lender held in different
+   trusts.
+6. PLEDGECHECK_LEFT: the borrower was enrolled in PledgeCheck and then left it. Being
+   absent from the start is a coverage note; leaving mid-facility is a change worth
+   asking about, because from then on nobody can see whether the collateral is
+   pledged elsewhere.
 """
 from bt.common import bank
 from bt.systems.base import Ctx, sig
@@ -36,7 +44,10 @@ WITH t AS (
     FROM public_abs WHERE month BETWEEN ? AND ?
 ), m AS (
     SELECT t.borrower_id, t.asset_id, t.month, p.pool_id FROM t JOIN p
-    USING (borrower_id, month, orig_month, amt, term, rate, make, model, model_year, obligor_state, credit_score)
+      ON t.borrower_id = p.borrower_id AND t.month = p.month AND t.orig_month = p.orig_month AND t.term = p.term
+     AND t.rate = p.rate AND t.make = p.make AND t.model = p.model AND t.model_year = p.model_year
+     AND t.obligor_state = p.obligor_state
+     AND abs(t.amt - p.amt) <= ? * greatest(t.amt, p.amt) AND abs(t.credit_score - p.credit_score) <= ?
 ), runs AS (
     SELECT a.borrower_id, a.asset_id, a.pool_id, a.month FROM m a
     JOIN m b ON b.asset_id = a.asset_id AND b.pool_id = a.pool_id AND b.month = a.month + 1
@@ -50,6 +61,10 @@ SELECT count(*) AS n FROM (SELECT UNNEST(?::VARCHAR[]) AS asset_id) m
 WHERE NOT EXISTS (SELECT 1 FROM payments p WHERE p.ref = m.asset_id AND p.month BETWEEN ? AND ?)
 """
 OVERLAP_MIN, OVERLAP_WINDOW = 3, 3
+# one loan reported twice can differ a little (servicing exports round amounts, refresh scores); measured on real
+# ABS-EE pools, this tolerance joined no two different loans across trusts of the same lender
+OVERLAP_AMOUNT_TOL, OVERLAP_SCORE_TOL = 0.02, 10
+LEFT_MIN_MONTHS = 3  # enrolled at least this long before leaving
 
 PLEDGECHECK = """
 SELECT borrower_id,
@@ -97,6 +112,17 @@ def run(ctx: Ctx):
                            [f"pledgecheck:{r['borrower_id']}:not_enrolled"],
                            "Not enrolled in Setpoint PledgeCheck: whether this collateral is also pledged at other "
                            "lenders can't be verified", ctx.as_of))
+    # leaving the registry mid-facility is a change, not a gap: from then on nobody sees a second pledge. Only while
+    # the feed itself is current: a feed that stopped updating would make every borrower look as if it had left
+    feed_current = (ctx.rows("SELECT max(month) AS m FROM pledgecheck")[0]["m"] or -1) >= ctx.as_of - 1
+    for r in ctx.rows("""SELECT borrower_id, min(month) AS first_m, max(month) AS last_m, count(DISTINCT month) AS n
+                         FROM pledgecheck WHERE enrolled GROUP BY 1 ORDER BY 1""") if feed_current else []:
+        if r["n"] >= LEFT_MIN_MONTHS and r["last_m"] < ctx.as_of - 1:
+            out.append(sig("S1", r["borrower_id"], "PLEDGECHECK_LEFT", 0.6, 0.6,
+                           [f"pledgecheck:{r['borrower_id']}:enrolled_months={r['first_m']}-{r['last_m']}"],
+                           f"Left Setpoint PledgeCheck after month {r['last_m'] + 1}, having been enrolled since month "
+                           f"{r['first_m'] + 1}: from then on, whether this collateral is also pledged at other lenders "
+                           f"can't be verified", r["last_m"] + 1))
     lo = max(0, ctx.as_of - 2)
     for r in ctx.rows(TAPE_DUP, [lo, ctx.as_of]):
         out.append(sig("S1", r["borrower_id"], "DUPLICATE_ASSET", 0.9, min(0.99, 0.6 + 0.05 * r["n_dup"]),
@@ -111,14 +137,16 @@ def run(ctx: Ctx):
     tape_cols = {c[0] for c in ctx.con.execute("DESCRIBE tape").fetchall()}
     if not ctx.shared.get("sec_off") and {"make", "credit_score"} <= tape_cols:  # older books lack loan attributes
         a = ctx.as_of
-        for r in ctx.rows(OVERLAP, [max(0, a - OVERLAP_WINDOW), a, max(0, a - OVERLAP_WINDOW), a]):
+        for r in ctx.rows(OVERLAP, [max(0, a - OVERLAP_WINDOW), a, max(0, a - OVERLAP_WINDOW), a,
+                                    OVERLAP_AMOUNT_TOL, OVERLAP_SCORE_TOL]):
             if r["n"] < OVERLAP_MIN:
                 continue
             out.append(sig("S1", r["borrower_id"], "PUBLIC_POOL_OVERLAP", 0.85, 0.8,
                            [f"tape:asset:{x}" for x in r["ex"]] + [f"public_abs:{r['pool']}", f"count:{r['n']}"],
-                           f"{r['n']} loans pledged to {bank.NAME} match, field for field, loans that the borrower's own "
-                           f"public securitization ({r['pool']}) reports to investors, two months running. The SEC data has "
-                           f"no VIN: ask for the VINs and titles to settle it", r["first_m"]))
+                           f"{r['n']} loans pledged to {bank.NAME} match loans that the borrower's own public "
+                           f"securitization ({r['pool']}) reports to investors, on every field allowing for small "
+                           f"reporting differences, two months running. The SEC data has no VIN: ask for the VINs and "
+                           f"titles to settle it", r["first_m"]))
             # a loan can only pay one servicer account: if the matched loans stopped paying Wells Fargo, the trust collects them
             u = ctx.rows(UNPAID, [r["assets"], max(0, a - 2), a])[0]["n"]
             if u >= OVERLAP_MIN and u / r["n"] >= 0.5:

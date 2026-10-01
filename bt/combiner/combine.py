@@ -34,6 +34,9 @@ MECHANISM_OF = {
     "ROLL_RATE_TOO_LOW": "TAPE_DRESSUP", "PUBLIC_POOL_OVERLAP": "DOUBLE_PLEDGE", "POOL_LOANS_PAID_ELSEWHERE": "DOUBLE_PLEDGE",
     "FILED_DEBT_UNDISCLOSED": "HIDDEN_DEBT", "FILED_VS_REPORTED": "FIN_MANIPULATION",
     "DEBT_ACCELERATION_FILED": "HIDDEN_DEBT",
+    # who the borrower pays, and when its customers pay (2 Oct 2026, after the blind red team)
+    "UNDISCLOSED_DEBT_SERVICE": "HIDDEN_DEBT", "NEW_PAYEES_DRAIN_CASH": "CASH_LEAKAGE",
+    "MONTH_END_CURES": "TAPE_DRESSUP", "PLEDGECHECK_LEFT": "DOUBLE_PLEDGE",
 }
 SEC_TYPES = {"ROLL_RATE_TOO_LOW", "PUBLIC_POOL_OVERLAP", "POOL_LOANS_PAID_ELSEWHERE", "FILED_DEBT_UNDISCLOSED", "FILED_VS_REPORTED",
              "DEBT_ACCELERATION_FILED"}  # checks that exist because of public SEC data (switch-off test: "SEC")
@@ -60,6 +63,8 @@ SOURCE = {
     "PUBLIC_POOL_OVERLAP": "public_abs", "POOL_LOANS_PAID_ELSEWHERE": "payments",
     "FILED_DEBT_UNDISCLOSED": "sec_filings", "FILED_VS_REPORTED": "sec_filings",
     "DEBT_ACCELERATION_FILED": "sec_filings",
+    "UNDISCLOSED_DEBT_SERVICE": "operating_account", "NEW_PAYEES_DRAIN_CASH": "operating_account",
+    "MONTH_END_CURES": "payments", "PLEDGECHECK_LEFT": "pledgecheck",
 }
 
 # checkable facts (not statistical inferences): strong enough to stand alone
@@ -72,6 +77,9 @@ FACT = {"DUPLICATE_ASSET", "PLEDGECHECK_UNIQUENESS_FAIL", "ALTERED_INVOICE", "SO
 
 # an undisclosed lien on the loan collateral itself means that collateral is pledged twice
 DOUBLE_PLEDGE_HINT = ("receivables and chattel paper",)
+# a borrower that leaves the shared collateral registry and, around the same time, starts paying a new company in
+# amounts shaped like interest: a second lender is likely financing the same collateral
+LEFT_REGISTRY_MONTHS = 3
 
 PLAIN = {
     "DOUBLE_PLEDGE": "the same collateral is pledged to more than one lender",
@@ -81,6 +89,7 @@ PLAIN = {
     "HIDDEN_DEBT": "the borrower has debt it has not disclosed",
     "RELATED_SHELLS": "the borrower is connected to undisclosed shell companies",
     "FIN_MANIPULATION": "the reported financial statements don't fit the evidence",
+    "CASH_LEAKAGE": "cash is leaving the borrower for new payees that take a large share of its spending",
 }
 
 WEIGHT = {"S1": 1.0, "S2": 1.0, "S3": 1.0, "S4": 1.0, "S5": 0.9, "S6": 0.5, "S7": 0.8}
@@ -97,9 +106,12 @@ def _x(s):
 
 def assign_mechanisms(sigs) -> dict[str, str]:
     by_id = {s.signal_id: s for s in sigs}
+    left = [s.observed_month for s in sigs if s.type == "PLEDGECHECK_LEFT"]
     mech = {}
     for s in sigs:
         if s.type == "COMPETING_LIEN" and any(h in s.explanation for h in DOUBLE_PLEDGE_HINT):
+            mech[s.signal_id] = "DOUBLE_PLEDGE"
+        elif s.type == "UNDISCLOSED_DEBT_SERVICE" and any(abs(s.observed_month - m) <= LEFT_REGISTRY_MONTHS for m in left):
             mech[s.signal_id] = "DOUBLE_PLEDGE"
         elif SOURCE[s.type] != "derived":
             mech[s.signal_id] = MECHANISM_OF[s.type]

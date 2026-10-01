@@ -68,7 +68,16 @@ public final class Playbooks {
             new StepTemplate("AUDITOR_BRIDGE", "Ask the borrower's auditor to bridge the gap", Kind.ACTION, null,
                 "Request that the borrower's auditor explain the difference between reported revenue and verified collections.", 14),
             new StepTemplate("RETEST_COVENANTS", "Re-test covenants on reconciled numbers", Kind.ACTION, null,
-                "Recompute covenant metrics on verified figures once reconciliations arrive.", 10))
+                "Recompute covenant metrics on verified figures once reconciliations arrive.", 10)),
+        // cash leaving for new payees that take a large share of spending (2 Oct 2026, after the blind red team)
+        "CASH_LEAKAGE", List.of(
+            new StepTemplate("PAYEE_CONTRACTS", "Ask what the listed payees provide, and under which contracts", Kind.LETTER, "BORROWER",
+                "the contract, invoices and a description of the service behind each listed payment, and who owns each payee", 7),
+            new StepTemplate("AFFILIATE_COVENANT_CHECK", "Check the payments against the credit agreement's limits", Kind.ACTION, null,
+                "Check the listed payments against the credit agreement's limits on payments to affiliates and on distributions.", 5),
+            new StepTemplate("APPROVE_LISTED_PAYEES", "Require approval for further payments to the listed payees", Kind.ACTION, null,
+                "Require the bank's prior approval for further payments from the operating account to the listed payees "
+                    + "until they are explained.", 3))
     );
 
     public static List<StepTemplate> forMechanism(String mechanism) {
@@ -112,7 +121,9 @@ public final class Playbooks {
         "FIN_MANIPULATION", new StepTemplate("CHECK_WORKINGS", "Ask for the workings behind the listed figures",
             Kind.LETTER, "BORROWER",
             "the covenant calculation and a reconciliation of reported revenue to customer cash received for the listed "
-                    + "quarters", 10)
+                    + "quarters", 10),
+        "CASH_LEAKAGE", new StepTemplate("CHECK_PAYEES", "Ask what the listed payees are paid for", Kind.LETTER, "BORROWER",
+            "for each listed payee, the service it provides, the contract behind the payments, and who owns it", 10)
     );
 
     public static final StepTemplate EXPLAIN = new StepTemplate("CHECK_EXPLAIN", "Ask the borrower to explain the listed items",

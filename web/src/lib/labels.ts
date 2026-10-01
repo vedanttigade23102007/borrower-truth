@@ -8,6 +8,7 @@ export const MECHANISM: Record<string, string> = {
   HIDDEN_DEBT: "Hidden debt",
   RELATED_SHELLS: "Linked shell companies",
   FIN_MANIPULATION: "Financials don't fit",
+  CASH_LEAKAGE: "Cash leaking out",
 };
 
 export const SYSTEM: Record<string, string> = {

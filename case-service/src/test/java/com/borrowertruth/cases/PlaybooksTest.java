@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class PlaybooksTest {
     static final List<String> MECHANISMS = List.of("DOUBLE_PLEDGE", "TAPE_DRESSUP", "DISGUISED_RECEIPTS",
-            "FAKE_INVOICES", "HIDDEN_DEBT", "RELATED_SHELLS", "FAKE_INVOICES", "FIN_MANIPULATION");
+            "FAKE_INVOICES", "HIDDEN_DEBT", "RELATED_SHELLS", "FAKE_INVOICES", "FIN_MANIPULATION", "CASH_LEAKAGE");
 
     static CaseIn sampleCase() {
         SignalIn s = new SignalIn("S5-B0001-COMPETING_LIEN-abc", "B0001", "S5", "COMPETING_LIEN", 0.8, 0.85,

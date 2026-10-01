@@ -58,7 +58,7 @@ OPTIONAL = {
         "public_abs": ("public-pool overlap", ()),
     },
     "S2": {"source_truth": ("servicer-system pulls", ("SOURCE_MISMATCH", "TARGETED_SOURCE_MISMATCH"))},
-    "S3": {"outflows": ("round trips", ())},
+    "S3": {"outflows": ("round trips and who the borrower pays (undisclosed debt service, cash leakage)", ())},
     "S5": {"ucc_filings": ("liens", ()), "court_records": ("court judgments", ()),
            "sec_filings": ("debt named in SEC filings", ())},
     "S6": {"sec_filings": ("subsidiaries listed in SEC filings", ())},
