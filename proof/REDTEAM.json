@@ -1,0 +1,2326 @@
+{
+ "frozen": {
+  "tag": "redteam-frozen",
+  "rule_version": "614d4a97ea9e",
+  "code_version": "21f4e35",
+  "briefing_zip_sha256": "e946f405fbc9decf1f95dad7bf233270ab5f49a3977ff8b9d49d86c727bf64a1",
+  "briefing_zip_bytes": 1942956,
+  "frozen_at": "2026-10-01"
+ },
+ "rule_version": "614d4a97ea9e",
+ "code_version": "064eaab",
+ "seeds": [
+  501,
+  502,
+  503,
+  504,
+  505
+ ],
+ "rows": [
+  {
+   "seed": 501,
+   "borrower_id": "B0016",
+   "attack": "abs_overlap",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 15234668.48,
+   "how": "598 loans sold into SYN-ABS-B0016 and pledged to the bank; $17,923,139 standing at month 23, advanced at 85%",
+   "facility_limit": 234094082.20137143,
+   "gain_share": 0.0650792550445376,
+   "small": false,
+   "start_month": 6,
+   "servicer": true,
+   "history": false,
+   "outcome": "sent to review",
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "first_flag": null,
+   "first_review": 0,
+   "findings": [
+    "HIDDEN_DEBT (low)"
+   ]
+  },
+  {
+   "seed": 501,
+   "borrower_id": "B0111",
+   "attack": "abs_overlap",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 7293142.94,
+   "how": "302 loans sold into SYN-ABS-B0111 and pledged to the bank; $8,580,168 standing at month 23, advanced at 85%",
+   "facility_limit": 111931071.65616323,
+   "gain_share": 0.06515744763351794,
+   "small": false,
+   "start_month": 6,
+   "servicer": true,
+   "history": false,
+   "outcome": "missed",
+   "verdict": "NO_ISSUE",
+   "first_flag": null,
+   "first_review": null,
+   "findings": []
+  },
+  {
+   "seed": 501,
+   "borrower_id": "B0037",
+   "attack": "deferment_mask",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 14037600.51,
+   "how": "49 rows flipped, 9 charged-off assets revived, 60 born-deferred loans; $16,514,824 ineligible balance advanced at 85%",
+   "facility_limit": 215331275.09841323,
+   "gain_share": 0.06519071836445668,
+   "small": false,
+   "start_month": 9,
+   "servicer": true,
+   "history": false,
+   "outcome": "caught",
+   "verdict": "LIKELY_FRAUD",
+   "first_flag": 11,
+   "first_review": 0,
+   "findings": [
+    "TAPE_DRESSUP (high)",
+    "DISGUISED_RECEIPTS (low)",
+    "RELATED_SHELLS (low)"
+   ]
+  },
+  {
+   "seed": 501,
+   "borrower_id": "B0063",
+   "attack": "deferment_mask",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 16595336.64,
+   "how": "98 rows flipped, 23 charged-off assets revived, 3125 born-deferred loans; $19,523,925 ineligible balance advanced at 85%",
+   "facility_limit": 255276377.77834305,
+   "gain_share": 0.06500929222056638,
+   "small": false,
+   "start_month": 9,
+   "servicer": true,
+   "history": false,
+   "outcome": "caught",
+   "verdict": "LIKELY_FRAUD",
+   "first_flag": 9,
+   "first_review": null,
+   "findings": [
+    "TAPE_DRESSUP (high)"
+   ]
+  },
+  {
+   "seed": 501,
+   "borrower_id": "B0079",
+   "attack": "double_pledge",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 19900816.16,
+   "how": "$19,900,816 raised from Tidewater Asset Finance LLC against collateral already pledged to the bank; 32 registry rows removed; interest routed through Riverbend Capital LP",
+   "facility_limit": 306166402.42819405,
+   "gain_share": 0.06500000000707912,
+   "small": false,
+   "start_month": 8,
+   "servicer": false,
+   "history": false,
+   "outcome": "missed",
+   "verdict": "NO_ISSUE",
+   "first_flag": null,
+   "first_review": null,
+   "findings": []
+  },
+  {
+   "seed": 501,
+   "borrower_id": "B0036",
+   "attack": "double_pledge",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 14141349.43,
+   "how": "$14,141,349 raised from Apex Specialty Finance LP against collateral already pledged to the bank; 16 registry rows removed; interest routed through Beacon Enterprises LP",
+   "facility_limit": 217559222.01441792,
+   "gain_share": 0.06499999999569236,
+   "small": false,
+   "start_month": 8,
+   "servicer": false,
+   "history": false,
+   "outcome": "missed",
+   "verdict": "NO_ISSUE",
+   "first_flag": null,
+   "first_review": null,
+   "findings": []
+  },
+  {
+   "seed": 501,
+   "borrower_id": "B0095",
+   "attack": "fee_strip",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 6774090.25,
+   "how": "$6,774,090 taken out over 19 months as servicing and rent to Northgate Group LP and Highpoint Associates Corp, one disclosed as a vendor, both nominee-officered",
+   "facility_limit": 104216773.04023537,
+   "gain_share": 0.06500000002288213,
+   "small": false,
+   "start_month": 5,
+   "servicer": false,
+   "history": true,
+   "outcome": "sent to review",
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "first_flag": null,
+   "first_review": 14,
+   "findings": [
+    "FIN_MANIPULATION (low)"
+   ]
+  },
+  {
+   "seed": 501,
+   "borrower_id": "B0075",
+   "attack": "fee_strip",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 15912463.08,
+   "how": "$15,912,463 taken out over 19 months as servicing and rent to Lakeside Holdings Corp and Ironbridge Holdings LP, one disclosed as a vendor, both nominee-officered",
+   "facility_limit": 244807124.32703573,
+   "gain_share": 0.06499999999486403,
+   "small": false,
+   "start_month": 5,
+   "servicer": false,
+   "history": true,
+   "outcome": "sent to review",
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "first_flag": null,
+   "first_review": 0,
+   "findings": [
+    "HIDDEN_DEBT (low)"
+   ]
+  },
+  {
+   "seed": 501,
+   "borrower_id": "B0042",
+   "attack": "ghost_vins",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 4398889.57,
+   "how": "217 fabricated loans carried to month 23 at $5,175,164, advanced at 85%",
+   "facility_limit": 67662290.66925138,
+   "gain_share": 0.06501242459411802,
+   "small": false,
+   "start_month": 7,
+   "servicer": true,
+   "history": false,
+   "outcome": "missed",
+   "verdict": "NO_ISSUE",
+   "first_flag": null,
+   "first_review": null,
+   "findings": []
+  },
+  {
+   "seed": 501,
+   "borrower_id": "B0088",
+   "attack": "ghost_vins",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 20912231.9,
+   "how": "1082 fabricated loans carried to month 23 at $24,602,626, advanced at 85%",
+   "facility_limit": 321646098.7720131,
+   "gain_share": 0.065016277143852,
+   "small": false,
+   "start_month": 7,
+   "servicer": true,
+   "history": false,
+   "outcome": "missed",
+   "verdict": "NO_ISSUE",
+   "first_flag": null,
+   "first_review": null,
+   "findings": []
+  },
+  {
+   "seed": 501,
+   "borrower_id": "B0044",
+   "attack": "month_end_cure",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 25764724.81,
+   "how": "153 delinquent rows cured with token payments plus a 1140-loan cohort cured monthly; $35,213,067 eligible at month 23 against $4,166,382 of own cash fed in",
+   "facility_limit": 375810881.8885477,
+   "gain_share": 0.06855768699545244,
+   "small": false,
+   "start_month": 10,
+   "servicer": true,
+   "history": false,
+   "outcome": "sent to review",
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "first_flag": null,
+   "first_review": 0,
+   "findings": [
+    "HIDDEN_DEBT (low)"
+   ]
+  },
+  {
+   "seed": 501,
+   "borrower_id": "B0120",
+   "attack": "month_end_cure",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 22498236.0,
+   "how": "351 delinquent rows cured with token payments plus a 5264-loan cohort cured monthly; $31,332,591 eligible at month 23 against $4,134,466 of own cash fed in",
+   "facility_limit": 334199723.3349627,
+   "gain_share": 0.06731973257036601,
+   "small": false,
+   "start_month": 10,
+   "servicer": true,
+   "history": false,
+   "outcome": "missed",
+   "verdict": "NO_ISSUE",
+   "first_flag": null,
+   "first_review": null,
+   "findings": []
+  },
+  {
+   "seed": 501,
+   "borrower_id": "B0040",
+   "attack": "offsheet_shells",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 6972734.61,
+   "how": "$6,972,735 borrowed through 3 nominee-owned shelf companies, undisclosed; debt_reported untouched, 5 covenant readings smoothed",
+   "facility_limit": 107272840.22644156,
+   "gain_share": 0.06499999995601215,
+   "small": false,
+   "start_month": 6,
+   "servicer": false,
+   "history": true,
+   "outcome": "missed",
+   "verdict": "NO_ISSUE",
+   "first_flag": null,
+   "first_review": 17,
+   "findings": []
+  },
+  {
+   "seed": 501,
+   "borrower_id": "B0094",
+   "attack": "offsheet_shells",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 2000218.98,
+   "how": "$2,000,219 borrowed through 3 nominee-owned shelf companies, undisclosed; debt_reported untouched, 6 covenant readings smoothed",
+   "facility_limit": 30772599.643848177,
+   "gain_share": 0.06500000010235951,
+   "small": false,
+   "start_month": 6,
+   "servicer": false,
+   "history": true,
+   "outcome": "sent to review",
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "first_flag": null,
+   "first_review": 0,
+   "findings": [
+    "HIDDEN_DEBT (low)"
+   ]
+  },
+  {
+   "seed": 501,
+   "borrower_id": "B0082",
+   "attack": "round_trip",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 6228637.81,
+   "how": "344 invented invoices; $11,961,457 cycled back through Stonegate Supply LP to look collectible, $9,438,655 left outstanding at 85%",
+   "facility_limit": 95336866.4052205,
+   "gain_share": 0.06533294039187058,
+   "small": false,
+   "start_month": 7,
+   "servicer": false,
+   "history": false,
+   "outcome": "caught",
+   "verdict": "LIKELY_FRAUD",
+   "first_flag": 23,
+   "first_review": 2,
+   "findings": [
+    "FAKE_INVOICES (medium)"
+   ]
+  },
+  {
+   "seed": 501,
+   "borrower_id": "B0004",
+   "attack": "round_trip",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 31584967.06,
+   "how": "845 invented invoices; $5,852,768 cycled back through Fairmount Logistics Inc to look collectible, $38,191,626 left outstanding at 85%",
+   "facility_limit": 485713632.3228344,
+   "gain_share": 0.06502796083558704,
+   "small": false,
+   "start_month": 7,
+   "servicer": false,
+   "history": false,
+   "outcome": "caught",
+   "verdict": "LIKELY_FRAUD",
+   "first_flag": 20,
+   "first_review": 10,
+   "findings": [
+    "FAKE_INVOICES (medium)"
+   ]
+  },
+  {
+   "seed": 502,
+   "borrower_id": "B0020",
+   "attack": "abs_overlap",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 26052666.79,
+   "how": "1415 loans sold into SYN-ABS-B0020 and pledged to the bank; $30,650,196 standing at month 23, advanced at 85%",
+   "facility_limit": 400648003.98887473,
+   "gain_share": 0.06502632368218021,
+   "small": false,
+   "start_month": 6,
+   "servicer": true,
+   "history": false,
+   "outcome": "missed",
+   "verdict": "NO_ISSUE",
+   "first_flag": null,
+   "first_review": null,
+   "findings": []
+  },
+  {
+   "seed": 502,
+   "borrower_id": "B0091",
+   "attack": "abs_overlap",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 7481740.19,
+   "how": "384 loans sold into SYN-ABS-B0091 and pledged to the bank; $8,802,047 standing at month 23, advanced at 85%",
+   "facility_limit": 114788324.11943878,
+   "gain_share": 0.06517858194545248,
+   "small": false,
+   "start_month": 6,
+   "servicer": true,
+   "history": false,
+   "outcome": "missed",
+   "verdict": "NO_ISSUE",
+   "first_flag": null,
+   "first_review": null,
+   "findings": []
+  },
+  {
+   "seed": 502,
+   "borrower_id": "B0120",
+   "attack": "deferment_mask",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 10883315.49,
+   "how": "86 rows flipped, 22 charged-off assets revived, 1961 born-deferred loans; $12,803,901 ineligible balance advanced at 85%",
+   "facility_limit": 167407978.71696886,
+   "gain_share": 0.06501073349914858,
+   "small": false,
+   "start_month": 9,
+   "servicer": true,
+   "history": false,
+   "outcome": "caught",
+   "verdict": "LIKELY_FRAUD",
+   "first_flag": 10,
+   "first_review": 0,
+   "findings": [
+    "TAPE_DRESSUP (high)",
+    "HIDDEN_DEBT (low)"
+   ]
+  },
+  {
+   "seed": 502,
+   "borrower_id": "B0057",
+   "attack": "deferment_mask",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 9290032.99,
+   "how": "65 rows flipped, 7 charged-off assets revived, 312 born-deferred loans; $10,929,451 ineligible balance advanced at 85%",
+   "facility_limit": 142857926.36544448,
+   "gain_share": 0.0650298742698756,
+   "small": false,
+   "start_month": 9,
+   "servicer": true,
+   "history": false,
+   "outcome": "caught",
+   "verdict": "LIKELY_FRAUD",
+   "first_flag": 10,
+   "first_review": null,
+   "findings": [
+    "TAPE_DRESSUP (high)"
+   ]
+  },
+  {
+   "seed": 502,
+   "borrower_id": "B0064",
+   "attack": "double_pledge",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 8240968.32,
+   "how": "$8,240,968 raised from Canyon Asset Finance LLC against collateral already pledged to the bank; 0 registry rows removed; interest routed through Clearwater Ventures LLC",
+   "facility_limit": 126784128.00559379,
+   "gain_share": 0.06499999999713216,
+   "small": false,
+   "start_month": 8,
+   "servicer": false,
+   "history": false,
+   "outcome": "missed",
+   "verdict": "NO_ISSUE",
+   "first_flag": null,
+   "first_review": 7,
+   "findings": []
+  },
+  {
+   "seed": 502,
+   "borrower_id": "B0115",
+   "attack": "double_pledge",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 8960351.25,
+   "how": "$8,960,351 raised from Silverline Credit Fund LP against collateral already pledged to the bank; 0 registry rows removed; interest routed through Stonegate Enterprises LP",
+   "facility_limit": 137851557.73016608,
+   "gain_share": 0.06499999998214895,
+   "small": false,
+   "start_month": 8,
+   "servicer": false,
+   "history": false,
+   "outcome": "missed",
+   "verdict": "NO_ISSUE",
+   "first_flag": null,
+   "first_review": 2,
+   "findings": []
+  },
+  {
+   "seed": 502,
+   "borrower_id": "B0112",
+   "attack": "fee_strip",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 8872879.98,
+   "how": "$8,872,880 taken out over 19 months as servicing and rent to Meridian Associates LLC and Northgate Supply Inc, one disclosed as a vendor, both nominee-officered",
+   "facility_limit": 136505845.91225806,
+   "gain_share": 0.06499999996852315,
+   "small": false,
+   "start_month": 5,
+   "servicer": false,
+   "history": true,
+   "outcome": "missed",
+   "verdict": "EXPLAINED",
+   "first_flag": null,
+   "first_review": null,
+   "findings": []
+  },
+  {
+   "seed": 502,
+   "borrower_id": "B0026",
+   "attack": "fee_strip",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 16949823.46,
+   "how": "$16,949,823 taken out over 19 months as servicing and rent to Westbrook Trading LP and Ambler Partners Corp, one disclosed as a vendor, both nominee-officered",
+   "facility_limit": 260766514.73619244,
+   "gain_share": 0.0650000000082353,
+   "small": false,
+   "start_month": 5,
+   "servicer": false,
+   "history": true,
+   "outcome": "missed",
+   "verdict": "NO_ISSUE",
+   "first_flag": null,
+   "first_review": null,
+   "findings": []
+  },
+  {
+   "seed": 502,
+   "borrower_id": "B0015",
+   "attack": "ghost_vins",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 14538855.49,
+   "how": "3037 fabricated loans carried to month 23 at $17,104,536, advanced at 85%",
+   "facility_limit": 223608997.82702318,
+   "gain_share": 0.06501909865562207,
+   "small": false,
+   "start_month": 7,
+   "servicer": true,
+   "history": false,
+   "outcome": "missed",
+   "verdict": "NO_ISSUE",
+   "first_flag": null,
+   "first_review": null,
+   "findings": []
+  },
+  {
+   "seed": 502,
+   "borrower_id": "B0061",
+   "attack": "ghost_vins",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 14653717.23,
+   "how": "3066 fabricated loans carried to month 23 at $17,239,667, advanced at 85%",
+   "facility_limit": 225431827.7874052,
+   "gain_share": 0.06500287636322265,
+   "small": false,
+   "start_month": 7,
+   "servicer": true,
+   "history": false,
+   "outcome": "sent to review",
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "first_flag": null,
+   "first_review": 0,
+   "findings": [
+    "HIDDEN_DEBT (low)"
+   ]
+  },
+  {
+   "seed": 502,
+   "borrower_id": "B0080",
+   "attack": "month_end_cure",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 6490013.5,
+   "how": "662 delinquent rows cured with token payments plus a 357-loan cohort cured monthly; $9,066,803 eligible at month 23 against $1,216,769 of own cash fed in",
+   "facility_limit": 92666244.09081052,
+   "gain_share": 0.07003643628460818,
+   "small": false,
+   "start_month": 10,
+   "servicer": true,
+   "history": false,
+   "outcome": "sent to review",
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "first_flag": null,
+   "first_review": 0,
+   "findings": [
+    "HIDDEN_DEBT (low)"
+   ]
+  },
+  {
+   "seed": 502,
+   "borrower_id": "B0106",
+   "attack": "month_end_cure",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 3070811.69,
+   "how": "73 delinquent rows cured with token payments plus a 765-loan cohort cured monthly; $4,252,203 eligible at month 23 against $543,561 of own cash fed in",
+   "facility_limit": 45264771.126865804,
+   "gain_share": 0.06784109614501938,
+   "small": false,
+   "start_month": 10,
+   "servicer": true,
+   "history": false,
+   "outcome": "missed",
+   "verdict": "NO_ISSUE",
+   "first_flag": null,
+   "first_review": null,
+   "findings": []
+  },
+  {
+   "seed": 502,
+   "borrower_id": "B0065",
+   "attack": "offsheet_shells",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 4306046.63,
+   "how": "$4,306,047 borrowed through 3 nominee-owned shelf companies, undisclosed; debt_reported untouched, 6 covenant readings smoothed",
+   "facility_limit": 66246871.30609352,
+   "gain_share": 0.06499999992609343,
+   "small": false,
+   "start_month": 6,
+   "servicer": false,
+   "history": true,
+   "outcome": "missed",
+   "verdict": "NO_ISSUE",
+   "first_flag": null,
+   "first_review": null,
+   "findings": []
+  },
+  {
+   "seed": 502,
+   "borrower_id": "B0087",
+   "attack": "offsheet_shells",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 4303181.24,
+   "how": "$4,303,181 borrowed through 3 nominee-owned shelf companies, undisclosed; debt_reported untouched, 7 covenant readings smoothed",
+   "facility_limit": 66202788.23472455,
+   "gain_share": 0.06500000007164207,
+   "small": false,
+   "start_month": 6,
+   "servicer": false,
+   "history": true,
+   "outcome": "missed",
+   "verdict": "NO_ISSUE",
+   "first_flag": null,
+   "first_review": null,
+   "findings": []
+  },
+  {
+   "seed": 502,
+   "borrower_id": "B0021",
+   "attack": "round_trip",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 5894565.18,
+   "how": "450 invented invoices; $16,160,153 cycled back through Lakeside Associates Corp to look collectible, $9,786,574 left outstanding at 85%",
+   "facility_limit": 90564305.95589596,
+   "gain_share": 0.06508706844030365,
+   "small": false,
+   "start_month": 7,
+   "servicer": false,
+   "history": false,
+   "outcome": "caught",
+   "verdict": "LIKELY_FRAUD",
+   "first_flag": 23,
+   "first_review": 7,
+   "findings": [
+    "FAKE_INVOICES (medium)",
+    "FIN_MANIPULATION (low)"
+   ]
+  },
+  {
+   "seed": 502,
+   "borrower_id": "B0029",
+   "attack": "round_trip",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 1485854.48,
+   "how": "214 invented invoices; $8,496,114 cycled back through Beacon Logistics LP to look collectible, $3,247,378 left outstanding at 85%",
+   "facility_limit": 22541071.876856133,
+   "gain_share": 0.06591764970704828,
+   "small": false,
+   "start_month": 7,
+   "servicer": false,
+   "history": false,
+   "outcome": "sent to review",
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "first_flag": null,
+   "first_review": 0,
+   "findings": [
+    "FAKE_INVOICES (low)",
+    "HIDDEN_DEBT (low)"
+   ]
+  },
+  {
+   "seed": 503,
+   "borrower_id": "B0115",
+   "attack": "abs_overlap",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 5835236.98,
+   "how": "301 loans sold into SYN-ABS-B0115 and pledged to the bank; $6,864,985 standing at month 23, advanced at 85%",
+   "facility_limit": 89637176.92181547,
+   "gain_share": 0.06509840202898948,
+   "small": false,
+   "start_month": 6,
+   "servicer": true,
+   "history": false,
+   "outcome": "sent to review",
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "first_flag": null,
+   "first_review": 0,
+   "findings": [
+    "HIDDEN_DEBT (low)"
+   ]
+  },
+  {
+   "seed": 503,
+   "borrower_id": "B0028",
+   "attack": "abs_overlap",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 7255024.36,
+   "how": "391 loans sold into SYN-ABS-B0028 and pledged to the bank; $8,535,323 standing at month 23, advanced at 85%",
+   "facility_limit": 111476685.57181692,
+   "gain_share": 0.06508109137606245,
+   "small": false,
+   "start_month": 6,
+   "servicer": true,
+   "history": false,
+   "outcome": "sent to review",
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "first_flag": null,
+   "first_review": 0,
+   "findings": [
+    "DISGUISED_RECEIPTS (low)"
+   ]
+  },
+  {
+   "seed": 503,
+   "borrower_id": "B0004",
+   "attack": "deferment_mask",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 18280397.8,
+   "how": "64 rows flipped, 20 charged-off assets revived, 80 born-deferred loans; $21,506,350 ineligible balance advanced at 85%",
+   "facility_limit": 279441448.56314665,
+   "gain_share": 0.06541763182947821,
+   "small": false,
+   "start_month": 9,
+   "servicer": true,
+   "history": false,
+   "outcome": "caught",
+   "verdict": "LIKELY_FRAUD",
+   "first_flag": 11,
+   "first_review": null,
+   "findings": [
+    "TAPE_DRESSUP (high)"
+   ]
+  },
+  {
+   "seed": 503,
+   "borrower_id": "B0103",
+   "attack": "deferment_mask",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 3213787.28,
+   "how": "36 rows flipped, 9 charged-off assets revived, 110 born-deferred loans; $3,780,926 ineligible balance advanced at 85%",
+   "facility_limit": 49023789.498941116,
+   "gain_share": 0.06555566823469279,
+   "small": false,
+   "start_month": 9,
+   "servicer": true,
+   "history": false,
+   "outcome": "caught",
+   "verdict": "LIKELY_FRAUD",
+   "first_flag": 11,
+   "first_review": null,
+   "findings": [
+    "TAPE_DRESSUP (high)"
+   ]
+  },
+  {
+   "seed": 503,
+   "borrower_id": "B0036",
+   "attack": "double_pledge",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 5707105.59,
+   "how": "$5,707,106 raised from Magnolia Asset Finance LLC against collateral already pledged to the bank; 16 registry rows removed; interest routed through Highpoint Partners LP",
+   "facility_limit": 87801624.4711862,
+   "gain_share": 0.06499999999285773,
+   "small": false,
+   "start_month": 8,
+   "servicer": false,
+   "history": false,
+   "outcome": "missed",
+   "verdict": "NO_ISSUE",
+   "first_flag": null,
+   "first_review": null,
+   "findings": []
+  },
+  {
+   "seed": 503,
+   "borrower_id": "B0114",
+   "attack": "double_pledge",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 2774825.26,
+   "how": "$2,774,825 raised from Magnolia Specialty Finance LP against collateral already pledged to the bank; 32 registry rows removed; interest routed through Clearwater Logistics LP",
+   "facility_limit": 42689619.45639426,
+   "gain_share": 0.06499999989070815,
+   "small": false,
+   "start_month": 8,
+   "servicer": false,
+   "history": false,
+   "outcome": "sent to review",
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "first_flag": null,
+   "first_review": 0,
+   "findings": [
+    "DISGUISED_RECEIPTS (low)"
+   ]
+  },
+  {
+   "seed": 503,
+   "borrower_id": "B0101",
+   "attack": "fee_strip",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 10683270.5,
+   "how": "$10,683,270 taken out over 19 months as servicing and rent to Summit Ventures Inc and Crestview Associates Inc, one disclosed as a vendor, both nominee-officered",
+   "facility_limit": 164358007.65713316,
+   "gain_share": 0.06500000001391076,
+   "small": false,
+   "start_month": 5,
+   "servicer": false,
+   "history": true,
+   "outcome": "missed",
+   "verdict": "EXPLAINED",
+   "first_flag": null,
+   "first_review": null,
+   "findings": []
+  },
+  {
+   "seed": 503,
+   "borrower_id": "B0085",
+   "attack": "fee_strip",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 9347872.47,
+   "how": "$9,347,872 taken out over 19 months as servicing and rent to Meridian Industries Inc and Riverbend Group LP, one disclosed as a vendor, both nominee-officered",
+   "facility_limit": 143813422.69033778,
+   "gain_share": 0.06499999996612309,
+   "small": false,
+   "start_month": 5,
+   "servicer": false,
+   "history": true,
+   "outcome": "sent to review",
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "first_flag": null,
+   "first_review": 0,
+   "findings": [
+    "HIDDEN_DEBT (low)"
+   ]
+  },
+  {
+   "seed": 503,
+   "borrower_id": "B0005",
+   "attack": "ghost_vins",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 17087138.41,
+   "how": "829 fabricated loans carried to month 23 at $20,102,516, advanced at 85%",
+   "facility_limit": 262755228.76981407,
+   "gain_share": 0.06503063132178098,
+   "small": false,
+   "start_month": 7,
+   "servicer": true,
+   "history": false,
+   "outcome": "sent to review",
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "first_flag": null,
+   "first_review": 0,
+   "findings": [
+    "HIDDEN_DEBT (low)"
+   ]
+  },
+  {
+   "seed": 503,
+   "borrower_id": "B0057",
+   "attack": "ghost_vins",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 7844507.43,
+   "how": "40 fabricated loans carried to month 23 at $9,228,832, advanced at 85%",
+   "facility_limit": 119978145.3611664,
+   "gain_share": 0.06538280289619354,
+   "small": false,
+   "start_month": 7,
+   "servicer": true,
+   "history": false,
+   "outcome": "missed",
+   "verdict": "NO_ISSUE",
+   "first_flag": null,
+   "first_review": null,
+   "findings": []
+  },
+  {
+   "seed": 503,
+   "borrower_id": "B0120",
+   "attack": "month_end_cure",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 8360608.37,
+   "how": "67 delinquent rows cured with token payments plus a 50-loan cohort cured monthly; $12,152,639 eligible at month 23 against $1,969,135 of own cash fed in",
+   "facility_limit": 123087076.28334676,
+   "gain_share": 0.06792433960129055,
+   "small": false,
+   "start_month": 10,
+   "servicer": true,
+   "history": false,
+   "outcome": "missed",
+   "verdict": "NO_ISSUE",
+   "first_flag": null,
+   "first_review": null,
+   "findings": []
+  },
+  {
+   "seed": 503,
+   "borrower_id": "B0016",
+   "attack": "month_end_cure",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 19559404.89,
+   "how": "304 delinquent rows cured with token payments plus a 1139-loan cohort cured monthly; $26,499,118 eligible at month 23 against $2,964,845 of own cash fed in",
+   "facility_limit": 282066607.0508152,
+   "gain_share": 0.06934321327329722,
+   "small": false,
+   "start_month": 10,
+   "servicer": true,
+   "history": false,
+   "outcome": "sent to review",
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "first_flag": null,
+   "first_review": 0,
+   "findings": [
+    "DISGUISED_RECEIPTS (low)"
+   ]
+  },
+  {
+   "seed": 503,
+   "borrower_id": "B0049",
+   "attack": "offsheet_shells",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 17626987.19,
+   "how": "$17,626,987 borrowed through 3 nominee-owned shelf companies, undisclosed; debt_reported untouched, 5 covenant readings smoothed",
+   "facility_limit": 271184418.34607816,
+   "gain_share": 0.06499999999079933,
+   "small": false,
+   "start_month": 6,
+   "servicer": false,
+   "history": true,
+   "outcome": "missed",
+   "verdict": "NO_ISSUE",
+   "first_flag": null,
+   "first_review": 9,
+   "findings": []
+  },
+  {
+   "seed": 503,
+   "borrower_id": "B0032",
+   "attack": "offsheet_shells",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 32494161.48,
+   "how": "$32,494,161 borrowed through 3 nominee-owned shelf companies, undisclosed; debt_reported untouched, 7 covenant readings smoothed",
+   "facility_limit": 499910176.64833415,
+   "gain_share": 0.06499999999571579,
+   "small": false,
+   "start_month": 6,
+   "servicer": false,
+   "history": true,
+   "outcome": "sent to review",
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "first_flag": null,
+   "first_review": 0,
+   "findings": [
+    "HIDDEN_DEBT (low)"
+   ]
+  },
+  {
+   "seed": 503,
+   "borrower_id": "B0105",
+   "attack": "round_trip",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 10452370.91,
+   "how": "608 invented invoices; $29,721,727 cycled back through Westbrook Distribution LLC to look collectible, $17,541,918 left outstanding at 85%",
+   "facility_limit": 160572008.6044562,
+   "gain_share": 0.06509460148653784,
+   "small": false,
+   "start_month": 7,
+   "servicer": false,
+   "history": false,
+   "outcome": "caught",
+   "verdict": "LIKELY_FRAUD",
+   "first_flag": 23,
+   "first_review": 7,
+   "findings": [
+    "FAKE_INVOICES (medium)"
+   ]
+  },
+  {
+   "seed": 503,
+   "borrower_id": "B0037",
+   "attack": "round_trip",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 11393645.1,
+   "how": "569 invented invoices; $7,349,167 cycled back through Cardinal Industries Corp to look collectible, $14,701,200 left outstanding at 85%",
+   "facility_limit": 174900056.6251116,
+   "gain_share": 0.06514374734835926,
+   "small": false,
+   "start_month": 7,
+   "servicer": false,
+   "history": false,
+   "outcome": "caught",
+   "verdict": "LIKELY_FRAUD",
+   "first_flag": 21,
+   "first_review": 8,
+   "findings": [
+    "FAKE_INVOICES (medium)"
+   ]
+  },
+  {
+   "seed": 504,
+   "borrower_id": "B0074",
+   "attack": "abs_overlap",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 12475123.45,
+   "how": "646 loans sold into SYN-ABS-B0074 and pledged to the bank; $14,676,616 standing at month 23, advanced at 85%",
+   "facility_limit": 191849138.68533722,
+   "gain_share": 0.06502569433194676,
+   "small": false,
+   "start_month": 6,
+   "servicer": true,
+   "history": false,
+   "outcome": "sent to review",
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "first_flag": null,
+   "first_review": 0,
+   "findings": [
+    "FIN_MANIPULATION (low)",
+    "HIDDEN_DEBT (low)"
+   ]
+  },
+  {
+   "seed": 504,
+   "borrower_id": "B0021",
+   "attack": "abs_overlap",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 17678506.99,
+   "how": "943 loans sold into SYN-ABS-B0021 and pledged to the bank; $20,798,244 standing at month 23, advanced at 85%",
+   "facility_limit": 271920801.01630545,
+   "gain_share": 0.06501344113405993,
+   "small": false,
+   "start_month": 6,
+   "servicer": true,
+   "history": false,
+   "outcome": "missed",
+   "verdict": "NO_ISSUE",
+   "first_flag": null,
+   "first_review": null,
+   "findings": []
+  },
+  {
+   "seed": 504,
+   "borrower_id": "B0082",
+   "attack": "deferment_mask",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 10634119.32,
+   "how": "137 rows flipped, 23 charged-off assets revived, 478 born-deferred loans; $12,510,729 ineligible balance advanced at 85%",
+   "facility_limit": 163488222.6916825,
+   "gain_share": 0.06504517050169764,
+   "small": false,
+   "start_month": 9,
+   "servicer": true,
+   "history": false,
+   "outcome": "caught",
+   "verdict": "LIKELY_FRAUD",
+   "first_flag": 9,
+   "first_review": null,
+   "findings": [
+    "TAPE_DRESSUP (high)"
+   ]
+  },
+  {
+   "seed": 504,
+   "borrower_id": "B0087",
+   "attack": "deferment_mask",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 7007532.98,
+   "how": "93 rows flipped, 29 charged-off assets revived, 1269 born-deferred loans; $8,244,156 ineligible balance advanced at 85%",
+   "facility_limit": 107782627.25860049,
+   "gain_share": 0.06501542185631624,
+   "small": false,
+   "start_month": 9,
+   "servicer": true,
+   "history": false,
+   "outcome": "caught",
+   "verdict": "LIKELY_FRAUD",
+   "first_flag": 9,
+   "first_review": 0,
+   "findings": [
+    "TAPE_DRESSUP (high)",
+    "HIDDEN_DEBT (low)"
+   ]
+  },
+  {
+   "seed": 504,
+   "borrower_id": "B0046",
+   "attack": "double_pledge",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 8797216.34,
+   "how": "$8,797,216 raised from Pioneer Asset Finance LLC against collateral already pledged to the bank; 16 registry rows removed; interest routed through Meridian Associates LP",
+   "facility_limit": 135341789.81317866,
+   "gain_share": 0.06500000001583685,
+   "small": false,
+   "start_month": 8,
+   "servicer": false,
+   "history": false,
+   "outcome": "missed",
+   "verdict": "NO_ISSUE",
+   "first_flag": null,
+   "first_review": null,
+   "findings": []
+  },
+  {
+   "seed": 504,
+   "borrower_id": "B0031",
+   "attack": "double_pledge",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 13142282.14,
+   "how": "$13,142,282 raised from Prairie Specialty Finance LP against collateral already pledged to the bank; 0 registry rows removed; interest routed through Westbrook Enterprises LLC",
+   "facility_limit": 202188956.01364794,
+   "gain_share": 0.06499999999561244,
+   "small": false,
+   "start_month": 8,
+   "servicer": false,
+   "history": false,
+   "outcome": "missed",
+   "verdict": "NO_ISSUE",
+   "first_flag": null,
+   "first_review": null,
+   "findings": []
+  },
+  {
+   "seed": 504,
+   "borrower_id": "B0002",
+   "attack": "fee_strip",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 11090917.67,
+   "how": "$11,090,918 taken out over 19 months as servicing and rent to Highpoint Enterprises Inc and Clearwater Capital LP, one disclosed as a vendor, both nominee-officered",
+   "facility_limit": 170629502.63581172,
+   "gain_share": 0.06499999999221845,
+   "small": false,
+   "start_month": 5,
+   "servicer": false,
+   "history": true,
+   "outcome": "missed",
+   "verdict": "NO_ISSUE",
+   "first_flag": null,
+   "first_review": null,
+   "findings": []
+  },
+  {
+   "seed": 504,
+   "borrower_id": "B0040",
+   "attack": "fee_strip",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 4314374.63,
+   "how": "$4,314,375 taken out over 19 months as servicing and rent to Riverbend Distribution Inc and Highpoint Capital LP, one disclosed as a vendor, both nominee-officered",
+   "facility_limit": 66374994.359647125,
+   "gain_share": 0.06499999994912145,
+   "small": false,
+   "start_month": 5,
+   "servicer": false,
+   "history": true,
+   "outcome": "missed",
+   "verdict": "NO_ISSUE",
+   "first_flag": null,
+   "first_review": 8,
+   "findings": []
+  },
+  {
+   "seed": 504,
+   "borrower_id": "B0004",
+   "attack": "ghost_vins",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 29052383.2,
+   "how": "6122 fabricated loans carried to month 23 at $34,179,274, advanced at 85%",
+   "facility_limit": 446934667.37148315,
+   "gain_share": 0.06500364666465276,
+   "small": false,
+   "start_month": 7,
+   "servicer": true,
+   "history": false,
+   "outcome": "missed",
+   "verdict": "EXPLAINED",
+   "first_flag": null,
+   "first_review": 0,
+   "findings": []
+  },
+  {
+   "seed": 504,
+   "borrower_id": "B0075",
+   "attack": "ghost_vins",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 23023061.82,
+   "how": "897 fabricated loans carried to month 23 at $27,085,955, advanced at 85%",
+   "facility_limit": 354173239.1978743,
+   "gain_share": 0.06500508585047884,
+   "small": false,
+   "start_month": 7,
+   "servicer": true,
+   "history": false,
+   "outcome": "missed",
+   "verdict": "NO_ISSUE",
+   "first_flag": null,
+   "first_review": null,
+   "findings": []
+  },
+  {
+   "seed": 504,
+   "borrower_id": "B0047",
+   "attack": "month_end_cure",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 8502268.05,
+   "how": "320 delinquent rows cured with token payments plus a 510-loan cohort cured monthly; $11,472,826 eligible at month 23 against $1,249,634 of own cash fed in",
+   "facility_limit": 121233852.08122428,
+   "gain_share": 0.07013113832515731,
+   "small": false,
+   "start_month": 10,
+   "servicer": true,
+   "history": false,
+   "outcome": "sent to review",
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "first_flag": null,
+   "first_review": 0,
+   "findings": [
+    "HIDDEN_DEBT (low)"
+   ]
+  },
+  {
+   "seed": 504,
+   "borrower_id": "B0050",
+   "attack": "month_end_cure",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 10807245.84,
+   "how": "1611 delinquent rows cured with token payments plus a 2592-loan cohort cured monthly; $15,355,764 eligible at month 23 against $2,245,154 of own cash fed in",
+   "facility_limit": 160416726.2021779,
+   "gain_share": 0.06736981919441062,
+   "small": false,
+   "start_month": 10,
+   "servicer": true,
+   "history": false,
+   "outcome": "sent to review",
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "first_flag": null,
+   "first_review": 0,
+   "findings": [
+    "DISGUISED_RECEIPTS (low)",
+    "HIDDEN_DEBT (low)"
+   ]
+  },
+  {
+   "seed": 504,
+   "borrower_id": "B0062",
+   "attack": "offsheet_shells",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 9602552.14,
+   "how": "$9,602,552 borrowed through 3 nominee-owned shelf companies, undisclosed; debt_reported untouched, 7 covenant readings smoothed",
+   "facility_limit": 147731571.41737854,
+   "gain_share": 0.06499999998558463,
+   "small": false,
+   "start_month": 6,
+   "servicer": false,
+   "history": true,
+   "outcome": "sent to review",
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "first_flag": null,
+   "first_review": 0,
+   "findings": [
+    "DISGUISED_RECEIPTS (low)"
+   ]
+  },
+  {
+   "seed": 504,
+   "borrower_id": "B0076",
+   "attack": "offsheet_shells",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 2923470.43,
+   "how": "$2,923,470 borrowed through 3 nominee-owned shelf companies, undisclosed; debt_reported untouched, 2 covenant readings smoothed",
+   "facility_limit": 44976468.20613595,
+   "gain_share": 0.06499999992443078,
+   "small": false,
+   "start_month": 6,
+   "servicer": false,
+   "history": true,
+   "outcome": "missed",
+   "verdict": "NO_ISSUE",
+   "first_flag": null,
+   "first_review": null,
+   "findings": []
+  },
+  {
+   "seed": 504,
+   "borrower_id": "B0088",
+   "attack": "round_trip",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 12777443.07,
+   "how": "647 invented invoices; $6,578,416 cycled back through Fairmount Partners Inc to look collectible, $16,193,183 left outstanding at 85%",
+   "facility_limit": 195906412.93912047,
+   "gain_share": 0.06522217868371004,
+   "small": false,
+   "start_month": 7,
+   "servicer": false,
+   "history": false,
+   "outcome": "caught",
+   "verdict": "LIKELY_FRAUD",
+   "first_flag": 21,
+   "first_review": 0,
+   "findings": [
+    "FAKE_INVOICES (medium)",
+    "DISGUISED_RECEIPTS (low)"
+   ]
+  },
+  {
+   "seed": 504,
+   "borrower_id": "B0117",
+   "attack": "round_trip",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 6548503.49,
+   "how": "429 invented invoices; $10,804,463 cycled back through Northgate Associates LLC to look collectible, $9,610,792 left outstanding at 85%",
+   "facility_limit": 100368181.46774055,
+   "gain_share": 0.06524481558037157,
+   "small": false,
+   "start_month": 7,
+   "servicer": false,
+   "history": false,
+   "outcome": "caught",
+   "verdict": "LIKELY_FRAUD",
+   "first_flag": 22,
+   "first_review": 14,
+   "findings": [
+    "FAKE_INVOICES (medium)"
+   ]
+  },
+  {
+   "seed": 505,
+   "borrower_id": "B0102",
+   "attack": "abs_overlap",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 8684948.87,
+   "how": "366 loans sold into SYN-ABS-B0102 and pledged to the bank; $10,217,587 standing at month 23, advanced at 85%",
+   "facility_limit": 133409971.51070307,
+   "gain_share": 0.06509969810842237,
+   "small": false,
+   "start_month": 6,
+   "servicer": true,
+   "history": false,
+   "outcome": "missed",
+   "verdict": "NO_ISSUE",
+   "first_flag": null,
+   "first_review": null,
+   "findings": []
+  },
+  {
+   "seed": 505,
+   "borrower_id": "B0034",
+   "attack": "abs_overlap",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 21112962.65,
+   "how": "1142 loans sold into SYN-ABS-B0034 and pledged to the bank; $24,838,780 standing at month 23, advanced at 85%",
+   "facility_limit": 324582880.00787437,
+   "gain_share": 0.06504644560886205,
+   "small": false,
+   "start_month": 6,
+   "servicer": true,
+   "history": false,
+   "outcome": "missed",
+   "verdict": "NO_ISSUE",
+   "first_flag": null,
+   "first_review": null,
+   "findings": []
+  },
+  {
+   "seed": 505,
+   "borrower_id": "B0083",
+   "attack": "deferment_mask",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 9223533.94,
+   "how": "130 rows flipped, 36 charged-off assets revived, 1702 born-deferred loans; $10,851,216 ineligible balance advanced at 85%",
+   "facility_limit": 141859564.8910792,
+   "gain_share": 0.06501876660260375,
+   "small": false,
+   "start_month": 9,
+   "servicer": true,
+   "history": false,
+   "outcome": "caught",
+   "verdict": "LIKELY_FRAUD",
+   "first_flag": 11,
+   "first_review": 0,
+   "findings": [
+    "TAPE_DRESSUP (high)"
+   ]
+  },
+  {
+   "seed": 505,
+   "borrower_id": "B0021",
+   "attack": "deferment_mask",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 29323741.28,
+   "how": "178 rows flipped, 28 charged-off assets revived, 1229 born-deferred loans; $34,498,519 ineligible balance advanced at 85%",
+   "facility_limit": 450971812.8533399,
+   "gain_share": 0.0650234459099916,
+   "small": false,
+   "start_month": 9,
+   "servicer": true,
+   "history": false,
+   "outcome": "caught",
+   "verdict": "LIKELY_FRAUD",
+   "first_flag": 9,
+   "first_review": null,
+   "findings": [
+    "TAPE_DRESSUP (high)"
+   ]
+  },
+  {
+   "seed": 505,
+   "borrower_id": "B0073",
+   "attack": "double_pledge",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 9221799.45,
+   "how": "$9,221,799 raised from Meridian Credit Fund LP against collateral already pledged to the bank; 16 registry rows removed; interest routed through Riverbend Group Inc",
+   "facility_limit": 141873837.67293686,
+   "gain_share": 0.0650000000088748,
+   "small": false,
+   "start_month": 8,
+   "servicer": false,
+   "history": false,
+   "outcome": "missed",
+   "verdict": "NO_ISSUE",
+   "first_flag": null,
+   "first_review": null,
+   "findings": []
+  },
+  {
+   "seed": 505,
+   "borrower_id": "B0030",
+   "attack": "double_pledge",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 9328001.05,
+   "how": "$9,328,001 raised from Granite Specialty Finance LP against collateral already pledged to the bank; 0 registry rows removed; interest routed through Beacon Industries LLC",
+   "facility_limit": 143507708.3904814,
+   "gain_share": 0.0650000000321844,
+   "small": false,
+   "start_month": 8,
+   "servicer": false,
+   "history": false,
+   "outcome": "missed",
+   "verdict": "EXPLAINED",
+   "first_flag": null,
+   "first_review": null,
+   "findings": []
+  },
+  {
+   "seed": 505,
+   "borrower_id": "B0108",
+   "attack": "fee_strip",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 30292659.85,
+   "how": "$30,292,660 taken out over 19 months as servicing and rent to Redstone Logistics LLC and Westbrook Distribution LLC, one disclosed as a vendor, both nominee-officered",
+   "facility_limit": 466040920.7244077,
+   "gain_share": 0.0650000000062516,
+   "small": false,
+   "start_month": 5,
+   "servicer": false,
+   "history": true,
+   "outcome": "missed",
+   "verdict": "NO_ISSUE",
+   "first_flag": null,
+   "first_review": 0,
+   "findings": []
+  },
+  {
+   "seed": 505,
+   "borrower_id": "B0117",
+   "attack": "fee_strip",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 3259877.17,
+   "how": "$3,259,877 taken out over 19 months as servicing and rent to Beacon Holdings LLC and Cardinal Holdings Corp, one disclosed as a vendor, both nominee-officered",
+   "facility_limit": 50151956.47683314,
+   "gain_share": 0.06499999998017716,
+   "small": false,
+   "start_month": 5,
+   "servicer": false,
+   "history": true,
+   "outcome": "sent to review",
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "first_flag": null,
+   "first_review": 0,
+   "findings": [
+    "HIDDEN_DEBT (low)"
+   ]
+  },
+  {
+   "seed": 505,
+   "borrower_id": "B0075",
+   "attack": "ghost_vins",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 12898056.48,
+   "how": "65 fabricated loans carried to month 23 at $15,174,184, advanced at 85%",
+   "facility_limit": 196148831.28052709,
+   "gain_share": 0.06575647887268585,
+   "small": false,
+   "start_month": 7,
+   "servicer": true,
+   "history": false,
+   "outcome": "missed",
+   "verdict": "EXPLAINED",
+   "first_flag": null,
+   "first_review": null,
+   "findings": []
+  },
+  {
+   "seed": 505,
+   "borrower_id": "B0080",
+   "attack": "ghost_vins",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 7223235.46,
+   "how": "35 fabricated loans carried to month 23 at $8,497,924, advanced at 85%",
+   "facility_limit": 109651231.06044467,
+   "gain_share": 0.06587464080561238,
+   "small": false,
+   "start_month": 7,
+   "servicer": true,
+   "history": false,
+   "outcome": "missed",
+   "verdict": "NO_ISSUE",
+   "first_flag": null,
+   "first_review": null,
+   "findings": []
+  },
+  {
+   "seed": 505,
+   "borrower_id": "B0056",
+   "attack": "month_end_cure",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 4151568.17,
+   "how": "473 delinquent rows cured with token payments plus a 240-loan cohort cured monthly; $5,908,371 eligible at month 23 against $870,547 of own cash fed in",
+   "facility_limit": 59898916.92075249,
+   "gain_share": 0.06930956991246788,
+   "small": false,
+   "start_month": 10,
+   "servicer": true,
+   "history": false,
+   "outcome": "missed",
+   "verdict": "EXPLAINED",
+   "first_flag": null,
+   "first_review": null,
+   "findings": []
+  },
+  {
+   "seed": 505,
+   "borrower_id": "B0023",
+   "attack": "month_end_cure",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 12544413.73,
+   "how": "117 delinquent rows cured with token payments plus a 521-loan cohort cured monthly; $17,253,261 eligible at month 23 against $2,120,858 of own cash fed in",
+   "facility_limit": 183247145.44349977,
+   "gain_share": 0.06845625725650277,
+   "small": false,
+   "start_month": 10,
+   "servicer": true,
+   "history": false,
+   "outcome": "sent to review",
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "first_flag": null,
+   "first_review": 12,
+   "findings": [
+    "RELATED_SHELLS (low)"
+   ]
+  },
+  {
+   "seed": 505,
+   "borrower_id": "B0112",
+   "attack": "offsheet_shells",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 6094969.45,
+   "how": "$6,094,969 borrowed through 3 nominee-owned shelf companies, undisclosed; debt_reported untouched, 6 covenant readings smoothed",
+   "facility_limit": 93768760.71263035,
+   "gain_share": 0.0650000000392351,
+   "small": false,
+   "start_month": 6,
+   "servicer": false,
+   "history": true,
+   "outcome": "missed",
+   "verdict": "NO_ISSUE",
+   "first_flag": null,
+   "first_review": null,
+   "findings": []
+  },
+  {
+   "seed": 505,
+   "borrower_id": "B0047",
+   "attack": "offsheet_shells",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 7031399.31,
+   "how": "$7,031,399 borrowed through 3 nominee-owned shelf companies, undisclosed; debt_reported untouched, 3 covenant readings smoothed",
+   "facility_limit": 108175373.99538732,
+   "gain_share": 0.06500000000277165,
+   "small": false,
+   "start_month": 6,
+   "servicer": false,
+   "history": true,
+   "outcome": "missed",
+   "verdict": "NO_ISSUE",
+   "first_flag": null,
+   "first_review": null,
+   "findings": []
+  },
+  {
+   "seed": 505,
+   "borrower_id": "B0060",
+   "attack": "round_trip",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 10641644.33,
+   "how": "626 invented invoices; $27,568,001 cycled back through Beacon Trading LP to look collectible, $17,384,523 left outstanding at 85%",
+   "facility_limit": 163250590.47841802,
+   "gain_share": 0.06518594694704545,
+   "small": false,
+   "start_month": 7,
+   "servicer": false,
+   "history": false,
+   "outcome": "caught",
+   "verdict": "LIKELY_FRAUD",
+   "first_flag": 23,
+   "first_review": 7,
+   "findings": [
+    "FAKE_INVOICES (medium)"
+   ]
+  },
+  {
+   "seed": 505,
+   "borrower_id": "B0081",
+   "attack": "round_trip",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 16791621.0,
+   "how": "720 invented invoices; $18,561,501 cycled back through Westbrook Supply Corp to look collectible, $23,030,407 left outstanding at 85%",
+   "facility_limit": 258175954.0322978,
+   "gain_share": 0.06503944591950407,
+   "small": false,
+   "start_month": 7,
+   "servicer": false,
+   "history": false,
+   "outcome": "caught",
+   "verdict": "LIKELY_FRAUD",
+   "first_flag": 22,
+   "first_review": 7,
+   "findings": [
+    "FAKE_INVOICES (medium)"
+   ]
+  }
+ ],
+ "honest": {
+  "n": 271,
+  "flagged_end": 0,
+  "flagged_ever": 0,
+  "review_per_100": 23.6
+ },
+ "original_frauds": {
+  "n": 249,
+  "caught": 246
+ },
+ "attacks_leak_scan": {
+  "files": 33,
+  "hits": [
+   {
+    "file": "attacks/README.md",
+    "where": "char 559",
+    "term": "DOUBLE_PLEDGE",
+    "context": "consumer, real estate | 9 | yes | no | ~6.5% | | `double_pledge` | a second facility on the same collateral, with"
+   },
+   {
+    "file": "attacks/README.md",
+    "where": "char 4921",
+    "term": "DOUBLE_PLEDGE",
+    "context": "and the four that do not touch the tape at all - `double_pledge`, `round_trip`, `offsheet_shells`, `fee_strip` - "
+   },
+   {
+    "file": "attacks/README.md",
+    "where": "char 849",
+    "term": "round_trip",
+    "context": " no shared key | auto | 6 | yes | no | ~6.5% | | `round_trip` | invoices for sales that never happened, early "
+   },
+   {
+    "file": "attacks/README.md",
+    "where": "char 4938",
+    "term": "round_trip",
+    "context": " do not touch the tape at all - `double_pledge`, `round_trip`, `offsheet_shells`, `fee_strip` - all set it Fal"
+   },
+   {
+    "file": "attacks/deferment_mask/plant.py",
+    "where": "char 4494",
+    "term": "DEFERMENT_PROGRAM",
+    "context": "         \"borrower_id\": ctx.bid,         \"kind\": \"deferment_program\",         \"counterparty_entity_id\": None,        "
+   },
+   {
+    "file": "attacks/double_pledge/README.md",
+    "where": "char 2",
+    "term": "DOUBLE_PLEDGE",
+    "context": "# double_pledge  **Story.** From month 8 the borrower raises a se"
+   },
+   {
+    "file": "attacks/double_pledge/plant.py",
+    "where": "char 3",
+    "term": "DOUBLE_PLEDGE",
+    "context": "\"\"\"double_pledge - the same collateral financed twice.  Follows th"
+   },
+   {
+    "file": "attacks/round_trip/README.md",
+    "where": "char 2",
+    "term": "round_trip",
+    "context": "# round_trip  **Story.** The borrower is an invoice-finance co"
+   },
+   {
+    "file": "attacks/round_trip/plant.py",
+    "where": "char 3",
+    "term": "round_trip",
+    "context": "\"\"\"round_trip - invoices for sales that never happened, paid fo"
+   }
+  ],
+  "numbers": [
+   {
+    "file": "attacks/abs_overlap/common.py",
+    "number": "0.20",
+    "context": "sample,         \"p20\": amounts[int(len(amounts) * 0.20)] if amounts else 10000.0,         \"p80\": amounts"
+   },
+   {
+    "file": "attacks/abs_overlap/common.py",
+    "number": "2",
+    "context": "0000.0,         \"median\": amounts[len(amounts) // 2] if amounts else 20000.0,     }   def draw_loan(c"
+   },
+   {
+    "file": "attacks/abs_overlap/common.py",
+    "number": "2",
+    "context": "f[\"p20\"], prof[\"p80\"]) * rng.uniform(0.92, 1.08), 2)     return {         \"orig_amount\": amt,        "
+   },
+   {
+    "file": "attacks/abs_overlap/common.py",
+    "number": "2",
+    "context": "ayer_name,         \"amount\": round(float(amount), 2),         \"memo\": memo,         \"ref\": ref,     }"
+   },
+   {
+    "file": "attacks/abs_overlap/common.py",
+    "number": "2",
+    "context": "ayee_name,         \"amount\": round(float(amount), 2),         \"memo\": memo,     }   def ramp(start_mo"
+   },
+   {
+    "file": "attacks/abs_overlap/common.py",
+    "number": "3",
+    "context": "ces):     n = _max_suffix(invoices, \"invoice_id\", 3)     counter = [n]      def mint():         count"
+   },
+   {
+    "file": "attacks/abs_overlap/common.py",
+    "number": "60",
+    "context": "e the term is done.\"\"\"     term = loan[\"term\"] or 60     age = month - loan[\"orig_month\"]     if age <"
+   },
+   {
+    "file": "attacks/abs_overlap/common.py",
+    "number": "60",
+    "context": "monthly_payment(loan):     term = loan[\"term\"] or 60     return float(loan[\"orig_amount\"]) / term   de"
+   },
+   {
+    "file": "attacks/abs_overlap/plant.py",
+    "number": "2",
+    "context": "hs = common.ramp(START_MONTH, common.LAST_MONTH - 2)     need = ctx.target() / ctx.advance_rate      "
+   },
+   {
+    "file": "attacks/abs_overlap/plant.py",
+    "number": "2",
+    "context": "                  ctx, mint_txn(), m, rng.randint(2, 27), oid, who,                     pmt * rng.uni"
+   },
+   {
+    "file": "attacks/abs_overlap/plant.py",
+    "number": "2",
+    "context": "loan[\"orig_amount\"]) * rng.uniform(0.985, 1.015), 2),                 \"rate\": loan[\"rate\"],          "
+   },
+   {
+    "file": "attacks/abs_overlap/plant.py",
+    "number": "2",
+    "context": "_score\": int(loan[\"credit_score\"]) + rng.choice([-2, -1, 1, 2]),                 \"dpd_bucket\": 0,    "
+   },
+   {
+    "file": "attacks/abs_overlap/plant.py",
+    "number": "2",
+    "context": "nt(loan[\"credit_score\"]) + rng.choice([-2, -1, 1, 2]),                 \"dpd_bucket\": 0,             }"
+   },
+   {
+    "file": "attacks/abs_overlap/plant.py",
+    "number": "2",
+    "context": "rate     return {         \"gain_usd\": round(gain, 2),         \"how\": (f\"{len(loans)} loans sold into "
+   },
+   {
+    "file": "attacks/deferment_mask/common.py",
+    "number": "0.20",
+    "context": "sample,         \"p20\": amounts[int(len(amounts) * 0.20)] if amounts else 10000.0,         \"p80\": amounts"
+   },
+   {
+    "file": "attacks/deferment_mask/common.py",
+    "number": "2",
+    "context": "0000.0,         \"median\": amounts[len(amounts) // 2] if amounts else 20000.0,     }   def draw_loan(c"
+   },
+   {
+    "file": "attacks/deferment_mask/common.py",
+    "number": "2",
+    "context": "f[\"p20\"], prof[\"p80\"]) * rng.uniform(0.92, 1.08), 2)     return {         \"orig_amount\": amt,        "
+   },
+   {
+    "file": "attacks/deferment_mask/common.py",
+    "number": "2",
+    "context": "ayer_name,         \"amount\": round(float(amount), 2),         \"memo\": memo,         \"ref\": ref,     }"
+   },
+   {
+    "file": "attacks/deferment_mask/common.py",
+    "number": "2",
+    "context": "ayee_name,         \"amount\": round(float(amount), 2),         \"memo\": memo,     }   def ramp(start_mo"
+   },
+   {
+    "file": "attacks/deferment_mask/common.py",
+    "number": "3",
+    "context": "ces):     n = _max_suffix(invoices, \"invoice_id\", 3)     counter = [n]      def mint():         count"
+   },
+   {
+    "file": "attacks/deferment_mask/common.py",
+    "number": "60",
+    "context": "e the term is done.\"\"\"     term = loan[\"term\"] or 60     age = month - loan[\"orig_month\"]     if age <"
+   },
+   {
+    "file": "attacks/deferment_mask/common.py",
+    "number": "60",
+    "context": "monthly_payment(loan):     term = loan[\"term\"] or 60     return float(loan[\"orig_amount\"]) / term   de"
+   },
+   {
+    "file": "attacks/deferment_mask/plant.py",
+    "number": "2",
+    "context": "    om = rng.choice(months[: max(1, len(months) - 2)])         loan = common.draw_loan(ctx, prof, om)"
+   },
+   {
+    "file": "attacks/deferment_mask/plant.py",
+    "number": "2",
+    "context": "rue_dpd = 0 if age == 0 else (1 if age == 1 else (2 if age == 2 else 3))             new_truth.append"
+   },
+   {
+    "file": "attacks/deferment_mask/plant.py",
+    "number": "2",
+    "context": "if age == 0 else (1 if age == 1 else (2 if age == 2 else 3))             new_truth.append(common.trut"
+   },
+   {
+    "file": "attacks/deferment_mask/plant.py",
+    "number": "2",
+    "context": "igible_reported\"] and r[\"dpd_bucket_reported\"] >= 2):             bad += r[\"balance\"]     gain = bad "
+   },
+   {
+    "file": "attacks/deferment_mask/plant.py",
+    "number": "2",
+    "context": "rate     return {         \"gain_usd\": round(gain, 2),         \"how\": (f\"{flipped} rows flipped, {len("
+   },
+   {
+    "file": "attacks/deferment_mask/plant.py",
+    "number": "3",
+    "context": "                          tr[\"balance_true\"], dpd=3, deferred=1,                                     "
+   },
+   {
+    "file": "attacks/deferment_mask/plant.py",
+    "number": "3",
+    "context": "== 0 else (1 if age == 1 else (2 if age == 2 else 3))             new_truth.append(common.truth_row(c"
+   },
+   {
+    "file": "attacks/double_pledge/common.py",
+    "number": "0.20",
+    "context": "sample,         \"p20\": amounts[int(len(amounts) * 0.20)] if amounts else 10000.0,         \"p80\": amounts"
+   },
+   {
+    "file": "attacks/double_pledge/common.py",
+    "number": "2",
+    "context": "0000.0,         \"median\": amounts[len(amounts) // 2] if amounts else 20000.0,     }   def draw_loan(c"
+   },
+   {
+    "file": "attacks/double_pledge/common.py",
+    "number": "2",
+    "context": "f[\"p20\"], prof[\"p80\"]) * rng.uniform(0.92, 1.08), 2)     return {         \"orig_amount\": amt,        "
+   },
+   {
+    "file": "attacks/double_pledge/common.py",
+    "number": "2",
+    "context": "ayer_name,         \"amount\": round(float(amount), 2),         \"memo\": memo,         \"ref\": ref,     }"
+   },
+   {
+    "file": "attacks/double_pledge/common.py",
+    "number": "2",
+    "context": "ayee_name,         \"amount\": round(float(amount), 2),         \"memo\": memo,     }   def ramp(start_mo"
+   },
+   {
+    "file": "attacks/double_pledge/common.py",
+    "number": "3",
+    "context": "ces):     n = _max_suffix(invoices, \"invoice_id\", 3)     counter = [n]      def mint():         count"
+   },
+   {
+    "file": "attacks/double_pledge/common.py",
+    "number": "60",
+    "context": "e the term is done.\"\"\"     term = loan[\"term\"] or 60     age = month - loan[\"orig_month\"]     if age <"
+   },
+   {
+    "file": "attacks/double_pledge/common.py",
+    "number": "60",
+    "context": "monthly_payment(loan):     term = loan[\"term\"] or 60     return float(loan[\"orig_amount\"]) / term   de"
+   },
+   {
+    "file": "attacks/double_pledge/plant.py",
+    "number": "2",
+    "context": "get()     tranches = max(3, min(8, len(months) // 2))     picks = sorted(rng.sample(months, min(tranc"
+   },
+   {
+    "file": "attacks/double_pledge/plant.py",
+    "number": "2",
+    "context": "der\"     return {         \"gain_usd\": round(gain, 2),         \"how\": (f\"${gain:,.0f} raised from {len"
+   },
+   {
+    "file": "attacks/double_pledge/plant.py",
+    "number": "3",
+    "context": ".state,         formed_month=max(0, START_MONTH - 3), has_operations=False))      # Stop being enroll"
+   },
+   {
+    "file": "attacks/double_pledge/plant.py",
+    "number": "3",
+    "context": " - 1)     total = ctx.target()     tranches = max(3, min(8, len(months) // 2))     picks = sorted(rng"
+   },
+   {
+    "file": "attacks/double_pledge/plant.py",
+    "number": "3",
+    "context": "ow_row(             ctx, mint_o(), m, rng.randint(3, 26), conduit_id, conduit_name,             svc, "
+   },
+   {
+    "file": "attacks/fee_strip/common.py",
+    "number": "0.20",
+    "context": "sample,         \"p20\": amounts[int(len(amounts) * 0.20)] if amounts else 10000.0,         \"p80\": amounts"
+   },
+   {
+    "file": "attacks/fee_strip/common.py",
+    "number": "2",
+    "context": "0000.0,         \"median\": amounts[len(amounts) // 2] if amounts else 20000.0,     }   def draw_loan(c"
+   },
+   {
+    "file": "attacks/fee_strip/common.py",
+    "number": "2",
+    "context": "f[\"p20\"], prof[\"p80\"]) * rng.uniform(0.92, 1.08), 2)     return {         \"orig_amount\": amt,        "
+   },
+   {
+    "file": "attacks/fee_strip/common.py",
+    "number": "2",
+    "context": "ayer_name,         \"amount\": round(float(amount), 2),         \"memo\": memo,         \"ref\": ref,     }"
+   },
+   {
+    "file": "attacks/fee_strip/common.py",
+    "number": "2",
+    "context": "ayee_name,         \"amount\": round(float(amount), 2),         \"memo\": memo,     }   def ramp(start_mo"
+   },
+   {
+    "file": "attacks/fee_strip/common.py",
+    "number": "3",
+    "context": "ces):     n = _max_suffix(invoices, \"invoice_id\", 3)     counter = [n]      def mint():         count"
+   },
+   {
+    "file": "attacks/fee_strip/common.py",
+    "number": "60",
+    "context": "e the term is done.\"\"\"     term = loan[\"term\"] or 60     age = month - loan[\"orig_month\"]     if age <"
+   },
+   {
+    "file": "attacks/fee_strip/common.py",
+    "number": "60",
+    "context": "monthly_payment(loan):     term = loan[\"term\"] or 60     return float(loan[\"orig_amount\"]) / term   de"
+   },
+   {
+    "file": "attacks/fee_strip/plant.py",
+    "number": "2",
+    "context": "er(persons)      vehicles = []     for k in range(2):         pid = mint_p()         persons.append({"
+   },
+   {
+    "file": "attacks/fee_strip/plant.py",
+    "number": "2",
+    "context": "ow(                 ctx, mint_o(), m, rng.randint(2, 27), eid, ename,                 amt * rng.unifo"
+   },
+   {
+    "file": "attacks/fee_strip/plant.py",
+    "number": "2",
+    "context": "    return {         \"gain_usd\": round(extracted, 2),         \"how\": (f\"${extracted:,.0f} taken out o"
+   },
+   {
+    "file": "attacks/ghost_vins/README.md",
+    "number": "2",
+    "context": "o meet lender requirements\", and that of roughly $2.2bn pledged only $1.4bn was real. This is the sim"
+   },
+   {
+    "file": "attacks/ghost_vins/README.md",
+    "number": "2",
+    "context": "lands at about 6.5% of `facility_limit` \u2014 around $2.9m on a $45m line, $11.1m on a $171m line. The fi"
+   },
+   {
+    "file": "attacks/ghost_vins/common.py",
+    "number": "0.20",
+    "context": "sample,         \"p20\": amounts[int(len(amounts) * 0.20)] if amounts else 10000.0,         \"p80\": amounts"
+   },
+   {
+    "file": "attacks/ghost_vins/common.py",
+    "number": "2",
+    "context": "0000.0,         \"median\": amounts[len(amounts) // 2] if amounts else 20000.0,     }   def draw_loan(c"
+   },
+   {
+    "file": "attacks/ghost_vins/common.py",
+    "number": "2",
+    "context": "f[\"p20\"], prof[\"p80\"]) * rng.uniform(0.92, 1.08), 2)     return {         \"orig_amount\": amt,        "
+   },
+   {
+    "file": "attacks/ghost_vins/common.py",
+    "number": "2",
+    "context": "ayer_name,         \"amount\": round(float(amount), 2),         \"memo\": memo,         \"ref\": ref,     }"
+   },
+   {
+    "file": "attacks/ghost_vins/common.py",
+    "number": "2",
+    "context": "ayee_name,         \"amount\": round(float(amount), 2),         \"memo\": memo,     }   def ramp(start_mo"
+   },
+   {
+    "file": "attacks/ghost_vins/common.py",
+    "number": "3",
+    "context": "ces):     n = _max_suffix(invoices, \"invoice_id\", 3)     counter = [n]      def mint():         count"
+   },
+   {
+    "file": "attacks/ghost_vins/common.py",
+    "number": "60",
+    "context": "e the term is done.\"\"\"     term = loan[\"term\"] or 60     age = month - loan[\"orig_month\"]     if age <"
+   },
+   {
+    "file": "attacks/ghost_vins/common.py",
+    "number": "60",
+    "context": "monthly_payment(loan):     term = loan[\"term\"] or 60     return float(loan[\"orig_amount\"]) / term   de"
+   },
+   {
+    "file": "attacks/ghost_vins/plant.py",
+    "number": "0.25",
+    "context": "h_share(i, len(months))         if rng.random() > 0.25 + 0.75 * w:             continue         om = mon"
+   },
+   {
+    "file": "attacks/ghost_vins/plant.py",
+    "number": "2",
+    "context": "                  ctx, mint_txn(), m, rng.randint(2, 27), oid, who,                     pmt * rng.uni"
+   },
+   {
+    "file": "attacks/ghost_vins/plant.py",
+    "number": "2",
+    "context": "rate     return {         \"gain_usd\": round(gain, 2),         \"how\": (f\"{len(fakes)} fabricated loans"
+   },
+   {
+    "file": "attacks/month_end_cure/common.py",
+    "number": "0.20",
+    "context": "sample,         \"p20\": amounts[int(len(amounts) * 0.20)] if amounts else 10000.0,         \"p80\": amounts"
+   },
+   {
+    "file": "attacks/month_end_cure/common.py",
+    "number": "2",
+    "context": "0000.0,         \"median\": amounts[len(amounts) // 2] if amounts else 20000.0,     }   def draw_loan(c"
+   },
+   {
+    "file": "attacks/month_end_cure/common.py",
+    "number": "2",
+    "context": "f[\"p20\"], prof[\"p80\"]) * rng.uniform(0.92, 1.08), 2)     return {         \"orig_amount\": amt,        "
+   },
+   {
+    "file": "attacks/month_end_cure/common.py",
+    "number": "2",
+    "context": "ayer_name,         \"amount\": round(float(amount), 2),         \"memo\": memo,         \"ref\": ref,     }"
+   },
+   {
+    "file": "attacks/month_end_cure/common.py",
+    "number": "2",
+    "context": "ayee_name,         \"amount\": round(float(amount), 2),         \"memo\": memo,     }   def ramp(start_mo"
+   },
+   {
+    "file": "attacks/month_end_cure/common.py",
+    "number": "3",
+    "context": "ces):     n = _max_suffix(invoices, \"invoice_id\", 3)     counter = [n]      def mint():         count"
+   },
+   {
+    "file": "attacks/month_end_cure/common.py",
+    "number": "60",
+    "context": "e the term is done.\"\"\"     term = loan[\"term\"] or 60     age = month - loan[\"orig_month\"]     if age <"
+   },
+   {
+    "file": "attacks/month_end_cure/common.py",
+    "number": "60",
+    "context": "monthly_payment(loan):     term = loan[\"term\"] or 60     return float(loan[\"orig_amount\"]) / term   de"
+   },
+   {
+    "file": "attacks/month_end_cure/plant.py",
+    "number": "2",
+    "context": "common.LAST_MONTH and r[\"dpd_bucket_reported\"] >= 2:             cured_bal_23 += r[\"balance\"]        "
+   },
+   {
+    "file": "attacks/month_end_cure/plant.py",
+    "number": "2",
+    "context": "ent)     return {         \"gain_usd\": round(gain, 2),         \"how\": (f\"{cured} delinquent rows cured"
+   },
+   {
+    "file": "attacks/offsheet_shells/common.py",
+    "number": "0.20",
+    "context": "sample,         \"p20\": amounts[int(len(amounts) * 0.20)] if amounts else 10000.0,         \"p80\": amounts"
+   },
+   {
+    "file": "attacks/offsheet_shells/common.py",
+    "number": "2",
+    "context": "0000.0,         \"median\": amounts[len(amounts) // 2] if amounts else 20000.0,     }   def draw_loan(c"
+   },
+   {
+    "file": "attacks/offsheet_shells/common.py",
+    "number": "2",
+    "context": "f[\"p20\"], prof[\"p80\"]) * rng.uniform(0.92, 1.08), 2)     return {         \"orig_amount\": amt,        "
+   },
+   {
+    "file": "attacks/offsheet_shells/common.py",
+    "number": "2",
+    "context": "ayer_name,         \"amount\": round(float(amount), 2),         \"memo\": memo,         \"ref\": ref,     }"
+   },
+   {
+    "file": "attacks/offsheet_shells/common.py",
+    "number": "2",
+    "context": "ayee_name,         \"amount\": round(float(amount), 2),         \"memo\": memo,     }   def ramp(start_mo"
+   },
+   {
+    "file": "attacks/offsheet_shells/common.py",
+    "number": "3",
+    "context": "ces):     n = _max_suffix(invoices, \"invoice_id\", 3)     counter = [n]      def mint():         count"
+   },
+   {
+    "file": "attacks/offsheet_shells/common.py",
+    "number": "60",
+    "context": "e the term is done.\"\"\"     term = loan[\"term\"] or 60     age = month - loan[\"orig_month\"]     if age <"
+   },
+   {
+    "file": "attacks/offsheet_shells/common.py",
+    "number": "60",
+    "context": "monthly_payment(loan):     term = loan[\"term\"] or 60     return float(loan[\"orig_amount\"]) / term   de"
+   },
+   {
+    "file": "attacks/offsheet_shells/plant.py",
+    "number": "0.95",
+    "context": "ame,             outstanding * rate * rng.uniform(0.95, 1.05), \"vendor payment\"))      # The quarterly p"
+   },
+   {
+    "file": "attacks/offsheet_shells/plant.py",
+    "number": "2",
+    "context": "ow_row(             ctx, mint_o(), m, rng.randint(2, 27), eid, ename,             outstanding * rate "
+   },
+   {
+    "file": "attacks/offsheet_shells/plant.py",
+    "number": "2",
+    "context": "bda r: r[\"quarter\"])     first_q = (START_MONTH - 2) // 3     touched = 0     for i, row in enumerate"
+   },
+   {
+    "file": "attacks/offsheet_shells/plant.py",
+    "number": "2",
+    "context": "s())     return {         \"gain_usd\": round(gain, 2),         \"how\": (f\"${gain:,.0f} borrowed through"
+   },
+   {
+    "file": "attacks/offsheet_shells/plant.py",
+    "number": "3",
+    "context": ", \"IL\", \"NC\"]      shells = []     for k in range(3):         pid = mint_p()         pname = common.p"
+   },
+   {
+    "file": "attacks/offsheet_shells/plant.py",
+    "number": "3",
+    "context": " r[\"quarter\"])     first_q = (START_MONTH - 2) // 3     touched = 0     for i, row in enumerate(mine)"
+   },
+   {
+    "file": "attacks/round_trip/common.py",
+    "number": "0.20",
+    "context": "sample,         \"p20\": amounts[int(len(amounts) * 0.20)] if amounts else 10000.0,         \"p80\": amounts"
+   },
+   {
+    "file": "attacks/round_trip/common.py",
+    "number": "2",
+    "context": "0000.0,         \"median\": amounts[len(amounts) // 2] if amounts else 20000.0,     }   def draw_loan(c"
+   },
+   {
+    "file": "attacks/round_trip/common.py",
+    "number": "2",
+    "context": "f[\"p20\"], prof[\"p80\"]) * rng.uniform(0.92, 1.08), 2)     return {         \"orig_amount\": amt,        "
+   },
+   {
+    "file": "attacks/round_trip/common.py",
+    "number": "2",
+    "context": "ayer_name,         \"amount\": round(float(amount), 2),         \"memo\": memo,         \"ref\": ref,     }"
+   },
+   {
+    "file": "attacks/round_trip/common.py",
+    "number": "2",
+    "context": "ayee_name,         \"amount\": round(float(amount), 2),         \"memo\": memo,     }   def ramp(start_mo"
+   },
+   {
+    "file": "attacks/round_trip/common.py",
+    "number": "3",
+    "context": "ces):     n = _max_suffix(invoices, \"invoice_id\", 3)     counter = [n]      def mint():         count"
+   },
+   {
+    "file": "attacks/round_trip/common.py",
+    "number": "60",
+    "context": "e the term is done.\"\"\"     term = loan[\"term\"] or 60     age = month - loan[\"orig_month\"]     if age <"
+   },
+   {
+    "file": "attacks/round_trip/common.py",
+    "number": "60",
+    "context": "monthly_payment(loan):     term = loan[\"term\"] or 60     return float(loan[\"orig_amount\"]) / term   de"
+   },
+   {
+    "file": "attacks/round_trip/plant.py",
+    "number": "0.25",
+    "context": " in mine)     lo, hi = amounts[int(len(amounts) * 0.25)], amounts[int(len(amounts) * 0.85)]     due_opts"
+   },
+   {
+    "file": "attacks/round_trip/plant.py",
+    "number": "0.25",
+    "context": "get()     per_cycle = max(1, int(len(mine) / 24 * 0.25))     for m in cycled_months:         for _ in ra"
+   },
+   {
+    "file": "attacks/round_trip/plant.py",
+    "number": "2",
+    "context": ".state,         formed_month=max(0, START_MONTH - 2), has_operations=False))      months = common.ram"
+   },
+   {
+    "file": "attacks/round_trip/plant.py",
+    "number": "2",
+    "context": "    cycled_months = months[: max(1, len(months) * 2 // 3)]   # these get paid back     final_months ="
+   },
+   {
+    "file": "attacks/round_trip/plant.py",
+    "number": "2",
+    "context": "ck     final_months = months[max(1, len(months) * 2 // 3):]     # these never do      new_inv, new_pa"
+   },
+   {
+    "file": "attacks/round_trip/plant.py",
+    "number": "2",
+    "context": "debtors)         amt = round(rng.uniform(lo, hi), 2)         num = f\"{ctx.bid}-{next_num}\"         ne"
+   },
+   {
+    "file": "attacks/round_trip/plant.py",
+    "number": "2",
+    "context": "_m = min(common.LAST_MONTH, m + rng.choice([1, 1, 2]))             day_out = rng.randint(1, 20)      "
+   },
+   {
+    "file": "attacks/round_trip/plant.py",
+    "number": "2",
+    "context": "ate)     return {         \"gain_usd\": round(gain, 2),         \"how\": (f\"{len(new_inv)} invented invoi"
+   },
+   {
+    "file": "attacks/round_trip/plant.py",
+    "number": "3",
+    "context": "ycled_months = months[: max(1, len(months) * 2 // 3)]   # these get paid back     final_months = mont"
+   },
+   {
+    "file": "attacks/round_trip/plant.py",
+    "number": "3",
+    "context": "  final_months = months[max(1, len(months) * 2 // 3):]     # these never do      new_inv, new_pay, ne"
+   },
+   {
+    "file": "attacks/round_trip/plant.py",
+    "number": "3",
+    "context": "x, mint_t(), pay_m, min(28, day_out + rng.randint(3, 8)),                 did, dname, amt, f\"REMIT {n"
+   }
+  ]
+ }
+}
