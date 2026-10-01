@@ -1,6 +1,15 @@
 # Red team, round 2: plan
 
-**Status: plan only. Nothing for round 2 has been built or run.** Written 2 Oct 2026 for Vedant to read and approve, after the round-1 fixes and the fresh 601–605 run (`proof/REDTEAM_after_fixes.md`).
+**Status: approved by Vedant on 2 Oct 2026, with one change to the payer rule (below). Built and frozen; the chat has not run yet.** Written 2 Oct 2026, after the round-1 fixes and the fresh 601–605 run (`proof/REDTEAM_after_fixes.md`).
+
+**Vedant's change (2 Oct 2026):** "A payment may name an existing customer as payer only if the borrower's operating account shows matching money going to that customer first. A customer acting as an accomplice is real, and the bank can see the money leave."
+
+**How it's built:**
+- An existing customer means an obligor already on the borrower's tape, or a debtor already on its invoices, before the plant.
+- "Matching money first" means outflows the attack itself adds, to that same customer, on or before each payment back, adding up to at least as much (1% rounding allowed).
+- A customer the attack invents can never be named as payer.
+
+**Attacker models, to be recorded in the report:** round 1: not given yet. Round 2: not given yet. Vedant's message carried template placeholders where the names should be.
 
 ## Why a second round
 
@@ -16,7 +25,7 @@ Round 2 also closes a gap Vedant found in round 1: three attacks recorded money 
 |---|---|---|
 | Attacker | a new incognito claude.ai chat | **a new incognito chat with a different model** if the model picker offers one, so the attacker shares fewer blind spots with round 1 and with the author of the checks |
 | What it sees | the briefing, an honest sample book, the DOJ/SEC texts | the same kinds of thing, rebuilt: **a new sample book** on an unused seed, from the corrected generator (credit limits sized to the collateral). **Never** round 1's attacks, results or fixes, because those would anchor it |
-| Payments | added payments could name anyone as payer | **a payment shows its real sender.** Money the borrower sends, directly or through a company it controls, must name that company as payer. It may not appear to come from a customer, real or invented |
+| Payments | added payments could name anyone as payer | **a payment shows its real sender.** The payer must be the borrower, a company it controls or creates, or an existing customer acting as an accomplice that the borrower's operating account paid at least as much first. Never a customer the attack invents |
 | Levers | servicer records; company history | the same two partial levers, reported with and without |
 | Size and timing | at least 5% of the credit limit; start by month 18 | the same. 5% now means about a tenth of a borrower's collateral, because the limits are realistic |
 | Scoring books | fresh seeds 501–505 | **fresh seeds 701–705**, never generated before |
@@ -28,6 +37,9 @@ The harness, written and frozen before the chat, rejects any planted payment int
 - the borrower's own company
 - a company whose officer is the borrower's owner
 - a company the attack itself creates
+- an existing customer (an obligor on the tape or a debtor on the invoices, before the plant) that the borrower's operating account paid first: outflows the attack adds to that customer, dated on or before each payment back, adding up to at least as much
+
+The rule is switched on by the freeze record, not by a command-line flag, so it can't be left off by mistake. Tests: `tests/test_redteam.py`. A dry run of round 1's attacks under the rule, on dev book 7, reverted exactly the four that had faked senders (`abs_overlap`, `ghost_vins`, `month_end_cure`, `round_trip`) and planted the other four.
 
 A plant that breaks the rule is reverted and reported, never repaired, the same as any other rule break. The briefing states the rule plainly, with one sentence of reason: "a bank's record of an incoming payment names the account the money came from".
 

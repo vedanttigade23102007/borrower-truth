@@ -78,3 +78,53 @@ def test_the_leak_scan_finds_our_internal_names(tmp_path):
     (tmp_path / "README.md").write_text("Use TARGETED_SOURCE_MISMATCH to dodge S2, says Borrower Truth.")
     terms = {h["term"] for h in redteam.scan(str(tmp_path))["hits"]}
     assert {"TARGETED_SOURCE_MISMATCH", "S2", "Borrower Truth"} <= terms
+
+
+def payment(b, payer, month, day, amount, acct="ACCT"):
+    return dict(txn_id=f"TX{payer}{month}{day}{int(amount)}", month=month, day=day, borrower_id=b, account_id=acct,
+                payer_id=payer, payer_name=str(payer), amount=float(amount), memo="loan payment", ref="")
+
+
+def outflow(b, payee, month, day, amount):
+    return dict(txn_id=f"OX{payee}{month}{day}{int(amount)}", month=month, day=day, borrower_id=b, account_id="ACCT",
+                payee_id=payee, payee_name=str(payee), amount=float(amount), memo="vendor payment")
+
+
+@pytest.mark.parametrize("case, ok", [
+    ("new company the attack creates", True),
+    ("existing customer, paid first", True),
+    ("existing customer, never paid", False),
+    ("existing customer, paid less than it pays back", False),
+    ("existing customer, paid only after", False),
+    ("invented customer", False),
+])
+def test_round2_a_payment_shows_its_real_sender(book, tmp_path, case, ok):
+    before, after = fresh(book, tmp_path)
+    tape = pq.read_table(before / "tape.parquet").to_pylist()
+    b = tape[0]["borrower_id"]
+    customer = next(r["obligor_id"] for r in tape if r["borrower_id"] == b)
+    pays, outs, ents = [], [], None
+    if case == "new company the attack creates":
+        own = next(r for r in pq.read_table(before / "borrowers.parquet").to_pylist() if r["borrower_id"] == b)["entity_id"]
+        tmpl = next(e for e in pq.read_table(before / "entities.parquet").to_pylist() if e["entity_id"] == own)
+        ents = lambda rows: rows + [dict(tmpl, entity_id="E_CONDUIT", name="Conduit LLC", formed_month=10, has_operations=False)]  # noqa: E731
+        pays = [payment(b, "E_CONDUIT", 12, 5, 1000)]
+    elif case == "existing customer, paid first":
+        outs, pays = [outflow(b, customer, 12, 2, 1000)], [payment(b, customer, 12, 9, 1000)]
+    elif case == "existing customer, never paid":
+        pays = [payment(b, customer, 12, 9, 1000)]
+    elif case == "existing customer, paid less than it pays back":
+        outs, pays = [outflow(b, customer, 12, 2, 400)], [payment(b, customer, 12, 9, 1000)]
+    elif case == "existing customer, paid only after":
+        outs, pays = [outflow(b, customer, 12, 20, 1000)], [payment(b, customer, 12, 9, 1000)]
+    else:
+        pays = [payment(b, f"O-{b}-999999", 12, 9, 1000)]
+    if ents:
+        edit(after, "entities", ents)
+    edit(after, "payments", lambda rows: rows + pays)
+    if outs:
+        edit(after, "outflows", lambda rows: rows + outs)
+    problems, _, _ = redteam.lever_violations(str(before), str(after), b, payer_rule=True)
+    assert (not problems) is ok, problems
+    if not ok:  # round 1 had no payer rule, and its plants are scored under their own rules
+        assert redteam.lever_violations(str(before), str(after), b, payer_rule=False)[0] == []

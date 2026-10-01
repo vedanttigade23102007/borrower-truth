@@ -140,13 +140,13 @@ def scan_md(res: dict, title: str) -> str:
 
 
 # ---------- the sealed briefing ----------
-def honest_sample(out_dir: str) -> int:
+def honest_sample(out_dir: str, seed: int = SAMPLE_SEED) -> int:
     """An ordinary book on an unused seed, with every borrower that has a planted fraud stripped out, together with
     the companies, people, liens and judgments that exist only because of them. Labels and notes are removed."""
     from bt.datagen.generate import main as generate
     raw = tempfile.mkdtemp()
     generate(["--borrowers", str(SAMPLE_BORROWERS), "--scale", str(SAMPLE_SCALE), "--fraud-rate", "0",
-              "--seed", str(SAMPLE_SEED), "--out", raw])
+              "--seed", str(seed), "--out", raw])
     labels = json.load(open(os.path.join(raw, "labels.json")))
     fraud = sorted(b for b, v in labels.items() if v["fraud"])
     con = duckdb.connect()
@@ -194,15 +194,15 @@ def honest_sample(out_dir: str) -> int:
     return n
 
 
-def briefing(out: str) -> str:
-    folder = os.path.join(out, "redteam_briefing")
+def briefing(out: str, src: str = BRIEFING_SRC, seed: int = SAMPLE_SEED, name: str = "redteam_briefing") -> str:
+    folder = os.path.join(out, name)
     if os.path.exists(folder):
         shutil.rmtree(folder)
-    shutil.copytree(BRIEFING_SRC, folder, ignore=shutil.ignore_patterns("__pycache__", ".DS_Store"))
+    shutil.copytree(src, folder, ignore=shutil.ignore_patterns("__pycache__", ".DS_Store", "*.zip"))
     os.makedirs(os.path.join(folder, "allegations"))
     for a in ALLEGATIONS:
         shutil.copy(os.path.join(ROOT, "research", "sources", a), os.path.join(folder, "allegations", a))
-    n = honest_sample(os.path.join(folder, "sample_book"))
+    n = honest_sample(os.path.join(folder, "sample_book"), seed)
     readme = open(os.path.join(folder, "README.md")).read()
     assert f"one honest book: {n} borrowers" in readme, f"README.md must say the sample has {n} borrowers"
     # the example attack must run on a copy of the sample, through bookio
@@ -212,23 +212,24 @@ def briefing(out: str) -> str:
     first = sorted(r["borrower_id"] for r in pq.read_table(os.path.join(test, "book", "borrowers.parquet")).to_pylist())[0]
     mod.plant(os.path.join(test, "book"), first, 0)
     shutil.rmtree(test)
-    zpath = os.path.join(out, "redteam_briefing.zip")
+    zpath = os.path.join(out, f"{name}.zip")
     with zipfile.ZipFile(zpath, "w", zipfile.ZIP_DEFLATED) as z:
         for f in sorted(glob.glob(os.path.join(folder, "**", "*"), recursive=True)):
             if os.path.isfile(f) and "__pycache__" not in f:
                 z.write(f, os.path.relpath(f, out))
     res = scan(folder)
-    open(os.path.join(out, "LEAK-SCAN-briefing.md"), "w").write(scan_md(res, "the sealed briefing, before upload"))
+    open(os.path.join(out, f"LEAK-SCAN-{name}.md"), "w").write(scan_md(res, f"the sealed briefing ({name}), before upload"))
     print(f"briefing: {zpath} ({os.path.getsize(zpath) / 1e6:.1f} MB, {n} honest borrowers in the sample); "
           f"leak scan: {len(res['hits'])} forbidden terms, {len(res['numbers'])} numbers to look at")
     return zpath
 
 
 # ---------- freeze ----------
-def freeze(zpath: str | None, out: str = FROZEN, tag: str = "redteam-frozen", attacks: str | None = None) -> None:
+def freeze(zpath: str | None, out: str = FROZEN, tag: str = "redteam-frozen", attacks: str | None = None,
+           payer_rule: bool = False) -> None:
     os.makedirs(os.path.dirname(out), exist_ok=True)
     rec = dict(tag=tag, rule_version=record.rule_version(), code_version=record.code_version(),
-               frozen_at=datetime.date.today().isoformat())
+               frozen_at=datetime.date.today().isoformat(), payer_rule=payer_rule)
     if zpath:
         rec.update(briefing_zip_sha256=hashlib.sha256(open(zpath, "rb").read()).hexdigest(),
                    briefing_zip_bytes=os.path.getsize(zpath))
@@ -274,7 +275,7 @@ ADD_ONLY = ("payments", "outflows")
 UNTOUCHABLE = ("borrowers", "facilities", "ucc_filings", "court_records")
 
 
-def lever_violations(before: str, after: str, b: str) -> tuple[list[str], bool, bool]:
+def lever_violations(before: str, after: str, b: str, payer_rule: bool = False) -> tuple[list[str], bool, bool]:
     """What the plant changed that a borrower doesn't control (README.md, rule 1). Returns (violations, servicer,
     history): whether it pulled the two levers a real borrower can only partly pull. `servicer`: it changed its
     servicer records. `history`: it faked a company's history, by changing when an existing company was formed or
@@ -310,6 +311,8 @@ def lever_violations(before: str, after: str, b: str) -> tuple[list[str], bool, 
                 out.append(f"{t}: {n_rem} recorded payment(s) removed or changed; only new ones may be added")
             if q(f"SELECT count(*) FROM {added} WHERE borrower_id IS DISTINCT FROM '{b}'")[0][0]:
                 out.append(f"{t}: payments added to other borrowers' accounts")
+            if payer_rule and t == "payments":
+                out += payer_violations(con, before, after, b, own_e, owner, added)
         elif t == "pledgecheck":
             if n_add or q(f"SELECT count(*) FROM {removed} WHERE borrower_id IS DISTINCT FROM '{b}'")[0][0]:
                 out.append("pledgecheck: results changed (only leaving the registry, by removing its own rows, is allowed)")
@@ -336,6 +339,41 @@ def lever_violations(before: str, after: str, b: str) -> tuple[list[str], bool, 
     return out, servicer, history
 
 
+def payer_violations(con, before: str, after: str, b: str, own_e: str, owner: str, added: str) -> list[str]:
+    """Round 2: a payment shows its real sender. An added payment's payer must be the borrower, a company it controls
+    or creates, or an existing customer (an obligor on its tape or a debtor on its invoices) that the borrower's
+    operating account paid first: at least as much, on or before each payment back (Vedant, 2 Oct 2026)."""
+    q = lambda s: con.execute(s).fetchall()  # noqa: E731
+    ent_b, ent_a = f"read_parquet('{before}/entities.parquet')", f"read_parquet('{after}/entities.parquet')"
+    controlled = {r[0] for r in q(f"SELECT entity_id FROM {ent_b} WHERE entity_id = '{own_e}' OR officer_person_id = '{owner}' "
+                                  f"UNION SELECT entity_id FROM {ent_a} WHERE entity_id NOT IN (SELECT entity_id FROM {ent_b})")}
+    customers = {r[0] for r in q(f"SELECT DISTINCT obligor_id FROM read_parquet('{before}/tape.parquet') WHERE borrower_id = '{b}' "
+                                 f"UNION SELECT DISTINCT debtor_id FROM read_parquet('{before}/invoices.parquet') WHERE borrower_id = '{b}'")}
+    old_o, new_o = f"read_parquet('{before}/outflows.parquet')", f"read_parquet('{after}/outflows.parquet')"
+    sent = q(f"SELECT payee_id, month * 31 + day, amount FROM (SELECT * FROM {new_o} EXCEPT ALL SELECT * FROM {old_o}) "
+             f"WHERE borrower_id = '{b}'")
+    out, back = [], {}
+    for payer, t, amt in q(f"SELECT payer_id, month * 31 + day, amount FROM {added}"):
+        if payer in controlled:
+            continue
+        if payer in customers:
+            back.setdefault(payer, []).append((t, amt))
+            continue
+        out.append(f"payments: a payment names '{payer}' as payer, which is neither the borrower, a company it controls, "
+                   "nor an existing customer it paid first")
+        break
+    for c, ins in back.items():
+        events = sorted([(t, 0, a) for p, t, a in sent if p == c] + [(t, 1, -a) for t, a in ins])  # money out first
+        bal = 0.0
+        for _, _, a in events:
+            bal += a
+            if bal < -0.01 * sum(a for _, a in ins):
+                out.append(f"payments: customer '{c}' pays the borrower more than the borrower's operating account "
+                           "had sent it first")
+                break
+    return out
+
+
 def dq_issues(book: str) -> list[str]:
     return [f"{t}: {', '.join(i)}" for t in dq.REQUIRED if (i := dq.check(os.path.join(book, f"{t}.parquet"), t))]
 
@@ -346,8 +384,9 @@ def _book_files(src: str, dst: str) -> None:
         shutil.copy2(f, dst)
 
 
-def plant(attacks_zip: str, seeds, root: str, test: bool, frozen: str = FROZEN) -> None:
-    check_frozen(test, seeds, frozen)
+def plant(attacks_zip: str, seeds, root: str, test: bool, frozen: str = FROZEN, payer_rule: bool = False) -> None:
+    rec = check_frozen(test, seeds, frozen)
+    payer_rule = bool(rec.get("payer_rule", False)) if rec else payer_rule  # the freeze record decides, so it can't be forgotten
     from bt.eval.evaluate import ensure_book
     adir = os.path.join(root, "attacks_received")
     if os.path.exists(adir):
@@ -355,7 +394,7 @@ def plant(attacks_zip: str, seeds, root: str, test: bool, frozen: str = FROZEN) 
     zipfile.ZipFile(attacks_zip).extractall(adir)
     folders = sorted({os.path.dirname(p) for p in glob.glob(os.path.join(adir, "**", "plant.py"), recursive=True)})
     attacks = {os.path.basename(f): f for f in folders if os.path.basename(f) != "example_attack"}
-    log = dict(attacks_zip_sha256=hashlib.sha256(open(attacks_zip, "rb").read()).hexdigest(), attacks=sorted(attacks),
+    log = dict(payer_rule=payer_rule, attacks_zip_sha256=hashlib.sha256(open(attacks_zip, "rb").read()).hexdigest(), attacks=sorted(attacks),
                books={})
     for seed in seeds:
         a_book = ensure_book(os.path.join(root, "A"), seed, 120)
@@ -388,7 +427,7 @@ def plant(attacks_zip: str, seeds, root: str, test: bool, frozen: str = FROZEN) 
                 except Exception as e:
                     problems.append(f"crashed: {type(e).__name__}: {e}"[:300])
                 if not problems:
-                    lv, servicer, history = lever_violations(snap, b_book, b)
+                    lv, servicer, history = lever_violations(snap, b_book, b, payer_rule)
                     problems += lv + [f"data quality: {x}" for x in dq_issues(b_book)]
                     if start > LAST_START:
                         problems.append(f"starts at month {start}, after month {LAST_START}")
@@ -410,7 +449,7 @@ def plant(attacks_zip: str, seeds, root: str, test: bool, frozen: str = FROZEN) 
 
 # ---------- scoring, once ----------
 def score(seeds, root: str, report_a: str, report_rt: str, test: bool, frozen_path: str = FROZEN,
-          label: str = "") -> None:
+          label: str = "", models: str = "") -> None:
     frozen = check_frozen(test, seeds, frozen_path)
     from bt.eval.evaluate import main as evaluate
     from bt.pipeline.run import run as pipeline
@@ -444,7 +483,7 @@ def score(seeds, root: str, report_a: str, report_rt: str, test: bool, frozen_pa
         orig = [b for b, v in labels.items() if v["fraud"]]
         orig_n += len(orig)
         orig_caught += sum(final[b]["verdict"] == "LIKELY_FRAUD" for b in orig)
-    out = dict(label=label, frozen=frozen, rule_version=record.rule_version(), code_version=record.code_version(), seeds=list(seeds),
+    out = dict(label=label, models=models, frozen=frozen, rule_version=record.rule_version(), code_version=record.code_version(), seeds=list(seeds),
                rows=rows, honest=dict(n=honest_n, flagged_end=honest_end, flagged_ever=honest_ever,
                                       review_per_100=round(100 * honest_review / honest_n, 1) if honest_n else None),
                original_frauds=dict(n=orig_n, caught=orig_caught),
@@ -472,6 +511,8 @@ def redteam_md(r: dict) -> str:
              + (f" ({r['label']})" if r.get("label") else ""), "",
              "**All data synthetic.** The attacks were designed by an AI red team that had not seen the rules "
              "(RED-TEAM-PLAN.md). They measure what this red team thought of, not real-world catch rates.", ""]
+    if r.get("models"):
+        lines += [f"**Attacker models:** {r['models']}", ""]
     if r.get("label"):
         lines += [f"**{r['label']}.** The rules were fixed after round 1 of these same attacks was scored, so this run "
                   "is not blind: it shows whether the fixes work on fresh books, not how a new attacker would do.", ""]
@@ -519,6 +560,9 @@ def main(argv=None):
     sub = ap.add_subparsers(dest="cmd", required=True)
     p = sub.add_parser("briefing")
     p.add_argument("--out", required=True)
+    p.add_argument("--src", default=BRIEFING_SRC)
+    p.add_argument("--sample-seed", type=int, default=SAMPLE_SEED)
+    p.add_argument("--name", default="redteam_briefing")
     p = sub.add_parser("scan")
     p.add_argument("path")
     p = sub.add_parser("freeze")
@@ -526,6 +570,7 @@ def main(argv=None):
     p.add_argument("--attacks", default=None, help="the attacks being re-scored, if any")
     p.add_argument("--out", default=FROZEN)
     p.add_argument("--tag", default="redteam-frozen")
+    p.add_argument("--payer-rule", action="store_true", help="round 2: a payment shows its real sender")
     for name in ("plant", "score"):
         p = sub.add_parser(name)
         p.add_argument("--seeds", type=int, nargs="+", default=list(FRESH_SEEDS))
@@ -535,24 +580,26 @@ def main(argv=None):
         if name == "plant":
             p.add_argument("--attacks", required=True)
             p.add_argument("--i-have-read-them", action="store_true", help="a person read every plant.py first")
+            p.add_argument("--payer-rule", action="store_true", help="test runs only; real runs take it from the freeze record")
         else:
             p.add_argument("--report-a", default="proof/REPORT_seeds501-505.md")
             p.add_argument("--report", default="proof/REDTEAM.md")
             p.add_argument("--label", default="", help='e.g. "after fixes: these attacks are no longer blind"')
+            p.add_argument("--models", default="", help="which AI model ran each round's attacker")
     a = ap.parse_args(argv)
     if a.cmd == "briefing":
-        briefing(a.out)
+        briefing(a.out, a.src, a.sample_seed, a.name)
     elif a.cmd == "scan":
         res = scan(a.path)
         print(scan_md(res, a.path))
     elif a.cmd == "freeze":
-        freeze(a.zip, a.out, a.tag, a.attacks)
+        freeze(a.zip, a.out, a.tag, a.attacks, a.payer_rule)
     elif a.cmd == "plant":
         if not a.i_have_read_them:
             sys.exit("read every plant.py first, then pass --i-have-read-them")
-        plant(a.attacks, a.seeds, a.root, a.test, a.frozen)
+        plant(a.attacks, a.seeds, a.root, a.test, a.frozen, a.payer_rule)
     else:
-        score(a.seeds, a.root, a.report_a, a.report, a.test, a.frozen, a.label)
+        score(a.seeds, a.root, a.report_a, a.report, a.test, a.frozen, a.label, a.models)
 
 
 if __name__ == "__main__":
