@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { use, useCallback, useEffect, useMemo, useState } from "react";
 import { Badge, Button, Card, ConfidencePill, ErrorState, Skeleton, StatusPill, VerdictBadge } from "@/components/ui";
-import { allowed, decide, fetchCase, isDemo, needsReason } from "@/lib/api";
+import { allowed, approverOf, decide, fetchCase, isDemo, needsReason, needsSecondPerson } from "@/lib/api";
 import { MECHANISM, SOURCE, SYSTEM, fmtDate, signalLabel } from "@/lib/labels";
 import { useStatic, type AgentRun, type Replay } from "@/lib/showcase";
 import type { CaseData, CaseDetail, Decision, Finding, Signal, Step } from "@/lib/types";
@@ -399,7 +399,7 @@ function FixSteps({
     setBusy(step.code + d);
     setErr(null);
     try {
-      await decide(id, step, d, user.trim() || "unknown", notes[step.code] ?? "", steps);
+      await decide(id, step, d, user, notes[step.code] ?? "", steps);
       onChange();
     } catch (e) {
       setErr(e instanceof Error ? e.message : String(e));
@@ -449,7 +449,8 @@ function FixSteps({
       </div>
       {isDemo && (
         <p className="border-b border-zinc-100 bg-zinc-50 px-4 py-2 text-xs text-zinc-500">
-          Demo mode: decisions are saved in your browser only, using the same rules as the live service.
+          Demo mode: decisions are saved in your browser only, using the same rules as the live service. A letter
+          needs a second person to mark it done: change the name in &ldquo;Approving as&rdquo; to try it.
         </p>
       )}
       {err && (
@@ -503,7 +504,10 @@ function FixSteps({
                         <Button variant="danger" disabled={!allowed(s, "REJECT") || busy !== null} onClick={() => void act(s, "REJECT")}>
                           Reject
                         </Button>
-                        <Button disabled={!allowed(s, "DONE") || busy !== null} onClick={() => void act(s, "DONE")}>
+                        <Button
+                          disabled={!allowed(s, "DONE") || busy !== null || needsSecondPerson(s, user)}
+                          onClick={() => void act(s, "DONE")}
+                        >
                           Mark done
                         </Button>
                       </>
@@ -512,8 +516,14 @@ function FixSteps({
                 </div>
                 {s.decidedBy && (
                   <p className="mt-1 text-xs text-zinc-500">
+                    {approverOf(s) && s.status !== "APPROVED" ? `approved by ${approverOf(s)} · ` : ""}
                     {s.status.toLowerCase()} by {s.decidedBy} · {fmtDate(s.decidedAt)}
                     {s.note ? ` · “${s.note}”` : ""}
+                  </p>
+                )}
+                {allowed(s, "DONE") && needsSecondPerson(s, user) && (
+                  <p className="mt-1 text-xs text-amber-800">
+                    Four eyes: you approved this letter, so a second person marks it done once it is sent.
                   </p>
                 )}
                 {(s.status === "PROPOSED" || (s.check && allowed(s, "CLEAR"))) && (

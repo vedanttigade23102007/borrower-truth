@@ -19,7 +19,15 @@ type Overlay = Record<
   string,
   Record<
     string,
-    { status: StepStatus; decidedBy?: string; decidedAt?: string; note?: string | null; mechanism?: string; from?: StepStatus }
+    {
+      status: StepStatus;
+      decidedBy?: string;
+      decidedAt?: string;
+      note?: string | null;
+      approvedBy?: string;
+      mechanism?: string;
+      from?: StepStatus;
+    }
   >
 >;
 const OVERLAY_KEY = "bt-demo-decisions";
@@ -111,6 +119,14 @@ export function allowed(step: Step, decision: Decision): boolean {
 
 export const needsReason = (decision: Decision) => Boolean(NEXT[decision].reason);
 
+const same = (a?: string | null, b?: string | null) => Boolean(a && b && a.trim().toLowerCase() === b.trim().toLowerCase());
+
+/** Four eyes: whoever approved a letter (anything that leaves the bank) can't also mark it done. */
+export function approverOf(step: Step): string | null {
+  return step.approvedBy ?? (step.status === "APPROVED" ? step.decidedBy : null);
+}
+export const needsSecondPerson = (step: Step, user: string) => step.kind === "LETTER" && same(approverOf(step), user);
+
 /** `all`: every step of the case, so a demo-mode escalation can bring the waiting fix steps forward. */
 export async function decide(
   id: string,
@@ -121,6 +137,10 @@ export async function decide(
   all: Step[] = [],
 ): Promise<void> {
   const r = NEXT[decision];
+  const who = user.trim();
+  if (!who || who.toLowerCase() === "unknown") {
+    throw new Error("Type your name in 'Approving as' first: a decision needs the officer's own name");
+  }
   if (r.check !== undefined && r.check !== step.check) {
     throw new Error(
       step.check
@@ -132,11 +152,14 @@ export async function decide(
     throw new Error(`${step.code} is ${step.status}; ${r.to} needs ${r.from.join(" or ")}`);
   }
   if (r.reason && !note.trim()) throw new Error(`${decision} needs a reason in the note`);
+  if (decision === "DONE" && needsSecondPerson(step, who)) {
+    throw new Error(`Four eyes: ${approverOf(step)} approved this letter, so someone else must mark it done`);
+  }
   if (!isDemo) {
     const res = await fetch(`${API}/api/cases/${encodeURIComponent(id)}/steps/${step.code}/decision`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ decision, user, note: note || null }),
+      body: JSON.stringify({ decision, user: who, note: note || null }),
     });
     if (!res.ok) {
       const body = (await res.json().catch(() => ({}))) as { error?: string };
@@ -151,19 +174,20 @@ export async function decide(
     ...(overlay[id] ?? {}),
     [step.code]: {
       status: r.to,
-      decidedBy: user,
+      decidedBy: who,
       decidedAt: now,
       note: note || null,
+      approvedBy: decision === "APPROVE" ? who : (approverOf(step) ?? undefined),
       mechanism: step.mechanism,
       from: prev?.from ?? step.status, // the status in the snapshot, for the feedback counts
     },
   };
   const audit = read<AuditEvent[]>(AUDIT_KEY, []);
-  audit.unshift({ id: Date.now(), at: now, actor: user, borrowerId: id, action: `STEP_${r.to}`, detail: step.code + (note ? ` — ${note}` : "") });
+  audit.unshift({ id: Date.now(), at: now, actor: who, borrowerId: id, action: `STEP_${r.to}`, detail: step.code + (note ? ` — ${note}` : "") });
   if (decision === "ESCALATE") {
     const waiting = all.filter((s) => s.mechanism === step.mechanism && s.status === "STANDBY");
     for (const s of waiting) overlay[id][s.code] = { status: "PROPOSED", mechanism: s.mechanism, from: "STANDBY" };
-    audit.unshift({ id: Date.now() + 1, at: now, actor: user, borrowerId: id, action: "FIX_PROPOSED", detail: `${step.mechanism}: ${waiting.length} fix step(s) proposed after escalation` });
+    audit.unshift({ id: Date.now() + 1, at: now, actor: who, borrowerId: id, action: "FIX_PROPOSED", detail: `${step.mechanism}: ${waiting.length} fix step(s) proposed after escalation` });
   }
   write(OVERLAY_KEY, overlay);
   write(AUDIT_KEY, audit.slice(0, 500));

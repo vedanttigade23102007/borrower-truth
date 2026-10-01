@@ -14,10 +14,13 @@ CREATE TABLE IF NOT EXISTS fix_step (
     note         VARCHAR(1000),
     created_at   TIMESTAMP    NOT NULL,
     clues        VARCHAR(4000),  -- for a "worth a look" check: the clues it asked about, one per line
+    approved_by  VARCHAR(80),    -- who approved it; decided_by is whoever made the latest decision
     PRIMARY KEY (borrower_id, mechanism, code)
 );
--- databases created before clue tracking (1 Oct 2026)
+-- databases created before these columns (1 Oct 2026); a step still APPROVED was approved by its decider
 ALTER TABLE fix_step ADD COLUMN IF NOT EXISTS clues VARCHAR(4000);
+ALTER TABLE fix_step ADD COLUMN IF NOT EXISTS approved_by VARCHAR(80);
+UPDATE fix_step SET approved_by = decided_by WHERE approved_by IS NULL AND status = 'APPROVED';
 
 CREATE TABLE IF NOT EXISTS audit_event (
     id          BIGINT AUTO_INCREMENT PRIMARY KEY,

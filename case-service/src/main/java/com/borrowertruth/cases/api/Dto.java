@@ -33,10 +33,11 @@ public final class Dto {
                              @Size(max = 500) String note) {}
 
     /** {@code check}: the one step that can clear a "worth a look" finding (it ends in CLEARED or ESCALATED).
-     *  Status STANDBY is a fix step waiting until that check is escalated or the evidence grows. */
+     *  Status STANDBY is a fix step waiting until that check is escalated or the evidence grows.
+     *  {@code decidedBy} made the latest decision; {@code approvedBy} approved the step, and stays after later decisions. */
     public record StepView(String mechanism, String code, String title, String kind, String status, String draft,
                            String draftSource, String owner, LocalDate dueDate, String decidedBy, Instant decidedAt,
-                           String note, boolean check) {}
+                           String note, boolean check, String approvedBy) {}
 
     public record CaseSummary(String borrowerId, String verdict, String headline, double priority,
                               List<String> mechanisms, long openSteps, String caseStatus, int liveAlerts) {}

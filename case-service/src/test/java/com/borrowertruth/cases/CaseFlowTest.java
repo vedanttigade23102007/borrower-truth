@@ -49,9 +49,34 @@ class CaseFlowTest {
         String code = service.detail("B0001").orElseThrow().steps().get(0).code();
         assertThrows(IllegalStateException.class, () -> service.decide("B0001", code, new DecisionIn("DONE", "t", null)));
         assertEquals("APPROVED", service.decide("B0001", code, new DecisionIn("APPROVE", "officer.a", "ok")).status());
-        assertEquals("DONE", service.decide("B0001", code, new DecisionIn("DONE", "officer.a", null)).status());
+        assertEquals("DONE", service.decide("B0001", code, new DecisionIn("DONE", "officer.b", null)).status());
         assertThrows(IllegalStateException.class, () -> service.decide("B0001", code, new DecisionIn("REJECT", "t", null)));
-        assertTrue(service.audit("B0001").stream().anyMatch(a -> a.action().equals("STEP_DONE") && a.actor().equals("officer.a")));
+        assertTrue(service.audit("B0001").stream().anyMatch(a -> a.action().equals("STEP_DONE") && a.actor().equals("officer.b")));
+    }
+
+    @Test
+    void aDecisionNeedsTheOfficersOwnName() {
+        service.ingest(run());
+        for (String nobody : List.of("unknown", "Unknown", "  ")) {
+            assertThrows(IllegalArgumentException.class,
+                    () -> service.decide("B0001", "ESTOPPEL_LETTER", new DecisionIn("APPROVE", nobody, null)), nobody);
+        }
+        assertEquals("officer.a", service.decide("B0001", "ESTOPPEL_LETTER", new DecisionIn("APPROVE", " officer.a ", null)).decidedBy());
+    }
+
+    @Test
+    void aLetterNeedsASecondPersonToMarkItDone() {
+        service.ingest(run());
+        service.decide("B0001", "ESTOPPEL_LETTER", new DecisionIn("APPROVE", "officer.a", null));
+        assertThrows(IllegalStateException.class,  // the same person, however the name is typed
+                () -> service.decide("B0001", "ESTOPPEL_LETTER", new DecisionIn("DONE", " Officer.A", "sent")));
+        StepView done = service.decide("B0001", "ESTOPPEL_LETTER", new DecisionIn("DONE", "officer.b", "sent by post"));
+        assertEquals("DONE", done.status());
+        assertEquals("officer.a", done.approvedBy());  // still answers "who approved this letter?"
+        assertEquals("officer.b", done.decidedBy());
+        // an internal action is not sent anywhere: one person may approve it and mark it done
+        service.decide("B0001", "INTERCREDITOR_CHECK", new DecisionIn("APPROVE", "officer.a", null));
+        assertEquals("DONE", service.decide("B0001", "INTERCREDITOR_CHECK", new DecisionIn("DONE", "officer.a", null)).status());
     }
 
     @Test

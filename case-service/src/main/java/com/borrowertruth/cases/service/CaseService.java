@@ -120,7 +120,8 @@ public class CaseService {
     }
 
     /**
-     * One-click decisions. DONE is only allowed after APPROVE: nothing is carried out unapproved.
+     * One-click decisions. DONE is only allowed after APPROVE: nothing is carried out unapproved. Every decision needs
+     * the officer's own name, and a letter (anything that leaves the bank) needs a second person to mark it done.
      * A "worth a look" check ends in CLEAR or ESCALATE, and both need a reason: "checked, it's fine, because …"
      * is what an auditor and the rules owner read later. ESCALATE proposes the finding's full fix steps.
      */
@@ -129,27 +130,35 @@ public class CaseService {
         List<StepView> matches = steps(borrowerId).stream().filter(s -> s.code().equals(code)).toList();
         if (matches.isEmpty()) throw new NoSuchElementException("no step " + code + " for " + borrowerId);
         StepView s = matches.get(0);
+        String user = in.user() == null ? "" : in.user().trim();
+        if (user.isEmpty() || user.equalsIgnoreCase("unknown")) {
+            throw new IllegalArgumentException("a decision needs the officer's own name, not '" + user + "'");
+        }
         String decision = in.decision().toUpperCase(Locale.ROOT);
         String next = switch (decision) {
             case "APPROVE" -> require(s, "APPROVED", PROPOSED);
             case "REJECT" -> require(fixOnly(s, decision), "REJECTED", PROPOSED);
-            case "DONE" -> require(fixOnly(s, decision), "DONE", "APPROVED");
+            case "DONE" -> require(secondPerson(fixOnly(s, decision), user), "DONE", "APPROVED");
             case "CLEAR" -> require(withReason(checkOnly(s, decision), in), "CLEARED", PROPOSED, "APPROVED");
             case "ESCALATE" -> require(withReason(checkOnly(s, decision), in), "ESCALATED", PROPOSED, "APPROVED");
             default -> throw new IllegalArgumentException("decision must be APPROVE, REJECT, DONE, CLEAR or ESCALATE");
         };
         jdbc.update("UPDATE fix_step SET status=?, decided_by=?, decided_at=?, note=? "
                         + "WHERE borrower_id=? AND mechanism=? AND code=?",
-                next, in.user(), Timestamp.from(clock.instant()), in.note(), borrowerId, s.mechanism(), code);
+                next, user, Timestamp.from(clock.instant()), in.note(), borrowerId, s.mechanism(), code);
+        if (next.equals("APPROVED")) {  // kept on the step after later decisions: "who approved this letter?"
+            jdbc.update("UPDATE fix_step SET approved_by=? WHERE borrower_id=? AND mechanism=? AND code=?",
+                    user, borrowerId, s.mechanism(), code);
+        }
         meters.counter("bt.decisions", "decision", next).increment();
-        audit(in.user(), borrowerId, "STEP_" + next, code + (in.note() == null ? "" : " — " + in.note()));
+        audit(user, borrowerId, "STEP_" + next, code + (in.note() == null ? "" : " — " + in.note()));
         if (next.equals("ESCALATED")) {
             CaseIn c = cases.get(borrowerId);
             FindingIn f = c == null || c.findings() == null ? null
                     : c.findings().stream().filter(x -> x.mechanism().equals(s.mechanism())).findFirst().orElse(null);
             int n = 0;
             for (StepTemplate t : Playbooks.forMechanism(s.mechanism())) n += promote(borrowerId, c, f, s.mechanism(), t);
-            audit(in.user(), borrowerId, "FIX_PROPOSED", s.mechanism() + ": " + n + " fix step(s) proposed after escalation");
+            audit(user, borrowerId, "FIX_PROPOSED", s.mechanism() + ": " + n + " fix step(s) proposed after escalation");
         }
         return steps(borrowerId).stream().filter(x -> x.code().equals(code)).findFirst().orElseThrow();
     }
@@ -194,6 +203,15 @@ public class CaseService {
 
     private static StepView fixOnly(StepView s, String decision) {
         if (s.check()) throw new IllegalArgumentException(s.code() + " is a check: it ends in CLEAR or ESCALATE, not " + decision);
+        return s;
+    }
+
+    /** Four eyes: whoever approved a letter can't also confirm it was sent. Internal actions don't need this. */
+    private static StepView secondPerson(StepView s, String user) {
+        String approver = s.approvedBy() != null ? s.approvedBy() : s.status().equals("APPROVED") ? s.decidedBy() : null;
+        if ("LETTER".equals(s.kind()) && approver != null && approver.trim().equalsIgnoreCase(user)) {
+            throw new IllegalStateException("four eyes: " + approver + " approved this letter, so someone else must mark it done");
+        }
         return s;
     }
 
@@ -288,12 +306,12 @@ public class CaseService {
 
     private List<StepView> steps(String borrowerId) {
         return jdbc.query("SELECT mechanism, code, title, kind, status, draft, draft_source, owner, due_date, decided_by, "
-                        + "decided_at, note FROM fix_step WHERE borrower_id=? ORDER BY mechanism, created_at, code",
+                        + "decided_at, note, approved_by FROM fix_step WHERE borrower_id=? ORDER BY mechanism, created_at, code",
                 (rs, i) -> new StepView(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4),
                         rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8),
                         rs.getDate(9) == null ? null : rs.getDate(9).toLocalDate(), rs.getString(10),
                         rs.getTimestamp(11) == null ? null : rs.getTimestamp(11).toInstant(), rs.getString(12),
-                        Playbooks.isCheck(rs.getString(2))),
+                        Playbooks.isCheck(rs.getString(2)), rs.getString(13)),
                 borrowerId);
     }
 

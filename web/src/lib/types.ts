@@ -62,6 +62,8 @@ export type Step = {
   note: string | null;
   /** the one step that can clear a "worth a look" finding: it ends in CLEARED or ESCALATED */
   check: boolean;
+  /** who approved it; decidedBy is whoever made the latest decision */
+  approvedBy?: string | null;
 };
 
 export type AuditEvent = {
