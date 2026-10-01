@@ -4,6 +4,7 @@ import bookio
 APPLIES_TO = ["auto_finance", "consumer_finance", "real_estate_finance", "receivables_finance"]
 START_MONTH = 0
 USES_SERVICER_RECORDS = False
+USES_COMPANY_HISTORY = False
 
 
 def plant(book_dir: str, borrower_id: str, seed: int) -> dict:

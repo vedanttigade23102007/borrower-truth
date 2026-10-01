@@ -270,10 +270,14 @@ ADD_ONLY = ("payments", "outflows")
 UNTOUCHABLE = ("borrowers", "facilities", "ucc_filings", "court_records")
 
 
-def lever_violations(before: str, after: str, b: str) -> tuple[list[str], bool]:
-    """What the plant changed that a borrower doesn't control (README.md, rule 1). Returns (violations, servicer)."""
+def lever_violations(before: str, after: str, b: str) -> tuple[list[str], bool, bool]:
+    """What the plant changed that a borrower doesn't control (README.md, rule 1). Returns (violations, servicer,
+    history): whether it pulled the two levers a real borrower can only partly pull. `servicer`: it changed its
+    servicer records. `history`: it faked a company's history, by changing when an existing company was formed or
+    whether it shows a real business, or by adding a company formed before month 0 (an old shelf company) or one
+    that shows a real business (a dressed-up shell)."""
     con = duckdb.connect()
-    out, servicer = [], False
+    out, servicer, history = [], False, False
     q = lambda s: con.execute(s).fetchall()  # noqa: E731
     owner, own_e = q(f"SELECT owner_person_id, entity_id FROM read_parquet('{before}/borrowers.parquet') "
                      f"WHERE borrower_id = '{b}'")[0]
@@ -317,9 +321,15 @@ def lever_violations(before: str, after: str, b: str) -> tuple[list[str], bool]:
                     f"WHERE entity_id NOT IN {allowed}")[0][0]
             if bad:
                 out.append(f"{t}: {bad} row(s) of companies the borrower doesn't control changed")
+            if t == "entities":
+                changed = q(f"SELECT count(*) FROM {added} a JOIN {old} o USING (entity_id) "
+                            f"WHERE a.formed_month IS DISTINCT FROM o.formed_month OR a.has_operations IS DISTINCT FROM o.has_operations")[0][0]
+                dressed = q(f"SELECT count(*) FROM {added} WHERE entity_id NOT IN (SELECT entity_id FROM {old}) "
+                            f"AND (formed_month < 0 OR has_operations)")[0][0]
+                history |= bool(changed or dressed)
         else:
             out.append(f"{t}: changed, and no rule covers it")
-    return out, servicer
+    return out, servicer, history
 
 
 def dq_issues(book: str) -> list[str]:
@@ -367,14 +377,14 @@ def plant(attacks_zip: str, seeds, root: str, test: bool) -> None:
                 used.add(b)
                 snap = tempfile.mkdtemp()
                 _book_files(b_book, snap)
-                problems, gain, how, servicer = [], 0.0, "", False
+                problems, gain, how, servicer, history = [], 0.0, "", False, False
                 try:
                     res = mod.plant(b_book, b, int(seed) * 1000 + i * 10 + k)
                     gain, how = float(res["gain_usd"]), str(res.get("how", ""))
                 except Exception as e:
                     problems.append(f"crashed: {type(e).__name__}: {e}"[:300])
                 if not problems:
-                    lv, servicer = lever_violations(snap, b_book, b)
+                    lv, servicer, history = lever_violations(snap, b_book, b)
                     problems += lv + [f"data quality: {x}" for x in dq_issues(b_book)]
                     if start > LAST_START:
                         problems.append(f"starts at month {start}, after month {LAST_START}")
@@ -385,7 +395,8 @@ def plant(attacks_zip: str, seeds, root: str, test: bool) -> None:
                 planted[b] = dict(attack=name, valid=ok, problems=problems, gain_usd=gain, how=how,
                                   facility_limit=limit[b], gain_share=gain / limit[b] if limit[b] else 0.0,
                                   small=ok and gain < SIZE_FLOOR * limit[b], start_month=start,
-                                  servicer=servicer or bool(getattr(mod, "USES_SERVICER_RECORDS", False)))
+                                  servicer=servicer or bool(getattr(mod, "USES_SERVICER_RECORDS", False)),
+                                  history=history or bool(getattr(mod, "USES_COMPANY_HISTORY", False)))
                 shutil.rmtree(snap)
                 print(f"  seed {seed} {name} -> {b}: {'planted' if ok else 'REVERTED: ' + '; '.join(problems)[:200]}")
         json.dump(planted, open(os.path.join(b_book, "redteam_labels.json"), "w"), indent=1)
@@ -459,21 +470,24 @@ def redteam_md(r: dict) -> str:
              f"code {r['code_version']}.", "",
              f"Counted: frauds gaining at least {SIZE_FLOOR:.0%} of the borrower's credit limit. Smaller ones are shown "
              "apart, as \"too small to matter\".", "",
-             "| Attack | Counted | Caught | Sent to review | Missed | Median months to catch | Too small (caught / review / missed) | Servicer lever |",
-             "|---|---|---|---|---|---|---|---|"]
+             "| Attack | Counted | Caught | Sent to review | Missed | Median months to catch | Too small (caught / review / missed) | Servicer lever | Company-history lever |",
+             "|---|---|---|---|---|---|---|---|---|"]
     for name, xs in sorted(by.items()):
         big, small = [x for x in xs if not x["small"]], [x for x in xs if x["small"]]
         c, v, m = tally(big)
         sc, sv, sm = tally(small)
         lines.append(f"| {name} | {len(big)} | {c} | {v} | {m} | {months(big)} | "
                      f"{f'{len(small)} ({sc} / {sv} / {sm})' if small else '-'} | "
-                     f"{'yes' if any(x['servicer'] for x in xs) else 'no'} |")
-    for label, keep in (("All counted attacks", lambda x: True), ("Without the servicer lever", lambda x: not x["servicer"]),
-                        ("With the servicer lever", lambda x: x["servicer"])):
+                     f"{'yes' if any(x['servicer'] for x in xs) else 'no'} | "
+                     f"{'yes' if any(x.get('history') for x in xs) else 'no'} |")
+    for label, keep in (("All counted attacks", lambda x: True),
+                        ("Without either partial lever", lambda x: not x["servicer"] and not x.get("history")),
+                        ("With the servicer lever", lambda x: x["servicer"]),
+                        ("With the company-history lever", lambda x: x.get("history"))):
         xs = [x for x in r["rows"] if not x["small"] and keep(x)]
         if xs:
             c, v, m = tally(xs)
-            lines.append(f"| **{label}** | {len(xs)} | {c} | {v} | {m} | {months(xs)} | | |")
+            lines.append(f"| **{label}** | {len(xs)} | {c} | {v} | {m} | {months(xs)} | | | |")
     h = r["honest"]
     lines += ["", f"Honest borrowers in the attacked books: {h['n']}. Flagged at month 24: {h['flagged_end']}; "
                   f"flagged in any month: {h['flagged_ever']}; sent to review: {h['review_per_100']} per 100.",

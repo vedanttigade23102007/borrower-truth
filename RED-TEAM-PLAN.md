@@ -7,6 +7,12 @@
 2. **The leak scan runs on the briefing itself, before upload.** Vedant reads the briefing and the scan result first.
 3. **Decisions 2, 3 and 4 as recommended:** the attacker may falsify its own servicer records (results reported with and without that lever); the size floor is 5% of the credit limit; the pass bar is the table in section 6.
 4. **The code is tagged before he starts the chat.**
+5. **(Added the same day, before anything ran.) A company's history is a partial lever too.** It covers when a company was formed and whether it shows a real business. A real borrower can only partly fake these, for example by buying an old shelf company or dressing up a shell. So, like the servicer lever:
+   - it is allowed, and stated in the red team's README
+   - the harness detects it: a changed `formed_month` or `has_operations`, or a new company formed before month 0 or one showing a real business
+   - results are reported with and without it
+
+   The briefing was rebuilt, re-scanned and re-frozen. The tag moved to the new commit, and both were pushed to `borrower-truth-private` so the freeze has a timestamp before the attack starts.
 
 ---
 
@@ -79,6 +85,7 @@ Every fraud in the test books so far was invented by the same author who wrote t
 - money it moves: who pays into the collection account, and what leaves its operating account
 - loans it sells into its own public securitizations, and its own SEC filings
 - **its own servicer system.** Many non-bank lenders service their own loans, so a determined fraudster can falsify those records too. (Decision 2 below.)
+- **its companies' history:** when a company was formed, and whether it shows a real business. A borrower can only partly fake these (an old shelf company, a dressed-up shell). This lever is detected by the harness and reported apart, like the servicer lever.
 
 **What it doesn't control, so the attack may not change it:**
 - other lenders' lien filings

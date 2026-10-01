@@ -36,6 +36,7 @@ The borrower may change:
 - money it moves: it may **add** payments into its collection account (`payments`) and payments out of its operating account (`outflows`)
 - the reports of its own public securitizations, and its own SEC filings, if it files
 - **its own servicer system** (`source_truth`), because many non-bank lenders service their own loans. If an attack does this, say so: the results are reported with and without this lever.
+- **its companies' history**: when a company was formed (`formed_month`) and whether it shows a real business (`has_operations`). A real borrower can only partly fake these, for example by buying an old "shelf" company or dressing up a shell. An attack uses this lever if it changes either field on an existing company, or adds a company formed before month 0 or one that shows a real business. If an attack does this, say so: the results are reported with and without this lever.
 
 The borrower may **not** change:
 - other borrowers' data
@@ -80,6 +81,7 @@ attacks/
 APPLIES_TO = ["auto_finance"]        # borrower types (borrowers.btype) it can be planted into
 START_MONTH = 6                      # the first month the fraud acts (at most 18)
 USES_SERVICER_RECORDS = False        # True if it changes source_truth
+USES_COMPANY_HISTORY = False         # True if it fakes a company's history (formed_month, has_operations)
 
 def plant(book_dir: str, borrower_id: str, seed: int) -> dict:
     """Plant the fraud into one honest borrower of the book in book_dir, editing its parquet files
