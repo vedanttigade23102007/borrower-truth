@@ -1,0 +1,8 @@
+{
+ "tag": "redteam-round2-after-fixes",
+ "rule_version": "4f2503e6bfa4",
+ "code_version": "b8507e5",
+ "frozen_at": "2026-10-02",
+ "payer_rule": true,
+ "attacks_zip_sha256": "0f2e097224d16ce209f806dc8a5446b19c73de2bb55a8a012b4bada77ea88825"
+}
