@@ -22,6 +22,8 @@ import urllib.error
 import urllib.parse
 import urllib.request
 
+from bt.common import network
+
 API = "https://api.gleif.org/api/v1"
 CACHE_DIR = os.environ.get("BT_CACHE_DIR", os.path.join("data", "cache", "gleif"))
 TTL_S = 7 * 24 * 3600
@@ -38,6 +40,10 @@ def _get(url: str, timeout: float = 10.0) -> tuple[dict, bool, float]:
     cached = json.load(open(path)) if os.path.exists(path) else None
     if cached and time.time() - cached["fetched_at"] < TTL_S:
         return cached["body"], False, cached["fetched_at"]
+    if network.offline():  # nothing leaves the bank: an older cached answer, marked stale, or nothing
+        if cached:
+            return cached["body"], True, cached["fetched_at"]
+        raise GleifUnavailable(network.message("GLEIF", url))
     try:
         req = urllib.request.Request(url, headers={"Accept": "application/vnd.api+json"})
         try:

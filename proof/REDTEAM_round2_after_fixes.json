@@ -1769,5 +1769,8 @@
     "context": "WY\", \"NV\"]),         \"formed_month\": -rng.randint(60, 120), \"has_operations\": True,         \"phone\": f"
    }
   ]
- }
+ },
+ "caveats": [
+  "Caveat on comparing round 1 with round 2 (added 2 Oct 2026, at Vedant's request). Round 2's attacker (Sonnet 5.5) may have been a weaker model than round 1's (Opus 5), so part of the improvement from round 1 to round 2 may come from that. The rules of the test also changed in between, in both directions. Credit limits were sized to each borrower's own collateral, so an attack worth 5% of the limit became a smaller share of the book, which is harder to catch. The payer rule took away recording money under a false sender, which is easier to catch. The rounds are not like for like. Both rounds used Claude models, the same family as the model that helped write the checks, so the \"same family\" limit still stands."
+ ]
 }

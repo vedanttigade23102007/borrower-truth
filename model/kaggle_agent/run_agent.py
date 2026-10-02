@@ -38,6 +38,8 @@ code_root = os.path.dirname(os.path.dirname(os.path.dirname(find("bt/agent/inves
 print("book:", book, "| code:", code_root)
 sys.path.insert(0, code_root)
 os.environ["BT_CACHE_DIR"] = "/kaggle/working/gleif_cache"
+# Kaggle is not a bank, and this book is synthetic: the model weights download from Hugging Face, and GLEIF answers live
+os.environ["BT_OFFLINE"] = "0"
 
 from bt.agent.investigate import main  # noqa: E402
 

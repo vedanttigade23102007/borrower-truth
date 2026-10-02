@@ -1,5 +1,7 @@
 """A polite EDGAR client: a declared User-Agent, at most 5 requests a second, an on-disk cache.
 
+Fetching needs BT_OFFLINE=0 (bt/common/network.py): nothing leaves the bank by default. The cache works offline.
+
 SEC fair-access rules: automated requests must declare a User-Agent with a contact
 email, and stay under 10 requests a second
 (https://www.sec.gov/search-filings/edgar-search-assistance/accessing-edgar-data).
@@ -14,6 +16,8 @@ import time
 import urllib.error
 import urllib.request
 
+from bt.common import network
+
 UA = "Vedant Tigade research your-email@example.com"
 CACHE = os.path.join(os.path.dirname(__file__), "..", "..", "data", "cache", "sec")
 MIN_GAP = 0.2  # seconds between requests: 5/s, half the SEC's limit
@@ -21,6 +25,7 @@ _last = [0.0]
 
 
 def _open(url: str):
+    network.require("SEC EDGAR", url)  # the on-disk cache still works offline; only fetching is blocked
     wait = MIN_GAP - (time.time() - _last[0])
     if wait > 0:
         time.sleep(wait)

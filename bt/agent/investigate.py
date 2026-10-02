@@ -29,6 +29,7 @@ import duckdb
 from rapidfuzz import fuzz
 
 from bt.adapters import gleif
+from bt.common import network
 
 ROUTER = os.environ.get("HF_ROUTER_URL", "https://router.huggingface.co/v1/chat/completions")
 MODELS = ["openai/gpt-oss-120b", "meta-llama/Llama-3.3-70B-Instruct", "Qwen/Qwen3-8B"]  # all open-weight
@@ -323,6 +324,7 @@ def chat(model: str, messages: list[dict], tools: list[dict] | None, token: str,
     body = {"model": model, "messages": messages, "max_tokens": 1500, "temperature": 0}
     if tools:
         body["tools"] = tools
+    network.require("A hosted model (Hugging Face router)", router)
     req = urllib.request.Request(router, data=json.dumps(body).encode(), headers={
         "Authorization": f"Bearer {token}", "Content-Type": "application/json", "User-Agent": "borrower-truth-agent/0.1"})
     with urllib.request.urlopen(req, timeout=120) as r:
@@ -434,14 +436,15 @@ def main(argv=None):
     ap.add_argument("--borrower", nargs="*", default=None)
     ap.add_argument("--top-review", type=int, default=8, help="also investigate this many 'needs more evidence' cases")
     ap.add_argument("--no-gleif", action="store_true")
-    ap.add_argument("--backend", choices=["hf", "local"], default="hf",
-                    help="hf: hosted open models via the Hugging Face router; local: run the model on this machine's GPU")
+    ap.add_argument("--backend", choices=["hf", "local"], default="local",
+                    help="local (default): run the model on this machine's GPU, from files already on disk unless "
+                         "BT_OFFLINE=0; hf: hosted open models via the Hugging Face router, only with BT_OFFLINE=0")
     ap.add_argument("--local-model", default="Qwen/Qwen3-8B")
     ap.add_argument("--revalidate", action="store_true",
                     help="re-apply the current checks to the memos already in --out; no model is called")
     a = ap.parse_args(argv)
     if a.revalidate:
-        tools = Tools(a.data, json.load(open(os.path.join(a.data, "run", "cases.json"))), live_gleif=not a.no_gleif)
+        tools = Tools(a.data, json.load(open(os.path.join(a.data, "run", "cases.json"))), live_gleif=not a.no_gleif and not network.offline())
         index = []
         for f in sorted(glob.glob(os.path.join(a.out, "B*.json"))):
             res = revalidate(json.load(open(f)), tools)
@@ -453,13 +456,15 @@ def main(argv=None):
               f"{sum(r['dropped'] for r in index)} dropped")
         return
     token, ask, models = os.environ.get("HF_TOKEN"), None, MODELS
+    if a.backend == "hf" and network.offline():
+        sys.exit(network.message("A hosted model (Hugging Face router)", ROUTER))
     if a.backend == "local":
         from bt.agent.local_model import LocalChat
         ask, models = LocalChat(a.local_model), [a.local_model]
     elif not token:
         sys.exit("HF_TOKEN is not set: put it in .env and run through scripts/with-env.sh")
     cases = json.load(open(os.path.join(a.data, "run", "cases.json")))
-    tools = Tools(a.data, cases, live_gleif=not a.no_gleif)
+    tools = Tools(a.data, cases, live_gleif=not a.no_gleif and not network.offline())
     if a.borrower:
         targets = a.borrower
     else:

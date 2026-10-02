@@ -13,6 +13,7 @@ import os
 import duckdb
 import pyarrow.parquet as pq
 
+from bt.common import network
 from bt.common.signal import Signal
 
 # Columns for tables that can legitimately be empty in a small book.
@@ -77,7 +78,7 @@ class Ctx:
         self.as_of = int(as_of)
         # data-quality gate: file name -> replacement path ("" = quarantined, no fallback -> empty table)
         self.overrides = overrides or {}
-        self.con = con or duckdb.connect()
+        self.con = con or duckdb.connect(config=network.duckdb_config())
         self.shared: dict = {}
         self.explanations: dict[str, list[str]] = {}
         self.con.execute(NORM_MACRO)

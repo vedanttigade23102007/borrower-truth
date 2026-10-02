@@ -16,6 +16,8 @@ import shutil
 import duckdb
 import pyarrow.parquet as pq
 
+from bt.common import network
+
 REQUIRED = {
     "borrowers": ["borrower_id", "entity_id", "name", "btype"],
     "entities": ["entity_id", "name", "kind", "officer_person_id", "address", "formed_month", "has_operations"],
@@ -60,7 +62,7 @@ def check(path: str, table: str, last: int | None = 23) -> list[str]:
     issues = [f"missing column {c}" for c in REQUIRED.get(table, []) if c not in cols]
     if issues:
         return issues
-    con = duckdb.connect()
+    con = duckdb.connect(config=network.duckdb_config())
     src = f"read_parquet('{path}')"
     n = con.execute(f"SELECT count(*) FROM {src}").fetchone()[0]
     if n == 0:

@@ -12,6 +12,8 @@ import re
 import torch
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
+from bt.common import network
+
 TOOL_CALL = re.compile(r"<tool_call>\s*(\{.*?\})\s*</tool_call>", re.S)
 THINK = re.compile(r"<think>.*?</think>", re.S)
 SPECIAL = re.compile(r"<\|[^|<>]+\|>")
@@ -20,8 +22,10 @@ SPECIAL = re.compile(r"<\|[^|<>]+\|>")
 class LocalChat:
     def __init__(self, name: str, max_new_tokens: int = 900):
         self.name = name
-        self.tok = AutoTokenizer.from_pretrained(name)
-        self.model = AutoModelForCausalLM.from_pretrained(name, torch_dtype=torch.float16, device_map="auto")
+        local = network.offline()  # nothing leaves the bank: the weights must already be on disk
+        self.tok = AutoTokenizer.from_pretrained(name, local_files_only=local)
+        self.model = AutoModelForCausalLM.from_pretrained(name, torch_dtype=torch.float16, device_map="auto",
+                                                          local_files_only=local)
         self.max_new = max_new_tokens
         self.n = 0
 

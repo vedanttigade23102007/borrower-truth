@@ -82,6 +82,8 @@ The run is monthly ("as of" a month). Payments also stream daily for live alerts
 
 **How to say it in the pitch (Vedant, 1 Oct 2026):** "It plugs into the company data you already use for KYC. If you don't have a feed, this is what you'd need." There is no starter mode without registry data. Such a mode would miss exactly the hidden companies S6 exists to find.
 
+**Public sources and the offline default.** Nothing leaves the bank by default (`BT_OFFLINE`, `INTEGRATION.md` section 1). GLEIF and SEC EDGAR are fetched on a machine allowed out, with `BT_OFFLINE=0`, and their copies are brought in. The checks read the copies.
+
 **Day one, with a registry feed, what the bank already holds** (credit lines, financials, loan tapes, invoices), **and the free public sources** (GLEIF, SEC EDGAR):
 
 | Check | Day one |

@@ -15,11 +15,17 @@ Written 2 Oct 2026 (plan: `INTEGRATION-PLAN.md`, approved by Vedant). All data i
 | The console | the credit officer's screen (Next.js) | inside the bank's network, behind the bank's sign-in |
 | The file mapper | a command that turns a borrower's own spreadsheet into the checks' tables (`bt.mapper`) | run by the bank's data team |
 
-- **Borrower data can stay inside the bank, with two settings to get right:**
-  - The checks, the case service, the console and the mapper send nothing outside.
-  - The optional investigator agent defaults, in this demo, to open models hosted on the Hugging Face router. That sends case evidence outside, which is fine for synthetic data and not for a bank. In a bank it runs with `--backend local`, on the bank's own hardware, or stays off.
-  - The optional document module runs its model locally, and is off by default.
-  - The public lookups (GLEIF, SEC EDGAR) send a company's name or ID to a public registry. That says which companies the bank is looking at, but no borrower data. Whether that's acceptable is the bank's call (typical, to confirm with the bank).
+- **Nothing leaves the bank by default.** One setting, `BT_OFFLINE`, is on unless someone sets it to `0`. While it's on:
+  - the public lookups (GLEIF, SEC EDGAR) are blocked. Their on-disk copies still work, so public data is refreshed on a machine allowed out, then copied in
+  - the investigator agent runs only on the bank's own hardware (`--backend local` is the default), and loads its model only from files already on disk. Hosted models need `--backend hf` and `BT_OFFLINE=0`, so that takes two switches
+  - DuckDB doesn't download extensions
+  - the optional document module runs its model locally, and is off by default
+  - calls inside the bank (the case service, Kafka, the metrics gateway) are not affected
+- **Tested** (`tests/test_offline.py`):
+  - The whole monthly pipeline runs with outbound network blocked in two ways: inside Python, where every connection or name lookup is recorded and refused, and, on macOS, inside an operating-system sandbox that denies the process any network.
+  - It produces every case, and nothing even tries to call out.
+  - Two control tests show both blockers do catch a real attempt.
+  - The agent's hosted-model path and the public lookups are refused before any connection.
 - **Database:** H2 today. A bank would most likely want Postgres or its own standard database (typical, to confirm with the bank). **Not checked on Postgres:** `REVIEW.md` gap 9 lists the three edits it needs.
 - **Size:** measured on one laptop up to 400 synthetic borrowers: 13.2M rows in 4.39 s for one month (`proof/scale.json`). A monthly run is not a capacity problem at that size. A bank's whole book is not measured.
 
@@ -135,6 +141,7 @@ The pilot group: about 10 borrowers with the most complete data (typical, to con
 - **Writes:** the case service accepts writes only with a shared key today. A bank would replace that with its own service identity (typical, to confirm with the bank).
 - **Audit log:** append-only. No update or delete path exists, and a test checks that.
 - **Borrower files are untrusted:** the mapper reads values only and refuses macro workbooks and oversized files.
+- **Outbound calls:** none by default (`BT_OFFLINE`, section 1). The console hasn't been checked for outside calls, such as fonts or scripts loaded from the internet: **not checked**.
 
 ---
 
