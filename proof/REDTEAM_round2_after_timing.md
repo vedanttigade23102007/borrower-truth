@@ -2,7 +2,7 @@
 
 **All data synthetic.** The attacks were designed by an AI red team that had not seen the rules (RED-TEAM-PLAN.md). They measure what this red team thought of, not real-world catch rates.
 
-**Attacker models:** round 1: not given by Vedant; round 2: not given by Vedant (asked twice; to be filled in)
+**Attacker models:** round 1: Opus 5; round 2: Sonnet 5.5 (as Vedant reported on 2 Oct 2026, after scoring; recorded here afterwards)
 
 **after the round-2 fixes and the timing rule: these attacks are no longer blind.** The rules were fixed after round 1 of these same attacks was scored, so this run is not blind: it shows whether the fixes work on fresh books, not how a new attacker would do.
 

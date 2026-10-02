@@ -1200,7 +1200,8 @@ class Book:
 
 def size_limits(out: str, seed: int) -> None:
     """Credit limits sized to each borrower's own collateral, as a bank sizes a warehouse line: the peak borrowing
-    base (eligible collateral times the advance rate) uses 60-90% of the line. Before 2 Oct 2026 the limit was drawn
+    base (eligible collateral times the advance rate) uses 60-90% of the line (an assumption, not a measured fact:
+    WHY.md change 11). Before 2 Oct 2026 the limit was drawn
     on its own (a median $150M), so the median borrower used about 4% of its line; the blind red team pointed it
     out. Only the written limits change: the internal draw that sizes disclosed debt is untouched, and the
     utilisation comes from its own random stream, so every other table stays byte-identical."""

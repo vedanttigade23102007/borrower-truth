@@ -9,7 +9,7 @@
 - "Matching money first" means outflows the attack itself adds, to that same customer, on or before each payment back, adding up to at least as much (1% rounding allowed).
 - A customer the attack invents can never be named as payer.
 
-**Attacker models, to be recorded in the report:** round 1: not given yet. Round 2: not given yet. Vedant's message carried template placeholders where the names should be.
+**Attacker models (Vedant, 2 Oct 2026):** round 1: Opus 5. Round 2: Sonnet 5.5. Recorded in every red-team report.
 
 ## Why a second round
 

@@ -1,6 +1,6 @@
 {
  "label": "after the round-2 fixes and the timing rule: these attacks are no longer blind",
- "models": "round 1: not given by Vedant; round 2: not given by Vedant (asked twice; to be filled in)",
+ "models": "round 1: Opus 5; round 2: Sonnet 5.5 (as Vedant reported on 2 Oct 2026, after scoring; recorded here afterwards)",
  "frozen": {
   "tag": "redteam-round2-after-timing",
   "rule_version": "d7b1caf7a0b8",

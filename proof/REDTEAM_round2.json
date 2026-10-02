@@ -1,6 +1,6 @@
 {
  "label": "",
- "models": "round 1: not given by Vedant; round 2: not given by Vedant (asked twice; to be filled in)",
+ "models": "round 1: Opus 5; round 2: Sonnet 5.5 (as Vedant reported on 2 Oct 2026, after scoring; recorded here afterwards)",
  "frozen": {
   "tag": "redteam-round2-frozen",
   "rule_version": "cdf8b9b94a09",

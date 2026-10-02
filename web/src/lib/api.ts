@@ -199,7 +199,7 @@ function proposeFix(overlay: Overlay, audit: AuditEvent[], id: string, mechanism
 }
 
 // ---------- second checks on clears ----------
-/** Same as the case service's bt.second-check.large-amount and bt.second-check.rate. */
+/** Same as the case service's bt.second-check.large-amount and bt.second-check.rate: demo defaults, a bank sets its own. */
 export const LARGE_AMOUNT = 500_000;
 export const SECOND_CHECK_RATE = 0.1;
 const SECOND_KEY = "bt-demo-second-checks";
