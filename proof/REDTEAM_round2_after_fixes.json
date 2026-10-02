@@ -1,0 +1,1773 @@
+{
+ "label": "after the round-2 fixes: these attacks are no longer blind",
+ "models": "round 1: not given by Vedant; round 2: not given by Vedant (asked twice; to be filled in)",
+ "frozen": {
+  "tag": "redteam-round2-after-fixes",
+  "rule_version": "4f2503e6bfa4",
+  "code_version": "b8507e5",
+  "frozen_at": "2026-10-02",
+  "payer_rule": true,
+  "attacks_zip_sha256": "0f2e097224d16ce209f806dc8a5446b19c73de2bb55a8a012b4bada77ea88825"
+ },
+ "rule_version": "4f2503e6bfa4",
+ "code_version": "c2742b1",
+ "seeds": [
+  801,
+  802,
+  803,
+  804,
+  805
+ ],
+ "rows": [
+  {
+   "seed": 801,
+   "borrower_id": "B0062",
+   "attack": "fictitious_deferment",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 77387.89244384765,
+   "how": "20 loans that are really 60+ days late or charged off kept on the tape as current, eligible and deferred (peak $91,045); source_truth edited to match; gain = advance rate x peak balance of loans that should be ineligible",
+   "facility_limit": 1000000.0,
+   "gain_share": 0.07738789244384765,
+   "small": false,
+   "start_month": 5,
+   "servicer": true,
+   "history": false,
+   "outcome": "caught",
+   "verdict": "LIKELY_FRAUD",
+   "first_flag": 11,
+   "first_review": 9,
+   "findings": [
+    "TAPE_DRESSUP (medium)"
+   ]
+  },
+  {
+   "seed": 801,
+   "borrower_id": "B0055",
+   "attack": "fictitious_deferment",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 90673.2314086914,
+   "how": "25 loans that are really 60+ days late or charged off kept on the tape as current, eligible and deferred (peak $106,674); source_truth edited to match; gain = advance rate x peak balance of loans that should be ineligible",
+   "facility_limit": 1000000.0,
+   "gain_share": 0.0906732314086914,
+   "small": false,
+   "start_month": 5,
+   "servicer": true,
+   "history": false,
+   "outcome": "caught",
+   "verdict": "LIKELY_FRAUD",
+   "first_flag": 11,
+   "first_review": 5,
+   "findings": [
+    "TAPE_DRESSUP (medium)"
+   ]
+  },
+  {
+   "seed": 801,
+   "borrower_id": "B0096",
+   "attack": "ghost_invoices",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 3052000.0000000005,
+   "how": "209 invoices for sales that never happened, pledged in batches every 2 months to real customers; peak fake face value $3,590,588 still within 90 days of due; gain = advance rate x that peak",
+   "facility_limit": 21800000.0,
+   "gain_share": 0.14,
+   "small": false,
+   "start_month": 3,
+   "servicer": false,
+   "history": false,
+   "outcome": "sent to review",
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "first_flag": 12,
+   "first_review": 3,
+   "findings": [
+    "FAKE_INVOICES (low)"
+   ]
+  },
+  {
+   "seed": 801,
+   "borrower_id": "B0020",
+   "attack": "ghost_invoices",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 4074000.0000000005,
+   "how": "253 invoices for sales that never happened, pledged in batches every 2 months to real customers; peak fake face value $4,792,941 still within 90 days of due; gain = advance rate x that peak",
+   "facility_limit": 29100000.0,
+   "gain_share": 0.14,
+   "small": false,
+   "start_month": 3,
+   "servicer": false,
+   "history": false,
+   "outcome": "caught",
+   "verdict": "LIKELY_FRAUD",
+   "first_flag": 10,
+   "first_review": 3,
+   "findings": [
+    "FAKE_INVOICES (medium)"
+   ]
+  },
+  {
+   "seed": 801,
+   "borrower_id": "B0101",
+   "attack": "invoice_inflation",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 5310733.8727,
+   "how": "245 real invoices pledged for 60% more than the customer owes; gain per invoice = advance on the inflated amount minus what the customer actually pays, net of the honest advance",
+   "facility_limit": 37700000.0,
+   "gain_share": 0.14086827248541114,
+   "small": false,
+   "start_month": 3,
+   "servicer": false,
+   "history": false,
+   "outcome": "sent to review",
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "first_flag": null,
+   "first_review": 10,
+   "findings": [
+    "FAKE_INVOICES (low)"
+   ]
+  },
+  {
+   "seed": 801,
+   "borrower_id": "B0083",
+   "attack": "invoice_inflation",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 4911436.1242,
+   "how": "171 real invoices pledged for 60% more than the customer owes; gain per invoice = advance on the inflated amount minus what the customer actually pays, net of the honest advance",
+   "facility_limit": 34500000.0,
+   "gain_share": 0.14236046736811594,
+   "small": false,
+   "start_month": 3,
+   "servicer": false,
+   "history": false,
+   "outcome": "sent to review",
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "first_flag": null,
+   "first_review": 10,
+   "findings": [
+    "FAKE_INVOICES (low)",
+    "RELATED_SHELLS (low)"
+   ]
+  },
+  {
+   "seed": 801,
+   "borrower_id": "B0117",
+   "attack": "phantom_collateral",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 169693.2555770767,
+   "how": "7 fictitious loans ($199,639 at month 4) reported current and eligible on F0117A; gain = advance rate x fake balance",
+   "facility_limit": 1000000.0,
+   "gain_share": 0.16969325557707668,
+   "small": false,
+   "start_month": 4,
+   "servicer": false,
+   "history": false,
+   "outcome": "caught",
+   "verdict": "LIKELY_FRAUD",
+   "first_flag": 4,
+   "first_review": 0,
+   "findings": [
+    "TAPE_DRESSUP (medium)"
+   ]
+  },
+  {
+   "seed": 801,
+   "borrower_id": "B0070",
+   "attack": "phantom_collateral",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 1965453.7815333782,
+   "how": "7 fictitious loans ($2,312,299 at month 4) reported current and eligible on F0070A; gain = advance rate x fake balance",
+   "facility_limit": 11700000.0,
+   "gain_share": 0.16798750269516052,
+   "small": false,
+   "start_month": 4,
+   "servicer": false,
+   "history": false,
+   "outcome": "caught",
+   "verdict": "LIKELY_FRAUD",
+   "first_flag": 4,
+   "first_review": null,
+   "findings": [
+    "TAPE_DRESSUP (medium)"
+   ]
+  },
+  {
+   "seed": 801,
+   "borrower_id": "B0040",
+   "attack": "seasoned_phantoms",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 1251004.900175353,
+   "how": "6 fictitious loans ($1,971,754) given a payment history by 6 existing customers who are paid $424,986 first; gain = advance on fake balance minus all cash sent to the customers (conservative)",
+   "facility_limit": 10400000.0,
+   "gain_share": 0.12028893270916856,
+   "small": false,
+   "start_month": 16,
+   "servicer": false,
+   "history": false,
+   "outcome": "caught",
+   "verdict": "LIKELY_FRAUD",
+   "first_flag": 16,
+   "first_review": null,
+   "findings": [
+    "TAPE_DRESSUP (medium)"
+   ]
+  },
+  {
+   "seed": 801,
+   "borrower_id": "B0093",
+   "attack": "seasoned_phantoms",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 123706.279199694,
+   "how": "6 fictitious loans ($201,753) given a payment history by 6 existing customers who are paid $47,784 first; gain = advance on fake balance minus all cash sent to the customers (conservative)",
+   "facility_limit": 1000000.0,
+   "gain_share": 0.12370627919969401,
+   "small": false,
+   "start_month": 16,
+   "servicer": false,
+   "history": false,
+   "outcome": "caught",
+   "verdict": "LIKELY_FRAUD",
+   "first_flag": 16,
+   "first_review": null,
+   "findings": [
+    "TAPE_DRESSUP (medium)"
+   ]
+  },
+  {
+   "seed": 801,
+   "borrower_id": "B0085",
+   "attack": "shadow_repledge",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 173809.22436523438,
+   "how": "35 real loans ($204,481 at month 2) pledged twice under new asset ids and new VINs; gain = advance rate x duplicated balance",
+   "facility_limit": 1000000.0,
+   "gain_share": 0.17380922436523438,
+   "small": false,
+   "start_month": 2,
+   "servicer": false,
+   "history": false,
+   "outcome": "caught",
+   "verdict": "LIKELY_FRAUD",
+   "first_flag": 2,
+   "first_review": 0,
+   "findings": [
+    "TAPE_DRESSUP (high)",
+    "DISGUISED_RECEIPTS (low)"
+   ]
+  },
+  {
+   "seed": 801,
+   "borrower_id": "B0080",
+   "attack": "shadow_repledge",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 2386591.438720703,
+   "how": "126 real loans ($2,807,755 at month 2) pledged twice under new asset ids and new VINs; gain = advance rate x duplicated balance",
+   "facility_limit": 14000000.0,
+   "gain_share": 0.1704708170514788,
+   "small": false,
+   "start_month": 2,
+   "servicer": false,
+   "history": false,
+   "outcome": "caught",
+   "verdict": "LIKELY_FRAUD",
+   "first_flag": 2,
+   "first_review": 0,
+   "findings": [
+    "TAPE_DRESSUP (high)",
+    "DOUBLE_PLEDGE (low)",
+    "HIDDEN_DEBT (low)"
+   ]
+  },
+  {
+   "seed": 801,
+   "borrower_id": "B0097",
+   "attack": "shell_roundtrip",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 162476.49,
+   "how": "8 payments totalling $162,476 of undisclosed outside borrowing routed in through a backdated, nominee-officered affiliate E000604",
+   "facility_limit": 1000000.0,
+   "gain_share": 0.16247649,
+   "small": false,
+   "start_month": 6,
+   "servicer": false,
+   "history": true,
+   "outcome": "sent to review",
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "first_flag": null,
+   "first_review": 9,
+   "findings": [
+    "DISGUISED_RECEIPTS (low)",
+    "RELATED_SHELLS (low)"
+   ]
+  },
+  {
+   "seed": 801,
+   "borrower_id": "B0059",
+   "attack": "shell_roundtrip",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 156496.61,
+   "how": "8 payments totalling $156,497 of undisclosed outside borrowing routed in through a backdated, nominee-officered affiliate E000605",
+   "facility_limit": 1000000.0,
+   "gain_share": 0.15649660999999998,
+   "small": false,
+   "start_month": 6,
+   "servicer": false,
+   "history": true,
+   "outcome": "sent to review",
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "first_flag": null,
+   "first_review": 0,
+   "findings": [
+    "DISGUISED_RECEIPTS (low)",
+    "HIDDEN_DEBT (low)"
+   ]
+  },
+  {
+   "seed": 802,
+   "borrower_id": "B0061",
+   "attack": "fictitious_deferment",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 1984353.79375,
+   "how": "14 loans that are really 60+ days late or charged off kept on the tape as current, eligible and deferred (peak $2,334,534); source_truth edited to match; gain = advance rate x peak balance of loans that should be ineligible",
+   "facility_limit": 32500000.0,
+   "gain_share": 0.06105703980769231,
+   "small": false,
+   "start_month": 5,
+   "servicer": true,
+   "history": false,
+   "outcome": "caught",
+   "verdict": "LIKELY_FRAUD",
+   "first_flag": 23,
+   "first_review": 10,
+   "findings": [
+    "TAPE_DRESSUP (medium)"
+   ]
+  },
+  {
+   "seed": 802,
+   "borrower_id": "B0078",
+   "attack": "fictitious_deferment",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 161541.14053955078,
+   "how": "48 loans that are really 60+ days late or charged off kept on the tape as current, eligible and deferred (peak $190,048); source_truth edited to match; gain = advance rate x peak balance of loans that should be ineligible",
+   "facility_limit": 1000000.0,
+   "gain_share": 0.16154114053955076,
+   "small": false,
+   "start_month": 5,
+   "servicer": true,
+   "history": false,
+   "outcome": "caught",
+   "verdict": "LIKELY_FRAUD",
+   "first_flag": 11,
+   "first_review": 5,
+   "findings": [
+    "TAPE_DRESSUP (medium)"
+   ]
+  },
+  {
+   "seed": 802,
+   "borrower_id": "B0099",
+   "attack": "ghost_invoices",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 3374000.0000000005,
+   "how": "231 invoices for sales that never happened, pledged in batches every 2 months to real customers; peak fake face value $3,969,412 still within 90 days of due; gain = advance rate x that peak",
+   "facility_limit": 24100000.0,
+   "gain_share": 0.14,
+   "small": false,
+   "start_month": 3,
+   "servicer": false,
+   "history": false,
+   "outcome": "sent to review",
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "first_flag": 18,
+   "first_review": 2,
+   "findings": [
+    "FAKE_INVOICES (low)"
+   ]
+  },
+  {
+   "seed": 802,
+   "borrower_id": "B0090",
+   "attack": "ghost_invoices",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 2310000.0,
+   "how": "231 invoices for sales that never happened, pledged in batches every 2 months to real customers; peak fake face value $2,717,647 still within 90 days of due; gain = advance rate x that peak",
+   "facility_limit": 16500000.0,
+   "gain_share": 0.14,
+   "small": false,
+   "start_month": 3,
+   "servicer": false,
+   "history": false,
+   "outcome": "sent to review",
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "first_flag": 12,
+   "first_review": 3,
+   "findings": [
+    "FAKE_INVOICES (low)"
+   ]
+  },
+  {
+   "seed": 802,
+   "borrower_id": "B0053",
+   "attack": "invoice_inflation",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 1554573.2465999997,
+   "how": "54 real invoices pledged for 60% more than the customer owes; gain per invoice = advance on the inflated amount minus what the customer actually pays, net of the honest advance",
+   "facility_limit": 10500000.0,
+   "gain_share": 0.1480545949142857,
+   "small": false,
+   "start_month": 3,
+   "servicer": false,
+   "history": false,
+   "outcome": "sent to review",
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "first_flag": null,
+   "first_review": 10,
+   "findings": [
+    "FAKE_INVOICES (low)",
+    "FIN_MANIPULATION (low)"
+   ]
+  },
+  {
+   "seed": 802,
+   "borrower_id": "B0012",
+   "attack": "invoice_inflation",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 2451944.7884000014,
+   "how": "114 real invoices pledged for 60% more than the customer owes; gain per invoice = advance on the inflated amount minus what the customer actually pays, net of the honest advance",
+   "facility_limit": 17400000.0,
+   "gain_share": 0.14091636714942538,
+   "small": false,
+   "start_month": 3,
+   "servicer": false,
+   "history": false,
+   "outcome": "sent to review",
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "first_flag": null,
+   "first_review": 10,
+   "findings": [
+    "FAKE_INVOICES (low)"
+   ]
+  },
+  {
+   "seed": 802,
+   "borrower_id": "B0017",
+   "attack": "phantom_collateral",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 8916054.941090828,
+   "how": "7 fictitious loans ($10,489,476 at month 4) reported current and eligible on F0017A; gain = advance rate x fake balance",
+   "facility_limit": 53700000.0,
+   "gain_share": 0.16603454266463366,
+   "small": false,
+   "start_month": 4,
+   "servicer": false,
+   "history": false,
+   "outcome": "caught",
+   "verdict": "LIKELY_FRAUD",
+   "first_flag": 4,
+   "first_review": null,
+   "findings": [
+    "TAPE_DRESSUP (medium)"
+   ]
+  },
+  {
+   "seed": 802,
+   "borrower_id": "B0003",
+   "attack": "phantom_collateral",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 383291.1535934337,
+   "how": "7 fictitious loans ($450,931 at month 4) reported current and eligible on F0003A; gain = advance rate x fake balance",
+   "facility_limit": 2200000.0,
+   "gain_share": 0.17422325163337893,
+   "small": false,
+   "start_month": 4,
+   "servicer": false,
+   "history": false,
+   "outcome": "caught",
+   "verdict": "LIKELY_FRAUD",
+   "first_flag": 4,
+   "first_review": null,
+   "findings": [
+    "TAPE_DRESSUP (medium)"
+   ]
+  },
+  {
+   "seed": 802,
+   "borrower_id": "B0087",
+   "attack": "seasoned_phantoms",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 605070.3657612263,
+   "how": "6 fictitious loans ($966,279) given a payment history by 6 existing customers who are paid $216,266 first; gain = advance on fake balance minus all cash sent to the customers (conservative)",
+   "facility_limit": 4900000.0,
+   "gain_share": 0.12348374811453597,
+   "small": false,
+   "start_month": 16,
+   "servicer": false,
+   "history": false,
+   "outcome": "caught",
+   "verdict": "LIKELY_FRAUD",
+   "first_flag": 16,
+   "first_review": null,
+   "findings": [
+    "TAPE_DRESSUP (medium)"
+   ]
+  },
+  {
+   "seed": 802,
+   "borrower_id": "B0069",
+   "attack": "seasoned_phantoms",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 121665.25326435934,
+   "how": "6 fictitious loans ($197,047) given a payment history by 6 existing customers who are paid $45,824 first; gain = advance on fake balance minus all cash sent to the customers (conservative)",
+   "facility_limit": 1000000.0,
+   "gain_share": 0.12166525326435934,
+   "small": false,
+   "start_month": 16,
+   "servicer": false,
+   "history": false,
+   "outcome": "caught",
+   "verdict": "LIKELY_FRAUD",
+   "first_flag": 16,
+   "first_review": null,
+   "findings": [
+    "TAPE_DRESSUP (medium)"
+   ]
+  },
+  {
+   "seed": 802,
+   "borrower_id": "B0046",
+   "attack": "shadow_repledge",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 14764888.323828125,
+   "how": "73 real loans ($17,370,457 at month 2) pledged twice under new asset ids and new VINs; gain = advance rate x duplicated balance",
+   "facility_limit": 86800000.0,
+   "gain_share": 0.17010240004410282,
+   "small": false,
+   "start_month": 2,
+   "servicer": false,
+   "history": false,
+   "outcome": "caught",
+   "verdict": "LIKELY_FRAUD",
+   "first_flag": 2,
+   "first_review": null,
+   "findings": [
+    "TAPE_DRESSUP (high)"
+   ]
+  },
+  {
+   "seed": 802,
+   "borrower_id": "B0059",
+   "attack": "shadow_repledge",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 3369950.7153320312,
+   "how": "124 real loans ($3,964,648 at month 2) pledged twice under new asset ids and new VINs; gain = advance rate x duplicated balance",
+   "facility_limit": 19700000.0,
+   "gain_share": 0.17106348808792038,
+   "small": false,
+   "start_month": 2,
+   "servicer": false,
+   "history": false,
+   "outcome": "caught",
+   "verdict": "LIKELY_FRAUD",
+   "first_flag": 2,
+   "first_review": null,
+   "findings": [
+    "TAPE_DRESSUP (high)"
+   ]
+  },
+  {
+   "seed": 802,
+   "borrower_id": "B0011",
+   "attack": "shell_roundtrip",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 4119497.59,
+   "how": "8 payments totalling $4,119,498 of undisclosed outside borrowing routed in through a backdated, nominee-officered affiliate E000599",
+   "facility_limit": 25400000.0,
+   "gain_share": 0.16218494448818896,
+   "small": false,
+   "start_month": 6,
+   "servicer": false,
+   "history": true,
+   "outcome": "sent to review",
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "first_flag": null,
+   "first_review": 0,
+   "findings": [
+    "DISGUISED_RECEIPTS (low)"
+   ]
+  },
+  {
+   "seed": 802,
+   "borrower_id": "B0013",
+   "attack": "shell_roundtrip",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 162004.08000000002,
+   "how": "8 payments totalling $162,004 of undisclosed outside borrowing routed in through a backdated, nominee-officered affiliate E000600",
+   "facility_limit": 1000000.0,
+   "gain_share": 0.16200408000000002,
+   "small": false,
+   "start_month": 6,
+   "servicer": false,
+   "history": true,
+   "outcome": "sent to review",
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "first_flag": null,
+   "first_review": 0,
+   "findings": [
+    "DISGUISED_RECEIPTS (low)"
+   ]
+  },
+  {
+   "seed": 803,
+   "borrower_id": "B0069",
+   "attack": "fictitious_deferment",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 632044.8776367187,
+   "how": "42 loans that are really 60+ days late or charged off kept on the tape as current, eligible and deferred (peak $743,582); source_truth edited to match; gain = advance rate x peak balance of loans that should be ineligible",
+   "facility_limit": 6900000.0,
+   "gain_share": 0.09160070690387227,
+   "small": false,
+   "start_month": 5,
+   "servicer": true,
+   "history": false,
+   "outcome": "caught",
+   "verdict": "LIKELY_FRAUD",
+   "first_flag": 14,
+   "first_review": 10,
+   "findings": [
+    "TAPE_DRESSUP (high)"
+   ]
+  },
+  {
+   "seed": 803,
+   "borrower_id": "B0034",
+   "attack": "fictitious_deferment",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 1670827.90703125,
+   "how": "14 loans that are really 60+ days late or charged off kept on the tape as current, eligible and deferred (peak $1,965,680); source_truth edited to match; gain = advance rate x peak balance of loans that should be ineligible",
+   "facility_limit": 24200000.0,
+   "gain_share": 0.06904247549715908,
+   "small": false,
+   "start_month": 5,
+   "servicer": true,
+   "history": false,
+   "outcome": "sent to review",
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "first_flag": null,
+   "first_review": 10,
+   "findings": [
+    "TAPE_DRESSUP (low)"
+   ]
+  },
+  {
+   "seed": 803,
+   "borrower_id": "B0083",
+   "attack": "ghost_invoices",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 4368000.0,
+   "how": "220 invoices for sales that never happened, pledged in batches every 2 months to real customers; peak fake face value $5,138,824 still within 90 days of due; gain = advance rate x that peak",
+   "facility_limit": 31200000.0,
+   "gain_share": 0.14,
+   "small": false,
+   "start_month": 3,
+   "servicer": false,
+   "history": false,
+   "outcome": "sent to review",
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "first_flag": 12,
+   "first_review": 5,
+   "findings": [
+    "FAKE_INVOICES (low)"
+   ]
+  },
+  {
+   "seed": 803,
+   "borrower_id": "B0017",
+   "attack": "ghost_invoices",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 5320000.000000001,
+   "how": "286 invoices for sales that never happened, pledged in batches every 2 months to real customers; peak fake face value $6,258,824 still within 90 days of due; gain = advance rate x that peak",
+   "facility_limit": 38000000.0,
+   "gain_share": 0.14,
+   "small": false,
+   "start_month": 3,
+   "servicer": false,
+   "history": false,
+   "outcome": "sent to review",
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "first_flag": 11,
+   "first_review": 3,
+   "findings": [
+    "FAKE_INVOICES (low)"
+   ]
+  },
+  {
+   "seed": 803,
+   "borrower_id": "B0005",
+   "attack": "invoice_inflation",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 3053539.8525999994,
+   "how": "126 real invoices pledged for 60% more than the customer owes; gain per invoice = advance on the inflated amount minus what the customer actually pays, net of the honest advance",
+   "facility_limit": 21800000.0,
+   "gain_share": 0.14007063544036694,
+   "small": false,
+   "start_month": 3,
+   "servicer": false,
+   "history": false,
+   "outcome": "sent to review",
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "first_flag": null,
+   "first_review": 10,
+   "findings": [
+    "FAKE_INVOICES (low)"
+   ]
+  },
+  {
+   "seed": 803,
+   "borrower_id": "B0007",
+   "attack": "invoice_inflation",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 1936522.697000001,
+   "how": "85 real invoices pledged for 60% more than the customer owes; gain per invoice = advance on the inflated amount minus what the customer actually pays, net of the honest advance",
+   "facility_limit": 13800000.0,
+   "gain_share": 0.14032773166666673,
+   "small": false,
+   "start_month": 3,
+   "servicer": false,
+   "history": false,
+   "outcome": "sent to review",
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "first_flag": null,
+   "first_review": 0,
+   "findings": [
+    "FAKE_INVOICES (low)",
+    "HIDDEN_DEBT (low)"
+   ]
+  },
+  {
+   "seed": 803,
+   "borrower_id": "B0001",
+   "attack": "phantom_collateral",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 174462.50281098814,
+   "how": "7 fictitious loans ($205,250 at month 4) reported current and eligible on F0001A; gain = advance rate x fake balance",
+   "facility_limit": 1000000.0,
+   "gain_share": 0.17446250281098813,
+   "small": false,
+   "start_month": 4,
+   "servicer": false,
+   "history": false,
+   "outcome": "caught",
+   "verdict": "LIKELY_FRAUD",
+   "first_flag": 4,
+   "first_review": null,
+   "findings": [
+    "TAPE_DRESSUP (medium)"
+   ]
+  },
+  {
+   "seed": 803,
+   "borrower_id": "B0028",
+   "attack": "phantom_collateral",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 1693537.5198723048,
+   "how": "7 fictitious loans ($1,992,397 at month 4) reported current and eligible on F0028A; gain = advance rate x fake balance",
+   "facility_limit": 9700000.0,
+   "gain_share": 0.17459149689405204,
+   "small": false,
+   "start_month": 4,
+   "servicer": false,
+   "history": false,
+   "outcome": "caught",
+   "verdict": "LIKELY_FRAUD",
+   "first_flag": 4,
+   "first_review": null,
+   "findings": [
+    "TAPE_DRESSUP (medium)"
+   ]
+  },
+  {
+   "seed": 803,
+   "borrower_id": "B0031",
+   "attack": "seasoned_phantoms",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 123691.911317749,
+   "how": "6 fictitious loans ($201,508) given a payment history by 6 existing customers who are paid $47,589 first; gain = advance on fake balance minus all cash sent to the customers (conservative)",
+   "facility_limit": 1000000.0,
+   "gain_share": 0.12369191131774901,
+   "small": false,
+   "start_month": 16,
+   "servicer": false,
+   "history": false,
+   "outcome": "caught",
+   "verdict": "LIKELY_FRAUD",
+   "first_flag": 16,
+   "first_review": null,
+   "findings": [
+    "TAPE_DRESSUP (medium)"
+   ]
+  },
+  {
+   "seed": 803,
+   "borrower_id": "B0038",
+   "attack": "seasoned_phantoms",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 572547.5168972737,
+   "how": "6 fictitious loans ($915,766) given a payment history by 6 existing customers who are paid $205,854 first; gain = advance on fake balance minus all cash sent to the customers (conservative)",
+   "facility_limit": 4800000.0,
+   "gain_share": 0.11928073268693203,
+   "small": false,
+   "start_month": 16,
+   "servicer": false,
+   "history": false,
+   "outcome": "caught",
+   "verdict": "LIKELY_FRAUD",
+   "first_flag": 16,
+   "first_review": 0,
+   "findings": [
+    "TAPE_DRESSUP (medium)"
+   ]
+  },
+  {
+   "seed": 803,
+   "borrower_id": "B0010",
+   "attack": "shadow_repledge",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 726549.6780761719,
+   "how": "33 real loans ($854,764 at month 2) pledged twice under new asset ids and new VINs; gain = advance rate x duplicated balance",
+   "facility_limit": 4200000.0,
+   "gain_share": 0.17298801858956475,
+   "small": false,
+   "start_month": 2,
+   "servicer": false,
+   "history": false,
+   "outcome": "caught",
+   "verdict": "LIKELY_FRAUD",
+   "first_flag": 2,
+   "first_review": null,
+   "findings": [
+    "TAPE_DRESSUP (high)"
+   ]
+  },
+  {
+   "seed": 803,
+   "borrower_id": "B0049",
+   "attack": "shadow_repledge",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 172092.8346801758,
+   "how": "32 real loans ($202,462 at month 2) pledged twice under new asset ids and new VINs; gain = advance rate x duplicated balance",
+   "facility_limit": 1000000.0,
+   "gain_share": 0.17209283468017578,
+   "small": false,
+   "start_month": 2,
+   "servicer": false,
+   "history": false,
+   "outcome": "caught",
+   "verdict": "LIKELY_FRAUD",
+   "first_flag": 2,
+   "first_review": null,
+   "findings": [
+    "TAPE_DRESSUP (high)"
+   ]
+  },
+  {
+   "seed": 803,
+   "borrower_id": "B0044",
+   "attack": "shell_roundtrip",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 4372670.05,
+   "how": "8 payments totalling $4,372,670 of undisclosed outside borrowing routed in through a backdated, nominee-officered affiliate E000597",
+   "facility_limit": 27100000.0,
+   "gain_share": 0.16135313837638376,
+   "small": false,
+   "start_month": 6,
+   "servicer": false,
+   "history": true,
+   "outcome": "sent to review",
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "first_flag": null,
+   "first_review": 0,
+   "findings": [
+    "DISGUISED_RECEIPTS (low)"
+   ]
+  },
+  {
+   "seed": 803,
+   "borrower_id": "B0052",
+   "attack": "shell_roundtrip",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 4453746.07,
+   "how": "8 payments totalling $4,453,746 of undisclosed outside borrowing routed in through a backdated, nominee-officered affiliate E000598",
+   "facility_limit": 27600000.0,
+   "gain_share": 0.16136761123188406,
+   "small": false,
+   "start_month": 6,
+   "servicer": false,
+   "history": true,
+   "outcome": "sent to review",
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "first_flag": null,
+   "first_review": 6,
+   "findings": [
+    "DISGUISED_RECEIPTS (low)",
+    "FIN_MANIPULATION (low)"
+   ]
+  },
+  {
+   "seed": 804,
+   "borrower_id": "B0049",
+   "attack": "fictitious_deferment",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 2764809.708984375,
+   "how": "17 loans that are really 60+ days late or charged off kept on the tape as current, eligible and deferred (peak $3,252,717); source_truth edited to match; gain = advance rate x peak balance of loans that should be ineligible",
+   "facility_limit": 46600000.0,
+   "gain_share": 0.059330680450308475,
+   "small": false,
+   "start_month": 5,
+   "servicer": true,
+   "history": false,
+   "outcome": "sent to review",
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "first_flag": null,
+   "first_review": 12,
+   "findings": [
+    "TAPE_DRESSUP (low)"
+   ]
+  },
+  {
+   "seed": 804,
+   "borrower_id": "B0092",
+   "attack": "fictitious_deferment",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 1451840.336816406,
+   "how": "126 loans that are really 60+ days late or charged off kept on the tape as current, eligible and deferred (peak $1,708,047); source_truth edited to match; gain = advance rate x peak balance of loans that should be ineligible",
+   "facility_limit": 6900000.0,
+   "gain_share": 0.21041164301687046,
+   "small": false,
+   "start_month": 5,
+   "servicer": true,
+   "history": false,
+   "outcome": "caught",
+   "verdict": "LIKELY_FRAUD",
+   "first_flag": 9,
+   "first_review": 5,
+   "findings": [
+    "TAPE_DRESSUP (high)"
+   ]
+  },
+  {
+   "seed": 804,
+   "borrower_id": "B0033",
+   "attack": "ghost_invoices",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 4200000.0,
+   "how": "352 invoices for sales that never happened, pledged in batches every 2 months to real customers; peak fake face value $4,941,176 still within 90 days of due; gain = advance rate x that peak",
+   "facility_limit": 30000000.0,
+   "gain_share": 0.14,
+   "small": false,
+   "start_month": 3,
+   "servicer": false,
+   "history": false,
+   "outcome": "sent to review",
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "first_flag": 12,
+   "first_review": 0,
+   "findings": [
+    "FAKE_INVOICES (low)",
+    "FIN_MANIPULATION (low)",
+    "HIDDEN_DEBT (low)"
+   ]
+  },
+  {
+   "seed": 804,
+   "borrower_id": "B0076",
+   "attack": "ghost_invoices",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 4788000.0,
+   "how": "330 invoices for sales that never happened, pledged in batches every 2 months to real customers; peak fake face value $5,632,941 still within 90 days of due; gain = advance rate x that peak",
+   "facility_limit": 34200000.0,
+   "gain_share": 0.14,
+   "small": false,
+   "start_month": 3,
+   "servicer": false,
+   "history": false,
+   "outcome": "sent to review",
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "first_flag": 12,
+   "first_review": 0,
+   "findings": [
+    "FAKE_INVOICES (low)",
+    "FIN_MANIPULATION (low)",
+    "HIDDEN_DEBT (low)"
+   ]
+  },
+  {
+   "seed": 804,
+   "borrower_id": "B0001",
+   "attack": "invoice_inflation",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 2510300.9822,
+   "how": "67 real invoices pledged for 60% more than the customer owes; gain per invoice = advance on the inflated amount minus what the customer actually pays, net of the honest advance",
+   "facility_limit": 17900000.0,
+   "gain_share": 0.14024027833519553,
+   "small": false,
+   "start_month": 3,
+   "servicer": false,
+   "history": false,
+   "outcome": "sent to review",
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "first_flag": null,
+   "first_review": 0,
+   "findings": [
+    "FAKE_INVOICES (low)",
+    "HIDDEN_DEBT (low)"
+   ]
+  },
+  {
+   "seed": 804,
+   "borrower_id": "B0106",
+   "attack": "invoice_inflation",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 3771694.1041000015,
+   "how": "166 real invoices pledged for 60% more than the customer owes; gain per invoice = advance on the inflated amount minus what the customer actually pays, net of the honest advance",
+   "facility_limit": 26500000.0,
+   "gain_share": 0.14232807940000006,
+   "small": false,
+   "start_month": 3,
+   "servicer": false,
+   "history": false,
+   "outcome": "sent to review",
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "first_flag": null,
+   "first_review": 0,
+   "findings": [
+    "FAKE_INVOICES (low)",
+    "HIDDEN_DEBT (low)"
+   ]
+  },
+  {
+   "seed": 804,
+   "borrower_id": "B0065",
+   "attack": "phantom_collateral",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 285627.13336439885,
+   "how": "7 fictitious loans ($336,032 at month 4) reported current and eligible on F0065A; gain = advance rate x fake balance",
+   "facility_limit": 1700000.0,
+   "gain_share": 0.16801596080258754,
+   "small": false,
+   "start_month": 4,
+   "servicer": false,
+   "history": false,
+   "outcome": "caught",
+   "verdict": "LIKELY_FRAUD",
+   "first_flag": 4,
+   "first_review": 0,
+   "findings": [
+    "TAPE_DRESSUP (medium)",
+    "DISGUISED_RECEIPTS (low)"
+   ]
+  },
+  {
+   "seed": 804,
+   "borrower_id": "B0004",
+   "attack": "phantom_collateral",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 356399.6808176105,
+   "how": "7 fictitious loans ($419,294 at month 4) reported current and eligible on F0004A; gain = advance rate x fake balance",
+   "facility_limit": 2100000.0,
+   "gain_share": 0.1697141337226717,
+   "small": false,
+   "start_month": 4,
+   "servicer": false,
+   "history": false,
+   "outcome": "caught",
+   "verdict": "LIKELY_FRAUD",
+   "first_flag": 4,
+   "first_review": 0,
+   "findings": [
+    "TAPE_DRESSUP (medium)",
+    "HIDDEN_DEBT (low)"
+   ]
+  },
+  {
+   "seed": 804,
+   "borrower_id": "B0022",
+   "attack": "seasoned_phantoms",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 924616.4752327517,
+   "how": "6 fictitious loans ($1,454,786) given a payment history by 6 existing customers who are paid $311,952 first; gain = advance on fake balance minus all cash sent to the customers (conservative)",
+   "facility_limit": 7600000.0,
+   "gain_share": 0.12166006253062522,
+   "small": false,
+   "start_month": 16,
+   "servicer": false,
+   "history": false,
+   "outcome": "caught",
+   "verdict": "LIKELY_FRAUD",
+   "first_flag": 16,
+   "first_review": null,
+   "findings": [
+    "TAPE_DRESSUP (medium)"
+   ]
+  },
+  {
+   "seed": 804,
+   "borrower_id": "B0085",
+   "attack": "seasoned_phantoms",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 2123137.8245381555,
+   "how": "6 fictitious loans ($3,784,564) given a payment history by 6 existing customers who are paid $1,093,742 first; gain = advance on fake balance minus all cash sent to the customers (conservative)",
+   "facility_limit": 16800000.0,
+   "gain_share": 0.1263772514606045,
+   "small": false,
+   "start_month": 16,
+   "servicer": false,
+   "history": false,
+   "outcome": "caught",
+   "verdict": "LIKELY_FRAUD",
+   "first_flag": 16,
+   "first_review": null,
+   "findings": [
+    "TAPE_DRESSUP (medium)"
+   ]
+  },
+  {
+   "seed": 804,
+   "borrower_id": "B0027",
+   "attack": "shadow_repledge",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 290321.9296081543,
+   "how": "52 real loans ($341,555 at month 2) pledged twice under new asset ids and new VINs; gain = advance rate x duplicated balance",
+   "facility_limit": 1700000.0,
+   "gain_share": 0.17077760565185546,
+   "small": false,
+   "start_month": 2,
+   "servicer": false,
+   "history": false,
+   "outcome": "caught",
+   "verdict": "LIKELY_FRAUD",
+   "first_flag": 2,
+   "first_review": 0,
+   "findings": [
+    "TAPE_DRESSUP (high)",
+    "DISGUISED_RECEIPTS (low)"
+   ]
+  },
+  {
+   "seed": 804,
+   "borrower_id": "B0103",
+   "attack": "shadow_repledge",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 460861.4032958984,
+   "how": "21 real loans ($542,190 at month 2) pledged twice under new asset ids and new VINs; gain = advance rate x duplicated balance",
+   "facility_limit": 2700000.0,
+   "gain_share": 0.17068940862811052,
+   "small": false,
+   "start_month": 2,
+   "servicer": false,
+   "history": false,
+   "outcome": "caught",
+   "verdict": "LIKELY_FRAUD",
+   "first_flag": 2,
+   "first_review": null,
+   "findings": [
+    "TAPE_DRESSUP (high)"
+   ]
+  },
+  {
+   "seed": 804,
+   "borrower_id": "B0079",
+   "attack": "shell_roundtrip",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 786834.03,
+   "how": "8 payments totalling $786,834 of undisclosed outside borrowing routed in through a backdated, nominee-officered affiliate E000596",
+   "facility_limit": 5000000.0,
+   "gain_share": 0.157366806,
+   "small": false,
+   "start_month": 6,
+   "servicer": false,
+   "history": true,
+   "outcome": "sent to review",
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "first_flag": null,
+   "first_review": 0,
+   "findings": [
+    "DISGUISED_RECEIPTS (low)"
+   ]
+  },
+  {
+   "seed": 804,
+   "borrower_id": "B0118",
+   "attack": "shell_roundtrip",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 609540.96,
+   "how": "8 payments totalling $609,541 of undisclosed outside borrowing routed in through a backdated, nominee-officered affiliate E000597",
+   "facility_limit": 3800000.0,
+   "gain_share": 0.16040551578947368,
+   "small": false,
+   "start_month": 6,
+   "servicer": false,
+   "history": true,
+   "outcome": "sent to review",
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "first_flag": null,
+   "first_review": 0,
+   "findings": [
+    "DISGUISED_RECEIPTS (low)",
+    "HIDDEN_DEBT (low)"
+   ]
+  },
+  {
+   "seed": 805,
+   "borrower_id": "B0002",
+   "attack": "fictitious_deferment",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 530075.6403320312,
+   "how": "51 loans that are really 60+ days late or charged off kept on the tape as current, eligible and deferred (peak $623,618); source_truth edited to match; gain = advance rate x peak balance of loans that should be ineligible",
+   "facility_limit": 3200000.0,
+   "gain_share": 0.16564863760375975,
+   "small": false,
+   "start_month": 5,
+   "servicer": true,
+   "history": false,
+   "outcome": "caught",
+   "verdict": "LIKELY_FRAUD",
+   "first_flag": 10,
+   "first_review": 5,
+   "findings": [
+    "TAPE_DRESSUP (high)"
+   ]
+  },
+  {
+   "seed": 805,
+   "borrower_id": "B0011",
+   "attack": "fictitious_deferment",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 2230239.5330322264,
+   "how": "148 loans that are really 60+ days late or charged off kept on the tape as current, eligible and deferred (peak $2,623,811); source_truth edited to match; gain = advance rate x peak balance of loans that should be ineligible",
+   "facility_limit": 21900000.0,
+   "gain_share": 0.10183742159964504,
+   "small": false,
+   "start_month": 5,
+   "servicer": true,
+   "history": false,
+   "outcome": "caught",
+   "verdict": "LIKELY_FRAUD",
+   "first_flag": 9,
+   "first_review": 5,
+   "findings": [
+    "TAPE_DRESSUP (high)"
+   ]
+  },
+  {
+   "seed": 805,
+   "borrower_id": "B0022",
+   "attack": "ghost_invoices",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 2604000.0000000005,
+   "how": "165 invoices for sales that never happened, pledged in batches every 2 months to real customers; peak fake face value $3,063,529 still within 90 days of due; gain = advance rate x that peak",
+   "facility_limit": 18600000.0,
+   "gain_share": 0.14,
+   "small": false,
+   "start_month": 3,
+   "servicer": false,
+   "history": false,
+   "outcome": "sent to review",
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "first_flag": 14,
+   "first_review": 5,
+   "findings": [
+    "FAKE_INVOICES (low)"
+   ]
+  },
+  {
+   "seed": 805,
+   "borrower_id": "B0108",
+   "attack": "ghost_invoices",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 2716000.0000000005,
+   "how": "176 invoices for sales that never happened, pledged in batches every 2 months to real customers; peak fake face value $3,195,294 still within 90 days of due; gain = advance rate x that peak",
+   "facility_limit": 19400000.0,
+   "gain_share": 0.14,
+   "small": false,
+   "start_month": 3,
+   "servicer": false,
+   "history": false,
+   "outcome": "sent to review",
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "first_flag": 12,
+   "first_review": 5,
+   "findings": [
+    "FAKE_INVOICES (low)"
+   ]
+  },
+  {
+   "seed": 805,
+   "borrower_id": "B0097",
+   "attack": "invoice_inflation",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 4956817.737300003,
+   "how": "185 real invoices pledged for 60% more than the customer owes; gain per invoice = advance on the inflated amount minus what the customer actually pays, net of the honest advance",
+   "facility_limit": 35100000.0,
+   "gain_share": 0.14121987855555565,
+   "small": false,
+   "start_month": 3,
+   "servicer": false,
+   "history": false,
+   "outcome": "sent to review",
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "first_flag": null,
+   "first_review": 10,
+   "findings": [
+    "FAKE_INVOICES (low)",
+    "RELATED_SHELLS (low)"
+   ]
+  },
+  {
+   "seed": 805,
+   "borrower_id": "B0074",
+   "attack": "invoice_inflation",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 3482015.2498999997,
+   "how": "178 real invoices pledged for 60% more than the customer owes; gain per invoice = advance on the inflated amount minus what the customer actually pays, net of the honest advance",
+   "facility_limit": 24800000.0,
+   "gain_share": 0.14040384072177417,
+   "small": false,
+   "start_month": 3,
+   "servicer": false,
+   "history": false,
+   "outcome": "sent to review",
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "first_flag": null,
+   "first_review": 10,
+   "findings": [
+    "FAKE_INVOICES (low)"
+   ]
+  },
+  {
+   "seed": 805,
+   "borrower_id": "B0041",
+   "attack": "phantom_collateral",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 2420030.1310631465,
+   "how": "7 fictitious loans ($2,847,094 at month 4) reported current and eligible on F0041A; gain = advance rate x fake balance",
+   "facility_limit": 14000000.0,
+   "gain_share": 0.17285929507593903,
+   "small": false,
+   "start_month": 4,
+   "servicer": false,
+   "history": false,
+   "outcome": "caught",
+   "verdict": "LIKELY_FRAUD",
+   "first_flag": 4,
+   "first_review": null,
+   "findings": [
+    "TAPE_DRESSUP (high)"
+   ]
+  },
+  {
+   "seed": 805,
+   "borrower_id": "B0063",
+   "attack": "phantom_collateral",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 12711018.718008779,
+   "how": "7 fictitious loans ($14,954,140 at month 4) reported current and eligible on F0063A; gain = advance rate x fake balance",
+   "facility_limit": 73200000.0,
+   "gain_share": 0.173647796694109,
+   "small": false,
+   "start_month": 4,
+   "servicer": false,
+   "history": false,
+   "outcome": "caught",
+   "verdict": "LIKELY_FRAUD",
+   "first_flag": 4,
+   "first_review": 3,
+   "findings": [
+    "TAPE_DRESSUP (medium)"
+   ]
+  },
+  {
+   "seed": 805,
+   "borrower_id": "B0087",
+   "attack": "seasoned_phantoms",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 810487.7101827222,
+   "how": "6 fictitious loans ($1,273,918) given a payment history by 6 existing customers who are paid $272,342 first; gain = advance on fake balance minus all cash sent to the customers (conservative)",
+   "facility_limit": 6800000.0,
+   "gain_share": 0.11918936914451797,
+   "small": false,
+   "start_month": 16,
+   "servicer": false,
+   "history": false,
+   "outcome": "caught",
+   "verdict": "LIKELY_FRAUD",
+   "first_flag": 16,
+   "first_review": 15,
+   "findings": [
+    "TAPE_DRESSUP (medium)"
+   ]
+  },
+  {
+   "seed": 805,
+   "borrower_id": "B0006",
+   "attack": "seasoned_phantoms",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 1529626.1075428273,
+   "how": "6 fictitious loans ($2,744,039) given a payment history by 6 existing customers who are paid $802,807 first; gain = advance on fake balance minus all cash sent to the customers (conservative)",
+   "facility_limit": 12300000.0,
+   "gain_share": 0.12435984614169328,
+   "small": false,
+   "start_month": 16,
+   "servicer": false,
+   "history": false,
+   "outcome": "caught",
+   "verdict": "LIKELY_FRAUD",
+   "first_flag": 16,
+   "first_review": null,
+   "findings": [
+    "TAPE_DRESSUP (medium)"
+   ]
+  },
+  {
+   "seed": 805,
+   "borrower_id": "B0119",
+   "attack": "shadow_repledge",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 5530633.985937499,
+   "how": "25 real loans ($6,506,628 at month 2) pledged twice under new asset ids and new VINs; gain = advance rate x duplicated balance",
+   "facility_limit": 32300000.0,
+   "gain_share": 0.17122705838815788,
+   "small": false,
+   "start_month": 2,
+   "servicer": false,
+   "history": false,
+   "outcome": "caught",
+   "verdict": "LIKELY_FRAUD",
+   "first_flag": 2,
+   "first_review": 5,
+   "findings": [
+    "TAPE_DRESSUP (high)"
+   ]
+  },
+  {
+   "seed": 805,
+   "borrower_id": "B0081",
+   "attack": "shadow_repledge",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 6132796.451171875,
+   "how": "31 real loans ($7,215,055 at month 2) pledged twice under new asset ids and new VINs; gain = advance rate x duplicated balance",
+   "facility_limit": 36000000.0,
+   "gain_share": 0.17035545697699653,
+   "small": false,
+   "start_month": 2,
+   "servicer": false,
+   "history": false,
+   "outcome": "caught",
+   "verdict": "LIKELY_FRAUD",
+   "first_flag": 2,
+   "first_review": 16,
+   "findings": [
+    "TAPE_DRESSUP (high)",
+    "FIN_MANIPULATION (low)"
+   ]
+  },
+  {
+   "seed": 805,
+   "borrower_id": "B0109",
+   "attack": "shell_roundtrip",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 3061801.4699999997,
+   "how": "8 payments totalling $3,061,801 of undisclosed outside borrowing routed in through a backdated, nominee-officered affiliate E000605",
+   "facility_limit": 19700000.0,
+   "gain_share": 0.15542139441624364,
+   "small": false,
+   "start_month": 6,
+   "servicer": false,
+   "history": true,
+   "outcome": "sent to review",
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "first_flag": null,
+   "first_review": 9,
+   "findings": [
+    "DISGUISED_RECEIPTS (low)"
+   ]
+  },
+  {
+   "seed": 805,
+   "borrower_id": "B0113",
+   "attack": "shell_roundtrip",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 2615862.78,
+   "how": "8 payments totalling $2,615,863 of undisclosed outside borrowing routed in through a backdated, nominee-officered affiliate E000606",
+   "facility_limit": 16500000.0,
+   "gain_share": 0.15853713818181817,
+   "small": false,
+   "start_month": 6,
+   "servicer": false,
+   "history": true,
+   "outcome": "sent to review",
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "first_flag": null,
+   "first_review": 6,
+   "findings": [
+    "DISGUISED_RECEIPTS (low)"
+   ]
+  }
+ ],
+ "honest": {
+  "n": 280,
+  "flagged_end": 1,
+  "flagged_ever": 1,
+  "review_per_100": 31.8
+ },
+ "original_frauds": {
+  "n": 250,
+  "caught": 249
+ },
+ "attacks_leak_scan": {
+  "files": 28,
+  "hits": [
+   {
+    "file": "attacks/fictitious_deferment/plant.py",
+    "where": "char 2813",
+    "term": "DEFERMENT_PROGRAM",
+    "context": "d[\"borrower_id\"] == borrower_id and d[\"kind\"] == \"deferment_program\" for d in disc):         disc.append({\"borrower_i"
+   },
+   {
+    "file": "attacks/fictitious_deferment/plant.py",
+    "where": "char 2906",
+    "term": "DEFERMENT_PROGRAM",
+    "context": "disc.append({\"borrower_id\": borrower_id, \"kind\": \"deferment_program\", \"counterparty_entity_id\": None,                "
+   }
+  ],
+  "numbers": [
+   {
+    "file": "attacks/fictitious_deferment/README.md",
+    "number": "60",
+    "context": "tious_deferment  **Story.** Loans that are really 60+ days late, or already charged off, are kept in t"
+   },
+   {
+    "file": "attacks/fictitious_deferment/plant.py",
+    "number": "2",
+    "context": " bad = (s is not None and s[\"dpd_bucket_true\"] >= 2) or co_month is not None             if not bad: "
+   },
+   {
+    "file": "attacks/fictitious_deferment/plant.py",
+    "number": "60",
+    "context": "         \"how\": f\"{n_loans} loans that are really 60+ days late or charged off kept on the tape as cur"
+   },
+   {
+    "file": "attacks/ghost_invoices/README.md",
+    "number": "3",
+    "context": "_invoices  **Story.** Every two months from month 3 the borrower pledges a batch of invoices for sale"
+   },
+   {
+    "file": "attacks/ghost_invoices/plant.py",
+    "number": "2",
+    "context": "TORY = False  TARGET_FRACTION = 0.14 ROLL_EVERY = 2          # a new batch of ghosts every 2 months A"
+   },
+   {
+    "file": "attacks/ghost_invoices/plant.py",
+    "number": "2",
+    "context": "_EVERY = 2          # a new batch of ghosts every 2 months AGE_OUT_DAYS = 90       # my assumption: a"
+   },
+   {
+    "file": "attacks/ghost_invoices/plant.py",
+    "number": "2",
+    "context": "rng.choice([30, 45, 60]), \"w\": rng.uniform(0.8, 1.2)})      def outstanding(month):         # days me"
+   },
+   {
+    "file": "attacks/ghost_invoices/plant.py",
+    "number": "2",
+    "context": "ue\"],             \"amount\": round(g[\"w\"] * scale, 2), \"description\": f\"{rng.randint(50, 900)} units {"
+   },
+   {
+    "file": "attacks/ghost_invoices/plant.py",
+    "number": "3",
+    "context": "PPLIES_TO = [\"receivables_finance\"] START_MONTH = 3 USES_SERVICER_RECORDS = False USES_COMPANY_HISTOR"
+   },
+   {
+    "file": "attacks/ghost_invoices/plant.py",
+    "number": "3",
+    "context": "ART_MONTH, 24, ROLL_EVERY))     n_per_batch = max(3, round(target_face / 3 / avg))     ghosts = []   "
+   },
+   {
+    "file": "attacks/ghost_invoices/plant.py",
+    "number": "3",
+    "context": "RY))     n_per_batch = max(3, round(target_face / 3 / avg))     ghosts = []     for m in batch_months"
+   },
+   {
+    "file": "attacks/ghost_invoices/plant.py",
+    "number": "30",
+    "context": " m, \"day\": rng.randint(1, 27), \"due\": rng.choice([30, 45, 60]), \"w\": rng.uniform(0.8, 1.2)})      def "
+   },
+   {
+    "file": "attacks/ghost_invoices/plant.py",
+    "number": "30",
+    "context": "standing(month):         # days measured as month*30 + day, as in the book         return sum(g[\"w\"] f"
+   },
+   {
+    "file": "attacks/ghost_invoices/plant.py",
+    "number": "30",
+    "context": "] for g in ghosts if g[\"m\"] <= month and (month * 30 + 15) <= g[\"m\"] * 30 + g[\"day\"] + g[\"due\"] + AGE_"
+   },
+   {
+    "file": "attacks/ghost_invoices/plant.py",
+    "number": "30",
+    "context": "g[\"m\"] <= month and (month * 30 + 15) <= g[\"m\"] * 30 + g[\"day\"] + g[\"due\"] + AGE_OUT_DAYS)     peak_w "
+   },
+   {
+    "file": "attacks/ghost_invoices/plant.py",
+    "number": "60",
+    "context": "\": rng.randint(1, 27), \"due\": rng.choice([30, 45, 60]), \"w\": rng.uniform(0.8, 1.2)})      def outstand"
+   },
+   {
+    "file": "attacks/invoice_inflation/README.md",
+    "number": "3",
+    "context": "amount` on a random set of them by 60% from month 3, so each is pledged for more than the customer ow"
+   },
+   {
+    "file": "attacks/invoice_inflation/README.md",
+    "number": "60",
+    "context": "ut raises the `amount` on a random set of them by 60% from month 3, so each is pledged for more than t"
+   },
+   {
+    "file": "attacks/invoice_inflation/plant.py",
+    "number": "2",
+    "context": "r[\"amount\"] - P)         r[\"amount\"] = round(new, 2)         gain += g; n += 1     bookio.save(book_d"
+   },
+   {
+    "file": "attacks/invoice_inflation/plant.py",
+    "number": "3",
+    "context": "PPLIES_TO = [\"receivables_finance\"] START_MONTH = 3 USES_SERVICER_RECORDS = False USES_COMPANY_HISTOR"
+   },
+   {
+    "file": "attacks/invoice_inflation/plant.py",
+    "number": "60",
+    "context": "\"\"\"invoice_inflation: real invoices pledged for 60% more than the real amount (see README.md).\"\"\" im"
+   },
+   {
+    "file": "attacks/phantom_collateral/README.md",
+    "number": "2",
+    "context": "wed.** DOJ, *US v. Chu et al.* (Tricolor): about $2.2bn pledged against about $1.4bn of real collater"
+   },
+   {
+    "file": "attacks/phantom_collateral/README.md",
+    "number": "2",
+    "context": "t about 17% of `facility_limit` (7 loans of about 2.4% each). Tested at 17.0-18.0% on every auto, con"
+   },
+   {
+    "file": "attacks/seasoned_phantoms/README.md",
+    "number": "3",
+    "context": "onthly payment on it into the collection account (3% of balance, months 17-23, memo \"loan payment\", r"
+   },
+   {
+    "file": "attacks/seasoned_phantoms/plant.py",
+    "number": "2",
+    "context": "ound(bal0 * INSTALMENT * rng.uniform(0.98, 1.02), 2)             paid_fake += amt             new_pay"
+   },
+   {
+    "file": "attacks/seasoned_phantoms/plant.py",
+    "number": "2",
+    "context": "en(new_pay):09d}\", \"month\": m, \"day\": rng.randint(2, 27), \"borrower_id\": borrower_id,                "
+   },
+   {
+    "file": "attacks/seasoned_phantoms/plant.py",
+    "number": "2",
+    "context": "total_paid.get(obl, 0.0) + paid_fake) * 1.01 + 1, 2),                         \"memo\": \"customer refun"
+   },
+   {
+    "file": "attacks/shadow_repledge/README.md",
+    "number": "2",
+    "context": ", delinquency and terms month by month from month 2. In a real fraud the second pledge goes to a seco"
+   },
+   {
+    "file": "attacks/shadow_repledge/README.md",
+    "number": "2",
+    "context": "e_rate x balance of the duplicated loans at month 2`, sized at about 17% of `facility_limit`. Tested "
+   },
+   {
+    "file": "attacks/shadow_repledge/plant.py",
+    "number": "2",
+    "context": "er_finance\", \"real_estate_finance\"] START_MONTH = 2 USES_SERVICER_RECORDS = False USES_COMPANY_HISTOR"
+   },
+   {
+    "file": "attacks/shell_roundtrip/plant.py",
+    "number": "2",
+    "context": "me, \"amount\": round(each * rng.uniform(0.9, 1.1), 2),              \"memo\": \"receivable settlement\", \""
+   },
+   {
+    "file": "attacks/shell_roundtrip/plant.py",
+    "number": "60",
+    "context": "WY\", \"NV\"]),         \"formed_month\": -rng.randint(60, 120), \"has_operations\": True,         \"phone\": f"
+   }
+  ]
+ }
+}
