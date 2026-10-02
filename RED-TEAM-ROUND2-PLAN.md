@@ -1,6 +1,6 @@
 # Red team, round 2: plan
 
-**Status: approved by Vedant on 2 Oct 2026, with one change to the payer rule (below). Built and frozen; the chat has not run yet.** Written 2 Oct 2026, after the round-1 fixes and the fresh 601–605 run (`proof/REDTEAM_after_fixes.md`).
+**Status: approved by Vedant on 2 Oct 2026, with one change to the payer rule (below). Run and scored once on 2 Oct 2026: `proof/REDTEAM_round2.md` (42 caught, 17 review, 11 missed of 70; copy A flagged 1 of 350 honest borrowers, so it fails the bar).** Written 2 Oct 2026, after the round-1 fixes and the fresh 601–605 run (`proof/REDTEAM_after_fixes.md`).
 
 **Vedant's change (2 Oct 2026):** "A payment may name an existing customer as payer only if the borrower's operating account shows matching money going to that customer first. A customer acting as an accomplice is real, and the bank can see the money leave."
 

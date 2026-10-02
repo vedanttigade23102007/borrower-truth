@@ -60,3 +60,30 @@ The books' own planted frauds: 249/250 caught.
 
 - `attacks/fictitious_deferment/plant.py`: DEFERMENT_PROGRAM: …d["borrower_id"] == borrower_id and d["kind"] == "deferment_program" for d in disc):         disc.append({"borrower_i…
 - `attacks/fictitious_deferment/plant.py`: DEFERMENT_PROGRAM: …disc.append({"borrower_id": borrower_id, "kind": "deferment_program", "counterparty_entity_id": None,                …
+
+## After scoring: what caused each miss (diagnosis only, 2 Oct 2026; no code changed)
+
+Everything above this line was written by the harness and committed unchanged (fba807e, pushed before this section). This section was added later. Causes were worked out on the dev books (7, 101–105), with the same seven attacks planted there: caught 45, review 26, missed 13 of 84, close to the fresh result. The one exception is the honest flag below, which was read on seed 701 itself, read-only.
+
+**The one honest borrower flagged (B0100, seed 701, in both copies): a name mix-up.**
+- A $6.46M judgment names "Magnolia Holdings Group LLC". Three registered companies in that book have that exact name: B0100's parent, another borrower, and a third company's parent.
+- Court records carry a name only, with no address, so the check gave the judgment to all three. Lien filings carry an address, and there the check already picks the right company. Judgments had no such tie-breaker.
+- Without that judgment, B0100 has only an old pre-onboarding lien and a $28k landlord judgment. Those would send it to review, not flag it.
+- On the dev books, judgments under a shared name happen 2 times in 67, never above $1M. That's why the dev bars never showed it.
+
+**invoice_inflation (0 caught, 1 review, 9 missed): nothing compares what a customer pays with what the invoice says.**
+- The customer pays the real amount, so each inflated invoice is paid about 38% short.
+- No check measures dilution (the share of invoice value that never arrives as cash).
+- On the dev books, the attacked borrowers' dilution rose 2.4 points (median) against their own first six months. Honest borrowers moved at most 0.5 points.
+- Caveat: real dilution (returns, credits, disputes) is noisier than this generator's. The line would have to be set on real receivables data, which we don't have.
+
+**seasoned_phantoms (8 caught, 2 missed): the servicer-system pull is a random sample.**
+- Six large fake loans in a big book can escape a random pull.
+- Because they are paid (the money comes from the borrower, through the customers), the pull aimed at unpaid loans skips them.
+- The 8 caught were caught by the random pull hitting them.
+
+**ghost_invoices (4 caught, 6 sent to review):** the never-paid invoices are found every time (12 of 12 on dev). That is one source alone, so it goes to review, where the check step is to confirm the invoices with the customers.
+
+**shell_roundtrip (0 caught, 10 sent to review; uses the company-history lever):** the receipts with no invoice or loan behind them are found every time. The payer is a backdated company in a nominee's name with no link to the owner in any table, so there is no second source.
+
+**Leak scan of the hand-in:** the 2 hits are the disclosure kind `deferment_program`, which the table guide documents (`TABLES.md`). Not a leak.
