@@ -67,3 +67,16 @@ Held-out seeds [801, 802, 803, 804, 805] · 600 borrowers · 250 with planted fr
 | SEC | 40 | 40 |
 
 Every system that loses detections when switched off earns its place. Zero borrowers lost with a system off means the others overlap it (defence in depth), not that it is useless: check the mechanism column.
+
+## After scoring: what caused the one honest flag (diagnosis only, 2 Oct 2026; no code changed)
+
+Everything above this line was written by the evaluation and committed unchanged (7be6d34, pushed). This section was added later.
+
+**B0003, seed 804 (real-estate lender, honest), flagged by the random servicer-system pull: a cut-off timing difference.**
+- 2 of the 60 loans pulled at month 24 are 60–89 days late in the servicer system, while the tape reports them 30–59 days late, so still eligible.
+- Both loans were 30–59 days late in both systems the month before. Each missed its last two payments, and the servicer's month-end count had rolled it into 60–89 days while the tape had not.
+- That is one month of ageing between two cut-off dates, the kind of difference a field examiner reconciles. It isn't loans dressed up as current.
+- **Not caused by the round-2 fixes.** The rules frozen before them (tag `redteam-round2-frozen`) flag B0003 on this book too. Checked by running that tagged code on seed 804.
+- **On the dev books:**
+  - Of the honest loans the pull could flag (eligible on the tape, 60+ late or missing in the servicer system), 318 of 336 rows (95%) are exactly this case: 30–59 on the tape, 60–89 in the servicer, 30–59 in the servicer the month before.
+  - Of the fraud borrowers' rows, it is 220 of 10,614 (2%). The rest are loans reported current while really 60+ late, or loans missing from the servicer system.
