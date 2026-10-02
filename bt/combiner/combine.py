@@ -37,6 +37,8 @@ MECHANISM_OF = {
     # who the borrower pays, and when its customers pay (2 Oct 2026, after the blind red team)
     "UNDISCLOSED_DEBT_SERVICE": "HIDDEN_DEBT", "NEW_PAYEES_DRAIN_CASH": "CASH_LEAKAGE",
     "MONTH_END_CURES": "TAPE_DRESSUP", "PLEDGECHECK_LEFT": "DOUBLE_PLEDGE",
+    # after red team round 2: dilution against the borrower's own early months; a judgment under a shared name
+    "DILUTION_JUMP": "FAKE_INVOICES", "JUDGMENT_NAME_SHARED": "HIDDEN_DEBT",
 }
 SEC_TYPES = {"ROLL_RATE_TOO_LOW", "PUBLIC_POOL_OVERLAP", "POOL_LOANS_PAID_ELSEWHERE", "FILED_DEBT_UNDISCLOSED", "FILED_VS_REPORTED",
              "DEBT_ACCELERATION_FILED"}  # checks that exist because of public SEC data (switch-off test: "SEC")
@@ -65,6 +67,7 @@ SOURCE = {
     "DEBT_ACCELERATION_FILED": "sec_filings",
     "UNDISCLOSED_DEBT_SERVICE": "operating_account", "NEW_PAYEES_DRAIN_CASH": "operating_account",
     "MONTH_END_CURES": "payments", "PLEDGECHECK_LEFT": "pledgecheck",
+    "DILUTION_JUMP": "payments", "JUDGMENT_NAME_SHARED": "courts",
 }
 
 # checkable facts (not statistical inferences): strong enough to stand alone
@@ -94,7 +97,8 @@ PLAIN = {
 
 WEIGHT = {"S1": 1.0, "S2": 1.0, "S3": 1.0, "S4": 1.0, "S5": 0.9, "S6": 0.5, "S7": 0.8}
 CONTEXT = {"PLEDGECHECK_ABSENT",  # coverage notes shown to the officer; never scored
-           "DEBT_ACCELERATION_FILED"}  # a lender sped up repayment (8-K Item 2.04): a credit event, not fraud
+           "DEBT_ACCELERATION_FILED",  # a lender sped up repayment (8-K Item 2.04): a credit event, not fraud
+           "JUDGMENT_NAME_SHARED"}  # a judgment that may belong to a namesake: a lead to check, not evidence
 LONE_CONTEXT = ("RELATED_ENTITY", "JUDGMENT")  # alone at low confidence: context, not a finding
 MIN_X = 0.25  # severity x confidence needed for a clue to count as corroboration
 ESCALATE_PRIORITY = 0.95

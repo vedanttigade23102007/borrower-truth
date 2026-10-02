@@ -20,6 +20,10 @@ Checks (window = the three most recent complete months):
                             pull takes loans that went straight from 30-59 days late
                             to current: that catches dress-up even when the borrower
                             pays the hidden loans itself, so the cash looks fine.
+                            A third pull takes the largest loans that first appeared on the
+                            tape in the last year, the way a field examiner tests the biggest
+                            new items first: a few large invented loans that are kept paying
+                            can slip past a random sample and past the unpaid-loan pull.
   ATTRIBUTE_REWRITE         a loan's credit score at origination should never change;
                             several were rewritten from below the 600 eligibility line
                             to above it (Tricolor, as alleged: ineligible collateral
@@ -132,6 +136,22 @@ WHERE c.k <= ?
 GROUP BY 1
 """
 
+LARGEST_RECENT = """
+WITH seen AS (SELECT asset_id, min(month) AS m0 FROM tape WHERE asset_id LIKE 'A-%' GROUP BY 1),
+cand AS (
+    SELECT t.borrower_id, t.asset_id, t.month,
+           row_number() OVER (PARTITION BY t.borrower_id ORDER BY t.balance DESC, t.asset_id) AS k
+    FROM tape t JOIN seen USING (asset_id)
+    WHERE t.month = ? AND t.asset_id LIKE 'A-%' AND t.eligible_reported AND seen.m0 >= ?
+)
+SELECT c.borrower_id, count(*) AS pulled,
+       count(*) FILTER (WHERE s.asset_id IS NULL OR s.dpd_bucket_true >= 2) AS mismatches,
+       list(c.asset_id ORDER BY c.asset_id) FILTER (WHERE s.asset_id IS NULL OR s.dpd_bucket_true >= 2)[1:3] AS ex
+FROM cand c LEFT JOIN source_truth s ON s.asset_id = c.asset_id AND s.month = c.month
+WHERE c.k <= ?
+GROUP BY 1 ORDER BY 1
+"""
+
 CURED = """
 WITH a AS (
     SELECT borrower_id, asset_id, month, dpd_bucket_reported AS r FROM tape
@@ -178,6 +198,7 @@ EDGE_RATIO_REAL, EDGE_FACTOR, EDGE_MIN, EDGE_Z = 1.18, 1.5, 40, 3.0
 SAMPLE_SIZE = 60
 TARGETED_SIZE = 30
 CURE_SIZE = 30  # loans that went from 30-59 days late to current, looked up in the servicer system
+LARGEST_SIZE, LARGEST_NEW_MONTHS = 30, 12  # the largest loans first seen on the tape in the last year
 JUMP_SHARE = 0.20  # real honest pools reach 12.2% (bt/sec/calibrate.py); a count alone isn't enough
 ROLL_MIN_REAL = 0.139  # lowest 30->60+ roll-forward rate among 28 real public auto pools (Ford Credit 2024-A)
 ROLL_FACTOR, ROLL_WINDOW, ROLL_MIN_N, ROLL_Z = 0.5, 6, 30, -2.5
@@ -240,6 +261,13 @@ def run(ctx: Ctx):
                                f"Loans reported current but with no payment for two months were pulled from the "
                                f"servicer system: {r['mismatches']} of {r['pulled']} are actually 60+ days late or "
                                f"no longer active", a))
+    for r in ctx.rows(LARGEST_RECENT, [a, a - LARGEST_NEW_MONTHS + 1, LARGEST_SIZE]):
+        if r["mismatches"] >= 2:
+            out.append(sig("S2", r["borrower_id"], "TARGETED_SOURCE_MISMATCH", 0.9, 0.92,
+                           [f"source_pull:{r['borrower_id']}:month={a}:targeted_by=largest_new"]
+                           + [f"tape:asset:{x}" for x in r["ex"]],
+                           f"The largest loans added to the tape in the last year were pulled from the servicer system: "
+                           f"{r['mismatches']} of {r['pulled']} are 60+ days late or not there at all", a))
     if a >= 2:
         # the pull a sharp auditor makes when late loans seem to vanish: the loans that went straight from 30-59 days
         # late to current. Real cures are current in the servicer system; a hidden 60+ day loan is not.

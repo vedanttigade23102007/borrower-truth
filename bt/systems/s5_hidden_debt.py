@@ -9,6 +9,10 @@ them. So matching is by normalised name with a fuzzy fallback, against the
 borrower AND every entity S6 linked to it. Some misfiled liens will still be
 missed; that is reported, not hidden.
 
+A judgment is filed against a name. When several registered companies share that exact name, and the court record
+has no address to settle it, the judgment is shown as a lead to check (pull the court file) and never counts as
+evidence: a namesake's judgment once flagged an honest borrower (red team round 2, seed 701).
+
 Old undisclosed liens that pre-date onboarding are often stale (debt repaid,
 filing never terminated). They are reported at lower confidence and asked
 about, not treated as proof.
@@ -78,9 +82,11 @@ def run(ctx: Ctx):
         by_addr.setdefault(norm_addr(r["address"]), []).append(r)
     exact: dict[str, set] = {}  # full legal name, suffix included -> registry entities
     by_core: dict[str, set] = {}  # shortened name -> registry entities (can be several)
-    for r in ctx.rows("SELECT entity_id, name FROM entities"):
+    addr_of: dict[str, str] = {}
+    for r in ctx.rows("SELECT entity_id, name, address FROM entities"):
         exact.setdefault(norm_addr(r["name"]), set()).add(r["entity_id"])
         by_core.setdefault(core(r["name"]), set()).add(r["entity_id"])
+        addr_of[r["entity_id"]] = norm_addr(r["address"])
     disclosed = {(r["borrower_id"], r["counterparty_entity_id"]) for r in ctx.rows(
         "SELECT borrower_id, counterparty_entity_id FROM disclosures WHERE kind = 'debt'")}
 
@@ -128,11 +134,24 @@ def run(ctx: Ctx):
             out.append(s)
             if not stale:
                 undisclosed.setdefault(b, []).append(s.signal_id)
-    for c in ctx.rows("SELECT * FROM courts"):
+    for c in ctx.rows("SELECT * FROM courts ORDER BY case_id"):
         targets, score = match(c["defendant_name"])
         owners = exact.get(norm_addr(c["defendant_name"]), set())
+        # several registered companies with this exact name: only the defendant's address on the court file can say
+        # which one was sued. Without it the judgment is a lead to check, never evidence against any of them
+        addr = norm_addr(c.get("defendant_address"))
+        if len(owners) > 1 and addr:
+            owners = {e for e in owners if addr_of.get(e) == addr} or owners
         if owners:  # the judgment names a registered company exactly: it belongs to that one, not a look-alike
             targets = [t for t in targets if t["entity_id"] in owners]
+        if len(owners) > 1:
+            for t in targets:
+                out.append(sig("S5", t["borrower_id"], "JUDGMENT_NAME_SHARED", 0.1, 1.0, [f"court:{c['case_id']}"],
+                               f"Judgment of ${c['amount']:,.0f} against '{c['defendant_name']}' in favour of "
+                               f"{c['plaintiff']}: {len(owners)} registered companies have this exact name and the court "
+                               f"record gives no address, so it can't be tied to this one yet. Pull the court file",
+                               c["month"], [t["entity_id"]]))
+            continue
         for t in targets:
             big = c["amount"] > 1_000_000
             out.append(sig("S5", t["borrower_id"], "JUDGMENT", 0.5 if big else 0.15, 0.9 if score == 100 else 0.8,

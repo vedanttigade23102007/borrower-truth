@@ -108,3 +108,63 @@ def test_the_same_loans_in_a_public_pool_match_within_small_differences(book, am
              for r in mine if r["asset_id"] in loans]
     save(book, "public_abs", pool)
     assert bool(clues(book, b, "PUBLIC_POOL_OVERLAP")) is fires
+
+
+# after red team round 2 (2 Oct 2026)
+
+@pytest.mark.parametrize("namesake,with_address,expected", [
+    (False, False, "JUDGMENT"),  # one company has the name: the judgment is evidence
+    (True, False, "JUDGMENT_NAME_SHARED"),  # two do, and the court record has no address: a lead, never evidence
+    (True, True, "JUDGMENT"),  # two do, but the court record's address settles it
+])
+def test_a_judgment_under_a_shared_name_needs_the_court_file(book, namesake, with_address, expected):
+    b = honest(book)[0]
+    eid = next(r["entity_id"] for r in rows(book, "borrowers") if r["borrower_id"] == b)
+    me = next(r for r in rows(book, "entities") if r["entity_id"] == eid)
+    if namesake:
+        save(book, "entities", rows(book, "entities") + [dict(me, entity_id="E_NAMESAKE", address="1 Elsewhere Rd, Suite 9",
+                                                              officer_person_id=None, kind="company")])
+    court = rows(book, "court_records") + [dict(case_id="CV-T1", defendant_name=me["name"],
+                                                plaintiff="(synthetic) Test Lender LLC", kind="judgment",
+                                                amount=5_000_000.0, month=20)]
+    if with_address:
+        court = [dict(r, defendant_address=me["address"] if r["case_id"] == "CV-T1" else None) for r in court]
+        pq.write_table(pa.Table.from_pylist(court), book / "court_records.parquet")
+    else:
+        save(book, "court_records", court)
+    sigs, _, _ = pipeline(str(book), 23)
+    got = {s.type for s in sigs if s.entity_id == b and "court:CV-T1" in s.evidence}
+    assert got == {expected}
+
+
+@pytest.mark.parametrize("factor,every,fires", [(1.6, 3, True), (1.005, 1, False)])
+def test_invoices_that_start_collecting_short_raise_dilution(book, factor, every, fires):
+    b = honest(book, {"receivables_finance"})[0]
+    inv = rows(book, "invoices")
+    late = sorted({r["invoice_number"] for r in inv if r["borrower_id"] == b and r["issue_month"] >= 6})
+    raised = set(late[::every])  # the customer still pays the real amount
+    save(book, "invoices", [dict(r, amount=r["amount"] * factor) if r["borrower_id"] == b and r["invoice_number"] in raised
+                            else r for r in inv])
+    assert bool(clues(book, b, "DILUTION_JUMP")) is fires
+
+
+@pytest.mark.parametrize("in_servicer", [False, True])
+def test_the_largest_new_loans_are_pulled_from_the_servicer(book, in_servicer):
+    tape = rows(book, "tape")
+    b = next(x for x in honest(book, {"auto_finance"}) if any(r["borrower_id"] == x and r["month"] == 15 for r in tape))
+    mine = [r for r in tape if r["borrower_id"] == b and r["month"] == 15]
+    big = 10 * max(r["balance"] for r in mine)
+    new = [dict(mine[0], asset_id=f"A-{b}-NEW{i}", vin=f"SYNNEW{b}{i}", obligor_id=f"O-{b}-NEW{i}", month=m,
+                balance=big * (1 - 0.02 * (m - 16)), dpd_bucket_reported=0, deferred_flag=0, eligible_reported=True)
+           for i in range(3) for m in range(16, 24)]
+    save(book, "tape", tape + new)
+    pay = rows(book, "payments")
+    p0 = next(r for r in pay if r["borrower_id"] == b and r["ref"].startswith("A-"))
+    save(book, "payments", pay + [dict(p0, txn_id=f"TNEW{r['asset_id'][-1]}{r['month']}", month=r["month"],
+                                       ref=r["asset_id"], amount=round(r["balance"] * 0.03, 2)) for r in new])
+    if in_servicer:
+        save(book, "source_truth", rows(book, "source_truth") + [
+            dict(month=r["month"], borrower_id=b, asset_id=r["asset_id"], dpd_bucket_true=0, balance_true=r["balance"])
+            for r in new])
+    pulled = [s for s in clues(book, b, "TARGETED_SOURCE_MISMATCH") if any("largest_new" in e for e in s.evidence)]
+    assert bool(pulled) is not in_servicer

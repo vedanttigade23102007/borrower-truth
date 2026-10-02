@@ -48,7 +48,7 @@ The run is monthly ("as of" a month). Payments also stream daily for live alerts
 | Officers and owners | the people behind the companies | registry and KYC | monthly | partly |
 | LEI register (GLEIF) | which companies have a Legal Entity Identifier | GLEIF (public, free) | monthly | free to fetch |
 | Lien filings | UCC filings naming the borrower or a linked company | state filing offices, through a lien-search vendor | monthly | often, as one-off searches; a monthly feed is a licence (gap 8) |
-| Court judgments | judgments against the borrower or a linked company | court dockets, through a vendor | monthly | often, as one-off searches |
+| Court judgments | judgments against the borrower or a linked company, with the defendant's address (without it, a name several companies share can't be settled, and the judgment is only a lead) | court dockets, through a vendor | monthly | often, as one-off searches |
 | PledgeCheck results | whether the same collateral is pledged at other lenders | Setpoint (third party; simulated here) | monthly | only if subscribed |
 | Public securitization reports | loan-level reports of the borrower's own public pools (SEC Form ABS-EE) | SEC EDGAR (public, free; needs a contact email in the request) | monthly | free to fetch |
 | SEC filings | 10-K debt notes and Exhibit 21, 8-K items, XBRL revenue | SEC EDGAR (public, free) | as filed | free to fetch |
@@ -99,6 +99,12 @@ The run is monthly ("as of" a month). Payments also stream daily for live alerts
 - **Confirming a sample of customers directly**, the way receivables are confirmed with debtors.
 
 Both are outside this data contract today, and both are pilot items.
+
+**Recommended: ownership records (found by the blind red team, round 2, 2 Oct 2026).**
+- A company held in someone else's name, backdated, with no link to the owner in the registry, can send the borrower money that looks like customer receipts.
+- The money is found, but nothing in the registry links the payer to the owner. Only records of who really owns each company can.
+- Sources: the beneficial-ownership records the bank already keeps under KYC for companies that are its own customers, or an ownership-data vendor.
+- Outside this data contract today, and a pilot item.
 
 **What to add next, in order of value:**
 1. A monthly lien feed (S5 liens).
