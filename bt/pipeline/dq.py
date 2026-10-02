@@ -9,6 +9,7 @@ empty table), and every case reports it.
 """
 from __future__ import annotations
 
+import json
 import os
 import shutil
 
@@ -36,7 +37,20 @@ MAX_NULL_SHARE = 0.01
 LAST_GOOD = ".last_good"
 
 
-def check(path: str, table: str) -> list[str]:
+def last_month(data_dir: str) -> int | None:
+    """The book's own calendar: the last reporting month it can hold. A generated book records its length in
+    manifest.json; a bank's mapped book records it in calendar.json. With neither, only "not before month 0" is
+    checked (INTEGRATION.md, section 5)."""
+    for name in ("manifest.json", "calendar.json"):
+        p = os.path.join(data_dir, name)
+        if os.path.exists(p):
+            months = json.load(open(p)).get("months")
+            if months:
+                return int(months) - 1
+    return None
+
+
+def check(path: str, table: str, last: int | None = 23) -> list[str]:
     if not os.path.exists(path):
         return [] if table not in CORE else ["file missing"]
     try:
@@ -57,8 +71,8 @@ def check(path: str, table: str) -> list[str]:
             issues.append(f"{nulls / n:.1%} of {c} is empty")
     if table in MONTHLY:
         lo, hi = con.execute(f"SELECT min({MONTHLY[table]}), max({MONTHLY[table]}) FROM {src}").fetchone()
-        if lo is not None and (lo < 0 or hi > 23):
-            issues.append(f"{MONTHLY[table]} outside 0..23 ({lo}..{hi})")
+        if lo is not None and (lo < 0 or (last is not None and hi > last)):
+            issues.append(f"{MONTHLY[table]} outside 0..{last if last is not None else ''} ({lo}..{hi})")
     if table == "payments":
         neg = con.execute(f"SELECT count(*) FILTER (WHERE amount < 0) FROM {src}").fetchone()[0]
         if neg:
@@ -71,10 +85,11 @@ def stage(data_dir: str) -> tuple[dict[str, str], dict]:
     good_dir = os.path.join(data_dir, LAST_GOOD)
     os.makedirs(good_dir, exist_ok=True)
     overrides, report = {}, {"quarantined": {}, "checked": 0}
+    last = last_month(data_dir)
     for table in REQUIRED:
         path = os.path.join(data_dir, f"{table}.parquet")
         good = os.path.join(good_dir, f"{table}.parquet")
-        issues = check(path, table)
+        issues = check(path, table, last)
         report["checked"] += 1
         if not issues:
             if os.path.exists(path) and (not os.path.exists(good) or os.path.getmtime(path) > os.path.getmtime(good)):

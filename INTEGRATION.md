@@ -68,6 +68,19 @@ Borrowers send loan tapes and invoice lists in their own layouts. The bank's dat
    - **the mapped balances add up to the borrower's borrowing-base certificate total, within $1**
 7. **Report.** A mapping report for a person to sign.
 
+Two more rules, both learned while building it:
+- **A row that appears twice is kept and flagged, never dropped.** A second copy of an invoice with a new amount is the evidence of an altered invoice. If the mapper stopped on it, the borrower could resend the file without that copy.
+- **An optional detail out of range is left empty and counted.** A credit score of 0 or 999, a "no score" code real lenders use, doesn't reject the loan. A required value out of range does.
+
+**Commands** (`uv run python -m bt.mapper …`): `inspect` (sheets and numbered rows), `suggest` (a draft mapping), `confirm --by "Name"`, `map` (with the certificate totals) and `assemble` (the table the checks read).
+
+**Tested:**
+- **Round trip on a synthetic book.** Tapes, servicer extracts and invoice lists were written as lender files: CSV with "$" text, and Excel with title rows and subtotals, real dates, days late and Y/N flags. Mapped back, they give the same tables and exactly the same cases. Five junk lines are rejected and listed (`tests/test_mapper.py`).
+- **One real lender layout:** 2,000 loans from a public SEC ABS-EE report.
+  - From the headers alone, the suggestion got 12 of 13 fields right, 0 wrong, and missed 1 (the obligor's state).
+  - It correctly left the 5 columns ABS-EE doesn't carry for a person.
+  - After a person's corrections, all 2,000 loans mapped and the total tied out to $0.00 (`proof/MAPPER_ABSEE_TRIAL.md`).
+
 The other inputs come from bank systems and vendors with fixed layouts. Those are mapped once per bank, as part of the pilot.
 
 ---
@@ -84,7 +97,7 @@ Where the bank's KYC record already holds a registry ID or an LEI, the link is d
 
 The checks count in reporting months. A real deployment counts from each facility's first month on the bank's books: month 1 is the first borrowing-base report after onboarding.
 - Real dates in borrower files become reporting months in the mapper.
-- **Code change needed:** the data-quality gate still assumes this project's 24 synthetic months. That becomes the run's own calendar, and every recorded decision must replay identically afterwards.
+- **Done (2 Oct 2026):** the data-quality gate no longer assumes this project's 24 synthetic months. It reads the book's own length, from the generator's manifest or from a `calendar.json` the bank keeps; with neither, it checks only that no month comes before month 0. A run recorded before the change replays 120 of 120 decisions identically.
 
 ---
 
@@ -132,4 +145,4 @@ The pilot group: about 10 borrowers with the most complete data (typical, to con
 - **Postgres:** not checked.
 - **The bank's sign-in:** not built.
 - **Scale beyond one laptop run:** not measured.
-- **Real borrower spreadsheets:** not seen. The mapper is tested on synthetic files written in a lender-like layout, and on the field names real lenders use in SEC ABS-EE reports.
+- **Real borrower spreadsheets:** not seen. The mapper is tested on synthetic files written in a lender-like layout, and on one real public layout (SEC ABS-EE, one trust, one month).

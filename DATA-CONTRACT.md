@@ -118,5 +118,5 @@ Both are outside this data contract today, and both are pilot items.
 
 - **Book level, not borrower level.** "Not delivered" is decided per file, for the whole book. In a bank, inputs arrive per borrower: the operating account might be held for some borrowers and not others. The case should then say which inputs were missing *for that borrower*. **Not built.**
 - **A crashed check upstream.** S7 compares revenue with the verified cash S3 publishes. If S3 crashes or doesn't run, S7 quietly skips that comparison. The case already shows S3 as unavailable, but not that S7 lost a check. **Not built.**
-- **The layouts are this project's own.** A bank's loan tape, servicer extract or lien feed will have different column names. Mapping them is integration work for each bank, and is part of a pilot.
+- **The layouts are this project's own.** A bank's loan tape, servicer extract or lien feed will have different column names. Since 2 Oct 2026, the file mapper (`bt/mapper`, `INTEGRATION.md` section 3) maps the files borrowers send (loan tapes, invoice lists, servicer extracts), with checks and a signed report. The feeds from bank systems and vendors are still mapped once per bank, in a pilot.
 - **The bank's own identity is fixed in the data.** The bank's own liens and its own SEC-listed debt are skipped by name and by entity ID. Gap 6 makes the name a setting.
