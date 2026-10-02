@@ -11,7 +11,11 @@ Checks (window = the three most recent complete months):
   DEFERMENT_WITHOUT_PROGRAM deferral flags with no disclosed deferment programme
   IMPOSSIBLE_TRANSITION     60+ days late one month, current the next, no payment
   SOURCE_MISMATCH           risk-weighted sample pulled from the servicer system
-                            disagrees with the tape
+                            disagrees with the tape. A loan that rolled from 30-59 to 60-89
+                            days late this month while the tape (cut a few days earlier) still
+                            says 30-59 is a timing difference: shown as "timing, unconfirmed"
+                            and excused for one month. Still behind next month, or 3 or more
+                            at once in one pull, and it counts.
   TARGETED_SOURCE_MISMATCH  the pull a sharp auditor makes: loans the tape calls
                             current but that paid nothing (bank-payment evidence)
                             are pulled from the servicer system, and are 60+ late
@@ -110,12 +114,11 @@ WITH elig AS (
            row_number() OVER (PARTITION BY borrower_id ORDER BY hash(asset_id || CAST(month AS VARCHAR) || 'audit')) AS k
     FROM tape WHERE month = ? AND asset_id LIKE 'A-%' AND eligible_reported
 )
-SELECT e.borrower_id, count(*) AS sampled,
-       count(*) FILTER (WHERE s.asset_id IS NULL OR s.dpd_bucket_true >= 2) AS mismatches,
-       list(e.asset_id ORDER BY e.asset_id) FILTER (WHERE s.asset_id IS NULL OR s.dpd_bucket_true >= 2)[1:3] AS ex
+SELECT e.borrower_id, e.asset_id, e.r, s.dpd_bucket_true AS tr, sp.dpd_bucket_true AS prev_tr, s.asset_id IS NULL AS gone
 FROM elig e LEFT JOIN source_truth s ON s.asset_id = e.asset_id AND s.month = e.month
+LEFT JOIN source_truth sp ON sp.asset_id = e.asset_id AND sp.month = e.month - 1
 WHERE e.k <= ?
-GROUP BY 1
+ORDER BY 1, 2
 """
 
 TARGETED = """
@@ -139,17 +142,24 @@ GROUP BY 1
 LARGEST_RECENT = """
 WITH seen AS (SELECT asset_id, min(month) AS m0 FROM tape WHERE asset_id LIKE 'A-%' GROUP BY 1),
 cand AS (
-    SELECT t.borrower_id, t.asset_id, t.month,
+    SELECT t.borrower_id, t.asset_id, t.month, t.dpd_bucket_reported AS r,
            row_number() OVER (PARTITION BY t.borrower_id ORDER BY t.balance DESC, t.asset_id) AS k
     FROM tape t JOIN seen USING (asset_id)
     WHERE t.month = ? AND t.asset_id LIKE 'A-%' AND t.eligible_reported AND seen.m0 >= ?
 )
-SELECT c.borrower_id, count(*) AS pulled,
-       count(*) FILTER (WHERE s.asset_id IS NULL OR s.dpd_bucket_true >= 2) AS mismatches,
-       list(c.asset_id ORDER BY c.asset_id) FILTER (WHERE s.asset_id IS NULL OR s.dpd_bucket_true >= 2)[1:3] AS ex
+SELECT c.borrower_id, c.asset_id, c.r, s.dpd_bucket_true AS tr, sp.dpd_bucket_true AS prev_tr, s.asset_id IS NULL AS gone
 FROM cand c LEFT JOIN source_truth s ON s.asset_id = c.asset_id AND s.month = c.month
+LEFT JOIN source_truth sp ON sp.asset_id = c.asset_id AND sp.month = c.month - 1
 WHERE c.k <= ?
-GROUP BY 1 ORDER BY 1
+ORDER BY 1, 2
+"""
+
+# last month's timing differences, looked up again this month: did the tape catch up?
+FOLLOW_UP = """
+SELECT t.asset_id, t.eligible_reported AS el, t.dpd_bucket_reported AS r, s.dpd_bucket_true AS tr, s.asset_id IS NULL AS gone
+FROM tape t LEFT JOIN source_truth s ON s.asset_id = t.asset_id AND s.month = t.month
+WHERE t.month = ? AND list_contains(?::VARCHAR[], t.asset_id)
+ORDER BY 1
 """
 
 CURED = """
@@ -199,6 +209,69 @@ SAMPLE_SIZE = 60
 TARGETED_SIZE = 30
 CURE_SIZE = 30  # loans that went from 30-59 days late to current, looked up in the servicer system
 LARGEST_SIZE, LARGEST_NEW_MONTHS = 30, 12  # the largest loans first seen on the tape in the last year
+# a tape cut a few days before the servicer's month end catches only a handful of loans rolling into 60+ days late:
+# honest dev pulls never held more than 1 at once. From 3 in one pull, it's not timing (set knowing that the one honest
+# case on fresh seeds 804 had 2, so the next fresh set is the real test of this line)
+TIMING_MANY = 3
+
+
+def _state(x) -> str:
+    if x["gone"]:
+        return "gone"
+    if x["tr"] >= 2:
+        # 30-59 on the tape, 60-89 in the servicer, 30-59 there last month: it rolled between the two cut-off dates
+        return "timing" if x["r"] == 1 and x["tr"] == 2 and x["prev_tr"] == 1 else "late"
+    return "ok"
+
+
+def judge_pull(ctx: Ctx, sql: str, now_args: list, prev_args: list | None) -> dict:
+    """One servicer-system pull, per borrower: loans that disagree, this month's timing differences, and last month's
+    timing differences the tape still hasn't caught up with (looked up again this month)."""
+    a = ctx.as_of
+    now: dict[str, list] = {}
+    for x in ctx.rows(sql, now_args):
+        now.setdefault(x["borrower_id"], []).append(x)
+    prev: dict[str, list] = {}
+    if prev_args is not None:
+        for x in ctx.rows(sql, prev_args):
+            if _state(x) == "timing":
+                prev.setdefault(x["borrower_id"], []).append(x["asset_id"])
+    ids = sorted(i for v in prev.values() for i in v)
+    behind = {x["asset_id"] for x in (ctx.rows(FOLLOW_UP, [a, ids]) if ids else [])
+              if x["el"] and x["r"] <= 1 and (x["gone"] or x["tr"] >= 2)}
+    out = {}
+    for b in sorted(set(now) | set(prev)):
+        loans = now.get(b, [])
+        here = {x["asset_id"] for x in loans}
+        still = [i for i in prev.get(b, []) if i in behind and i not in here]
+        out[b] = dict(pulled=len(loans) + len(still), still=still,
+                      mism=[x["asset_id"] for x in loans if _state(x) in ("gone", "late")],
+                      timing=[x["asset_id"] for x in loans if _state(x) == "timing"])
+    return out
+
+
+def settle_timing(*pulls: dict) -> dict:
+    """A timing difference is excused for one month only. It counts as a mismatch if the tape hasn't caught up by the
+    next month, or if many loans are behind at once (counted per borrower across every pull)."""
+    timing: dict[str, set] = {}
+    for pull in pulls:
+        for b, p in pull.items():
+            timing.setdefault(b, set()).update(p["timing"])
+    many = {b for b, t in timing.items() if len(t) >= TIMING_MANY}
+    for pull in pulls:
+        for b, p in pull.items():
+            p["many"] = b in many
+            p["mism"] = sorted(p["mism"] + p["still"] + (p["timing"] if b in many else []))
+    return {b: sorted(t) for b, t in timing.items() if t and b not in many}
+
+
+def _why(p: dict) -> str:
+    s = ""
+    if p["still"]:
+        s += f"; {len(p['still'])} were noted last month as a timing difference and the tape still hasn't caught up"
+    if p["many"] and p["timing"]:
+        s += "; several had just rolled from 30-59 to 60+ days late, but that many at once is not a cut-off timing difference"
+    return s
 JUMP_SHARE = 0.20  # real honest pools reach 12.2% (bt/sec/calibrate.py); a count alone isn't enough
 ROLL_MIN_REAL = 0.139  # lowest 30->60+ roll-forward rate among 28 real public auto pools (Ford Credit 2024-A)
 ROLL_FACTOR, ROLL_WINDOW, ROLL_MIN_N, ROLL_Z = 0.5, 6, 30, -2.5
@@ -246,12 +319,17 @@ def run(ctx: Ctx):
                                f"Only {k} of {n} loans reported 30-59 days late were 60+ late a month later ({rate:.0%}). "
                                f"In 28 real public auto-loan pools the lowest rate is {ROLL_MIN_REAL:.0%}: "
                                f"late loans here seem to vanish instead of getting later", a))
-    for r in ctx.rows(SAMPLE, [a, SAMPLE_SIZE]):
-        if r["mismatches"] >= 2 and r["mismatches"] / r["sampled"] > 0.02:
-            out.append(sig("S2", r["borrower_id"], "SOURCE_MISMATCH", 0.9, 0.8 if r["mismatches"] == 2 else 0.92,
-                           [f"source_pull:{r['borrower_id']}:month={a}"] + [f"tape:asset:{x}" for x in r["ex"]],
-                           f"Servicer-system pull: {r['mismatches']} of {r['sampled']} sampled 'eligible' loans are "
-                           f"actually 60+ days late or no longer active", a))
+    sample = judge_pull(ctx, SAMPLE, [a, SAMPLE_SIZE], [a - 1, SAMPLE_SIZE] if a >= 1 else None)
+    largest = judge_pull(ctx, LARGEST_RECENT, [a, a - LARGEST_NEW_MONTHS + 1, LARGEST_SIZE],
+                         [a - 1, a - LARGEST_NEW_MONTHS, LARGEST_SIZE] if a >= 1 else None)
+    unconfirmed = settle_timing(sample, largest)
+    for b, p in sample.items():
+        n = len(p["mism"])
+        if n >= 2 and n / p["pulled"] > 0.02:
+            out.append(sig("S2", b, "SOURCE_MISMATCH", 0.9, 0.8 if n == 2 else 0.92,
+                           [f"source_pull:{b}:month={a}"] + [f"tape:asset:{x}" for x in p["mism"][:3]],
+                           f"Servicer-system pull: {n} of {p['pulled']} sampled 'eligible' loans are actually 60+ days "
+                           f"late or no longer active{_why(p)}", a))
     if a >= 1:
         for r in ctx.rows(TARGETED, [a, a - 1, a, TARGETED_SIZE]):
             if r["mismatches"] >= 2:
@@ -261,13 +339,19 @@ def run(ctx: Ctx):
                                f"Loans reported current but with no payment for two months were pulled from the "
                                f"servicer system: {r['mismatches']} of {r['pulled']} are actually 60+ days late or "
                                f"no longer active", a))
-    for r in ctx.rows(LARGEST_RECENT, [a, a - LARGEST_NEW_MONTHS + 1, LARGEST_SIZE]):
-        if r["mismatches"] >= 2:
-            out.append(sig("S2", r["borrower_id"], "TARGETED_SOURCE_MISMATCH", 0.9, 0.92,
-                           [f"source_pull:{r['borrower_id']}:month={a}:targeted_by=largest_new"]
-                           + [f"tape:asset:{x}" for x in r["ex"]],
+    for b, p in largest.items():
+        if len(p["mism"]) >= 2:
+            out.append(sig("S2", b, "TARGETED_SOURCE_MISMATCH", 0.9, 0.92,
+                           [f"source_pull:{b}:month={a}:targeted_by=largest_new"]
+                           + [f"tape:asset:{x}" for x in p["mism"][:3]],
                            f"The largest loans added to the tape in the last year were pulled from the servicer system: "
-                           f"{r['mismatches']} of {r['pulled']} are 60+ days late or not there at all", a))
+                           f"{len(p['mism'])} of {p['pulled']} are 60+ days late or not there at all{_why(p)}", a))
+    for b, ids in unconfirmed.items():  # this month's timing differences can only be confirmed next month
+        out.append(sig("S2", b, "TIMING_UNCONFIRMED", 0.1, 1.0,
+                       [f"source_pull:{b}:month={a}:timing"] + [f"tape:asset:{x}" for x in ids[:3]],
+                       f"Timing, unconfirmed: {len(ids)} pulled loan(s) are 60-89 days late in the servicer system "
+                       f"but 30-59 on the tape. Each rolled into 60+ this month, which a tape cut a few days before "
+                       f"month end explains. If the tape hasn't caught up next month, they count as mismatches", a))
     if a >= 2:
         # the pull a sharp auditor makes when late loans seem to vanish: the loans that went straight from 30-59 days
         # late to current. Real cures are current in the servicer system; a hidden 60+ day loan is not.

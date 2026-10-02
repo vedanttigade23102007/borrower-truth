@@ -168,3 +168,55 @@ def test_the_largest_new_loans_are_pulled_from_the_servicer(book, in_servicer):
             for r in new])
     pulled = [s for s in clues(book, b, "TARGETED_SOURCE_MISMATCH") if any("largest_new" in e for e in s.evidence)]
     assert bool(pulled) is not in_servicer
+
+
+def _pull(book, month):
+    import duckdb
+    from bt.systems.s2_tape_source import SAMPLE, SAMPLE_SIZE
+    con = duckdb.connect()
+    for t in ("tape", "source_truth"):
+        con.execute(f"CREATE VIEW {t} AS SELECT * FROM '{book / (t + '.parquet')}'")
+    return {(r[0], r[1]) for r in con.execute(SAMPLE, [month, SAMPLE_SIZE]).fetchall()}
+
+
+def _roll(book, b, loans, m, tape_next=None, true_next=None):
+    """The servicer rolls these loans from 30-59 to 60-89 days late at month m; the tape stays at 30-59."""
+    want = {(a, mm): v for a in loans for mm, v in ((m - 1, 1), (m, 1))}
+    tape = [dict(r, dpd_bucket_reported=want[(r["asset_id"], r["month"])], eligible_reported=True)
+            if (r["asset_id"], r["month"]) in want else r for r in rows(book, "tape")]
+    truth = {(a, m - 1): 1 for a in loans} | {(a, m): 2 for a in loans}
+    if tape_next is not None:  # what the tape says the month after
+        tape = [dict(r, dpd_bucket_reported=tape_next, eligible_reported=tape_next <= 1)
+                if r["asset_id"] in loans and r["month"] == m + 1 else r for r in tape]
+        truth |= {(a, m + 1): true_next for a in loans}
+    save(book, "tape", tape)
+    save(book, "source_truth", [dict(r, dpd_bucket_true=truth[(r["asset_id"], r["month"])])
+                                if (r["asset_id"], r["month"]) in truth else r for r in rows(book, "source_truth")])
+
+
+def _big_honest_auto(book):
+    tape = rows(book, "tape")
+    n = {b: sum(1 for r in tape if r["borrower_id"] == b and r["month"] == 23 and r["eligible_reported"])
+         for b in honest(book, {"auto_finance"})}
+    return max(n, key=n.get)
+
+
+@pytest.mark.parametrize("k,flagged", [(2, False), (3, True)])
+def test_loans_that_just_rolled_are_a_timing_difference_unless_many_at_once(book, k, flagged):
+    b = _big_honest_auto(book)
+    loans = sorted(a for bb, a in _pull(book, 23) if bb == b)[:k]
+    _roll(book, b, loans, 23)
+    assert bool(clues(book, b, "SOURCE_MISMATCH")) is flagged
+    assert bool(clues(book, b, "TIMING_UNCONFIRMED")) is not flagged
+
+
+@pytest.mark.parametrize("caught_up", [True, False])
+def test_a_timing_difference_must_catch_up_the_next_month(book, caught_up):
+    b = _big_honest_auto(book)
+    later = {a for bb, a in _pull(book, 23) if bb == b}
+    loans = sorted(a for bb, a in _pull(book, 22) if bb == b and a not in later)[:2]
+    assert len(loans) == 2  # pulled last month, not this month: only the follow-up can see them
+    _roll(book, b, loans, 22, tape_next=2 if caught_up else 1, true_next=3)
+    got = clues(book, b, "SOURCE_MISMATCH")
+    assert bool(got) is not caught_up
+    assert caught_up or "still hasn't caught up" in got[0].explanation
