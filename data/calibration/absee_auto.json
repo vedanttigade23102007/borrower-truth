@@ -4188,5 +4188,342 @@
   "min_roll_forward_rate": 0.1391,
   "max_late60_current_no_pay_share": 0.1217,
   "pools": 28
+ },
+ "balance_rises": {
+  "pools": [
+   {
+    "trust": "Exeter Select Automobile Receivables Trust 2025-1",
+    "family": "Exeter Select",
+    "tier": "near-prime",
+    "loan_months": 16810,
+    "rose": 5,
+    "rose_1usd": 6,
+    "max_rise": 444.98,
+    "monthly_rate": 0.000297,
+    "projected_share": 0.00711
+   },
+   {
+    "trust": "ALLY AUTO RECEIVABLES TRUST 2024-1",
+    "family": "Ally",
+    "tier": "prime",
+    "loan_months": 44364,
+    "rose": 49,
+    "rose_1usd": 49,
+    "max_rise": 800.47,
+    "monthly_rate": 0.001104,
+    "projected_share": 0.02617
+   },
+   {
+    "trust": "BMW Vehicle Owner Trust 2023-A",
+    "family": "BMW",
+    "tier": "prime",
+    "loan_months": 30971,
+    "rose": 1,
+    "rose_1usd": 1,
+    "max_rise": 27.68,
+    "monthly_rate": 3.2e-05,
+    "projected_share": 0.00077
+   },
+   {
+    "trust": "Capital One Prime Auto Receivables Trust 2023-1",
+    "family": "Capital One",
+    "tier": "prime",
+    "loan_months": 52402,
+    "rose": 1,
+    "rose_1usd": 2,
+    "max_rise": 9.97,
+    "monthly_rate": 1.9e-05,
+    "projected_share": 0.00046
+   },
+   {
+    "trust": "CarMax Auto Owner Trust 2024-1",
+    "family": "CarMax",
+    "tier": "prime",
+    "loan_months": 66525,
+    "rose": 55,
+    "rose_1usd": 62,
+    "max_rise": 1006.91,
+    "monthly_rate": 0.000827,
+    "projected_share": 0.01965
+   },
+   {
+    "trust": "Carvana Auto Receivables Trust 2024-P2",
+    "family": "Carvana prime",
+    "tier": "prime",
+    "loan_months": 23476,
+    "rose": 4,
+    "rose_1usd": 4,
+    "max_rise": 234.65,
+    "monthly_rate": 0.00017,
+    "projected_share": 0.00408
+   },
+   {
+    "trust": "Fifth Third Auto Trust 2023-1",
+    "family": "Fifth Third",
+    "tier": "prime",
+    "loan_months": 64672,
+    "rose": 26,
+    "rose_1usd": 28,
+    "max_rise": 162.05,
+    "monthly_rate": 0.000402,
+    "projected_share": 0.0096
+   },
+   {
+    "trust": "Ford Credit Auto Owner Trust 2024-A",
+    "family": "Ford Credit",
+    "tier": "prime",
+    "loan_months": 46172,
+    "rose": 16,
+    "rose_1usd": 20,
+    "max_rise": 5896.53,
+    "monthly_rate": 0.000347,
+    "projected_share": 0.00828
+   },
+   {
+    "trust": "GM Financial Consumer Automobile Receivables Trust 2024-1",
+    "family": "GM Financial prime",
+    "tier": "prime",
+    "loan_months": 48504,
+    "rose": 10,
+    "rose_1usd": 11,
+    "max_rise": 2455.08,
+    "monthly_rate": 0.000206,
+    "projected_share": 0.00494
+   },
+   {
+    "trust": "Honda Auto Receivables 2024-1 Owner Trust",
+    "family": "Honda",
+    "tier": "prime",
+    "loan_months": 92465,
+    "rose": 24,
+    "rose_1usd": 29,
+    "max_rise": 1003.35,
+    "monthly_rate": 0.00026,
+    "projected_share": 0.00621
+   },
+   {
+    "trust": "Hyundai Auto Receivables Trust 2024-A",
+    "family": "Hyundai",
+    "tier": "prime",
+    "loan_months": 78933,
+    "rose": 8,
+    "rose_1usd": 11,
+    "max_rise": 660.05,
+    "monthly_rate": 0.000101,
+    "projected_share": 0.00243
+   },
+   {
+    "trust": "Mercedes-Benz Auto Receivables Trust 2024-1",
+    "family": "Mercedes-Benz",
+    "tier": "prime",
+    "loan_months": 23436,
+    "rose": 15,
+    "rose_1usd": 15,
+    "max_rise": 2492.39,
+    "monthly_rate": 0.00064,
+    "projected_share": 0.01525
+   },
+   {
+    "trust": "Nissan Auto Receivables 2024-A Owner Trust",
+    "family": "Nissan",
+    "tier": "prime",
+    "loan_months": 68197,
+    "rose": 8,
+    "rose_1usd": 9,
+    "max_rise": 314.92,
+    "monthly_rate": 0.000117,
+    "projected_share": 0.00281
+   },
+   {
+    "trust": "Toyota Auto Receivables 2024-A Owner Trust",
+    "family": "Toyota",
+    "tier": "prime",
+    "loan_months": 71740,
+    "rose": 37,
+    "rose_1usd": 41,
+    "max_rise": 447.06,
+    "monthly_rate": 0.000516,
+    "projected_share": 0.0123
+   },
+   {
+    "trust": "Volkswagen Auto Loan Enhanced Trust 2023-1",
+    "family": "Volkswagen",
+    "tier": "prime",
+    "loan_months": 44509,
+    "rose": 19,
+    "rose_1usd": 24,
+    "max_rise": 223.36,
+    "monthly_rate": 0.000427,
+    "projected_share": 0.01019
+   },
+   {
+    "trust": "World Omni Auto Receivables Trust 2024-A",
+    "family": "World Omni",
+    "tier": "prime",
+    "loan_months": 42365,
+    "rose": 49,
+    "rose_1usd": 50,
+    "max_rise": 9269.28,
+    "monthly_rate": 0.001157,
+    "projected_share": 0.02739
+   },
+   {
+    "trust": "AmeriCredit Automobile Receivables Trust 2022-1",
+    "family": "AmeriCredit (GM Financial)",
+    "tier": "subprime",
+    "loan_months": 22321,
+    "rose": 25,
+    "rose_1usd": 28,
+    "max_rise": 743.66,
+    "monthly_rate": 0.00112,
+    "projected_share": 0.02654
+   },
+   {
+    "trust": "AmeriCredit Automobile Receivables Trust 2024-1",
+    "family": "AmeriCredit (GM Financial)",
+    "tier": "subprime",
+    "loan_months": 53165,
+    "rose": 93,
+    "rose_1usd": 97,
+    "max_rise": 6359.89,
+    "monthly_rate": 0.001749,
+    "projected_share": 0.04115
+   },
+   {
+    "trust": "Bridgecrest Lending Auto Securitization Trust 2024-1",
+    "family": "Bridgecrest (DriveTime)",
+    "tier": "subprime",
+    "loan_months": 20936,
+    "rose": 12,
+    "rose_1usd": 16,
+    "max_rise": 503.07,
+    "monthly_rate": 0.000573,
+    "projected_share": 0.01367
+   },
+   {
+    "trust": "Bridgecrest Lending Auto Securitization Trust 2026-2",
+    "family": "Bridgecrest (DriveTime)",
+    "tier": "subprime",
+    "loan_months": 62837,
+    "rose": 123,
+    "rose_1usd": 136,
+    "max_rise": 478.07,
+    "monthly_rate": 0.001957,
+    "projected_share": 0.04594
+   },
+   {
+    "trust": "Carvana Auto Receivables Trust 2021-N1",
+    "family": "Carvana non-prime",
+    "tier": "subprime",
+    "loan_months": 5805,
+    "rose": 1,
+    "rose_1usd": 1,
+    "max_rise": 12.48,
+    "monthly_rate": 0.000172,
+    "projected_share": 0.00413
+   },
+   {
+    "trust": "Carvana Auto Receivables Trust 2021-N4",
+    "family": "Carvana non-prime",
+    "tier": "subprime",
+    "loan_months": 8135,
+    "rose": 1,
+    "rose_1usd": 1,
+    "max_rise": 147.88,
+    "monthly_rate": 0.000123,
+    "projected_share": 0.00295
+   },
+   {
+    "trust": "DRIVE AUTO RECEIVABLES TRUST 2025-2",
+    "family": "Drive Auto (Santander)",
+    "tier": "subprime",
+    "loan_months": 87087,
+    "rose": 55,
+    "rose_1usd": 56,
+    "max_rise": 753.2,
+    "monthly_rate": 0.000632,
+    "projected_share": 0.01505
+   },
+   {
+    "trust": "Drive Auto Receivables Trust 2024-1",
+    "family": "Drive Auto (Santander)",
+    "tier": "subprime",
+    "loan_months": 37572,
+    "rose": 14,
+    "rose_1usd": 15,
+    "max_rise": 600.45,
+    "monthly_rate": 0.000373,
+    "projected_share": 0.0089
+   },
+   {
+    "trust": "Exeter Automobile Receivables Trust 2024-1",
+    "family": "Exeter",
+    "tier": "subprime",
+    "loan_months": 22942,
+    "rose": 9,
+    "rose_1usd": 9,
+    "max_rise": 412.36,
+    "monthly_rate": 0.000392,
+    "projected_share": 0.00937
+   },
+   {
+    "trust": "Exeter Automobile Receivables Trust 2026-2",
+    "family": "Exeter",
+    "tier": "subprime",
+    "loan_months": 49101,
+    "rose": 41,
+    "rose_1usd": 44,
+    "max_rise": 517.27,
+    "monthly_rate": 0.000835,
+    "projected_share": 0.01985
+   },
+   {
+    "trust": "Santander Drive Auto Receivables Trust 2024-1",
+    "family": "Santander Drive",
+    "tier": "subprime",
+    "loan_months": 39478,
+    "rose": 13,
+    "rose_1usd": 13,
+    "max_rise": 1713.19,
+    "monthly_rate": 0.000329,
+    "projected_share": 0.00787
+   },
+   {
+    "trust": "Santander Drive Auto Receivables Trust 2026-1",
+    "family": "Santander Drive",
+    "tier": "subprime",
+    "loan_months": 136327,
+    "rose": 64,
+    "rose_1usd": 69,
+    "max_rise": 686.9,
+    "monthly_rate": 0.000469,
+    "projected_share": 0.01121
+   }
+  ],
+  "book_months": 24,
+  "max_monthly_rate": 0.001957,
+  "max_projected_share": 0.04594,
+  "pools_with_a_rise_over_1usd": 28,
+  "n_pools": 28
+ },
+ "contract_collisions": {
+  "month+amount": {
+   "open_loan_rows": 1598456,
+   "loans_sharing_the_key": 16015,
+   "shared_keys": 6721,
+   "share": 0.010019
+  },
+  "month+amount+term+rate+state": {
+   "open_loan_rows": 1598456,
+   "loans_sharing_the_key": 440,
+   "shared_keys": 218,
+   "share": 0.000275
+  },
+  "month+amount+term+rate+state+make+model+year": {
+   "open_loan_rows": 1598456,
+   "loans_sharing_the_key": 302,
+   "shared_keys": 150,
+   "share": 0.000189
+  }
  }
 }

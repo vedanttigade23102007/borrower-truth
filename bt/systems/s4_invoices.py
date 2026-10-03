@@ -14,7 +14,9 @@ and double-pledged invoices"; "the dollar amounts on invoices were altered"
                        Both the last six months together and any single month's invoices
   CUSTOMER_NEVER_PAID  a customer with several invoices past due has never paid the borrower
                        anything: no payment for any of its invoices, and none from it at all,
-                       reached the collection account (the bank's own cash records)
+                       reached the collection account (the bank's own cash records). A customer
+                       paying the borrower directly looks the same, so the case asks where it
+                       pays, and it needs another source to reach likely fraud
 
 Evidence stays in view while the collateral is still pledged (red team round 3, Vedant 3 Oct 2026): an invoice that
 is still unpaid is checked however old it is, not only within the last few months.
@@ -204,7 +206,9 @@ def run(ctx: Ctx):
     for r in ctx.rows(NEVER_PAID, [a, NEVER_PAID_MIN]):
         out.append(sig("S4", r["borrower_id"], "CUSTOMER_NEVER_PAID", 0.8, 0.9,
                        [f"invoice:{x}" for x in r["ex"]] + [f"debtor:{r['debtor_id']}", f"count:{r['n']}"],
-                       f"'{r['name']}' has {r['n']} invoices past due (${r['face']:,.0f}) and has never paid this borrower "
-                       f"anything: no payment for any of its invoices, and none from it, reached the collection account. "
-                       f"Confirm the invoices with the customer", r["first_m"], [r["debtor_id"]]))
+                       f"'{r['name']}' has {r['n']} invoices past due (${r['face']:,.0f}) and no payment from it, or for "
+                       f"any of its invoices, has reached the collection account. Either the invoices aren't real, or the "
+                       f"customer pays somewhere else (to the borrower directly or another account), which breaks the "
+                       f"cash-dominion terms: ask where it pays, and confirm the invoices with the customer",
+                       r["first_m"], [r["debtor_id"]]))
     return out

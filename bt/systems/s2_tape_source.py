@@ -32,7 +32,8 @@ Checks (window = the three most recent complete months):
                             current, not deferred, and the bank received their payment: a paying
                             loan's balance only goes down (red team round 3: fees capitalized into
                             real loans, in the tape and the servicer records alike). Checked against
-                            the bank's own receipts, over the loan's whole life on the tape
+                            the bank's own receipts, over the loan's whole life on the tape. Real
+                            honest pools show some rises, so the line is set above all 28 of them
   ATTRIBUTE_REWRITE         a loan's credit score at origination should never change;
                             several were rewritten from below the 600 eligibility line
                             to above it (Tricolor, as alleged: ineligible collateral
@@ -203,7 +204,11 @@ SELECT r.borrower_id, count(DISTINCT r.asset_id) AS n, sum(r.rise) AS usd, min(r
        (SELECT count(DISTINCT asset_id) FROM t WHERE t.borrower_id = r.borrower_id AND t.month = ?) AS on_tape
 FROM rose r GROUP BY 1 ORDER BY 1
 """
-ROSE_MIN, ROSE_SHARE = 3, 0.01  # a few loans and at least 1% of the book: one fee correction is not a pattern
+# Calibrated on 28 real public auto pools (bt/sec/calibrate.py --round3-facts): honest servicers do show current,
+# paid, unmodified loans rising, up to 0.20% of loan-months in one pool. Counted over a loan's 24 months on a tape,
+# that's up to 4.6% of loans. The line sits half as high again above that worst pool. It's a clue, not a fact: it needs
+# another source before it can reach likely fraud (bt/combiner/combine.py)
+ROSE_MIN, ROSE_SHARE = 3, 0.07
 
 REWRITE = """
 WITH a AS (

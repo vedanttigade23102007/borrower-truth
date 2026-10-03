@@ -129,14 +129,27 @@ public final class Playbooks {
     public static final StepTemplate EXPLAIN = new StepTemplate("CHECK_EXPLAIN", "Ask the borrower to explain the listed items",
             Kind.LETTER, "BORROWER", "an explanation of each listed item, with supporting documents", 10);
 
+    /** A customer that has never paid into the collection account may be paying somewhere else: ask where. */
+    public static final StepTemplate PAYMENT_ROUTE = new StepTemplate("CHECK_PAYMENT_ROUTE",
+            "Ask where the listed customer pays", Kind.LETTER, "BORROWER",
+            "for each listed customer, where it sends its payments (the collection account, another account, or to you "
+                    + "directly), statements of any other account its payments reached, and a contact so the bank can "
+                    + "confirm the listed invoices with the customer. Customer payments that bypass the collection "
+                    + "account are not allowed under the cash-dominion terms", 10);
+
     private static final Set<String> LIEN_TYPES = Set.of("COMPETING_LIEN", "UNDISCLOSED_SECURED_PARTY");
+    private static final Set<String> PAYMENT_ROUTE_TYPES = Set.of("CUSTOMER_NEVER_PAID");
 
     /** The one step that can clear a "worth a look" finding. A lien filed before onboarding (S5 dates it before
-     *  month 0) is most often a repaid loan whose filing was never terminated, so the release is what to ask for. */
+     *  month 0) is most often a repaid loan whose filing was never terminated, so the release is what to ask for. A
+     *  customer that never paid into the collection account may be paying the borrower directly: ask where it pays. */
     public static StepTemplate checkFor(FindingIn finding, List<SignalIn> signals) {
         boolean staleLien = signals != null && finding.signals() != null && signals.stream()
                 .anyMatch(s -> finding.signals().contains(s.signalId()) && LIEN_TYPES.contains(s.type()) && s.observedMonth() < 0);
-        return staleLien ? LIEN_RELEASE : CHECK_BY_MECHANISM.getOrDefault(finding.mechanism(), EXPLAIN);
+        if (staleLien) return LIEN_RELEASE;
+        boolean neverPaid = signals != null && finding.signals() != null && signals.stream()
+                .anyMatch(s -> finding.signals().contains(s.signalId()) && PAYMENT_ROUTE_TYPES.contains(s.type()));
+        return neverPaid ? PAYMENT_ROUTE : CHECK_BY_MECHANISM.getOrDefault(finding.mechanism(), EXPLAIN);
     }
 
     public static boolean isCheck(String code) {

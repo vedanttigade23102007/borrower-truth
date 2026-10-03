@@ -30,8 +30,9 @@ First Brands F1).
    asking about, because from then on nobody can see whether the collateral is
    pledged elsewhere.
 7. The same vehicle, or the same loan contract (customer, origination month and amount), listed twice in ONE facility
-   under different loan numbers: one vehicle, one contract, one pledge (red team round 3: "participations" split off
-   real loans). Reported as DUPLICATE_ASSET, like a vehicle pledged in two facilities.
+   under different loan numbers, both counted in the borrowing base: one vehicle, one contract, one pledge (red team
+   round 3: "participations" split off real loans). Reported as DUPLICATE_ASSET, like a vehicle pledged in two
+   facilities. A repossessed car resold under a new loan, with the old loan closed, doesn't count.
 """
 from bt.common import bank
 from bt.systems.base import Ctx, sig
@@ -84,11 +85,14 @@ FROM (SELECT borrower_id, month, vin FROM tape
 GROUP BY 1
 """
 
-# the same vehicle or the same contract twice in one facility, in the same month, under different loan numbers
+# the same vehicle or the same contract twice in one facility, in the same month, under different loan numbers, both
+# counted in the borrowing base (eligible, with a balance). A repossessed car resold under a new loan, with the old loan
+# closed or written down, is one pledge, not two. The contract key needs the lender's customer ID: without it, 1.0% of
+# real public loans share an origination month and amount with another loan in the same pool (calibrate.py)
 TAPE_DUP_IN = """
 WITH k AS (
     SELECT borrower_id, facility_id, month, 'vin ' || vin AS item FROM tape
-    WHERE month BETWEEN ? AND ? AND coalesce(vin, '') <> ''
+    WHERE month BETWEEN ? AND ? AND coalesce(vin, '') <> '' AND eligible_reported AND balance > 0
     GROUP BY 1, 2, 3, 4 HAVING count(DISTINCT asset_id) > 1
     {contract}
 )
@@ -100,6 +104,7 @@ TAPE_DUP_CONTRACT = """
     SELECT borrower_id, facility_id, month,
            'contract ' || obligor_id || ' ' || CAST(orig_month AS VARCHAR) || ' ' || CAST(round(orig_amount, 2) AS VARCHAR)
     FROM tape WHERE month BETWEEN ? AND ? AND coalesce(obligor_id, '') <> '' AND orig_amount IS NOT NULL
+      AND eligible_reported AND balance > 0
     GROUP BY 1, 2, 3, 4 HAVING count(DISTINCT asset_id) > 1"""
 
 INV_DUP = """

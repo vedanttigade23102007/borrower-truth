@@ -52,5 +52,29 @@ def test_score_edge_line_sits_above_every_real_pool(cal):
             assert e["ratio"] < s2.EDGE_RATIO_REAL * s2.EDGE_FACTOR, e["trust"]
 
 
+def test_balance_rise_line_sits_above_every_real_pool(cal):
+    # honest servicers do show current, paid, unmodified loans rising now and then; counted over a loan's 24 months on
+    # a tape, every real pool must stay below S2's line, with room to spare
+    br = cal["balance_rises"]
+    assert br["n_pools"] >= 20 and br["book_months"] == 24
+    for p in br["pools"]:
+        assert p["projected_share"] < s2.ROSE_SHARE, p["trust"]
+    assert s2.ROSE_SHARE >= 1.4 * br["max_projected_share"]
+
+
+def test_a_rising_balance_or_a_never_paying_customer_needs_another_source(cal):
+    from bt.combiner import combine
+    # real honest pools rise sometimes; a customer paying the borrower directly looks like one that never paid
+    assert "BALANCE_ROSE_WHILE_PAID" not in combine.FACT and "CUSTOMER_NEVER_PAID" not in combine.FACT
+
+
+def test_the_same_contract_key_needs_the_lenders_customer_id(cal):
+    from bt.systems import s1_collateral as s1
+    # without a customer ID, 1% of real public loans share an origination month and amount with another loan in the
+    # same pool; the key must carry the lender's customer ID, and both loans must be counted in the borrowing base
+    assert cal["contract_collisions"]["month+amount"]["share"] > 0.005
+    assert "obligor_id" in s1.TAPE_DUP_CONTRACT and "eligible_reported" in s1.TAPE_DUP_CONTRACT
+
+
 def test_real_servicers_never_rewrite_credit_scores(cal):
     assert cal["score_changes"]["loans"] > 500_000 and cal["score_changes"]["changed"] == 0

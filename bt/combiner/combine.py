@@ -79,9 +79,10 @@ FACT = {"DUPLICATE_ASSET", "PLEDGECHECK_UNIQUENESS_FAIL", "ALTERED_INVOICE", "SO
         # what the borrower told the SEC contradicts what it told the bank: checkable in the filing itself
         "FILED_DEBT_UNDISCLOSED", "FILED_VS_REPORTED",
         # named loans, matched to the public trust, whose payments no longer reach Wells Fargo: checkable per loan
-        "POOL_LOANS_PAID_ELSEWHERE",
-        # checked against the bank's own receipts, loan by loan or customer by customer (red team round 3)
-        "BALANCE_ROSE_WHILE_PAID", "CUSTOMER_NEVER_PAID"}
+        "POOL_LOANS_PAID_ELSEWHERE"}
+# Not facts, though checked against the bank's own receipts (red team round 3): real honest loans' balances do rise now
+# and then (calibrated on 28 real pools), and a customer that pays the borrower directly, bypassing the collection
+# account, looks like one that never paid. Each needs another source before it can reach likely fraud.
 
 # an undisclosed lien on the loan collateral itself means that collateral is pledged twice
 DOUBLE_PLEDGE_HINT = ("receivables and chattel paper",)

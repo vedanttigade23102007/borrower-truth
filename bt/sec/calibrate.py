@@ -233,7 +233,73 @@ def run():
     return out
 
 
+# months a loan can sit on one of our books' tapes: the rule counts any month of its life there
+BOOK_MONTHS = 24
+
+
+def balance_rises(c) -> dict:
+    """How often an honest servicer shows a current, paid, unmodified loan's balance going UP within a month: what
+    S2's BALANCE_ROSE_WHILE_PAID must stay clear of. Same rise test as the check: over max($1, 0.1%).
+    The check counts a loan once if it rose in any month of its life on the tape, so each pool's monthly rate is
+    projected over BOOK_MONTHS: 1 - (1 - p)^24."""
+    pools = rows(c, """
+        SELECT trust, family, tier,
+               count(*) AS loan_months,
+               count(*) FILTER (WHERE end_bal - beg_bal > greatest(1.0, 0.001 * beg_bal)) AS rose,
+               count(*) FILTER (WHERE end_bal - beg_bal > 1.0) AS rose_1usd,
+               max(end_bal - beg_bal) AS max_rise
+        FROM s
+        WHERE status = 'current' AND coalesce(paid, 0) > 0 AND NOT coalesce(modified, false)
+          AND coalesce(extended, 0) = 0 AND coalesce(beg_bal, 0) > 0 AND end_bal IS NOT NULL
+        GROUP BY 1, 2, 3 ORDER BY 3, 1""")
+    for p in pools:
+        p["monthly_rate"] = p["rose"] / max(p["loan_months"], 1)
+        p["projected_share"] = round(1 - (1 - p["monthly_rate"]) ** BOOK_MONTHS, 5)
+        p["monthly_rate"] = round(p["monthly_rate"], 6)
+        p["max_rise"] = round(p["max_rise"] or 0.0, 2)
+    return dict(pools=pools, book_months=BOOK_MONTHS,
+                max_monthly_rate=max(p["monthly_rate"] for p in pools),
+                max_projected_share=max(p["projected_share"] for p in pools),
+                pools_with_a_rise_over_1usd=sum(p["rose_1usd"] > 0 for p in pools), n_pools=len(pools))
+
+
+def contract_collisions(c) -> dict:
+    """S1's same-facility check calls two loan numbers one contract when they share the customer, the origination
+    month and the amount. ABS-EE has no customer ID, so this measures the key WITHOUT it, within each pool and report:
+    an upper bound on how often two different real loans could collide. With the lender's own customer ID added, two
+    loans collide only if one customer took out two loans in the same month for the same amount."""
+    keys = {"month+amount": "orig_ym, orig_amt",
+            "month+amount+term+rate+state": "orig_ym, orig_amt, term, rate, state",
+            "month+amount+term+rate+state+make+model+year": "orig_ym, orig_amt, term, rate, state, make, model, model_year"}
+    out = {}
+    for name, cols in keys.items():
+        r = c.execute(f"""
+            WITH o AS (SELECT * FROM s WHERE coalesce(end_bal, 0) > 0 AND orig_amt > 0 AND orig_ym IS NOT NULL),
+            g AS (SELECT trust, period_end, {cols}, count(DISTINCT asset) AS n FROM o GROUP BY ALL)
+            SELECT (SELECT count(*) FROM o), coalesce(sum(n) FILTER (WHERE n > 1), 0), count(*) FILTER (WHERE n > 1)
+            FROM g""").fetchone()
+        out[name] = dict(open_loan_rows=r[0], loans_sharing_the_key=int(r[1]), shared_keys=int(r[2]),
+                         share=round(r[1] / max(r[0], 1), 6))
+    return out
+
+
+def patch(fields: dict) -> None:
+    """Add measurements to absee_auto.json without rebuilding the rest (the sample the generator draws from stays)."""
+    p = os.path.join(OUT, "absee_auto.json")
+    o = json.load(open(p))
+    o.update(fields)
+    json.dump(o, open(p, "w"), indent=1, default=str)
+
+
 if __name__ == "__main__":
+    import sys
+    if sys.argv[1:] == ["--round3-facts"]:
+        cc = con()
+        f = dict(balance_rises=balance_rises(cc), contract_collisions=contract_collisions(cc))
+        patch(f)
+        print(json.dumps({"balance_rises": {k: v for k, v in f["balance_rises"].items() if k != "pools"},
+                          "contract_collisions": f["contract_collisions"]}, indent=1))
+        sys.exit(0)
     o = run()
     print(json.dumps({k: o[k] for k in ("files", "loan_rows", "open_loans_month1", "pairs", "current_no_payment",
                                         "late_to_current", "score_changes", "fingerprint")}, indent=1, default=str))

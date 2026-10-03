@@ -233,14 +233,19 @@ def _paid_loans(book, b, month):
                   r["dpd_bucket_reported"] == 0 and r["asset_id"] in later and (r["asset_id"], month) in pay)
 
 
-@pytest.mark.parametrize("deferred,fires", [(False, True), (True, False)])
-def test_a_paying_loan_whose_balance_rises_is_caught(book, deferred, fires):
+@pytest.mark.parametrize("share,deferred,fires", [(0.09, False, True), (0.09, True, False), (0.05, False, False)])
+def test_paying_loans_whose_balances_rise_are_caught(book, share, deferred, fires):
+    import math
+    from bt.systems.s2_tape_source import ROSE_SHARE
     b = _big_honest_auto(book)
-    loans = set(_paid_loans(book, b, 8)[:5])
-    assert len(loans) == 5
+    on_tape = len({r["asset_id"] for r in rows(book, "tape") if r["borrower_id"] == b and r["month"] == 23})
+    k = math.ceil(share * on_tape)
+    loans = set(_paid_loans(book, b, 8)[:k])
+    assert len(loans) == k and (k / on_tape >= ROSE_SHARE) is (share > ROSE_SHARE)
     save(book, "tape", [dict(r, balance=r["balance"] * 1.10, deferred_flag=int(deferred and r["month"] == 8))
                         if r["asset_id"] in loans and r["month"] >= 8 else r for r in rows(book, "tape")])
-    assert bool(clues(book, b, "BALANCE_ROSE_WHILE_PAID")) is fires  # month 8, seen at month 24: still pledged
+    # month 8, seen at month 24: still pledged. Under the line calibrated on real pools (5%), it stays quiet
+    assert bool(clues(book, b, "BALANCE_ROSE_WHILE_PAID")) is fires
 
 
 @pytest.mark.parametrize("same_contract,fires", [(True, True), (False, False)])
@@ -258,6 +263,25 @@ def test_the_same_vehicle_or_contract_twice_in_one_facility(book, same_contract,
     save(book, "tape", tape + extra)
     got = [s for s in clues(book, b, "DUPLICATE_ASSET") if "same_facility" in s.evidence]
     assert bool(got) is fires
+
+
+@pytest.mark.parametrize("old_loan", ["closed", "written_down"])
+def test_a_repossessed_car_resold_under_a_new_loan_is_one_pledge(book, old_loan):
+    b = _big_honest_auto(book)
+    tape = rows(book, "tape")
+    src = sorted({r["asset_id"] for r in tape if r["borrower_id"] == b and r["month"] == 23})[:2]
+    new = []
+    for r in tape:
+        if r["asset_id"] in src and r["month"] >= 20:  # the same car, resold to a new customer under a new loan
+            new.append(dict(r, asset_id=r["asset_id"] + "-R", obligor_id=r["obligor_id"] + "-NEW",
+                            orig_month=20, orig_amount=r["orig_amount"] * 0.6, balance=r["orig_amount"] * 0.6))
+    if old_loan == "closed":  # the old loan leaves the tape when the car is repossessed
+        tape = [r for r in tape if not (r["asset_id"] in src and r["month"] >= 20)]
+    else:  # or stays, written down to nothing and ineligible
+        tape = [dict(r, balance=0.0, eligible_reported=False, dpd_bucket_reported=3)
+                if r["asset_id"] in src and r["month"] >= 20 else r for r in tape]
+    save(book, "tape", tape + new)
+    assert not [s for s in clues(book, b, "DUPLICATE_ASSET") if "same_facility" in s.evidence]
 
 
 def _new_debtor_invoices(book, b, n, month=6, amount=None, debtor=None):

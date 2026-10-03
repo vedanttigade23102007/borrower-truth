@@ -73,6 +73,25 @@ class PlaybooksTest {
     }
 
     @Test
+    void aCustomerThatNeverPaidAsksWhereItPays() {
+        SignalIn s = new SignalIn("S4-B0003-CUSTOMER_NEVER_PAID-x", "B0003", "S4", "CUSTOMER_NEVER_PAID", 0.8, 0.9,
+                List.of("invoice:INV-1", "debtor:E000900"), "'Quiet Orders LLC' has 4 invoices past due", 6,
+                List.of("E000900"));
+        FindingIn f = new FindingIn("FAKE_INVOICES", "low", "invoices are fake, inflated or altered",
+                List.of(s.signalId()), List.of(), List.of("payments"), List.of("S4"), 6);
+        CaseIn c = new CaseIn("B0003", "NEEDS_MORE_EVIDENCE", "Worth a look: fake invoices", 0.4, List.of(f), List.of(s),
+                List.of(), Map.of("S4", "ok"), null);
+        var t = Playbooks.checkFor(f, c.signals());
+        assertEquals("CHECK_PAYMENT_ROUTE", t.code());
+        DraftWriter.Draft d = new TemplateDraftWriter().write(c, f, t, LocalDate.of(2026, 10, 11));
+        assertTrue(d.text().contains("where it sends its payments"));
+        assertTrue(d.text().contains("does not allege wrongdoing"));
+        // the same mechanism without that clue keeps the general invoice question
+        var plain = new FindingIn("FAKE_INVOICES", "low", "", List.of(), List.of(), List.of(), List.of(), 0);
+        assertEquals("CHECK_INVOICE_SUPPORT", Playbooks.checkFor(plain, List.of()).code());
+    }
+
+    @Test
     void aClueIsWhatItIsAbout() {
         SignalIn lien = lowCase().signals().get(0);
         assertEquals("COMPETING_LIEN|ucc:TX-UCC-000002", Playbooks.clueKey(lien));
