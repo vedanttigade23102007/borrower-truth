@@ -172,11 +172,11 @@ def test_the_largest_new_loans_are_pulled_from_the_servicer(book, in_servicer):
 
 def _pull(book, month):
     import duckdb
-    from bt.systems.s2_tape_source import SAMPLE, SAMPLE_SIZE
+    from bt.systems.s2_tape_source import SAMPLE, SAMPLE_SIZE, draw_key
     con = duckdb.connect()
-    for t in ("tape", "source_truth"):
+    for t in ("tape", "source_truth", "facilities"):  # the pull looks at loans on borrowing-base (warehouse) lines
         con.execute(f"CREATE VIEW {t} AS SELECT * FROM '{book / (t + '.parquet')}'")
-    return {(r[0], r[1]) for r in con.execute(SAMPLE, [month, SAMPLE_SIZE]).fetchall()}
+    return {(r[0], r[1]) for r in con.execute(SAMPLE.replace("@KEY@", draw_key(con)), [month, SAMPLE_SIZE]).fetchall()}
 
 
 def _roll(book, b, loans, m, tape_next=None, true_next=None):

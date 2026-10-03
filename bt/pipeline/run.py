@@ -111,6 +111,19 @@ def run(data_dir: str, as_of: int = 23, simulate_fail: set[str] | None = None, m
     borrowers = [r["borrower_id"] for r in ctx.rows("SELECT borrower_id FROM borrowers ORDER BY 1")]
     t1 = time.perf_counter()
     cases = build_cases(signals, coverage, ctx.explanations, borrowers)
+    not_run = ctx.shared.get("not_run", {})
+    for c in cases:  # a check whose starting list was empty for this borrower: "not run" on its case, never "ok"
+        gaps = not_run.get(c["borrower_id"])
+        if gaps:
+            cov = dict(c["coverage"])
+            for system, items in gaps.items():
+                if not str(cov.get(system, "")).startswith(("ok", "partial")):
+                    continue  # the whole check didn't run anyway, and the case already says so
+                note = "; ".join(f"{check} not run for this borrower ({why})" for check, why in items)
+                cov[system] = f"partial: {note}" if cov[system] == "ok" else f"{cov[system]}; {note}"
+            c["coverage"] = cov
+    metrics["not_run_for_some_borrowers"] = {s: sum(s in g for g in not_run.values())
+                                             for s in sorted({s for g in not_run.values() for s in g})}
     man = record.manifest(data_dir, overrides, as_of, document_model)  # replay record: inputs, rules, code, module
     record.stamp(cases, man)
     metrics["manifest"] = man

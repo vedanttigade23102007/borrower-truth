@@ -1,6 +1,6 @@
 """The file mapper (INTEGRATION.md, section 3): untrusted files read safely, columns suggested, values converted,
-every check, and a round trip: a synthetic book written out as messy lender spreadsheets and mapped back gives
-exactly the same cases."""
+every check, and a round trip: a synthetic book with realistic loan, credit-line and borrower IDs, written out as messy
+lender spreadsheets and mapped back, gives exactly the same cases."""
 import csv
 import datetime as dt
 import json
@@ -219,10 +219,13 @@ def _write(path, head, rows, xlsx, title=None, subtotal_col=None, month_col=None
 
 @pytest.fixture(scope="module")
 def roundtrip(tmp_path_factory):
+    from rename_ids import rename
     root = tmp_path_factory.mktemp("rt")
-    base = root / "base"
-    generate(["--borrowers", "30", "--scale", "0.2", "--seed", "13", "--out", str(base)])
-    _cents(base)
+    gen = root / "generated"
+    generate(["--borrowers", "30", "--scale", "0.2", "--seed", "13", "--out", str(gen)])
+    _cents(gen)
+    base = root / "base"  # realistic, random loan, credit-line and borrower IDs, as a lender's files would carry
+    rename(str(gen), str(base))
     tape, truth, inv = (pq.read_table(base / f"{t}.parquet").to_pylist() for t in ("tape", "source_truth", "invoices"))
     files, junk = [], []
     staging = root / "staging"

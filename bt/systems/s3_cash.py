@@ -57,7 +57,8 @@ WITH o AS (SELECT borrower_id, txn_id, month, month * 30 + day AS d, amount, nor
      -- only payments that settle nothing: a real customer's payment is applied to an invoice or a loan
      i AS (SELECT borrower_id, txn_id, month * 30 + day AS d, amount, norm(payer_name) AS pn FROM payments
            WHERE coalesce(ref, '') = ''
-              OR (ref NOT LIKE 'A-%' AND ref NOT IN (SELECT invoice_number FROM invoices))),
+              OR (ref NOT IN (SELECT asset_id FROM tape WHERE asset_id IS NOT NULL)
+                  AND ref NOT IN (SELECT invoice_number FROM invoices))),
      pairs AS (
         SELECT o.borrower_id, o.pn, o.payee_name, o.txn_id AS out_id, o.month, o.amount, i.txn_id AS in_id
         FROM o JOIN i ON i.borrower_id = o.borrower_id AND i.pn = o.pn
@@ -214,6 +215,10 @@ def month_end_cures(ctx: Ctx) -> list:
     a = ctx.as_of
     if a < 11:
         return []
+    for b, s in ctx.loan_scope().items():  # an empty starting list is "not run" for that borrower, never "ok"
+        if s["rows_any"] and s["pays"] and not s["pays_loans"]:
+            ctx.not_run("S3", b, "the month-end payment check",
+                        f"none of its {s['pays']:,} payments names one of its loan numbers")
     out = []
     for r in ctx.rows(f"""
         SELECT borrower_id,
@@ -221,7 +226,7 @@ def month_end_cures(ctx: Ctx) -> list:
                avg(CASE WHEN day >= {MONTH_END_DAY} THEN 1 ELSE 0 END) FILTER (WHERE month BETWEEN 1 AND 6) AS s0,
                count(*) FILTER (WHERE month BETWEEN {a - 5} AND {a}) AS n1,
                avg(CASE WHEN day >= {MONTH_END_DAY} THEN 1 ELSE 0 END) FILTER (WHERE month BETWEEN {a - 5} AND {a}) AS s1
-        FROM payments WHERE ref LIKE 'A-%' AND month <= {a} GROUP BY 1 ORDER BY 1"""):
+        FROM payments WHERE ref IN (SELECT asset_id FROM tape) AND month <= {a} GROUP BY 1 ORDER BY 1"""):
         if min(r["n0"], r["n1"]) < MONTH_END_MIN_PAYMENTS or r["s1"] - r["s0"] < MONTH_END_JUMP:
             continue
         out.append(sig("S3", r["borrower_id"], "MONTH_END_CURES", 0.7, 0.6,

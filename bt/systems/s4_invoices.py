@@ -81,6 +81,20 @@ ORDER BY 1, 2
 """
 NEVER_PAID_MIN = 3
 
+# per borrower: invoices past due, payments, and how many payments name one of its invoice numbers. If none does, the
+# checks that match payments to invoices would see every invoice as unpaid: "not run" for that borrower, not a flood
+INVOICE_SCOPE = """
+WITH inv AS (SELECT DISTINCT borrower_id, invoice_number FROM invoices),
+due AS (SELECT borrower_id, count(*) AS n
+        FROM (SELECT borrower_id, invoice_number, min(issue_month) AS im, min(due_days) AS d FROM invoices GROUP BY 1, 2)
+        WHERE im + CAST(ceil(d / 30.0) AS INTEGER) + 1 <= ? GROUP BY 1),
+p AS (SELECT p.borrower_id, count(*) AS pays, count(inv.invoice_number) AS pays_inv
+      FROM payments p LEFT JOIN inv ON inv.borrower_id = p.borrower_id AND inv.invoice_number = p.ref GROUP BY 1)
+SELECT due.borrower_id, due.n AS past_due, coalesce(p.pays, 0) AS pays, coalesce(p.pays_inv, 0) AS pays_inv
+FROM due LEFT JOIN p USING (borrower_id) ORDER BY 1
+"""
+MATCHING = "the checks that match payments to invoices"
+
 # dilution: the share of a paid invoice's face value that never arrived as cash, by issue month. Only invoices old
 # enough to have been paid, and only paid ones: never-paid invoices are UNPAID_BY_DEBTOR's job
 DILUTION = """
@@ -117,6 +131,8 @@ def dilution(ctx: Ctx) -> list:
         by_b.setdefault(r["borrower_id"], []).append(r)
     out = []
     for b, months in by_b.items():
+        if ctx.skipped("S4", b, MATCHING):
+            continue
         base, recent = months[:DILUTION_BASE_MONTHS], months[-DILUTION_RECENT_MONTHS:]
         if len(months) < DILUTION_BASE_MONTHS + DILUTION_RECENT_MONTHS:
             continue  # not enough history to have both an early yardstick and a separate recent window
@@ -185,6 +201,10 @@ def document_check(ctx: Ctx) -> list:
 
 
 def run(ctx: Ctx):
+    for r in ctx.rows(INVOICE_SCOPE, [ctx.as_of]):  # an empty starting list is "not run" for that borrower, never "ok"
+        if r["past_due"] and r["pays"] and not r["pays_inv"]:
+            ctx.not_run("S4", r["borrower_id"], MATCHING,
+                        f"none of its {r['pays']:,} payments names one of its invoice numbers")
     out, a = document_check(ctx) + dilution(ctx), ctx.as_of
     for r in ctx.rows(ALTERED):
         out.append(sig("S4", r["borrower_id"], "ALTERED_INVOICE", 0.9, 0.95,
@@ -192,6 +212,8 @@ def run(ctx: Ctx):
                        f"{r['n']} invoice numbers were submitted more than once with different amounts "
                        f"(up to {r['max_ratio']:.1f}x the original)", r["first_m"]))
     for r in ctx.rows(UNPAID, [a, max(0, a - 9)]):
+        if ctx.skipped("S4", r["borrower_id"], MATCHING):
+            continue
         if r["n"] >= 20 and r["unpaid"] / r["n"] > 0.06:
             rate = r["unpaid"] / r["n"]
             out.append(sig("S4", r["borrower_id"], "UNPAID_BY_DEBTOR", min(1.0, rate * 3), 0.8,
@@ -199,11 +221,13 @@ def run(ctx: Ctx):
                            f"{rate:.1%} of invoices past due were never paid by the named customer "
                            f"({r['unpaid']} of {r['n']})", a))
     for r in ctx.rows(IMPLAUSIBLE, [max(0, a - 9)]):
-        if r["n"] >= 2:
+        if r["n"] >= 2 and not ctx.skipped("S4", r["borrower_id"], MATCHING):
             out.append(sig("S4", r["borrower_id"], "IMPLAUSIBLE_AMOUNT", 0.6, 0.7,
                            [f"invoice:{x}" for x in r["ex"]] + [f"count:{r['n']}"],
                            f"{r['n']} invoices are over 5x what the named customer normally pays", r["first_m"]))
     for r in ctx.rows(NEVER_PAID, [a, NEVER_PAID_MIN]):
+        if ctx.skipped("S4", r["borrower_id"], MATCHING):
+            continue
         out.append(sig("S4", r["borrower_id"], "CUSTOMER_NEVER_PAID", 0.8, 0.9,
                        [f"invoice:{x}" for x in r["ex"]] + [f"debtor:{r['debtor_id']}", f"count:{r['n']}"],
                        f"'{r['name']}' has {r['n']} invoices past due (${r['face']:,.0f}) and no payment from it, or for "

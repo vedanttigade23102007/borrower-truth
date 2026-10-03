@@ -35,13 +35,13 @@ First Brands F1).
    facilities. A repossessed car resold under a new loan, with the old loan closed, doesn't count.
 """
 from bt.common import bank
-from bt.systems.base import Ctx, sig
+from bt.systems.base import WAREHOUSE, Ctx, sig
 
-OVERLAP = """
+OVERLAP = f"""
 WITH t AS (
     SELECT DISTINCT borrower_id, asset_id, month, orig_month, round(orig_amount, 2) AS amt, term, round(rate, 4) AS rate,
            upper(make) AS make, upper(model) AS model, model_year, obligor_state, credit_score
-    FROM tape WHERE month BETWEEN ? AND ? AND coalesce(make, '') <> '' AND facility_id LIKE '%A'
+    FROM tape WHERE month BETWEEN ? AND ? AND coalesce(make, '') <> '' AND {WAREHOUSE}
 ), p AS (
     SELECT DISTINCT issuer_borrower_id AS borrower_id, pool_id, month, orig_month, round(orig_amount, 2) AS amt, term,
            round(rate, 4) AS rate, upper(make) AS make, upper(model) AS model, model_year, obligor_state, credit_score
@@ -170,6 +170,10 @@ def run(ctx: Ctx):
                        r["first_m"]))
     if not ctx.shared.get("sec_off") and {"make", "credit_score"} <= tape_cols:  # older books lack loan attributes
         a = ctx.as_of
+        for b, s in ctx.loan_scope().items():  # an empty starting list is "not run" for that borrower, never "ok"
+            if s["rows_any"] and not s["rows_wh"]:
+                ctx.not_run("S1", b, "public-pool overlap",
+                            f"none of its {s['rows_any']:,} loan rows is on a borrowing-base (warehouse) line")
         for r in ctx.rows(OVERLAP, [max(0, a - OVERLAP_WINDOW), a, max(0, a - OVERLAP_WINDOW), a,
                                     OVERLAP_AMOUNT_TOL, OVERLAP_SCORE_TOL]):
             if r["n"] < OVERLAP_MIN:

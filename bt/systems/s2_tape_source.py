@@ -55,14 +55,14 @@ lenders, April-May 2026; bt/sec/calibrate.py -> data/calibration/absee_auto.json
   - a loan's credit score at origination changed between monthly reports: 0 of 774,975 real
     loans, so ATTRIBUTE_REWRITE has no honest base rate to hide in.
 """
-from bt.systems.base import Ctx, sig
+from bt.systems.base import WAREHOUSE, Ctx, sig
 
-CURRENT_NO_PAY = """
+CURRENT_NO_PAY = f"""
 WITH t AS (
     SELECT borrower_id, month, asset_id, deferred_flag FROM tape
-    WHERE dpd_bucket_reported = 0 AND month BETWEEN ? AND ? AND asset_id LIKE 'A-%'
+    WHERE dpd_bucket_reported = 0 AND month BETWEEN ? AND ? AND {WAREHOUSE}
 ), p AS (
-    SELECT DISTINCT ref AS asset_id, month FROM payments WHERE ref LIKE 'A-%'
+    SELECT DISTINCT ref AS asset_id, month FROM payments WHERE ref <> ''
 ), prog AS (
     SELECT borrower_id, start_month FROM disclosures WHERE kind = 'deferment_program'
 ), x AS (
@@ -82,15 +82,15 @@ SELECT borrower_id, count(*) AS n,
 FROM y GROUP BY 1
 """
 
-TRANSITIONS = """
+TRANSITIONS = f"""
 WITH a AS (
     SELECT borrower_id, asset_id, month, dpd_bucket_reported AS r FROM tape
-    WHERE asset_id LIKE 'A-%' AND month BETWEEN ? AND ?
+    WHERE {WAREHOUSE} AND month BETWEEN ? AND ?
 ), jump AS (
     SELECT cur.borrower_id, cur.asset_id, cur.month FROM a cur
     JOIN a prev ON prev.asset_id = cur.asset_id AND prev.month = cur.month - 1
     WHERE prev.r >= 2 AND cur.r = 0 AND cur.month >= ?
-), p AS (SELECT DISTINCT ref AS asset_id, month FROM payments WHERE ref LIKE 'A-%')
+), p AS (SELECT DISTINCT ref AS asset_id, month FROM payments WHERE ref <> '')
 SELECT j.borrower_id, count(DISTINCT j.asset_id) AS n, min(j.month) AS first_m,
        list(DISTINCT j.asset_id ORDER BY j.asset_id)[1:3] AS ex
 FROM jump j LEFT JOIN p ON p.asset_id = j.asset_id AND p.month BETWEEN j.month AND j.month + 1
@@ -98,15 +98,15 @@ WHERE p.asset_id IS NULL
 GROUP BY 1
 """
 
-LATE60 = """
+LATE60 = f"""
 SELECT borrower_id, count(DISTINCT asset_id) AS n FROM tape
-WHERE asset_id LIKE 'A-%' AND month BETWEEN ? AND ? AND dpd_bucket_reported >= 2 GROUP BY 1
+WHERE {WAREHOUSE} AND month BETWEEN ? AND ? AND dpd_bucket_reported >= 2 GROUP BY 1
 """
 
-ROLL = """
+ROLL = f"""
 WITH a AS (
     SELECT borrower_id, asset_id, month, dpd_bucket_reported AS r FROM tape
-    WHERE asset_id LIKE 'A-%' AND facility_id LIKE '%A' AND month BETWEEN ? AND ?
+    WHERE {WAREHOUSE} AND month BETWEEN ? AND ?
 )
 SELECT p.borrower_id, count(*) AS late30, count(*) FILTER (WHERE c.r >= 2) AS rolled
 FROM a p JOIN a c ON c.asset_id = p.asset_id AND c.month = p.month + 1
@@ -114,11 +114,12 @@ WHERE p.r = 1
 GROUP BY 1
 """
 
-SAMPLE = """
+SAMPLE = f"""
 WITH elig AS (
     SELECT borrower_id, asset_id, month, dpd_bucket_reported AS r,
-           row_number() OVER (PARTITION BY borrower_id ORDER BY hash(asset_id || CAST(month AS VARCHAR) || 'audit')) AS k
-    FROM tape WHERE month = ? AND asset_id LIKE 'A-%' AND eligible_reported
+           row_number() OVER (PARTITION BY borrower_id
+                              ORDER BY hash(@KEY@ || '|' || CAST(month AS VARCHAR) || '|audit'), asset_id) AS k
+    FROM tape WHERE month = ? AND {WAREHOUSE} AND eligible_reported
 )
 SELECT e.borrower_id, e.asset_id, e.r, s.dpd_bucket_true AS tr, sp.dpd_bucket_true AS prev_tr, s.asset_id IS NULL AS gone
 FROM elig e LEFT JOIN source_truth s ON s.asset_id = e.asset_id AND s.month = e.month
@@ -127,14 +128,14 @@ WHERE e.k <= ?
 ORDER BY 1, 2
 """
 
-TARGETED = """
+TARGETED = f"""
 WITH cur AS (
-    SELECT borrower_id, asset_id, month FROM tape
-    WHERE month = ? AND asset_id LIKE 'A-%' AND dpd_bucket_reported = 0 AND eligible_reported
+    SELECT borrower_id, asset_id, month, @KEY@ AS dk FROM tape
+    WHERE month = ? AND {WAREHOUSE} AND dpd_bucket_reported = 0 AND eligible_reported
 ), paid AS (
-    SELECT DISTINCT ref AS asset_id FROM payments WHERE ref LIKE 'A-%' AND month BETWEEN ? AND ?
+    SELECT DISTINCT ref AS asset_id FROM payments WHERE ref <> '' AND month BETWEEN ? AND ?
 ), cand AS (
-    SELECT c.*, row_number() OVER (PARTITION BY c.borrower_id ORDER BY hash(c.asset_id || 'targeted')) AS k
+    SELECT c.*, row_number() OVER (PARTITION BY c.borrower_id ORDER BY hash(c.dk || '|targeted'), c.asset_id) AS k
     FROM cur c LEFT JOIN paid p USING (asset_id) WHERE p.asset_id IS NULL
 )
 SELECT c.borrower_id, count(*) AS pulled,
@@ -145,13 +146,13 @@ WHERE c.k <= ?
 GROUP BY 1
 """
 
-LARGEST_RECENT = """
-WITH seen AS (SELECT asset_id, min(month) AS m0 FROM tape WHERE asset_id LIKE 'A-%' GROUP BY 1),
+LARGEST_RECENT = f"""
+WITH seen AS (SELECT asset_id, min(month) AS m0 FROM tape WHERE {WAREHOUSE} GROUP BY 1),
 cand AS (
     SELECT t.borrower_id, t.asset_id, t.month, t.dpd_bucket_reported AS r,
-           row_number() OVER (PARTITION BY t.borrower_id ORDER BY t.balance DESC, t.asset_id) AS k
+           row_number() OVER (PARTITION BY t.borrower_id ORDER BY t.balance DESC, hash(@KEY@), t.asset_id) AS k
     FROM tape t JOIN seen USING (asset_id)
-    WHERE t.month = ? AND t.asset_id LIKE 'A-%' AND t.eligible_reported AND seen.m0 >= ?
+    WHERE t.month = ? AND t.{WAREHOUSE} AND t.eligible_reported AND seen.m0 >= ?
 )
 SELECT c.borrower_id, c.asset_id, c.r, s.dpd_bucket_true AS tr, sp.dpd_bucket_true AS prev_tr, s.asset_id IS NULL AS gone
 FROM cand c LEFT JOIN source_truth s ON s.asset_id = c.asset_id AND s.month = c.month
@@ -168,13 +169,13 @@ WHERE t.month = ? AND list_contains(?::VARCHAR[], t.asset_id)
 ORDER BY 1
 """
 
-CURED = """
+CURED = f"""
 WITH a AS (
-    SELECT borrower_id, asset_id, month, dpd_bucket_reported AS r FROM tape
-    WHERE asset_id LIKE 'A-%' AND facility_id LIKE '%A' AND month BETWEEN ? AND ?
+    SELECT borrower_id, asset_id, month, dpd_bucket_reported AS r, @KEY@ AS dk FROM tape
+    WHERE {WAREHOUSE} AND month BETWEEN ? AND ?
 ), c AS (
     SELECT cur.borrower_id, cur.asset_id, cur.month,
-           row_number() OVER (PARTITION BY cur.borrower_id ORDER BY hash(cur.asset_id || 'cure')) AS k
+           row_number() OVER (PARTITION BY cur.borrower_id ORDER BY hash(cur.dk || '|cure'), cur.asset_id) AS k
     FROM a cur JOIN a prev ON prev.asset_id = cur.asset_id AND prev.month = cur.month - 1
     WHERE prev.r = 1 AND cur.r = 0 AND cur.month >= ?
 )
@@ -244,6 +245,19 @@ LARGEST_SIZE, LARGEST_NEW_MONTHS = 30, 12  # the largest loans first seen on the
 # case on fresh seeds 804 had 2, so the next fresh set is the real test of this line)
 TIMING_MANY = 3
 
+# The pulls draw loans at random, and the draw is seeded from each loan's own facts (vehicle, origination, terms), never
+# from how the lender spells its loan numbers: renaming every loan, line and borrower must give the same pulls. Only
+# loans identical in every fact fall back to the loan number, to keep the order fixed. Older books without these
+# columns use the loan number.
+DRAW_FIELDS = ("vin", "orig_month", "orig_amount", "term", "rate", "credit_score", "obligor_state", "make", "model",
+               "model_year")
+
+
+def draw_key(con) -> str:
+    cols = {c[0] for c in con.execute("DESCRIBE tape").fetchall()}
+    parts = [f"coalesce(CAST({c} AS VARCHAR), '')" for c in DRAW_FIELDS if c in cols]
+    return " || '|' || ".join(parts) if parts else "asset_id"
+
 
 def _state(x) -> str:
     if x["gone"]:
@@ -311,10 +325,22 @@ ELIGIBLE_SCORE, EDGE_BAND = 600, 13  # the facility's eligibility rule, and "jus
 def run(ctx: Ctx):
     out = []
     a = ctx.as_of
+    for b, s in ctx.loan_scope().items():  # an empty starting list is "not run" for that borrower, never "ok"
+        if s["rows_any"] and not s["rows_wh"]:
+            ctx.not_run("S2", b, "the checks on borrowing-base loans",
+                        f"none of its {s['rows_any']:,} loan rows is on a borrowing-base (warehouse) line")
+        elif s["rows_wh"] and not s["rows_now"]:
+            ctx.not_run("S2", b, "the servicer-system pulls", "no loans on this month's tape")
+        if s["rows_any"] and s["pays"] and not s["pays_loans"]:
+            ctx.not_run("S2", b, "the payment checks",
+                        f"none of its {s['pays']:,} payments names one of its loan numbers")
+    paid_ok = lambda b: not ctx.skipped("S2", b, "the payment checks")  # noqa: E731
     lo, hi = max(0, a - 3), a - 1
     if hi >= lo:
         for r in ctx.rows(CURRENT_NO_PAY, [lo, hi]):
             b, n = r["borrower_id"], r["n"]
+            if not paid_ok(b):
+                continue
             if r["def_prog"]:
                 ctx.explain(b, f"{r['def_prog']} deferred loans are covered by a disclosed deferment programme")
             if n >= 50 and r["nopay"] / n > 0.03:
@@ -329,6 +355,8 @@ def run(ctx: Ctx):
     if a >= 1:
         late60 = {r["borrower_id"]: r["n"] for r in ctx.rows(LATE60, [max(0, lo - 1), a - 1])}
         for r in ctx.rows(TRANSITIONS, [max(0, lo - 1), a, max(1, lo)]):
+            if not paid_ok(r["borrower_id"]):
+                continue
             share = r["n"] / max(late60.get(r["borrower_id"], 0), 1)
             if r["n"] >= 3 and share >= JUMP_SHARE:
                 out.append(sig("S2", r["borrower_id"], "IMPOSSIBLE_TRANSITION", 0.75, 0.85,
@@ -349,8 +377,9 @@ def run(ctx: Ctx):
                                f"Only {k} of {n} loans reported 30-59 days late were 60+ late a month later ({rate:.0%}). "
                                f"In 28 real public auto-loan pools the lowest rate is {ROLL_MIN_REAL:.0%}: "
                                f"late loans here seem to vanish instead of getting later", a))
-    sample = judge_pull(ctx, SAMPLE, [a, SAMPLE_SIZE], [a - 1, SAMPLE_SIZE] if a >= 1 else None)
-    largest = judge_pull(ctx, LARGEST_RECENT, [a, a - LARGEST_NEW_MONTHS + 1, LARGEST_SIZE],
+    key = draw_key(ctx.con)
+    sample = judge_pull(ctx, SAMPLE.replace("@KEY@", key), [a, SAMPLE_SIZE], [a - 1, SAMPLE_SIZE] if a >= 1 else None)
+    largest = judge_pull(ctx, LARGEST_RECENT.replace("@KEY@", key), [a, a - LARGEST_NEW_MONTHS + 1, LARGEST_SIZE],
                          [a - 1, a - LARGEST_NEW_MONTHS, LARGEST_SIZE] if a >= 1 else None)
     unconfirmed = settle_timing(sample, largest)
     for b, p in sample.items():
@@ -361,7 +390,9 @@ def run(ctx: Ctx):
                            f"Servicer-system pull: {n} of {p['pulled']} sampled 'eligible' loans are actually 60+ days "
                            f"late or no longer active{_why(p)}", a))
     if a >= 1:
-        for r in ctx.rows(TARGETED, [a, a - 1, a, TARGETED_SIZE]):
+        for r in ctx.rows(TARGETED.replace("@KEY@", key), [a, a - 1, a, TARGETED_SIZE]):
+            if not paid_ok(r["borrower_id"]):
+                continue
             if r["mismatches"] >= 2:
                 out.append(sig("S2", r["borrower_id"], "TARGETED_SOURCE_MISMATCH", 0.9, 0.92,
                                [f"source_pull:{r['borrower_id']}:month={a}:targeted_by=no_payment"]
@@ -385,7 +416,7 @@ def run(ctx: Ctx):
     if a >= 2:
         # the pull a sharp auditor makes when late loans seem to vanish: the loans that went straight from 30-59 days
         # late to current. Real cures are current in the servicer system; a hidden 60+ day loan is not.
-        for r in ctx.rows(CURED, [a - 2, a, a - 1, CURE_SIZE]):
+        for r in ctx.rows(CURED.replace("@KEY@", key), [a - 2, a, a - 1, CURE_SIZE]):
             if r["mismatches"] >= 2:
                 out.append(sig("S2", r["borrower_id"], "TARGETED_SOURCE_MISMATCH", 0.9, 0.92,
                                [f"source_pull:{r['borrower_id']}:month={a}:targeted_by=cure_from_30"]
@@ -394,6 +425,8 @@ def run(ctx: Ctx):
                                f"system: {r['mismatches']} of {r['pulled']} are actually 60+ days late or no longer active",
                                a))
     for r in ctx.rows(BALANCE_ROSE, [a, a]):
+        if not paid_ok(r["borrower_id"]):
+            continue
         if r["n"] >= ROSE_MIN and r["n"] / max(r["on_tape"], 1) >= ROSE_SHARE:
             out.append(sig("S2", r["borrower_id"], "BALANCE_ROSE_WHILE_PAID", 0.85, 0.9,
                            [f"tape:asset:{x}" for x in r["ex"]] + [f"payments:{r['borrower_id']}:paid_same_month",
