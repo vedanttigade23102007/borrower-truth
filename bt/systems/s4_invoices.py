@@ -10,7 +10,14 @@ and double-pledged invoices"; "the dollar amounts on invoices were altered"
   DILUTION_JUMP        customers now pay well short of the invoice amounts, against the
                        borrower's own first quarter on the facility (inflated invoices: the
                        customer pays what it really owes). Dilution is a standard field-exam
-                       number; the comparison is with the borrower itself, never one fixed line
+                       number; the comparison is with the borrower itself, never one fixed line.
+                       Both the last six months together and any single month's invoices
+  CUSTOMER_NEVER_PAID  a customer with several invoices past due has never paid the borrower
+                       anything: no payment for any of its invoices, and none from it at all,
+                       reached the collection account (the bank's own cash records)
+
+Evidence stays in view while the collateral is still pledged (red team round 3, Vedant 3 Oct 2026): an invoice that
+is still unpaid is checked however old it is, not only within the last few months.
 
 A fine-tuned document model (design §6a) plugs in here to read the invoice
 images; these rule checks run first so the model only reads what they flag.
@@ -42,13 +49,35 @@ GROUP BY 1
 
 IMPLAUSIBLE = """
 WITH paid AS (SELECT DISTINCT ref FROM payments WHERE ref <> ''),
+     got AS (SELECT borrower_id, ref, sum(amount) AS p FROM payments WHERE ref <> '' GROUP BY 1, 2),
      med AS (SELECT i.debtor_id, median(i.amount) AS md FROM invoices i JOIN paid ON paid.ref = i.invoice_number
              GROUP BY 1 HAVING count(*) >= 5)
 SELECT i.borrower_id, count(*) AS n, min(i.pledged_month) AS first_m, list(i.invoice_id ORDER BY i.invoice_id)[1:3] AS ex
 FROM invoices i JOIN med USING (debtor_id)
-WHERE i.amount > 5 * med.md AND i.pledged_month >= ?
-GROUP BY 1
+LEFT JOIN got ON got.borrower_id = i.borrower_id AND got.ref = i.invoice_number
+WHERE i.amount > 5 * med.md AND (i.pledged_month >= ? OR coalesce(got.p, 0) < 0.99 * i.amount)
+GROUP BY 1 ORDER BY 1
+"""  # recent ones, plus any still not paid in full: a fake invoice stays in view while it is still owed
+
+# a customer that has never paid anything: several of its invoices past due, none paid, and no payment from it at all
+NEVER_PAID = """
+WITH inv AS (SELECT borrower_id, debtor_id, any_value(debtor_name) AS name, invoice_number, min(issue_month) AS im,
+                    min(due_days) AS due, max(amount) AS face
+             FROM invoices GROUP BY 1, 2, 4),
+     due AS (SELECT * FROM inv WHERE im + CAST(ceil(due / 30.0) AS INTEGER) + 1 <= ?),
+     by_ref AS (SELECT DISTINCT borrower_id, ref FROM payments WHERE ref <> ''),
+     by_payer AS (SELECT DISTINCT borrower_id, payer_id FROM payments)
+SELECT d.borrower_id, d.debtor_id, any_value(d.name) AS name, count(*) AS n, sum(d.face) AS face, min(d.im) AS first_m,
+       list(d.invoice_number ORDER BY d.invoice_number)[1:3] AS ex
+FROM due d
+WHERE NOT EXISTS (SELECT 1 FROM by_ref r WHERE r.borrower_id = d.borrower_id AND r.ref = d.invoice_number)
+  AND NOT EXISTS (SELECT 1 FROM by_payer p WHERE p.borrower_id = d.borrower_id AND p.payer_id = d.debtor_id)
+  AND NOT EXISTS (SELECT 1 FROM by_ref r JOIN inv i2 ON i2.borrower_id = r.borrower_id AND i2.invoice_number = r.ref
+                  WHERE i2.borrower_id = d.borrower_id AND i2.debtor_id = d.debtor_id)
+GROUP BY 1, 2 HAVING count(*) >= ?
+ORDER BY 1, 2
 """
+NEVER_PAID_MIN = 3
 
 # dilution: the share of a paid invoice's face value that never arrived as cash, by issue month. Only invoices old
 # enough to have been paid, and only paid ones: never-paid invoices are UNPAID_BY_DEBTOR's job
@@ -75,6 +104,9 @@ DILUTION_BASE_MONTHS, DILUTION_RECENT_MONTHS = 3, 6
 DILUTION_MIN_JUMP = 0.01  # below a point of invoice value the jump doesn't change what the receivables are worth
 DILUTION_SPREAD_K = 3  # and it must stand well clear of how much the borrower's own early months moved
 DILUTION_MIN_INVOICES = 30
+# one month's invoices on their own: a single burst of inflated invoices ages out of a six-month average. A month is
+# noisier than six, so the line is higher: honest dev months moved at most 3.5 points (tuned on dev books only)
+DILUTION_COHORT_MIN_JUMP, DILUTION_COHORT_MIN_INVOICES = 0.05, 20
 
 
 def dilution(ctx: Ctx) -> list:
@@ -93,16 +125,22 @@ def dilution(ctx: Ctx) -> list:
         r_dil = sum(m["dil"] * m["n"] for m in recent) / nr
         spread = statistics.pstdev([m["dil"] for m in base])
         jump = r_dil - b_dil
-        if jump < max(DILUTION_MIN_JUMP, DILUTION_SPREAD_K * spread):
-            continue
         r0, r1, b0, b1 = recent[0]["im"], recent[-1]["im"], base[0]["im"], base[-1]["im"]
+        if jump < max(DILUTION_MIN_JUMP, DILUTION_SPREAD_K * spread):
+            # no recent drift: is any single later month's batch far off, however long ago it was issued?
+            worst = max((m for m in months[DILUTION_BASE_MONTHS:] if m["n"] >= DILUTION_COHORT_MIN_INVOICES),
+                        key=lambda m: m["dil"], default=None)
+            if worst is None or worst["dil"] - b_dil < max(DILUTION_COHORT_MIN_JUMP, DILUTION_SPREAD_K * spread):
+                continue
+            r0 = r1 = worst["im"]
+            r_dil, nr = worst["dil"], worst["n"]
         ex = [x["invoice_number"] for x in ctx.rows(SHORT_PAID, [b, r0, r1])]
         out.append(sig("S4", b, "DILUTION_JUMP", 0.6, 0.75,
                        [f"invoice:{x}" for x in ex]
                        + [f"invoices:{b}:dilution:months={r0}-{r1}:{r_dil:.4f}",
                           f"invoices:{b}:dilution:baseline_months={b0}-{b1}:{b_dil:.4f}"],
-                       f"Customers paid {r_dil:.1%} less than the invoice amounts on invoices issued in months "
-                       f"{r0 + 1}-{r1 + 1}, against {b_dil:.1%} in the borrower's own first three months ({nr} paid "
+                       f"Customers paid {r_dil:.1%} less than the invoice amounts on invoices issued in "
+                       f"{f'month {r0 + 1}' if r0 == r1 else f'months {r0 + 1}-{r1 + 1}'}, against {b_dil:.1%} in the borrower's own first three months ({nr} paid "
                        f"invoices). Invoices that collect short are worth less than the borrowing base says: confirm a "
                        f"sample of them with the customers", r0))
     return out
@@ -163,4 +201,10 @@ def run(ctx: Ctx):
             out.append(sig("S4", r["borrower_id"], "IMPLAUSIBLE_AMOUNT", 0.6, 0.7,
                            [f"invoice:{x}" for x in r["ex"]] + [f"count:{r['n']}"],
                            f"{r['n']} invoices are over 5x what the named customer normally pays", r["first_m"]))
+    for r in ctx.rows(NEVER_PAID, [a, NEVER_PAID_MIN]):
+        out.append(sig("S4", r["borrower_id"], "CUSTOMER_NEVER_PAID", 0.8, 0.9,
+                       [f"invoice:{x}" for x in r["ex"]] + [f"debtor:{r['debtor_id']}", f"count:{r['n']}"],
+                       f"'{r['name']}' has {r['n']} invoices past due (${r['face']:,.0f}) and has never paid this borrower "
+                       f"anything: no payment for any of its invoices, and none from it, reached the collection account. "
+                       f"Confirm the invoices with the customer", r["first_m"], [r["debtor_id"]]))
     return out

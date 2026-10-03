@@ -28,6 +28,11 @@ Checks (window = the three most recent complete months):
                             tape in the last year, the way a field examiner tests the biggest
                             new items first: a few large invented loans that are kept paying
                             can slip past a random sample and past the unpaid-loan pull.
+  BALANCE_ROSE_WHILE_PAID   loans still pledged whose balance went UP in a month when they were
+                            current, not deferred, and the bank received their payment: a paying
+                            loan's balance only goes down (red team round 3: fees capitalized into
+                            real loans, in the tape and the servicer records alike). Checked against
+                            the bank's own receipts, over the loan's whole life on the tape
   ATTRIBUTE_REWRITE         a loan's credit score at origination should never change;
                             several were rewritten from below the 600 eligibility line
                             to above it (Tricolor, as alleged: ineligible collateral
@@ -179,6 +184,26 @@ FROM c LEFT JOIN source_truth s ON s.asset_id = c.asset_id AND s.month = c.month
 WHERE c.k <= ?
 GROUP BY 1
 """
+
+# a balance roll-forward against the bank's own receipts, for every loan still on the tape this month
+BALANCE_ROSE = """
+WITH t AS (SELECT facility_id, borrower_id, asset_id, month, balance, dpd_bucket_reported AS r, deferred_flag AS dfl
+           FROM tape),
+now AS (SELECT DISTINCT facility_id, asset_id FROM t WHERE month = ?),
+paid AS (SELECT ref, month, sum(amount) AS amt FROM payments WHERE ref <> '' GROUP BY 1, 2),
+rose AS (
+    SELECT c.borrower_id, c.asset_id, c.month, c.balance - p.balance AS rise
+    FROM t c JOIN now USING (facility_id, asset_id)
+    JOIN t p ON p.facility_id = c.facility_id AND p.asset_id = c.asset_id AND p.month = c.month - 1
+    JOIN paid ON paid.ref = c.asset_id AND paid.month = c.month AND paid.amt > 0
+    WHERE c.r = 0 AND c.dfl = 0 AND c.balance - p.balance > greatest(1.0, 0.001 * p.balance)
+)
+SELECT r.borrower_id, count(DISTINCT r.asset_id) AS n, sum(r.rise) AS usd, min(r.month) AS first_m,
+       list(DISTINCT r.asset_id ORDER BY r.asset_id)[1:3] AS ex,
+       (SELECT count(DISTINCT asset_id) FROM t WHERE t.borrower_id = r.borrower_id AND t.month = ?) AS on_tape
+FROM rose r GROUP BY 1 ORDER BY 1
+"""
+ROSE_MIN, ROSE_SHARE = 3, 0.01  # a few loans and at least 1% of the book: one fee correction is not a pattern
 
 REWRITE = """
 WITH a AS (
@@ -363,6 +388,15 @@ def run(ctx: Ctx):
                                f"Loans the tape shows going from 30-59 days late to current were pulled from the servicer "
                                f"system: {r['mismatches']} of {r['pulled']} are actually 60+ days late or no longer active",
                                a))
+    for r in ctx.rows(BALANCE_ROSE, [a, a]):
+        if r["n"] >= ROSE_MIN and r["n"] / max(r["on_tape"], 1) >= ROSE_SHARE:
+            out.append(sig("S2", r["borrower_id"], "BALANCE_ROSE_WHILE_PAID", 0.85, 0.9,
+                           [f"tape:asset:{x}" for x in r["ex"]] + [f"payments:{r['borrower_id']}:paid_same_month",
+                                                                    f"count:{r['n']}"],
+                           f"{r['n']} loans still pledged had their balance go up (${r['usd']:,.0f} in all) in a month "
+                           f"when they were current, not deferred, and the bank received their payment. A paying "
+                           f"loan's balance only goes down: ask for the loan contracts and payment histories",
+                           r["first_m"]))
     if "credit_score" in {r[0] for r in ctx.con.execute("DESCRIBE tape").fetchall()}:  # older books lack it
         L = ELIGIBLE_SCORE
         for r in ctx.rows(REWRITE, [L, L, L, L, L, L, L]):

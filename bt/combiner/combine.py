@@ -39,6 +39,8 @@ MECHANISM_OF = {
     "MONTH_END_CURES": "TAPE_DRESSUP", "PLEDGECHECK_LEFT": "DOUBLE_PLEDGE",
     # after red team round 2: dilution against the borrower's own early months; a judgment under a shared name
     "DILUTION_JUMP": "FAKE_INVOICES", "JUDGMENT_NAME_SHARED": "HIDDEN_DEBT", "TIMING_UNCONFIRMED": "TAPE_DRESSUP",
+    # after red team round 3 (Vedant, 3 Oct 2026): checked against the bank's own cash records
+    "BALANCE_ROSE_WHILE_PAID": "TAPE_DRESSUP", "CUSTOMER_NEVER_PAID": "FAKE_INVOICES",
 }
 SEC_TYPES = {"ROLL_RATE_TOO_LOW", "PUBLIC_POOL_OVERLAP", "POOL_LOANS_PAID_ELSEWHERE", "FILED_DEBT_UNDISCLOSED", "FILED_VS_REPORTED",
              "DEBT_ACCELERATION_FILED"}  # checks that exist because of public SEC data (switch-off test: "SEC")
@@ -68,6 +70,7 @@ SOURCE = {
     "UNDISCLOSED_DEBT_SERVICE": "operating_account", "NEW_PAYEES_DRAIN_CASH": "operating_account",
     "MONTH_END_CURES": "payments", "PLEDGECHECK_LEFT": "pledgecheck",
     "DILUTION_JUMP": "payments", "JUDGMENT_NAME_SHARED": "courts", "TIMING_UNCONFIRMED": "servicer_system",
+    "BALANCE_ROSE_WHILE_PAID": "payments", "CUSTOMER_NEVER_PAID": "payments",
 }
 
 # checkable facts (not statistical inferences): strong enough to stand alone
@@ -76,7 +79,9 @@ FACT = {"DUPLICATE_ASSET", "PLEDGECHECK_UNIQUENESS_FAIL", "ALTERED_INVOICE", "SO
         # what the borrower told the SEC contradicts what it told the bank: checkable in the filing itself
         "FILED_DEBT_UNDISCLOSED", "FILED_VS_REPORTED",
         # named loans, matched to the public trust, whose payments no longer reach Wells Fargo: checkable per loan
-        "POOL_LOANS_PAID_ELSEWHERE"}
+        "POOL_LOANS_PAID_ELSEWHERE",
+        # checked against the bank's own receipts, loan by loan or customer by customer (red team round 3)
+        "BALANCE_ROSE_WHILE_PAID", "CUSTOMER_NEVER_PAID"}
 
 # an undisclosed lien on the loan collateral itself means that collateral is pledged twice
 DOUBLE_PLEDGE_HINT = ("receivables and chattel paper",)

@@ -29,6 +29,9 @@ First Brands F1).
    absent from the start is a coverage note; leaving mid-facility is a change worth
    asking about, because from then on nobody can see whether the collateral is
    pledged elsewhere.
+7. The same vehicle, or the same loan contract (customer, origination month and amount), listed twice in ONE facility
+   under different loan numbers: one vehicle, one contract, one pledge (red team round 3: "participations" split off
+   real loans). Reported as DUPLICATE_ASSET, like a vehicle pledged in two facilities.
 """
 from bt.common import bank
 from bt.systems.base import Ctx, sig
@@ -81,6 +84,24 @@ FROM (SELECT borrower_id, month, vin FROM tape
 GROUP BY 1
 """
 
+# the same vehicle or the same contract twice in one facility, in the same month, under different loan numbers
+TAPE_DUP_IN = """
+WITH k AS (
+    SELECT borrower_id, facility_id, month, 'vin ' || vin AS item FROM tape
+    WHERE month BETWEEN ? AND ? AND coalesce(vin, '') <> ''
+    GROUP BY 1, 2, 3, 4 HAVING count(DISTINCT asset_id) > 1
+    {contract}
+)
+SELECT borrower_id, count(DISTINCT item) AS n_dup, min(month) AS first_m, list(DISTINCT item ORDER BY item)[1:3] AS ex
+FROM k GROUP BY 1 ORDER BY 1
+"""
+TAPE_DUP_CONTRACT = """
+    UNION ALL
+    SELECT borrower_id, facility_id, month,
+           'contract ' || obligor_id || ' ' || CAST(orig_month AS VARCHAR) || ' ' || CAST(round(orig_amount, 2) AS VARCHAR)
+    FROM tape WHERE month BETWEEN ? AND ? AND coalesce(obligor_id, '') <> '' AND orig_amount IS NOT NULL
+    GROUP BY 1, 2, 3, 4 HAVING count(DISTINCT asset_id) > 1"""
+
 INV_DUP = """
 SELECT borrower_id, count(*) AS n_dup, min(first_m) AS first_m, list(invoice_number ORDER BY invoice_number)[1:3] AS ex
 FROM (SELECT borrower_id, invoice_number, max(pledged_month) AS first_m FROM invoices
@@ -129,12 +150,19 @@ def run(ctx: Ctx):
                        [f"tape:vin:{v}" for v in r["ex"]] + [f"count:{r['n_dup']}"],
                        f"{r['n_dup']} vehicles (matched by VIN) are pledged in two {bank.NAME} facilities at once",
                        r["first_m"]))
+    tape_cols = {c[0] for c in ctx.con.execute("DESCRIBE tape").fetchall()}
+    has_contract = {"orig_month", "orig_amount"} <= tape_cols  # older books lack loan attributes
+    args = [lo, ctx.as_of] * (2 if has_contract else 1)
+    for r in ctx.rows(TAPE_DUP_IN.format(contract=TAPE_DUP_CONTRACT if has_contract else ""), args):
+        out.append(sig("S1", r["borrower_id"], "DUPLICATE_ASSET", 0.9, min(0.99, 0.6 + 0.05 * r["n_dup"]),
+                       [f"tape:{x.replace(' ', ':', 1)}" for x in r["ex"]] + [f"count:{r['n_dup']}", "same_facility"],
+                       f"{r['n_dup']} vehicles or loan contracts appear twice in the same facility under different loan "
+                       f"numbers: one vehicle, one contract, one pledge", r["first_m"]))
     for r in ctx.rows(INV_DUP):
         out.append(sig("S1", r["borrower_id"], "DUPLICATE_ASSET", 0.9, min(0.99, 0.6 + 0.05 * r["n_dup"]),
                        [f"invoice:{n}" for n in r["ex"]] + [f"count:{r['n_dup']}"],
                        f"{r['n_dup']} identical invoices are pledged in two {bank.NAME} facilities at once",
                        r["first_m"]))
-    tape_cols = {c[0] for c in ctx.con.execute("DESCRIBE tape").fetchall()}
     if not ctx.shared.get("sec_off") and {"make", "credit_score"} <= tape_cols:  # older books lack loan attributes
         a = ctx.as_of
         for r in ctx.rows(OVERLAP, [max(0, a - OVERLAP_WINDOW), a, max(0, a - OVERLAP_WINDOW), a,

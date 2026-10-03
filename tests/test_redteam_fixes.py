@@ -220,3 +220,96 @@ def test_a_timing_difference_must_catch_up_the_next_month(book, caught_up):
     got = clues(book, b, "SOURCE_MISMATCH")
     assert bool(got) is not caught_up
     assert caught_up or "still hasn't caught up" in got[0].explanation
+
+
+# after red team round 3 (Vedant, 3 Oct 2026): checked against the bank's own cash records, and kept in view while the
+# collateral is still pledged
+
+def _paid_loans(book, b, month):
+    pay = {(r["ref"], r["month"]) for r in rows(book, "payments") if r["borrower_id"] == b}
+    tape = rows(book, "tape")
+    later = {r["asset_id"] for r in tape if r["borrower_id"] == b and r["month"] == 23}
+    return sorted(r["asset_id"] for r in tape if r["borrower_id"] == b and r["month"] == month and
+                  r["dpd_bucket_reported"] == 0 and r["asset_id"] in later and (r["asset_id"], month) in pay)
+
+
+@pytest.mark.parametrize("deferred,fires", [(False, True), (True, False)])
+def test_a_paying_loan_whose_balance_rises_is_caught(book, deferred, fires):
+    b = _big_honest_auto(book)
+    loans = set(_paid_loans(book, b, 8)[:5])
+    assert len(loans) == 5
+    save(book, "tape", [dict(r, balance=r["balance"] * 1.10, deferred_flag=int(deferred and r["month"] == 8))
+                        if r["asset_id"] in loans and r["month"] >= 8 else r for r in rows(book, "tape")])
+    assert bool(clues(book, b, "BALANCE_ROSE_WHILE_PAID")) is fires  # month 8, seen at month 24: still pledged
+
+
+@pytest.mark.parametrize("same_contract,fires", [(True, True), (False, False)])
+def test_the_same_vehicle_or_contract_twice_in_one_facility(book, same_contract, fires):
+    b = _big_honest_auto(book)
+    tape = rows(book, "tape")
+    src = sorted({r["asset_id"] for r in tape if r["borrower_id"] == b and r["month"] == 23})[:2]
+    extra = []
+    for r in tape:
+        if r["asset_id"] in src and r["month"] >= 20:
+            x = dict(r, asset_id=r["asset_id"] + "-P", balance=r["balance"] * 0.3)
+            if not same_contract:  # the same customer's second, different loan: another car, other terms
+                x.update(vin=r["vin"] + "Z", orig_amount=r["orig_amount"] + 1000.0)
+            extra.append(x)
+    save(book, "tape", tape + extra)
+    got = [s for s in clues(book, b, "DUPLICATE_ASSET") if "same_facility" in s.evidence]
+    assert bool(got) is fires
+
+
+def _new_debtor_invoices(book, b, n, month=6, amount=None, debtor=None):
+    inv = rows(book, "invoices")
+    mine = [r for r in inv if r["borrower_id"] == b]
+    t = mine[0]
+    return [dict(t, invoice_id=f"INVT{k}", invoice_number=f"T-{b}-{k}", po_number=f"PO-T{k}",
+                 debtor_id=debtor or "E_NEVERPAYS", debtor_name="Quiet Orders LLC" if debtor is None else t["debtor_name"],
+                 pledged_month=month, issue_month=month, issue_day=5, due_days=30,
+                 amount=amount or t["amount"]) for k in range(n)]
+
+
+@pytest.mark.parametrize("pays_one,fires", [(False, True), (True, False)])
+def test_a_customer_that_has_never_paid_anything(book, pays_one, fires):
+    b = honest(book, {"receivables_finance"})[0]
+    new = _new_debtor_invoices(book, b, 4)
+    save(book, "invoices", rows(book, "invoices") + new)
+    if pays_one:
+        pay = rows(book, "payments")
+        p0 = next(r for r in pay if r["borrower_id"] == b)
+        save(book, "payments", pay + [dict(p0, txn_id="TPAID1", month=8, payer_id="E_NEVERPAYS",
+                                            payer_name="Quiet Orders LLC", amount=new[0]["amount"], ref=new[0]["invoice_number"])])
+    assert bool(clues(book, b, "CUSTOMER_NEVER_PAID")) is fires
+
+
+@pytest.mark.parametrize("paid_in_full,fires", [(False, True), (True, False)])
+def test_an_unpaid_oversized_invoice_stays_in_view(book, paid_in_full, fires):
+    import statistics
+    b = honest(book, {"receivables_finance"})[0]
+    inv, pay = rows(book, "invoices"), rows(book, "payments")
+    paid_refs = {r["ref"] for r in pay}
+    by_debtor = {}
+    for r in inv:
+        if r["borrower_id"] == b and r["invoice_number"] in paid_refs:
+            by_debtor.setdefault(r["debtor_id"], []).append(r["amount"])
+    debtor = max(by_debtor, key=lambda d: len(by_debtor[d]))
+    big = 10 * statistics.median(by_debtor[debtor])
+    new = _new_debtor_invoices(book, b, 2, month=6, amount=big, debtor=debtor)  # pledged month 7: past any 9-month window
+    save(book, "invoices", inv + new)
+    if paid_in_full:
+        p0 = next(r for r in pay if r["borrower_id"] == b)
+        save(book, "payments", pay + [dict(p0, txn_id=f"TFULL{k}", month=8, payer_id=debtor, amount=big,
+                                            ref=x["invoice_number"]) for k, x in enumerate(new)])
+    assert bool(clues(book, b, "IMPLAUSIBLE_AMOUNT")) is fires
+
+
+@pytest.mark.parametrize("factor,fires", [(1.30, True), (1.02, False)])
+def test_one_months_short_paid_invoices_stay_in_view(book, factor, fires):
+    inv = rows(book, "invoices")
+    cand = honest(book, {"receivables_finance"})
+    b = max(cand, key=lambda x: sum(1 for r in inv if r["borrower_id"] == x and r["issue_month"] == 6))
+    assert sum(1 for r in inv if r["borrower_id"] == b and r["issue_month"] == 6) >= 20
+    save(book, "invoices", [dict(r, amount=r["amount"] * factor) if r["borrower_id"] == b and r["issue_month"] == 6
+                            else r for r in inv])  # the customers still pay the real amounts
+    assert bool(clues(book, b, "DILUTION_JUMP")) is fires
