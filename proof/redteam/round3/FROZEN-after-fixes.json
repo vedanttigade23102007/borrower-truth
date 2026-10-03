@@ -1,0 +1,17 @@
+{
+ "tag": "redteam-round3-after-fixes",
+ "rule_version": "a88b4d4f561f",
+ "code_version": "7a57538",
+ "frozen_at": "2026-10-03",
+ "payer_rule": true,
+ "attacks_zip_sha256": "27a3e5e5f95c84e6cf3a45b2a497e82009d7b60b6c0665a3b6685f9c2bd171ae",
+ "seeds": [
+  1101,
+  1102,
+  1103,
+  1104,
+  1105
+ ],
+ "attacker": "GPT-6 Astra (as shown in Codex), run by a friend on their own machine; round 3's attacks re-scored, no longer blind",
+ "note": "after the round-3 fixes (WHY.md 23-25) and the real-data checks and ID fix (26-29); stopping rule applies"
+}
