@@ -4,7 +4,7 @@
 
 **Attacker models:** round 1: Opus 5; round 2: Sonnet 5.5 (as Vedant reported on 2 Oct 2026, after scoring; recorded here afterwards)
 
-**Caveat on comparing round 1 with round 2 (added 2 Oct 2026, at Vedant's request).** Round 2's attacker (Sonnet 5.5) may have been a weaker model than round 1's (Opus 5), so part of the improvement from round 1 to round 2 may come from that. The rules of the test also changed in between, in both directions. Credit limits were sized to each borrower's own collateral, so an attack worth 5% of the limit became a smaller share of the book, which is harder to catch. The payer rule took away recording money under a false sender, which is easier to catch. The rounds are not like for like. Both rounds used Claude models, the same family as the model that helped write the checks, so the "same family" limit still stands.
+**Caveat on comparing round 1 with round 2 (added 2 Oct 2026, at Vedant's request).** Rounds 1 and 2 used different Claude models (Opus 5, then Sonnet 5.5); which is stronger wasn't measured, so the rounds aren't a clean comparison of the fixes. The rules of the test also changed in between, in both directions. Credit limits were sized to each borrower's own collateral, so an attack worth 5% of the limit became a smaller share of the book, which is harder to catch. The payer rule took away recording money under a false sender, which is easier to catch. The rounds are not like for like. Both rounds used Claude models, the same family as the model that helped write the checks, so the "same family" limit still stands.
 
 Rules version cdf8b9b94a09 (frozen: cdf8b9b94a09); code f5b95b9.
 
