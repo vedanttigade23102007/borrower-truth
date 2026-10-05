@@ -13,6 +13,18 @@
   "liveAlerts": 0
  },
  {
+  "borrowerId": "B0031",
+  "verdict": "LIKELY_FRAUD",
+  "headline": "Likely: bad loans are being reported as good ones",
+  "priority": 1.0,
+  "mechanisms": [
+   "TAPE_DRESSUP"
+  ],
+  "openSteps": 4,
+  "caseStatus": "AWAITING_APPROVAL",
+  "liveAlerts": 0
+ },
+ {
   "borrowerId": "B0034",
   "verdict": "LIKELY_FRAUD",
   "headline": "Likely: invoices are fake, inflated or altered",
@@ -306,6 +318,18 @@
   "liveAlerts": 0
  },
  {
+  "borrowerId": "B0093",
+  "verdict": "LIKELY_FRAUD",
+  "headline": "Likely: bad loans are being reported as good ones",
+  "priority": 0.998,
+  "mechanisms": [
+   "TAPE_DRESSUP"
+  ],
+  "openSteps": 4,
+  "caseStatus": "AWAITING_APPROVAL",
+  "liveAlerts": 0
+ },
+ {
   "borrowerId": "B0100",
   "verdict": "LIKELY_FRAUD",
   "headline": "Likely: the same collateral is pledged to more than one lender",
@@ -338,18 +362,6 @@
    "TAPE_DRESSUP"
   ],
   "openSteps": 4,
-  "caseStatus": "AWAITING_APPROVAL",
-  "liveAlerts": 0
- },
- {
-  "borrowerId": "B0031",
-  "verdict": "LIKELY_FRAUD",
-  "headline": "Likely: bad loans are being reported as good ones",
-  "priority": 0.95,
-  "mechanisms": [
-   "TAPE_DRESSUP"
-  ],
-  "openSteps": 3,
   "caseStatus": "AWAITING_APPROVAL",
   "liveAlerts": 0
  },
@@ -512,18 +524,6 @@
    "RELATED_SHELLS"
   ],
   "openSteps": 5,
-  "caseStatus": "AWAITING_APPROVAL",
-  "liveAlerts": 0
- },
- {
-  "borrowerId": "B0093",
-  "verdict": "LIKELY_FRAUD",
-  "headline": "Likely: bad loans are being reported as good ones",
-  "priority": 0.95,
-  "mechanisms": [
-   "TAPE_DRESSUP"
-  ],
-  "openSteps": 3,
   "caseStatus": "AWAITING_APPROVAL",
   "liveAlerts": 0
  },

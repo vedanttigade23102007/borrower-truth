@@ -1,5 +1,14 @@
 [
  {
+  "mechanism": "CASH_LEAKAGE",
+  "proposed": 2,
+  "approved": 0,
+  "rejected": 0,
+  "done": 0,
+  "cleared": 0,
+  "escalated": 0
+ },
+ {
   "mechanism": "DISGUISED_RECEIPTS",
   "proposed": 51,
   "approved": 1,

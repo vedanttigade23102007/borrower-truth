@@ -1,6 +1,6 @@
 {
  "asOf": 23,
- "receivedAt": "2026-10-01T07:58:56.896572Z",
+ "receivedAt": "2026-10-05T12:25:58.011022Z",
  "runMetrics": {
   "data_quality": {
    "quarantined": {},
@@ -14,27 +14,27 @@
   },
   "S1": {
    "status": "ok",
-   "seconds": 0.074,
+   "seconds": 0.103,
    "signals": 74
   },
   "S2": {
    "status": "ok",
-   "seconds": 0.093,
-   "signals": 61
+   "seconds": 0.279,
+   "signals": 65
   },
   "S3": {
    "status": "ok",
-   "seconds": 0.297,
-   "signals": 24
+   "seconds": 0.38,
+   "signals": 26
   },
   "S4": {
    "status": "ok",
-   "seconds": 0.037,
-   "signals": 15
+   "seconds": 0.106,
+   "signals": 20
   },
   "S5": {
    "status": "ok",
-   "seconds": 0.009,
+   "seconds": 0.01,
    "signals": 48
   },
   "S7": {
@@ -42,6 +42,7 @@
    "seconds": 0.004,
    "signals": 61
   },
+  "not_run_for_some_borrowers": {},
   "manifest": {
    "as_of": 23,
    "inputs": {
@@ -65,15 +66,15 @@
    },
    "document_model": false,
    "inputs_digest": "ec63acb069af",
-   "rule_version": "614d4a97ea9e",
-   "code_version": "3881eb6"
+   "rule_version": "a88b4d4f561f",
+   "code_version": "abf04bc"
   },
   "combiner": {
    "status": "ok",
-   "seconds": 0.089,
+   "seconds": 0.096,
    "cases": 120
   },
-  "total_seconds": 1.392,
+  "total_seconds": 1.762,
   "as_of": 23,
   "document_model": "off"
  },
