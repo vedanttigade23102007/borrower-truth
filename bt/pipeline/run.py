@@ -108,9 +108,11 @@ def run(data_dir: str, as_of: int = 23, simulate_fail: set[str] | None = None, m
     coverage["data"] = ("quarantined: " + ", ".join(f"{t} ({v['using']})" for t, v in q.items())) if q else "ok"
     if document_model:  # off (the default): an optional module that isn't installed is not missing coverage
         coverage["documents"] = ctx.shared.get("documents", "unavailable (S4 did not run)")
-    borrowers = [r["borrower_id"] for r in ctx.rows("SELECT borrower_id FROM borrowers ORDER BY 1")]
+    rows = ctx.rows("SELECT borrower_id, entity_id FROM borrowers ORDER BY 1")
+    borrowers = [r["borrower_id"] for r in rows]
     t1 = time.perf_counter()
-    cases = build_cases(signals, coverage, ctx.explanations, borrowers)
+    # each borrower's own company: a lien or judgment naming it says nothing about which creditor it is
+    cases = build_cases(signals, coverage, ctx.explanations, borrowers, {r["borrower_id"]: r["entity_id"] for r in rows})
     not_run = ctx.shared.get("not_run", {})
     for c in cases:  # a check whose starting list was empty for this borrower: "not run" on its case, never "ok"
         gaps = not_run.get(c["borrower_id"])

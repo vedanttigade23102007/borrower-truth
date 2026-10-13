@@ -133,7 +133,25 @@ def assign_mechanisms(sigs) -> dict[str, str]:
     return mech
 
 
-def build_cases(signals, coverage: dict, explanations: dict, borrowers: list[str]) -> list[dict]:
+def claims(ss, own: set[str]) -> list[list]:
+    """Split one mechanism's clues into claims (audit 14 Oct 2026, gap 2). Clues that name a counterparty, leaving out
+    the borrower's own company, and share one are about the same thing; clues about different lenders are different
+    facts and never corroborate each other. A clue that names none can't be placed, so it joins every claim."""
+    parts: list[tuple[set, set]] = []
+    for s in ss:
+        ents = set(s.related_entities) - own
+        if ents:
+            hit = [p for p in parts if p[0] & ents]
+            parts = [p for p in parts if not p[0] & ents] + [
+                (ents.union(*(p[0] for p in hit)), {s.signal_id}.union(*(p[1] for p in hit)))]
+    if not parts:
+        return [ss]
+    general = {s.signal_id for s in ss if not set(s.related_entities) - own}
+    return [[s for s in ss if s.signal_id in ids or s.signal_id in general] for _, ids in parts]
+
+
+def build_cases(signals, coverage: dict, explanations: dict, borrowers: list[str],
+                own_entities: dict[str, str] | None = None) -> list[dict]:
     by_b = defaultdict(list)
     for s in signals:
         by_b[s.entity_id].append(s)
@@ -156,36 +174,44 @@ def build_cases(signals, coverage: dict, explanations: dict, borrowers: list[str
         for s in sigs:
             groups[mech_of[s.signal_id]].append(s)
 
-        findings = []
+        own = {own_entities[b]} if own_entities and b in own_entities else set()
+        order = {"high": 0, "medium": 1, "low": 2}
+        findings, escalate = [], False
         for m, ss in groups.items():
-            sources = {SOURCE[s.type] for s in ss if _x(s) >= MIN_X and SOURCE[s.type] != "derived"}
-            # chaining: a clue elsewhere that points at the same linked company corroborates this finding
-            linked = {e for s in ss for e in s.related_entities}
-            corroborating = [o for o in sigs if mech_of[o.signal_id] != m and linked & set(o.related_entities)
-                             and _x(o) >= MIN_X and SOURCE[o.type] != "derived"]
-            sources |= {SOURCE[o.type] for o in corroborating}
-            has_fact = any(s.type in FACT and _x(s) >= 0.5 for s in ss)
-            best = max(_x(s) for s in ss)
-            if (has_fact and len(sources) >= 2) or len(sources) >= 3:
-                conf = "high"
-            elif has_fact or len(sources) >= 2:
-                conf = "medium"
-            elif best >= 0.3:
-                conf = "low"
-            else:
-                continue
+            ranked = []  # corroboration counts within one claim; the finding takes the best claim
+            for claim in claims(ss, own):
+                sources = {SOURCE[s.type] for s in claim if _x(s) >= MIN_X and SOURCE[s.type] != "derived"}
+                # chaining: a clue elsewhere that points at the same linked company (never the borrower) corroborates
+                linked = {e for s in claim for e in s.related_entities} - own
+                corroborating = [o for o in sigs if mech_of[o.signal_id] != m and linked & (set(o.related_entities) - own)
+                                 and _x(o) >= MIN_X and SOURCE[o.type] != "derived"]
+                sources |= {SOURCE[o.type] for o in corroborating}
+                has_fact = any(s.type in FACT and _x(s) >= 0.5 for s in claim)
+                if (has_fact and len(sources) >= 2) or len(sources) >= 3:
+                    conf = "high"
+                elif has_fact or len(sources) >= 2:
+                    conf = "medium"
+                else:
+                    conf = None
+                ranked.append(((order.get(conf, 3), not has_fact, -len(sources), -max(_x(s) for s in claim)),
+                               conf, has_fact, sources, corroborating))
+            _, conf, has_fact, sources, corroborating = min(ranked, key=lambda r: r[0])
+            if conf is None:
+                if max(_x(s) for s in ss) >= 0.3:
+                    conf = "low"
+                else:
+                    continue
             if conf == "low" and all(s.type in LONE_CONTEXT for s in ss):
                 continue  # a lone affiliate or small judgment is context, not a finding
+            # hard escalation: a checkable fact confirmed by an independent source in the same claim jumps the queue
+            escalate = escalate or (conf == "high" and has_fact)
             findings.append(dict(mechanism=m, confidence=conf, plain=PLAIN[m],
                                  signals=[s.signal_id for s in ss],
                                  corroborated_by=[o.signal_id for o in corroborating],
                                  sources=sorted(sources), systems=sorted({s.system for s in ss}),
                                  first_month=min(s.observed_month for s in ss)))
-        order = {"high": 0, "medium": 1, "low": 2}
         findings.sort(key=lambda f: (order[f["confidence"]], f["mechanism"]))
-        # hard escalation: a checkable fact confirmed by an independent source jumps the queue
-        if any(f["confidence"] == "high" and any(s.type in FACT and _x(s) >= 0.5 for s in groups[f["mechanism"]])
-               for f in findings):
+        if escalate:
             priority = max(priority, ESCALATE_PRIORITY)
         actionable = [f for f in findings if f["confidence"] in ("high", "medium")]
         if actionable:
