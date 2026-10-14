@@ -33,7 +33,7 @@ From the SEC complaint (SEC v. Chu, Kollar and Seibold, SDNY 26-cv-7041; allegat
 | Loans pledged to more than one securitization and warehouse line (¶2–3) | S1: the same VIN in two of the bank's own facilities; PledgeCheck results for other lenders; overlap with the borrower's own *registered* public pools | Other lenders are visible only through PledgeCheck, which is simulated here. Tricolor's deals were private (Rule 144A, reported; `proof/REAL_DATA.md`), so no public loan data exists for them. |
 | Delinquent "dead loans" reported as current (¶5) | S2: "current" loans with no payment in the bank's own receipts; servicer-system pulls; a paying loan's balance checked against those receipts | When the borrower services its own loans, it controls the servicer data too. The bank's own cash records are the anchor. |
 | Monthly servicing reports with altered delinquency fields (¶7) | S2: tape against servicer pulls, impossible jumps, tape against the bank's receipts | Same as above. |
-| Falsified VINs (¶7) | none | No VIN validity check yet. It is first on the after-outreach list (`WHY.md`). |
+| Falsified VINs (¶7) | none | No VIN validity check yet. It is first on the after-outreach list (in the decision log, which is kept private). |
 | Adjusted loan payment terms (¶7) | not checked | — |
 | A hole of about $800M across all lenders (¶6) | S1, inside one bank only | Adding up one borrower's collateral across every lender needs a shared registry. |
 
@@ -105,7 +105,7 @@ Around the decision:
 
 Each set was scored once under the rules of its day (`proof/REPORT_seeds*.md`). 201–205 was re-scored on 12 Sep after new checks were added (`REPORT_seeds201-205_new_checks.md`, 146/150); a re-score isn't a fresh run, so the table keeps the first one. The "any month" bar came later: 306–310 and 401–405 each had 2 honest borrowers flagged in some month, cleared by month 24.
 
-**Pooled honest false alarms across all 13 sets:** 2 of 4,771 honest borrowers flagged at month 24 (0.04 per 100), and 6 in any month (0.13 per 100). The rate measured is low, not zero (`WHY.md`).
+**Pooled honest false alarms across all 13 sets:** 2 of 4,771 honest borrowers flagged at month 24 (0.04 per 100), and 6 in any month (0.13 per 100). The rate measured is low, not zero; it is summed from the 13 reports in `proof/`.
 
 ### The blind red team: three rounds
 
@@ -167,7 +167,7 @@ For each: what the product does to help, and what stays outside any tool.
 ## Known limits
 
 - **Synthetic data.** Real accuracy needs real data; the pilot measures it.
-- **Clues that name no counterparty still pool together** within a finding, for example a judgment against the borrower itself (`WHY.md` change 30).
+- **Clues that name no counterparty still pool together** within a finding, for example a judgment against the borrower itself (change 30 in the decision log, kept private).
 - **A nominee company** with no link to the owner in any table is a known limit.
 - **No VIN validity check yet**, against the documented fake-VIN trick.
 - **PledgeCheck is simulated.** Other lenders' pledges need the real service.
@@ -234,7 +234,7 @@ uv run pytest -q                                               # 142 Python test
 
 **Java tests:** `cd case-service && JAVA_HOME=<jdk21> ./gradlew test --rerun` (35 tests).
 
-**A fresh held-out run**, scored once: freeze the rules (`bt.eval.redteam freeze`), push, then generate and score never-used seeds (`bt.eval.redteam plant` and `score`). The procedure and its stopping rule are in `WHY.md`.
+**A fresh held-out run**, scored once: freeze the rules (`bt.eval.redteam freeze`), push, then generate and score never-used seeds (`bt.eval.redteam plant` and `score`). The procedure and its stopping rule are in the decision log, which is kept private.
 
 **Case service:**
 ```bash

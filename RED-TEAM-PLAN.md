@@ -72,7 +72,7 @@ Every fraud in the test books so far was invented by the same author who wrote t
 - **What it never sees:**
   - our checks (`bt/systems`), the combiner, any threshold
   - the generator code, which holds our list of fraud types
-  - REVIEW.md, WHY.md and DATA-CONTRACT.md, which name the checks
+  - REVIEW.md, the decision log (kept private) and DATA-CONTRACT.md, which name the checks
   - the proof reports, the website, the deck and the case study
 - **It can't test against us.** Our pipeline isn't in its folder, and it is told not to run it. A real fraudster can't run the bank's monitoring either. It may run its own scripts on the honest sample book, to check they work.
 - **How blindness is checked.** It's enforced by instruction, not by a locked sandbox, because the agent runs on this same machine. Afterwards, a **leak scan** searches everything it hands in for our internal names, check codes and threshold numbers. A hit is reported as a possible leak, and that attack is marked as not blind.
@@ -134,7 +134,7 @@ The numbers above are invented to show the shape of the result. They are not a p
 ## 5. What happens after the score
 
 - **Everything is published as it came out:** every attack, every miss and the false alarms, in `proof/REDTEAM.md`, labelled synthetic and "attacks designed by an AI red team that had not seen the rules".
-- **Every miss gets a decision from Vedant,** logged in WHY.md:
+- **Every miss gets a decision from Vedant,** logged in the decision log (kept private):
   - **fix it:** a reason, a change and a test, or
   - **known limit:** a reason, written in the docs and the pitch.
 - **If anything was fixed,** one more run on new fresh seeds 601–605, copy A and copy B. It is labelled "after fixes": those attacks are no longer blind, because we tuned to them. If nothing was fixed, the 501–505 copy A run is the fresh held-out run.

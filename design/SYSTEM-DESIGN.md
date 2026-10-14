@@ -1,6 +1,6 @@
 # Borrower-truth system: design
 
-*The design record, written 11–12 Sep 2026. Since 28 Sep the product is pitched to any bank that lends to non-bank lenders, with Wells Fargo as the worked example; the tools in §6 are pitched as fitting the platform a bank already runs, each with a simpler option (`WHY.md`). Current results: the README and `proof/` (latest fresh run: `proof/REPORT_seeds1201-1205.md`).*
+*The design record, written 11–12 Sep 2026. Since 28 Sep the product is pitched to any bank that lends to non-bank lenders, with Wells Fargo as the worked example; the tools in §6 are pitched as fitting the platform a bank already runs, each with a simpler option (decision log, kept private). Current results: the README and `proof/` (latest fresh run: `proof/REPORT_seeds1201-1205.md`).*
 
 **Problem:** bank loans to non-bank lenders reached $1.32T in Q3 2025, 10% of all bank loans, and banks over $100B hold about 86% (FDIC, *Banking Issues in Focus* no. 1, Feb 2026). In the worked example, Wells Fargo's largest commercial loan category is loans to non-bank financial firms: $208.8B, 20% of all loans [W1, W3], up 9% in six months [W2]. WF's stated protections are collateral eligibility rules and re-margining [W4], and both rely on what the borrower reports. Recent frauds at borrowers of this type (Tricolor, First Brands, MFS) beat those protections in several different ways at once. WF took "a single fraud-related loss" in this category in Q1 2026 [W5, C5] and responded with a manual, one-off sweep: "follow the money trail and trace back all the flows" [C4].
 
@@ -164,7 +164,7 @@ A risk number tells a credit officer nothing about what to do. The combiner's jo
 
 ## 6. Architecture: fits the platform a bank already runs
 
-The product is three parts: the checks, a case service that keeps decisions apart from them, and the officer's screen. Kafka, Airflow and the Java service fit a bank that already runs them, and each has a simpler option: a daily payment file, one scheduled script, a small Python service (Vedant's decision, 2 Oct; `WHY.md` gives the honest reasons each was chosen, including that the internship posting and Wells Fargo's job ads listed them [W18–W20]).
+The product is three parts: the checks, a case service that keeps decisions apart from them, and the officer's screen. Kafka, Airflow and the Java service fit a bank that already runs them, and each has a simpler option: a daily payment file, one scheduled script, a small Python service (Vedant's decision, 2 Oct; the decision log, kept private, gives the honest reasons each was chosen, including that the internship posting and Wells Fargo's job ads listed them [W18–W20]).
 
 | Layer | Choice | Why |
 |---|---|---|

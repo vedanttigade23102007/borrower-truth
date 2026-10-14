@@ -1,6 +1,6 @@
 # Red team, round 3: the record, written before it ran
 
-**All data synthetic.** Written 2 Oct 2026, before the attack started. Decisions: `WHY.md`, "red team round 3".
+**All data synthetic.** Written 2 Oct 2026, before the attack started. Decisions: the decision log (kept private), "red team round 3".
 
 | | Round 3 |
 |---|---|

@@ -1,4 +1,4 @@
-"""Corroboration counts only within one claim (audit 14 Oct 2026, gap 2; WHY.md change 30).
+"""Corroboration counts only within one claim (audit 14 Oct 2026, gap 2; decision log change 30, kept private).
 
 A claim is the set of clues in one mechanism that share a counterparty, leaving out the borrower's own company. Clues
 about different lenders are different facts and must not corroborate each other. Clues that name no counterparty can't

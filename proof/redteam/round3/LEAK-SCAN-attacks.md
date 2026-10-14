@@ -84,4 +84,4 @@ Files scanned: 18. Forbidden terms searched: 88 (our signal, finding and check n
   - company history: `shelf_orders`
   - a customer as accomplice: `customer_roundtrip`, with each payment back pre-funded 4 days earlier by an equal transfer to the same customer
 - **The attacker's own words:** each README says no internet research was done, and that the only internet use was installing pyarrow and numpy. That matches Vedant's account.
-- **Noted before scoring:** `invoice_uplift` inflates one month's invoices only (month 6). The dilution check (WHY.md change 18) compares the last six months with the first three, so a one-month burst sits outside both windows.
+- **Noted before scoring:** `invoice_uplift` inflates one month's invoices only (month 6). The dilution check (change 18 in the decision log, kept private) compares the last six months with the first three, so a one-month burst sits outside both windows.

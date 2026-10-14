@@ -69,7 +69,7 @@ A plant that breaks the rule is reverted and reported, never repaired, the same 
 
 - **The attacker is still an AI,** and of the same broad kind as the one that helped write the checks.
 - **Round 2's attacker may have been the weaker model** (Sonnet 5.5, against round 1's Opus 5), and the rules of the test changed between the rounds in both directions (realistic credit limits, the payer rule). Part of the improvement may come from that. Added to every red-team report on 2 Oct 2026.
-  - *Replaced on 5 Oct 2026 by Vedant's correction (`WHY.md`, "the round 1–2 caveat corrected"): which of the two models is stronger was never measured. The line above is kept as it was written.*
+  - *Replaced on 5 Oct 2026 by Vedant's correction (decision log, kept private): which of the two models is stronger was never measured. The line above is kept as it was written.*
 - **The data is still synthetic,** and the attack can only use what our tables record.
 - **Blindness rests on instructions** and a leak scan, plus the chat having no access to this Mac.
 - **A later round 3 could be an "informed fraudster"** that reads the public website first. Not part of this plan.

@@ -4,7 +4,7 @@
 
 **Attacker models:** round 1: Opus 5; round 2: Sonnet 5.5; round 3: GPT-6 Astra (as shown in Codex), run by a friend on their own machine with no internet (Vedant, 2 Oct 2026)
 
-**Caveat on comparing rounds.** Round 3's attacker is a different company's model (GPT-6 Astra in OpenAI Codex), so the "same family" limit of rounds 1 and 2 doesn't apply to it. The rounds are still not like for like. The rules changed between round 2 and round 3 (WHY.md changes 17–20). Round 3's attacks were also much smaller: 6–8% of the credit limit, just over the 5% floor, against 14–16% in round 2. And every one was a single burst at month 6.
+**Caveat on comparing rounds.** Round 3's attacker is a different company's model (GPT-6 Astra in OpenAI Codex), so the "same family" limit of rounds 1 and 2 doesn't apply to it. The rounds are still not like for like. The rules changed between round 2 and round 3 (changes 17–20 in the decision log, kept private). Round 3's attacks were also much smaller: 6–8% of the credit limit, just over the 5% floor, against 14–16% in round 2. And every one was a single burst at month 6.
 
 Rules version ca03f77baae5 (frozen: ca03f77baae5); code 1b06de2.
 
@@ -94,7 +94,7 @@ The books' own planted frauds: 248/250 caught.
 
 ## After scoring: what the attacks actually changed (diagnosis only, 2 Oct 2026; no code changed)
 
-Everything above was written by the harness and committed unchanged (`21ca7c1`, pushed). This section was added later. **Round 3 is a measurement only** (WHY.md): no fixes before outreach.
+Everything above was written by the harness and committed unchanged (`21ca7c1`, pushed). This section was added later. **Round 3 is a measurement only** (decision log, kept private): no fixes before outreach.
 
 **"Sent to review" overstates it.** About 28 of every 100 honest borrowers sit at review anyway, because of honest look-alikes. Each attacked borrower was compared with the same borrower in copy A, the same book without the attack, month by month (months 7–24). The question was whether the attack changed what an officer would see.
 

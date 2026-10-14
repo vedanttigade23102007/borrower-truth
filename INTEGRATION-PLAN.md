@@ -1,6 +1,6 @@
 # Day-one integration: plan
 
-**Status: approved by Vedant on 2 Oct 2026 (Excel allowed, values only; a command first). Built: `INTEGRATION.md`, `bt/mapper`, the calendar change. What changed from this plan, and why, is in `WHY.md` change 21.** Written 2 Oct 2026, after the fresh run on seeds 901–905 passed.
+**Status: approved by Vedant on 2 Oct 2026 (Excel allowed, values only; a command first). Built: `INTEGRATION.md`, `bt/mapper`, the calendar change. What changed from this plan, and why, is change 21 in the decision log (kept private).** Written 2 Oct 2026, after the fresh run on seeds 901–905 passed.
 
 ## Why this step
 

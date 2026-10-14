@@ -137,7 +137,7 @@ The pilot group: about 10 borrowers with the most complete data (typical, to con
 
 ## 8. Security and access
 
-- **Sign-in:** the console has none of its own. It sits behind the bank's sign-in, which decides who can see which borrowers and who counts as a second person. **Not built here** (`WHY.md` changes 5 and 6).
+- **Sign-in:** the console has none of its own. It sits behind the bank's sign-in, which decides who can see which borrowers and who counts as a second person. **Not built here** (changes 5 and 6 in the decision log, kept private).
 - **Writes:** the case service accepts writes only with a shared key today. A bank would replace that with its own service identity (typical, to confirm with the bank).
 - **Audit log:** append-only. No update or delete path exists, and a test checks that.
 - **Borrower files are untrusted:** the mapper reads values only and refuses macro workbooks and oversized files.

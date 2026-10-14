@@ -13,5 +13,5 @@
   1105
  ],
  "attacker": "GPT-6 Astra (as shown in Codex), run by a friend on their own machine; round 3's attacks re-scored, no longer blind",
- "note": "after the round-3 fixes (WHY.md 23-25) and the real-data checks and ID fix (26-29); stopping rule applies"
+ "note": "after the round-3 fixes (decision log 23-25, kept private) and the real-data checks and ID fix (26-29); stopping rule applies"
 }
