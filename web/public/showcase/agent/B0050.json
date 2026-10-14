@@ -86,11 +86,11 @@
  "dropped": [
   {
    "text": "The borrower's inflows from a non-customer payer, Harbor Recovery Inc, were not confirmed [S2-B0050-SOURCE_MISMATCH-cb5cd324].",
-   "reason": "names 'harbor recovery', which its sources don't mention"
+   "reason": "cites an unknown source: S2-B0050-SOURCE_MISMATCH-cb5cd324"
   }
  ],
  "rounds": 2,
  "tokens": 4456,
  "seconds": 45.2,
- "checks_reapplied": "2026-09-16"
+ "checks_reapplied": "2026-10-14"
 }

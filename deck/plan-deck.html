@@ -65,6 +65,7 @@ blockquote{margin:0;padding:12px 18px;border-left:4px solid var(--accent);backgr
 .verdict{border-radius:14px;padding:20px 26px;font-size:32px;font-weight:800;background:var(--ok-bg);color:var(--ok)}
 ul{margin:0;padding-left:22px}li{margin:5px 0}
 .fine{font-size:13px;color:var(--muted)}
+.tight th,.tight td{padding:3px 8px;line-height:1.2}
 .mt{margin-top:auto}
 .cmp{font-size:14px}.cmp th,.cmp td{text-align:center;padding:5px 6px;vertical-align:middle}
 .cmp th:first-child,.cmp td:first-child{text-align:left}
@@ -357,8 +358,8 @@ h1{font-size:30px}h2{font-size:24px}.big{font-size:54px}.timeline{flex-direction
 <!-- B2x Every run -->
 <section class="slide"><div class="frame">
   <div class="kicker">Every fresh run, never only the best one · each set generated for the first time and scored once</div>
-  <h2>13 fresh sets. Two failed, and both are shown. Across all of them: 2 of 4,771 honest borrowers flagged at month 24.</h2>
-  <table style="font-size:13px">
+  <h2>13 fresh sets. Two failed, and both are shown.</h2>
+  <table class="tight" style="font-size:13px">
     <tr><th>Seeds</th><th>What it tested</th><th>Frauds caught</th><th>Honest flagged, month 24</th><th>Honest flagged, any month</th><th>Review / 100 honest</th></tr>
     <tr><td>201–205</td><td>first rules</td><td>143/150</td><td>0 of 450</td><td>0</td><td>31.3</td></tr>
     <tr><td>301–305</td><td>generator v2</td><td>189/190</td><td>0 of 410</td><td>0</td><td>30.5</td></tr>
@@ -367,14 +368,14 @@ h1{font-size:30px}h2{font-size:24px}.big{font-size:54px}.timeline{flex-direction
     <tr><td>406–410</td><td>generator v3, final</td><td>248/250</td><td>0 of 350</td><td>0</td><td>29.1</td></tr>
     <tr><td>501–505</td><td>red team round 1's books</td><td>246/249</td><td>0 of 351</td><td>0</td><td>25.6</td></tr>
     <tr><td>601–605</td><td>after the round-1 fixes</td><td>246/250</td><td>0 of 350</td><td>0</td><td>30.3</td></tr>
-    <tr class="win"><td><b>701–705</b></td><td><b>failed:</b> a judgment matched by a name three companies share</td><td>249/250</td><td><b>1 of 350</b></td><td>1</td><td>28.3</td></tr>
-    <tr class="win"><td><b>801–805</b></td><td><b>failed:</b> a cut-off timing difference</td><td>249/250</td><td><b>1 of 350</b></td><td>1</td><td>30.9</td></tr>
+    <tr class="win"><td><b>701–705</b></td><td><b>failed:</b> a name three companies share</td><td>249/250</td><td><b>1 of 350</b></td><td>1</td><td>28.3</td></tr>
+    <tr class="win"><td><b>801–805</b></td><td><b>failed:</b> cut-off timing</td><td>249/250</td><td><b>1 of 350</b></td><td>1</td><td>30.9</td></tr>
     <tr><td>901–905</td><td>after the timing rule</td><td>248/250</td><td>0 of 350</td><td>0</td><td>30.0</td></tr>
     <tr><td>1001–1005</td><td>red team round 3's books</td><td>248/250</td><td>0 of 350</td><td>0</td><td>28.6</td></tr>
     <tr><td>1101–1105</td><td>after the round-3 fixes</td><td>250/250</td><td>0 of 350</td><td>0</td><td>29.1</td></tr>
     <tr><td>1201–1205</td><td>after the claims fix</td><td>248/250</td><td>0 of 350</td><td>0</td><td>28.9</td></tr>
   </table>
-  <p class="fine mt">Pooled: 2 of 4,771 honest borrowers flagged at month 24 (0.04 per 100), 6 in any month (0.13 per 100); low, not zero. The "any month" bar came later: 306–310 and 401–405 each had 2 honest borrowers flagged in some month, cleared by month 24. Reports: proof/REPORT_seeds*.md.</p>
+  <p class="fine mt"><b>Pooled: 2 of 4,771 honest borrowers flagged at month 24 (0.04 per 100), 6 in any month (0.13 per 100): low, not zero.</b> The "any month" bar came later: 306–310 and 401–405 each had 2 flagged in some month, cleared by month 24. proof/REPORT_seeds*.md.</p>
 </div></section>
 
 <!-- B2y Red team -->
@@ -527,7 +528,7 @@ h1{font-size:30px}h2{font-size:24px}.big{font-size:54px}.timeline{flex-direction
   <h2>Every control partner's first question, the evidence we have, and the gap we'll close. Gaps are stated, not hidden.</h2>
   <table>
     <tr><th style="width:18%">Partner</th><th style="width:30%">First question</th><th>Evidence today</th><th style="width:26%">Gap → plan</th></tr>
-    <tr><td><b>Model risk</b><br><span class="fine">SR 26-2 / OCC 2026-13 (17 Apr 2026)</span></td><td>Is it a model? Development and use, validation and monitoring, governance?</td><td>Rules decide; six loan-tape thresholds checked on 28 real pools; 13 fresh sets scored once; three blind red-team rounds; replay 120/120; the agent never decides</td><td>Register and tier it under SR 26-2; validate independently on bank data; the AI agent goes under the bank's AI policy (outside SR 26-2's scope)</td></tr>
+    <tr><td><b>Model risk</b><br><span class="fine">SR 26-2 / OCC 2026-13 (17 Apr 2026)</span></td><td>Is it a model? Development and use, validation and monitoring, governance?</td><td>Rules decide; six loan-tape thresholds checked on 28 real pools; 13 fresh sets; three blind red-team rounds; replay 120/120</td><td>Register, tier and validate it under SR 26-2; the AI agent goes under the bank's AI policy</td></tr>
     <tr><td><b>BSA/AML compliance</b><br><span class="fine">SAR 12 CFR 21.11; beneficial ownership</span></td><td>Does "likely fraud" trigger a SAR decision? Can letters tip off?</td><td>Evidence chain for every clue; shells linked by owner, address, phone, agent; audit log</td><td>Route cases to the financial-crimes unit; Compliance and Legal approve letter templates</td></tr>
     <tr><td><b>InfoSec</b><br><span class="fine">GLBA security guidelines</span></td><td>Obligor data, access, encryption, hosting?</td><td>No secrets in code; localhost binding and write key; open-weight models that can run in-bank</td><td>Bank SSO, encryption at rest, in-bank hosting, pen test</td></tr>
     <tr><td><b>Legal · third-party · op risk · audit</b></td><td>Data rights? Vendors? Failure modes? Auditable?</td><td>Letters ask, never accuse; open-source stack; isolated checks and quarantine; decision record</td><td>Confirm audit rights per facility; vendor reviews; run-book; audit walk-through</td></tr>

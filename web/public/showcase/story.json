@@ -299,7 +299,7 @@
     "signal:S5-B0028-COMPETING_LIEN-9f05809d",
     "financials:B0028:debt_reported"
    ],
-   "explanation": "Debt reported to Wells Fargo omits 1 secured lender(s) found in public lien filings",
+   "explanation": "Debt reported to Wells Fargo omits 1 lender(s) found in public lien filings",
    "observed_month": 23,
    "related_entities": []
   },
@@ -485,8 +485,8 @@
   "decision_id": "B0028-m23-57a795803fa4",
   "result_digest": "57a795803fa4",
   "inputs_digest": "ec63acb069af",
-  "rule_version": "614d4a97ea9e",
-  "code_version": "3881eb6",
+  "rule_version": "7c290d875a0c",
+  "code_version": "5f8b7d9",
   "as_of": 23
  }
 }

@@ -1,6 +1,6 @@
 {
  "asOf": 23,
- "receivedAt": "2026-10-05T12:25:58.011022Z",
+ "receivedAt": "2026-10-14T02:29:18.347767Z",
  "runMetrics": {
   "data_quality": {
    "quarantined": {},
@@ -9,27 +9,27 @@
   },
   "S6": {
    "status": "ok",
-   "seconds": 0.021,
+   "seconds": 0.058,
    "signals": 93
   },
   "S1": {
    "status": "ok",
-   "seconds": 0.103,
+   "seconds": 0.114,
    "signals": 74
   },
   "S2": {
    "status": "ok",
-   "seconds": 0.279,
+   "seconds": 0.297,
    "signals": 65
   },
   "S3": {
    "status": "ok",
-   "seconds": 0.38,
+   "seconds": 0.435,
    "signals": 26
   },
   "S4": {
    "status": "ok",
-   "seconds": 0.106,
+   "seconds": 0.105,
    "signals": 20
   },
   "S5": {
@@ -66,15 +66,15 @@
    },
    "document_model": false,
    "inputs_digest": "ec63acb069af",
-   "rule_version": "a88b4d4f561f",
-   "code_version": "abf04bc"
+   "rule_version": "7c290d875a0c",
+   "code_version": "5f8b7d9"
   },
   "combiner": {
    "status": "ok",
-   "seconds": 0.096,
+   "seconds": 0.088,
    "cases": 120
   },
-  "total_seconds": 1.762,
+  "total_seconds": 1.913,
   "as_of": 23,
   "document_model": "off"
  },

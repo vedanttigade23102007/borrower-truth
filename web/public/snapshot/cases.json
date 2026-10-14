@@ -404,18 +404,6 @@
   "liveAlerts": 0
  },
  {
-  "borrowerId": "B0106",
-  "verdict": "LIKELY_FRAUD",
-  "headline": "Likely: the borrower has debt it has not disclosed",
-  "priority": 0.95,
-  "mechanisms": [
-   "HIDDEN_DEBT"
-  ],
-  "openSteps": 3,
-  "caseStatus": "AWAITING_APPROVAL",
-  "liveAlerts": 0
- },
- {
   "borrowerId": "B0102",
   "verdict": "LIKELY_FRAUD",
   "headline": "Likely: money from lenders or linked companies is arriving dressed up as customer payments",
@@ -434,18 +422,6 @@
   "priority": 0.95,
   "mechanisms": [
    "DISGUISED_RECEIPTS"
-  ],
-  "openSteps": 3,
-  "caseStatus": "AWAITING_APPROVAL",
-  "liveAlerts": 0
- },
- {
-  "borrowerId": "B0014",
-  "verdict": "LIKELY_FRAUD",
-  "headline": "Likely: the borrower has debt it has not disclosed",
-  "priority": 0.95,
-  "mechanisms": [
-   "HIDDEN_DEBT"
   ],
   "openSteps": 3,
   "caseStatus": "AWAITING_APPROVAL",
@@ -540,7 +516,31 @@
   "liveAlerts": 0
  },
  {
+  "borrowerId": "B0106",
+  "verdict": "LIKELY_FRAUD",
+  "headline": "Likely: the borrower has debt it has not disclosed",
+  "priority": 0.908,
+  "mechanisms": [
+   "HIDDEN_DEBT"
+  ],
+  "openSteps": 3,
+  "caseStatus": "AWAITING_APPROVAL",
+  "liveAlerts": 0
+ },
+ {
   "borrowerId": "B0109",
+  "verdict": "LIKELY_FRAUD",
+  "headline": "Likely: the borrower has debt it has not disclosed",
+  "priority": 0.908,
+  "mechanisms": [
+   "HIDDEN_DEBT"
+  ],
+  "openSteps": 3,
+  "caseStatus": "AWAITING_APPROVAL",
+  "liveAlerts": 0
+ },
+ {
+  "borrowerId": "B0014",
   "verdict": "LIKELY_FRAUD",
   "headline": "Likely: the borrower has debt it has not disclosed",
   "priority": 0.908,
