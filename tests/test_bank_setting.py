@@ -1,5 +1,5 @@
-"""The bank's name is one setting (REVIEW.md gap 6). Wells Fargo is the worked example and the default; for any other
-bank, its own liens are skipped and Wells Fargo's become another lender's."""
+"""The bank's name is one setting (buyer review gap 6, kept private). Wells Fargo is the worked example and the default;
+for any other bank, its own liens are skipped and Wells Fargo's become another lender's."""
 import pytest
 
 from bt.common import bank

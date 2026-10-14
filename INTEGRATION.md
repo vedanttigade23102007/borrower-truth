@@ -26,7 +26,7 @@ Written 2 Oct 2026 (plan: `INTEGRATION-PLAN.md`, approved by Vedant). All data i
   - It produces every case, and nothing even tries to call out.
   - Two control tests show both blockers do catch a real attempt.
   - The agent's hosted-model path and the public lookups are refused before any connection.
-- **Database:** H2 today. A bank would most likely want Postgres or its own standard database (typical, to confirm with the bank). **Not checked on Postgres:** `REVIEW.md` gap 9 lists the three edits it needs.
+- **Database:** H2 today. A bank would most likely want Postgres or its own standard database (typical, to confirm with the bank). **Not checked on Postgres:** the buyer review (kept private) lists the three edits it needs, as gap 9.
 - **Size:** measured on one laptop up to 400 synthetic borrowers: 13.2M rows in 4.39 s for one month (`proof/scale.json`). A monthly run is not a capacity problem at that size. A bank's whole book is not measured.
 
 ---

@@ -1,6 +1,6 @@
 # Data contract: what Borrower Truth needs from a bank
 
-REVIEW.md gap 5. Written on 1 Oct 2026. It answers an architect's first question: *what do I have to plug in, and what works on day one with what we already have?*
+Buyer review gap 5 (the review is kept private). Written on 1 Oct 2026. It answers an architect's first question: *what do I have to plug in, and what works on day one with what we already have?*
 
 The same contract is written in code in `bt/pipeline/contract.py`, so the document and the system can't drift apart. Tests: `tests/test_fallbacks.py`.
 

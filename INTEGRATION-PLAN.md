@@ -17,7 +17,7 @@ After "what does it catch?", a bank's next question is "what do my people do on 
      - the case service (Java)
      - the console
    - Everything runs inside the bank's network, and no data leaves it.
-   - Database: H2 today. A bank would likely use Postgres, which is **not checked** (REVIEW.md gap 9 lists the three edits).
+   - Database: H2 today. A bank would likely use Postgres, which is **not checked** (the buyer review, kept private, lists the three edits as gap 9).
 2. **Where each input comes from in a bank.** One table: input → the bank system or vendor that holds it → who owns the feed. For example:
    - payments → the deposit system
    - company registry and owners → the KYC platform

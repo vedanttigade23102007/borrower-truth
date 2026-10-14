@@ -1,5 +1,7 @@
 # PROBLEMS — whole-company scan, scored
 
+> **Dated note (14 Oct 2026):** internship-era research from September 2026, kept as a record. It is superseded by the [README](../README.md).
+
 Six candidate problems, one or more per area of Wells Fargo, scored 0–2 on seven tests (max 14).
 Every fact cited is in `VERIFY.md` (ID in brackets). Scores are judgement — the reasons are written next to them so they can be argued with.
 

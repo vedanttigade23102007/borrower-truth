@@ -1,6 +1,6 @@
 # Red team plan (step 5): a blind attack on Borrower Truth
 
-**Status: approved by Vedant on 1 Oct 2026, with changes (below). The harness and the briefing are built and frozen with the code (tag `redteam-frozen`). The red team hasn't run yet.** REVIEW.md gap 4.
+**Status: approved by Vedant on 1 Oct 2026, with changes (below). The harness and the briefing are built and frozen with the code (tag `redteam-frozen`). The red team hasn't run yet.** Buyer review gap 4 (the review is kept private).
 
 **Vedant's decisions (1 Oct 2026):**
 1. **The red team is option (b), on claude.ai.** Vedant runs it himself, in a new incognito chat. He uploads the sealed briefing as one zip, pastes a fixed first message, and brings the attacks back as a zip.
@@ -72,7 +72,7 @@ Every fraud in the test books so far was invented by the same author who wrote t
 - **What it never sees:**
   - our checks (`bt/systems`), the combiner, any threshold
   - the generator code, which holds our list of fraud types
-  - REVIEW.md, the decision log (kept private) and DATA-CONTRACT.md, which name the checks
+  - the buyer review and the decision log (both kept private) and DATA-CONTRACT.md, which name the checks
   - the proof reports, the website, the deck and the case study
 - **It can't test against us.** Our pipeline isn't in its folder, and it is told not to run it. A real fraudster can't run the bank's monitoring either. It may run its own scripts on the honest sample book, to check they work.
 - **How blindness is checked.** It's enforced by instruction, not by a locked sandbox, because the agent runs on this same machine. Afterwards, a **leak scan** searches everything it hands in for our internal names, check codes and threshold numbers. A hit is reported as a possible leak, and that attack is marked as not blind.
