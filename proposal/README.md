@@ -1,6 +1,6 @@
 # Proposal pack: taking Borrower Truth through a bank's approval process
 
-Banks don't adopt a tool because it works. A sponsor carries it, control partners sign it off, and a committee approves a small, safe first step. This pack is built for that path.
+Banks don't adopt a tool because it works. A sponsor carries it, control partners sign it off, and a committee approves a small, safe first step. This pack is built for that path, at any bank that lends to non-bank lenders. Wells Fargo is the worked example, because its public filings show the problem clearly.
 
 | Stage | What happens | Document |
 |---|---|---|
@@ -22,10 +22,10 @@ Banks don't adopt a tool because it works. A sponsor carries it, control partner
   - Internal Audit
 - **Delivery:** the Commercial Banking technology team that would host it.
 
-## How an intern would socialize it
-1. Show the deck and the live demo to my manager and team first. Ask what would stop it, not whether they like it.
-2. Ask my manager who owns NDFI credit risk, and request 20 minutes with someone on that team. Bring the one-page memo, not the deck.
+## How it gets carried inside a bank
+1. Start with the people who know the work: former credit officers and field examiners, for advice, and the team that lends to non-bank lenders. Ask what would stop it, not whether they like it.
+2. Find who owns NDFI credit risk and ask for 20 minutes. Bring the one-page memo, not the deck. The ask is a lookback pilot inside the bank's own network.
 3. Ask one Model Risk and one Compliance contact the questions in `03-CONTROL-MATRIX.md` early. Their objections shape the pilot, and it's cheaper to learn them before the committee.
 4. Only then take a sponsor-backed memo to a steering committee, asking for a 90-day shadow pilot.
 
-**Honest status:** everything here is prepared from public information and a prototype on synthetic data. It has not been seen by anyone at Wells Fargo.
+**Honest status:** everything here is prepared from public information and a prototype on synthetic data. It has not been seen by anyone at any bank, including Wells Fargo.

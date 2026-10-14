@@ -25,8 +25,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col">
         <div className="border-b border-amber-200 bg-amber-50 px-4 py-1.5 text-center text-xs text-amber-900">
-          All data is synthetic. No real company, person or loan is shown. An internship-application project, not
-          affiliated with Wells Fargo.
+          All data is synthetic. No real company, person or loan is shown. Built for any bank that lends to non-bank
+          lenders, with Wells Fargo as the worked example; not affiliated with Wells Fargo.
         </div>
         <Header />
         <main className="mx-auto w-full max-w-7xl flex-1 px-4 py-8 sm:px-6">{children}</main>

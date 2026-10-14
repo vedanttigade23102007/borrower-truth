@@ -1,6 +1,8 @@
 # Borrower-truth system: design
 
-**Problem:** Wells Fargo's largest commercial loan category is loans to non-bank financial firms: $208.8B, 20% of all loans [W1, W3], up 9% in six months [W2]. WF's stated protections are collateral eligibility rules and re-margining [W4], and both rely on what the borrower reports. Recent frauds at borrowers of this type (Tricolor, First Brands, MFS) beat those protections in several different ways at once. WF took "a single fraud-related loss" in this category in Q1 2026 [W5, C5] and responded with a manual, one-off sweep: "follow the money trail and trace back all the flows" [C4].
+*The design record, written 11–12 Sep 2026. Since 28 Sep the product is pitched to any bank that lends to non-bank lenders, with Wells Fargo as the worked example; the tools in §6 are pitched as fitting the platform a bank already runs, each with a simpler option (`WHY.md`). Current results: the README and `proof/` (latest fresh run: `proof/REPORT_seeds1201-1205.md`).*
+
+**Problem:** bank loans to non-bank lenders reached $1.32T in Q3 2025, 10% of all bank loans, and banks over $100B hold about 86% (FDIC, *Banking Issues in Focus* no. 1, Feb 2026). In the worked example, Wells Fargo's largest commercial loan category is loans to non-bank financial firms: $208.8B, 20% of all loans [W1, W3], up 9% in six months [W2]. WF's stated protections are collateral eligibility rules and re-margining [W4], and both rely on what the borrower reports. Recent frauds at borrowers of this type (Tricolor, First Brands, MFS) beat those protections in several different ways at once. WF took "a single fraud-related loss" in this category in Q1 2026 [W5, C5] and responded with a manual, one-off sweep: "follow the money trail and trace back all the flows" [C4].
 
 **What we design:** seven connected systems plus a combiner that continuously answer the credit officer's real question: *is this borrower's picture of itself true?*
 
@@ -158,11 +160,11 @@ A risk number tells a credit officer nothing about what to do. The combiner's jo
 | Related shells (S6) | Request an ownership certification and related-party schedule · add the linked entities to monitoring |
 | Financial inconsistency (S7) | Request reconciliations (revenue ↔ cash ↔ receivables) · have the borrower's auditor bridge the gap · re-test covenants on reconciled numbers |
 
-**Why this split** (deterministic verdict/playbook, model only for reading and writing): a bank must be able to explain and validate every decision path. The OCC's agreement with WF itself cites the model-risk guidance, OCC Bulletin 2011-12 [O1]. WF's own Agentspace tools are described as helping employees "navigate policies and procedures" and "sort through scores of documentation": assisting, not deciding [A2]. WF has also used a network of interacting agents to re-underwrite 15 years of archived loan documents [A3]. That's the same multi-system pattern as this design. Keeping judgement in auditable rules and humans, and language in the model, is what makes the automation approvable.
+**Why this split** (deterministic verdict/playbook, model only for reading and writing): a bank must be able to explain and validate every decision path. The OCC's 2024 agreement with WF cited the model-risk guidance of the day, OCC Bulletin 2011-12 [O1]; on 17 Apr 2026 SR 26-2 / OCC Bulletin 2026-13 replaced it, and it leaves generative and agentic AI out of scope. WF's own Agentspace tools are described as helping employees "navigate policies and procedures" and "sort through scores of documentation": assisting, not deciding [A2]. WF has also used a network of interacting agents to re-underwrite 15 years of archived loan documents [A3]. That's the same multi-system pattern as this design. Keeping judgement in auditable rules and humans, and language in the model, is what makes the automation approvable.
 
-## 6. Architecture: aligned to Wells Fargo's own engineering stack
+## 6. Architecture: fits the platform a bank already runs
 
-The intern posting asks for Java, C#, SQL and Python [W18, primary]. WF's India engineering job ads also list Kafka, Spark, Spring Boot, and Airflow on Cloud Composer with Pub/Sub [W19, W20]. Those two are secondary: they come from search snippets, because the posting pages no longer load. We build with the same tools, so the project maps one-to-one onto the resume and the interview.
+The product is three parts: the checks, a case service that keeps decisions apart from them, and the officer's screen. Kafka, Airflow and the Java service fit a bank that already runs them, and each has a simpler option: a daily payment file, one scheduled script, a small Python service (Vedant's decision, 2 Oct; `WHY.md` gives the honest reasons each was chosen, including that the internship posting and Wells Fargo's job ads listed them [W18–W20]).
 
 | Layer | Choice | Why |
 |---|---|---|
@@ -174,7 +176,7 @@ The intern posting asks for Java, C#, SQL and Python [W18, primary]. WF's India 
 | Model layer | **Swappable**: default is a fine-tuned small open model (section 6a) | Runs "inside the bank" |
 | Console | **Next.js** + Tailwind; the chain view as a node graph | The officer's case screen |
 | Monitoring (optional) | **Grafana** | Pipeline health, alert volumes, model drift: the ongoing monitoring model-risk rules expect. Not in WF ads |
-| Proof | pytest, JUnit, promptfoo, an evaluation harness | Numbers, not claims |
+| Proof | pytest, JUnit, an evaluation harness | Numbers, not claims. promptfoo was not adopted: the memo's line checks run in code |
 
 **RAM limit:** the 8 GB Mac can't run Redpanda, Airflow, Spring Boot, Next.js and Grafana at once. Develop one service at a time; run the full stack in a cloud dev environment for the demo. No local model inference (per TOOLS.md).
 
@@ -188,7 +190,7 @@ The intern posting asks for Java, C#, SQL and Python [W18, primary]. WF's India 
 | Scrub personal data from documents | A small open model | **Not built** |
 | Write findings, verdict sentences and draft letters | A small open instruct model | Prompted with the signal records only; must cite signal IDs |
 | Optional larger model | Any provider, via the same interface | Sees **scrubbed** text only, the Fargo pattern |
-| Live demo hosting | **Hugging Face ZeroGPU Space** (free) [G2] | Can be slow to wake up; the demo also ships precomputed results as a fallback |
+| Live demo hosting | Planned: Hugging Face ZeroGPU Space [G2] | **Not used.** The public demo is a static console on Vercel; the agent ran on a free Kaggle GPU |
 
 **The proof point it creates:** "My fine-tuned small model extracts invoice fields at X% vs. the base model's Y% on a held-out set, and it never sends data outside." Pick the specific base model at build time; newer ones may exist after the knowledge cutoff.
 
@@ -219,7 +221,7 @@ The honest consequence: the demo proves the *design and detection logic*. Real p
 3. **Beyond PledgeCheck:** simulate PledgeCheck's four published checks [S3] as a baseline and count the frauds that pass it but that we catch.
 4. Days to detection vs. a quarterly sample-audit baseline.
 5. False alarms per 100 clean borrowers; precision in the top decile of the queue.
-6. AI faithfulness: 100% of summary and draft sentences cite an existing signal (promptfoo).
+6. AI faithfulness: every memo sentence cites an existing signal or tool call, or code drops it (done in code, not with promptfoo).
 7. **Fine-tuned vs. base model:** field-extraction accuracy on held-out receipts and invoices, plus the altered-invoice detection rate.
 8. **Fix quality:** for each planted case, does the suggested playbook address the planted mechanism? (Checked against the scenario's ground truth.) Also: time from alert to a ready-to-approve case file.
 
@@ -285,11 +287,13 @@ A great tool can still fail to fit a bank. This design plans for that from day o
 - **Adoptable piece by piece:** each system runs alone, so WF could start with S3 alone.
 - **Not solvable from outside (stated plainly):** WF's approval timelines (security, third-party risk, model-risk validation) and access to real data. The design makes those reviews easy; it cannot skip them.
 
-## 14. Built and measured (11–12 Sep 2026)
+## 14. Built and measured (11–14 Sep 2026, kept as history)
+
+*These numbers are superseded. The current headline is the latest fresh run (`proof/REPORT_seeds1201-1205.md`: 248 of 250 caught, 0 of 350 honest flagged, 28.9 per 100 to review), with every fresh run, the pooled false-alarm rate and the three blind red-team rounds in the README. Tests today: 142 Python, 35 Java.*
 
 **Not everything in §1–§13 is built.** `proof/AUDIT.md` checks every claim line by line: built, partial, not built, or corrected. An earlier version of this section said "everything is implemented"; that was wrong, and the audit exists because of it. Measured on synthetic data:
 
-**Held-out proof** (fresh seeds 406–410, generator v3 calibrated on real SEC data, generated and scored once after every change; `proof/REPORT.md`):
+**Held-out proof** (fresh seeds 406–410, generator v3 calibrated on real SEC data, generated and scored once after every change; `proof/REPORT_seeds406-410.md`):
 
 | Measure | Result |
 |---|---|
@@ -333,7 +337,7 @@ The switch-off test shows every system contributes.
 - Tamper check: 11 of 11 tampered invoices flagged; false flags on 3.3% of clean ones.
 - Speed: 120 docs/min.
 
-**Live full stack** (`proof/STACK-DEMO.md`, Codespaces):
+**Full stack** (`proof/STACK-DEMO.md`, Codespaces; last run 11 Sep 2026, on earlier rules):
 - 59,551 payments streamed.
 - Payment → signal: p50 24 ms, p95 29 ms.
 - 0 dead letters.
@@ -341,7 +345,7 @@ The switch-off test shows every system contributes.
 
 **Deployed:**
 - The console on Vercel (production, public by link; search engines are told not to index it; security headers on every page).
-- Grafana and the case service in Codespaces, on ports bound to localhost; writes to the case service from another machine need a shared key.
+- Grafana and the case service in Codespaces on 11 Sep 2026, on ports bound to localhost; writes to the case service from another machine need a shared key.
 
 **Closed after the audit** (evidence in `proof/AUDIT.md`):
 - The document model is wired into S4 (`DOC_DATA_MISMATCH`).
@@ -367,6 +371,3 @@ The switch-off test shows every system contributes.
 - Obligor confirmations, a single-counterparty check, SEC ABS-EE calibration (needs a contact email for EDGAR).
 - Model-written letters and finding sentences (the agent's memo is model-written and checked; letters stay templates).
 - Test on real documents and data, which needs bank access.
-
-## 11. Interview story, in 30 seconds
-"Your biggest loan book is lending to lenders. The frauds hitting that market use seven different tricks, and each one hides in a different place. You backed a tool that protects the collateral pool. I designed seven connected checks that watch the borrower around the pool. The system doesn't just flag a borrower: it tells the officer what's wrong, shows the proof, suggests the fix and drafts the paperwork, all for one-click approval. The document reading runs on a small model I fine-tuned that can run inside the bank, so borrower data need not leave it. It's built on your stack: Kafka, Airflow, Spring Boot."

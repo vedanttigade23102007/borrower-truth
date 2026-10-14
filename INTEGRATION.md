@@ -141,7 +141,7 @@ The pilot group: about 10 borrowers with the most complete data (typical, to con
 - **Writes:** the case service accepts writes only with a shared key today. A bank would replace that with its own service identity (typical, to confirm with the bank).
 - **Audit log:** append-only. No update or delete path exists, and a test checks that.
 - **Borrower files are untrusted:** the mapper reads values only and refuses macro workbooks and oversized files.
-- **Outbound calls:** none by default (`BT_OFFLINE`, section 1). The console hasn't been checked for outside calls, such as fonts or scripts loaded from the internet: **not checked**.
+- **Outbound calls:** none by default from the checks, the agent or the public lookups (`BT_OFFLINE`, section 1). **The console downloads its fonts from Google when it's built** (`next/font/google` in `web/src/app/layout.tsx`), so a bank's offline build would need the fonts stored locally. Other outside calls by the console in the browser: **not checked**.
 
 ---
 

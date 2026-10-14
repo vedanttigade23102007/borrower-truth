@@ -1,17 +1,19 @@
 # Business case and requirements (BRD): Borrower Truth
 
-*Prepared the way a Wells Fargo proposal would be: problem, solution, requirements, resources, timeline, money, alternatives. Public facts are cited; every other number is labelled as a planning assumption for the bank to replace with its own.*
+*Prepared the way a bank proposal would be: problem, solution, requirements, resources, timeline, money, alternatives. It fits any bank that lends to non-bank lenders; Wells Fargo is the worked example. Public facts are cited; every other number is labelled as a planning assumption for the bank to replace with its own.*
 
 ## 1. Problem
-- **The exposure is large.** Lending to non-bank financial firms is Wells Fargo's largest commercial loan category: $208.8B, 20% of all loans (10-Q, 30 Jun 2026).
+- **The exposure is large, and it sits with the biggest banks.** Bank loans to nondepository financial institutions reached $1.32 trillion in the third quarter of 2025, 10.0% of all bank loans; banks with assets over $100 billion hold about 86% (FDIC, *Banking Issues in Focus* no. 1, Feb 2026, pp. 2–3).
+- **The worked example.** Lending to non-bank financial firms is Wells Fargo's largest commercial loan category: $208.8B, 20% of all loans (10-Q, 30 Jun 2026).
 - **The risk has already materialised.** In Q1 2026, net charge-offs rose "driven by a single fraud-related loss" (10-Q). Management said it then reviewed the portfolio, sending teams to clients to review their procedures and collateral (Q1 2026 earnings call, secondary). That was a manual, one-off sweep.
 - **The frauds hide in several places at once.** In the 2025–26 cases (Tricolor, First Brands; allegations in DOJ and SEC documents) one borrower used several tricks at once. They hid in the loan file, the servicer's system, cash receipts, invoices, lien filings, company records and financial statements. The controls described publicly (field exams, collateral checks such as PledgeCheck) each look in one place, often a sample at a time. The bank's own control set would be mapped in phase 0.
 
 ## 2. Proposed solution
 A layer that joins seven checks (one per documented trick) into one case per borrower: the finding, the evidence, a suggested fix, and drafted paperwork that a credit officer approves.
-- It **uses** the tools the bank already has (Setpoint PledgeCheck results feed S1) rather than replacing them.
+- It **uses** the tools the bank already has (Setpoint PledgeCheck results feed S1; simulated in the prototype) rather than replacing them.
 - Verdicts come from auditable rules, not a model.
-- Its five loan-tape checks are tested against real public loan data (2.2M SEC ABS-EE records). The other checks' thresholds are still set on synthetic books.
+- Its six loan-tape checks are tested against real public loan data (2.23M SEC ABS-EE records). The other checks' thresholds are still set on synthetic books.
+- It is a second pair of eyes next to covenants and field exams, not a fix for fraud.
 - An open-model agent drafts investigation notes, and never decides.
 
 ## 3. Scope
@@ -69,7 +71,7 @@ The bank's own loss data will replace these inputs. What can be said honestly no
 | r = 5% a month | $14.0M | $4.7M | $2.3M |
 
 **How to read it:** if the tool moves the bank's response forward by three months on **one** exposure of about $8M, the pilot has paid for itself (at r = 3%).
-- On the synthetic test the median was 3 months (90 days) earlier than a quarterly audit. That is a design result, not a measured real-world lead.
+- On the latest synthetic test (`proof/REPORT_seeds1201-1205.md`) the median was 3 months (90 days) earlier than a quarterly audit. That is a design result, not a measured real-world lead.
 - For scale: at Tricolor's bankruptcy its largest lenders were owed more than $900M in total (DOJ, allegations).
 
 **Benefits outside the formula:**
@@ -81,7 +83,7 @@ The bank's own loss data will replace these inputs. What can be said honestly no
 ## 8. Alternatives considered
 | Option | For | Against | Verdict |
 |---|---|---|---|
-| Do nothing (quarterly field exams, one-off sweeps after a loss) | no new cost | the audit caught 38% of planted frauds in the test; sweeps happen after the loss | not recommended |
+| Do nothing (quarterly field exams, one-off sweeps after a loss) | no new cost | the audit caught 37% of planted frauds in the latest test; sweeps happen after the loss | not recommended |
 | More field exams | proven, understood | sample-based and slow; cost scales with headcount | keep, but aim them with this tool |
 | Extend Setpoint PledgeCheck | Wells Fargo already backs it; it sees other lenders' facilities | covers collateral uniqueness and collections, not shells, hidden debt or who paid | keep: already an input to S1 |
 | Buy an entity-resolution platform (e.g. Quantexa) | strong relationship matching at scale | one of the seven places; a platform project in its own right | a candidate to feed S6 later |

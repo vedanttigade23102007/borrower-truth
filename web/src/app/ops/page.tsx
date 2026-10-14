@@ -22,7 +22,7 @@ const GRAFANA = process.env.NEXT_PUBLIC_GRAFANA_URL;
 const FALLBACKS = [
   ["A check crashes or times out", "The case still builds and says which check was unavailable; the others keep running."],
   ["A message fails", "Retried with backoff, then parked in a dead-letter queue to replay; nothing is lost."],
-  ["The document model is down", "Letters fall back to deterministic templates; every draft records which path wrote it."],
+  ["A drafting model is down", "Letters fall back to deterministic templates (the default: no drafting model is configured); every draft records which path wrote it."],
   ["A public data source is down", "The cached copy is used and marked with how stale it is."],
   ["A borrower file is malformed", "It's quarantined; the last good data is kept and an alert is raised."],
   ["The case service is down", "The pipeline parks the run and replays it when the service is back."],

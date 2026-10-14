@@ -19,7 +19,7 @@
   th, td { text-align:left; padding:3px 5px; border-bottom:1px solid var(--line); vertical-align:top; }
   th { color:var(--muted); font-weight:600; font-size:10.5px; text-transform:uppercase; letter-spacing:.05em; }
   .fine { color:var(--muted); font-size:10.5px; margin-top:8px; }
-  @media print { body { background:#fff; } .page { margin:0; } @page { size:A4; margin:0; } }
+  @media print { body { background:#fff; } .page { margin:0; padding:8mm 16mm; } @page { size:A4; margin:0; } }
 </style>
 </head>
 <body>
@@ -27,46 +27,47 @@
   <div class="hdr">
     <b>To</b><span>Executive sponsor, NDFI lending (head of the business or its senior credit officer)</span>
     <b>From</b><span>Vedant Tigade (prototype author; written from public information as a mock proposal)</span>
-    <b>Date</b><span>18 September 2026</span>
+    <b>Date</b><span>14 October 2026</span>
     <b>Subject</b><span>Approve a 90-day shadow pilot of Borrower Truth on one NDFI sub-portfolio</span>
   </div>
 
-  <h1>Catch borrower fraud in Wells Fargo's largest loan category months before a quarterly audit, using tools the bank already backs.</h1>
+  <h1>Catch borrower fraud in loans to non-bank lenders months before a quarterly audit: a second pair of eyes next to covenants and field exams.</h1>
 
   <div class="ask"><b>Decision requested:</b> a read-only pilot on 20–40 auto-finance warehouse borrowers. About 19 FTE-months (~$0.5–1.0M planning range). No automated actions, no customer-facing change. Go / no-go returns to committee in 90 days.</div>
 
   <h2>Why now</h2>
   <ul>
-    <li>Loans to non-bank financial firms are Wells Fargo's largest commercial category: <b>$208.8B, 20% of all loans</b> (10-Q, June 2026). Q1 2026 charge-offs rose "driven by a single fraud-related loss" (10-Q).</li>
-    <li>The 2025–26 frauds in this market (Tricolor, First Brands; DOJ and SEC allegations) each used several tricks at once, hidden in different places. Publicly described controls (field exams, collateral checks) each look in one place, often a sample at a time. After Q1, management said teams reviewed clients' procedures and collateral (earnings call); this makes that review monthly and automatic.</li>
+    <li>Banks have lent <b>$1.32T to non-bank lenders, 10% of all bank loans</b>; banks over $100B hold about 86% (FDIC, Feb 2026). In the worked example it is Wells Fargo's largest commercial category: <b>$208.8B, 20% of its loans</b> (10-Q, June 2026), and Q1 2026 charge-offs rose "driven by a single fraud-related loss" (10-Q).</li>
+    <li>The 2025–26 frauds in this market (Tricolor, First Brands; SEC and DOJ allegations) used several tricks at once, hidden in different places; field exams and collateral checks each look in one place. After Q1, management said teams reviewed clients' procedures and collateral (earnings call); this makes that review monthly.</li>
+    <li>Model-risk guidance changed on 17 Apr 2026: <b>SR 26-2</b> / OCC 2026-13 replaced SR 11-7 and OCC 2011-12. A new tool should bring a model-risk file written against it. Here, written rules decide; the AI agent only drafts.</li>
   </ul>
 
   <h2>What it is</h2>
-  <p>Seven checks, one per documented trick, joined into one case per borrower: what's wrong, the evidence chain, a suggested fix and a drafted letter. <b>An officer approves every step.</b> Verdicts come from written rules, not a model; every decision can be replayed. It uses Setpoint PledgeCheck results rather than replacing them. Its models are open-weight and can run inside the bank, so borrower data need not leave it.</p>
+  <p>Seven checks, one per documented trick, joined into one case per borrower: what's wrong, the evidence chain, a suggested fix and a drafted letter. <b>An officer approves every step.</b> Verdicts come from written rules, not a model; every decision can be replayed. It uses Setpoint PledgeCheck results (simulated here). Its models are open-weight and run inside the bank.</p>
 
-  <h2>Evidence so far (prototype)</h2>
+  <h2>Evidence so far (synthetic: it proves coverage, not a real-world rate)</h2>
   <table>
     <tr><th>Test</th><th>Result</th></tr>
-    <tr><td>Fresh synthetic books, scored once (600 borrowers, 250 planted frauds)</td><td><b>248 of 250 caught</b> vs 38% for a quarterly sample audit; <b>0 of 350</b> honest borrowers flagged; a median 90 days earlier</td></tr>
-    <tr><td>Real public data: 2.2M SEC loan records, 28 pools, 22 lenders</td><td>The five loan-tape checks tested on every pool: <b>0 of 28 honest pools flagged</b>. The other checks can't be tested on public data yet</td></tr>
-    <tr><td>Workload</td><td>29 of every 100 honest borrowers sent to "worth a look"; the top tenth of the queue was 60 of 60 real frauds</td></tr>
+    <tr><td>Fresh synthetic books, scored once (latest of 13 sets: 600 borrowers, 250 planted frauds)</td><td><b>248 of 250 caught</b> vs 37% for a quarterly sample audit; <b>0 of 350</b> honest flagged; a median 90 days earlier. All 13 sets: 2 of 4,771 honest flagged; the two failed sets are published</td></tr>
+    <tr><td>Blind red team, three rounds</td><td>Round 3, an attacker controlling the borrower's records: <b>0 of 60 caught</b>, 28 to review. Lesson: anchor on the bank's cash</td></tr>
+    <tr><td>Real public data: 2.23M SEC loan records, 28 pools, 22 lenders</td><td>The six loan-tape checks tested on every pool: <b>0 of 28 honest pools flagged</b>. The other checks can't be tested on public data yet</td></tr>
+    <tr><td>Workload</td><td>About 29 of every 100 honest borrowers sent to "worth a look"; the top tenth of the queue was 60 of 60 real frauds</td></tr>
   </table>
-  <p style="margin-top:4px">The frauds are planted, so these prove coverage of documented tricks, not a real-world catch rate. <b>The pilot measures the real one.</b></p>
 
   <h2>Money</h2>
-  <p>Break-even, not a forecast: moving the response to <b>one ~$8M exposure</b> three months earlier pays for the pilot, at 3% monthly erosion. Other rates and lead times are in the business case, and the bank's own loss data replaces these inputs.</p>
+  <p>Break-even, not a forecast: moving the response to <b>one ~$8M exposure</b> three months earlier pays for the pilot at 3% monthly erosion; the bank's own loss data replaces these inputs.</p>
 
   <h2>Risk and controls</h2>
   <ul>
-    <li><b>Model risk:</b> likely in scope as a model. Register and tier it, and validate it independently before production. The LLM never decides.</li>
+    <li><b>Model risk:</b> likely in scope as a model under SR 26-2. Register and tier it, and validate it independently before production. The AI agent is outside that guidance's scope and never decides.</li>
     <li><b>BSA/AML:</b> likely-fraud cases route to the financial-crimes unit for a SAR decision. Compliance and Legal approve the letter templates, so no letter tips off a borrower.</li>
     <li><b>InfoSec and third parties:</b> runs inside the bank, with bank SSO and encryption at rest (to build). Lien and court data vendors go through third-party review.</li>
   </ul>
 
   <h2>Next steps if approved</h2>
-  <p>Weeks 0–4: data access, model-risk tiering, InfoSec review. Weeks 5–16: shadow pilot with weekly officer review. Week 17: go / no-go paper, with success and kill criteria agreed up front.</p>
+  <p>Weeks 0–4: data access, model-risk tiering, InfoSec review. Weeks 5–16: shadow pilot, weekly officer review, measuring the real rate. Week 17: go / no-go against criteria set up front.</p>
 
-  <p class="fine">Prototype on synthetic data, prepared from public sources; not affiliated with Wells Fargo. Fraud facts are allegations from DOJ and SEC documents. Details: business case, control matrix, pilot plan and committee Q&amp;A (proposal pack); live demo at borrower-truth.vercel.app.</p>
+  <p class="fine">For any bank lending to non-bank lenders; Wells Fargo is the worked example, from public sources, not affiliated. Synthetic data. Fraud facts are SEC and DOJ allegations. Details: proposal pack; demo at borrower-truth.vercel.app.</p>
 </div>
 </body>
 </html>

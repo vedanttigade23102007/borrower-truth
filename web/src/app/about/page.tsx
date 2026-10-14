@@ -23,7 +23,7 @@ type Proof = {
 };
 
 const SYSTEMS: [string, string, string][] = [
-  ["S1", "Collateral integrity", "Is the same collateral pledged twice? Uses PledgeCheck's result plus checks inside the bank, and says when a borrower isn't enrolled, so other lenders can't be checked."],
+  ["S1", "Collateral integrity", "Is the same collateral pledged twice? Uses PledgeCheck's result (simulated in this demo) plus checks inside the bank, and says when a borrower isn't enrolled, so other lenders can't be checked."],
   ["S2", "Tape vs source", "Does the loan file match the lender's own system? \"Pull this up on your screen,\" automated: it pulls the loans reported current that paid nothing, and catches credit scores rewritten to clear the eligibility line."],
   ["S3", "Cash provenance", "Who actually paid? Lender or affiliate money dressed up as customer payments is caught by the payer, and money sent out to a middleman that comes back as 'customer' cash is caught by the round trip."],
   ["S4", "Invoice authenticity", "Re-submitted invoices with new amounts, invoices the customer never pays, impossible amounts."],
@@ -46,11 +46,13 @@ export default function AboutPage() {
       <div>
         <h1 className="text-2xl font-semibold tracking-tight text-zinc-900">How it works</h1>
         <p className="mt-2 text-zinc-700">
-          Wells Fargo&apos;s largest commercial loan category is lending to non-bank financial firms: $208.8B, 20% of all
-          loans (10-Q, June 2026). Recent frauds against lenders in this market used several tricks at once, each
-          hiding in a different place. One check reads one place, so Borrower Truth runs seven connected checks, and a
-          combiner turns what they find into a solved case: the finding, the proof, a suggested fix and drafted
-          paperwork, for a person to approve.
+          Banks have lent $1.32 trillion to non-bank lenders, 10% of all bank loans, and banks over $100 billion in
+          assets hold about 86% of it (FDIC, February 2026). The worked example is Wells Fargo, whose largest commercial
+          loan category is lending to non-bank financial firms: $208.8B, 20% of all its loans (10-Q, June 2026). Recent
+          frauds against lenders in this market used several tricks at once, each hiding in a different place. One
+          check reads one place, so Borrower Truth runs seven connected checks, and a combiner turns what they find
+          into a solved case: the finding, the proof, a suggested fix and drafted paperwork, for a person to approve.
+          It is a second pair of eyes next to covenants and field exams, not a fix for fraud.
         </p>
         <a
           href="/deck.html"
@@ -64,33 +66,6 @@ export default function AboutPage() {
         >
           Read the one-page proposal memo →
         </a>
-      </div>
-
-      <div>
-        <h2 className="text-lg font-semibold tracking-tight text-zinc-900">Two short videos</h2>
-        <div className="mt-3 grid gap-4 sm:grid-cols-2">
-          {[
-            ["overview", "Overview", "The problem, who it's for, the real SEC data behind it, what other tools miss, and the proof. About 3½ minutes."],
-            ["training", "Training walkthrough", "A credit officer works a real case on this site: queue, evidence, agent memo, fix, approval. About 3 minutes."],
-          ].map(([file, title, what]) => (
-            <Card key={file} className="overflow-hidden">
-              <video
-                controls
-                preload="none"
-                poster={`/videos/${file}.jpg`}
-                className="aspect-video w-full bg-zinc-100"
-                aria-label={`${title} video`}
-              >
-                <source src={`/videos/${file}.mp4`} type="video/mp4" />
-              </video>
-              <div className="px-4 py-3">
-                <div className="font-medium text-zinc-900">{title}</div>
-                <p className="text-sm text-zinc-600">{what}</p>
-              </div>
-            </Card>
-          ))}
-        </div>
-        <p className="mt-2 text-xs text-zinc-500">Recorded on this live site. Narrated by an open-weights voice model, with captions. All borrower data shown is synthetic.</p>
       </div>
 
       <Card className="divide-y divide-zinc-100">
@@ -107,8 +82,10 @@ export default function AboutPage() {
       <div>
         <h2 className="text-lg font-semibold tracking-tight text-zinc-900">The proof, on data it never saw</h2>
         <p className="mt-1 text-sm text-zinc-600">
-          Rules were tuned on one synthetic book; these numbers come from five fresh ones. All synthetic: they prove
-          coverage of the documented fraud mechanisms, not real-world catch rates.
+          Rules were tuned on six development books; these numbers come from the latest fresh run (five books never
+          used before, scored once). Every fresh run, including the two that failed, the pooled false-alarm rate and
+          the three blind red-team rounds are in the plan deck. All synthetic: they prove coverage of the documented
+          fraud mechanisms, not real-world catch rates.
         </p>
         {!p ? (
           <Skeleton className="mt-3 h-40 w-full" />

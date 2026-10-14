@@ -77,8 +77,10 @@ def run(ctx: Ctx, upstream: dict):
                            f"Revenue sent to {bank.NAME} for Q{q} is {g:+.0%} off what the borrower reported to the SEC for "
                            f"the same quarter ({len(qs)} quarter{'s' if len(qs) > 1 else ''} differ)", qs[0][0] * 3 + 2))
     for b, ids in upstream.get("s5_undisclosed", {}).items():
+        filed = sum("FILED_DEBT_UNDISCLOSED" in i for i in ids)  # the rest are undisclosed liens
+        where = " and ".join(w for w, n in (("public lien filings", len(ids) - filed), ("the borrower's own SEC filings", filed)) if n)
         out.append(sig("S7", b, "DEBT_GAP", 0.7, 0.8, [f"signal:{i}" for i in ids[:3]] + [f"financials:{b}:debt_reported"],
-                       f"Debt reported to {bank.NAME} omits {len(ids)} secured lender(s) found in public lien filings",
+                       f"Debt reported to {bank.NAME} omits {len(ids)} lender(s) found in {where}",
                        ctx.as_of))
     for b, ids in upstream.get("s4_flags", {}).items():
         out.append(sig("S7", b, "RECEIVABLES_QUALITY", 0.5, 0.7, [f"signal:{i}" for i in ids[:3]],

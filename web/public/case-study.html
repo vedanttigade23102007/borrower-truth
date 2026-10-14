@@ -29,55 +29,55 @@
 <body>
 <div class="page">
   <h1>Borrower Truth: seven connected fraud checks for non-bank lending</h1>
-  <p class="sub">Vedant Tigade · B.Tech, Manipal University Jaipur (2028) · Wells Fargo 2027 Technology Program Intern application · synthetic data · live demo and answer key: borrower-truth.vercel.app · code walkthrough on request</p>
+  <p class="sub">Vedant Tigade · B.Tech, Manipal University Jaipur (2028) · for any bank that lends to non-bank lenders, Wells Fargo as the worked example · synthetic data · live demo and answer key: borrower-truth.vercel.app · code walkthrough on request</p>
 
-  <h2>The problem, from Wells Fargo's own filings</h2>
-  <p>Loans to non-bank financial firms are Wells Fargo's largest commercial category: <b>$208.8B, 20% of all loans</b> (10-Q, June 2026), with "a single fraud-related loss" there in Q1 2026. In 2025–26, borrowers of this type (Tricolor, First Brands, per the DOJ and SEC) used several tricks at once: collateral pledged twice, bad loans reported as good, lender money disguised as customer payments, fake invoices, hidden debt, shells, rigged financials. Each hides in a different place; one check reads one place.</p>
+  <h2>The problem, from primary sources</h2>
+  <p>Banks have lent <b>$1.32T to non-bank lenders, 10% of all bank loans</b>; banks over $100B hold about 86% (FDIC, Feb 2026). In the worked example, Wells Fargo, it is the largest commercial category: <b>$208.8B, 20% of all loans</b> (10-Q, June 2026), with "a single fraud-related loss" there in Q1 2026. In 2025–26, borrowers of this type (Tricolor, First Brands, per the DOJ and SEC) used several tricks at once: collateral pledged twice, bad loans reported as good, lender money disguised as customer payments, fake invoices, hidden debt, shells, rigged financials. Each hides in a different place; one check reads one place. Borrower Truth is a second pair of eyes next to covenants and field exams, not a fix for fraud.</p>
 
   <h2>What I built</h2>
   <div class="two">
     <ul>
       <li><b>Seven checks</b> (Python, DuckDB), one per documented trick, feeding each other: a shell found by S6 widens the lien search (S5) and the payer check (S3).</li>
-      <li><b>Combiner</b>: confidence comes from <i>independent</i> sources; verdicts come from auditable rules, not a model.</li>
+      <li><b>Combiner</b>: "likely fraud" needs one checkable fact or two <i>independent</i> sources about the same claim; verdicts come from auditable rules, not a model.</li>
       <li><b>Case service</b> (Java 21, Spring Boot): playbook fixes, drafted letters, one-click approval, audit log.</li>
       <li><b>Decision replay</b>: every verdict carries fingerprints of its inputs, rules and code; replaying the run gave 120 of 120 identical decisions.</li>
     </ul>
     <ul>
-      <li><b>Streaming</b> (Kafka): a suspicious payer is flagged 24 ms after the payment lands, then bridged into the case.</li>
-      <li><b>Document model</b>: Donut, fine-tuned on a free Kaggle GPU, reads invoices so S4 can compare the document with the data.</li>
-      <li><b>Operations</b>: Airflow nightly job, Prometheus and Grafana, isolated checks, file quarantine, stale-cache fallback.</li>
+      <li><b>Streaming</b> (Kafka, optional): a suspicious payer flagged 24 ms after the payment lands, then bridged into the case (last run 11 Sep 2026, on earlier rules).</li>
+      <li><b>Document model</b> (optional, off by default): Donut, fine-tuned on a free Kaggle GPU, reads invoices so S4 can compare the document with the data.</li>
+      <li><b>Operations</b>: isolated checks, file quarantine, stale-cache fallback; Airflow, Prometheus and Grafana fit the platform a bank already runs (last run 11 Sep 2026).</li>
       <li><b>Investigator agent</b> (Qwen3-8B, open model): read-only tools, drafts a memo; code drops lines that cite nothing, invent numbers or contradict the records. It never decides.</li>
     </ul>
   </div>
 
-  <h2>Proof: 5 fresh synthetic books calibrated on real SEC data, scored once (600 borrowers, 250 frauds)</h2>
+  <h2>Proof: the latest of 13 fresh synthetic sets, each scored once (seeds 1201–1205)</h2>
   <div class="grid">
-    <div class="m"><b>99%</b><span>frauds caught (248/250). A quarterly audit caught 38%.</span></div>
+    <div class="m"><b>99%</b><span>frauds caught (248/250). A quarterly audit caught 37%.</span></div>
     <div class="m"><b>90 days</b><span>earlier than the audit (median)</span></div>
     <div class="m"><b>0 / 350</b><span>honest borrowers marked "likely fraud", in any month</span></div>
-    <div class="m"><b>0 of 28</b><span>real public loan pools (2.2M SEC loan records) trip the loan-tape checks</span></div>
+    <div class="m"><b>2 of 4,771</b><span>honest borrowers flagged at month 24, across all 13 fresh sets (two sets failed; both published)</span></div>
     <div class="m"><b>24 / 24</b><span>tampered invoices caught by the document model (2.9% false flags)</span></div>
-    <div class="m"><b>96.5%</b><span>invoice totals read correctly (unseen borrowers)</span></div>
-    <div class="m"><b>24 ms</b><span>payment to alert, median (Kafka)</span></div>
+    <div class="m"><b>0 of 60</b><span>caught at month 24 in the blind red team's round 3 (28 to review): the open problem</span></div>
+    <div class="m"><b>0 of 28</b><span>real public loan pools (2.23M SEC loan records) trip the six loan-tape checks</span></div>
     <div class="m"><b>13.2M rows</b><span>in 4.4 s, one 8 GB laptop</span></div>
   </div>
 
   <h2>What a credit officer gets</h2>
-  <p>Not a score but a solved case: <b>what's wrong</b>, <b>the evidence chain</b>, a <b>verdict with confidence</b>, a <b>playbook fix</b> and a <b>drafted letter that asks and doesn't accuse</b>, sent only after a person approves. The top tenth of the queue is 60 of 60 real frauds; all 430 suggested fixes target a planted trick.</p>
+  <p>Not a score but a solved case: <b>what's wrong</b>, <b>the evidence chain</b>, a <b>verdict with confidence</b>, a <b>playbook fix</b> and a <b>drafted letter that asks and doesn't accuse</b>, sent only after a person approves. The top tenth of the queue was 60 of 60 real frauds; 427 of 429 suggested fixes target a planted trick.</p>
 
-  <p><b>Real data:</b> 2.2M loan records from SEC ABS-EE filings (28 public pools, 22 lenders) set how honest auto loans behave and test the five loan-tape checks (0 of 28 real pools flagged; a benchmark that flagged 3 was dropped). SEC-based checks (late loans that never get later, debt named only in the borrower's 10-K or 8-K, loans also in its public trust) switched off, lose 41 of the 248 catches.</p>
+  <p><b>Real data:</b> 2.23M SEC ABS-EE loan records (28 pools, 22 lenders) set how honest auto loans behave; a benchmark that flagged 3 honest pools was dropped. Switching off the SEC-based checks loses 39 of the 248 caught frauds.</p>
 
   <h2>Honest limits</h2>
   <table>
-    <tr><td>Data</td><td>Frauds are planted. Honest auto-loan behaviour and the loan-tape thresholds come from real SEC data; the other checks are still set on synthetic books. It proves coverage of the documented tricks, not real-world rates. Tricolor's own deals were private and never filed ABS-EE.</td></tr>
-    <tr><td>Workload</td><td>About 29 in every 100 honest borrowers land in "worth a look": the real review cost, reported rather than hidden.</td></tr>
-    <tr><td>Weakest check</td><td>Bad loans reported as good: 63 of 65. Both misses hid only a few loans, too few for a 30-loan servicer pull to hit.</td></tr>
+    <tr><td>Data</td><td>Frauds are planted. Honest auto-loan behaviour and the loan-tape thresholds come from real SEC data; the other checks are still set on synthetic books. It proves coverage of the documented tricks, not real-world rates. Tricolor's own deals were reportedly private (Rule 144A) and never filed ABS-EE.</td></tr>
+    <tr><td>Workload</td><td>About 29 in every 100 honest borrowers land in "worth a look": the real review cost.</td></tr>
+    <tr><td>Red team</td><td>Three blind rounds. In round 3, an attacker controlling the borrower's own records: 0 of 60 caught, 28 to review, 32 missed. The next step anchors on the bank's own cash records.</td></tr>
     <tr><td>Model</td><td>Compared only with its untrained base; no large-model benchmark yet.</td></tr>
-    <tr><td>Market</td><td>Vendors each cover one place (Setpoint, Quantexa, Wolters Kluwer); none publicly joins all seven, so this uses them rather than replacing them.</td></tr>
+    <tr><td>Market</td><td>Vendors each cover one place (Setpoint, Quantexa, Wolters Kluwer); none publicly joins all seven.</td></tr>
     <tr><td>Not built</td><td>Partitioned storage, obligor confirmations, bank sign-in. Status: <code>proof/AUDIT.md</code>.</td></tr>
   </table>
 
-  <p class="fine">Sources: WF 10-Q (Q1, Q2 2026); DOJ SDNY 25-271, 26-012 (allegations); SEC 2026-77; Setpoint release (Oct 2025). 57 of 57 research claims matched to saved sources (<code>research/VERIFY.md</code>). Not affiliated with Wells Fargo.</p>
+  <p class="fine">Sources: FDIC (Feb 2026); WF 10-Q (2026); SEC 2026-77, SDNY 26-cv-7041, DOJ SDNY 25-271 and 26-012 (allegations); Setpoint (Oct 2025); <code>research/VERIFY.md</code> (57 of 57, 14 Oct 2026); numbers in <code>proof/</code>. Not affiliated with Wells Fargo.</p>
 </div>
 </body>
 </html>
