@@ -93,7 +93,7 @@ Around the decision:
 
 **The honest borrower flagged at least once:** B0054 on seed 1305, in months 21–22 only. A few of its pledged loans match loans in its own public securitization, and those loans' payments went elsewhere for three months. The previous rules give the same result, so change 32 didn't cause it. Under the stopping rule decided before these runs, it is published as it came out and recorded as a known limit (below), not fixed.
 
-**The previous rules' evaluation:** seeds 1201–1205 (`proof/REPORT_seeds1201-1205.md`, rule version `bfe7200495c4`, before change 32): 248 of 250 planted fraud cases flagged by month 24, 0 of 350 honest synthetic borrowers flagged at month 24 or in any month, 28.9 per 100 sent to review. `proof/REPORT.md` is a copy of that report, kept as published.
+**The previous rules' evaluation:** seeds 1201–1205 (`proof/REPORT_seeds1201-1205.md`, rule version `bfe7200495c4`, before change 32): 248 of 250 planted fraud cases flagged by month 24, 0 of 350 honest synthetic borrowers flagged at month 24 or in any month, 28.9 per 100 sent to review. `proof/REPORT.md` is now a copy of the current report (1301–1305), not this one.
 
 ### Every fresh run so far
 
