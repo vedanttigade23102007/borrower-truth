@@ -136,7 +136,9 @@ def assign_mechanisms(sigs) -> dict[str, str]:
 def claims(ss, own: set[str]) -> list[list]:
     """Split one mechanism's clues into claims (audit 14 Oct 2026, gap 2). Clues that name a counterparty, leaving out
     the borrower's own company, and share one are about the same thing; clues about different lenders are different
-    facts and never corroborate each other. A clue that names none can't be placed, so it joins every claim."""
+    facts and never corroborate each other. A clue that names none can't be placed, so it never backs a claim about a
+    counterparty (audit addendum 15 Oct 2026): those clues form a claim of their own, or, when no clue names a
+    counterparty, they pool, as borrower-level clues such as the tape checks always have."""
     parts: list[tuple[set, set]] = []
     for s in ss:
         ents = set(s.related_entities) - own
@@ -146,8 +148,9 @@ def claims(ss, own: set[str]) -> list[list]:
                 (ents.union(*(p[0] for p in hit)), {s.signal_id}.union(*(p[1] for p in hit)))]
     if not parts:
         return [ss]
-    general = {s.signal_id for s in ss if not set(s.related_entities) - own}
-    return [[s for s in ss if s.signal_id in ids or s.signal_id in general] for _, ids in parts]
+    general = [s for s in ss if not set(s.related_entities) - own]
+    claimed = [[s for s in ss if s.signal_id in ids] for _, ids in parts]
+    return claimed + ([general] if general else [])
 
 
 def build_cases(signals, coverage: dict, explanations: dict, borrowers: list[str],

@@ -2,7 +2,8 @@
 
 A claim is the set of clues in one mechanism that share a counterparty, leaving out the borrower's own company. Clues
 about different lenders are different facts and must not corroborate each other. Clues that name no counterparty can't
-be placed, so they still join every claim (a known limit).
+be placed: when the mechanism has counterparty claims they form a claim of their own, and when it has none they pool
+(audit addendum 15 Oct 2026; decision log change 32, kept private).
 """
 from bt.combiner.combine import ESCALATE_PRIORITY, build_cases
 from bt.common.signal import Signal
@@ -78,3 +79,63 @@ def test_borrower_level_clues_still_pool():
     f = _finding(c, "TAPE_DRESSUP")
     assert f["confidence"] == "high"
     assert f["sources"] == ["payments", "servicer_system"]
+
+
+# The values S5 really emits: a lien filed before onboarding 0.8 x 0.5; a judgment over $1M 0.5 x 0.9, naming only the
+# defendant; an SEC-filed debt 0.85 x 0.9, naming the lender (bt/systems/s5_hidden_debt.py)
+def _stale_lien(lender="E_LENDER_B"):
+    return _s("S5", "COMPETING_LIEN", 0.8, 0.5, [lender, OWN], sid="-L" + lender,
+              text="all assets of the debtor (filed before onboarding: may be a stale filing)")
+
+
+def _big_judgment():
+    return _s("S5", "JUDGMENT", 0.5, 0.9, [OWN], sid="-J")
+
+
+def test_an_old_lien_and_a_large_judgment_against_the_borrower_are_not_likely_fraud():
+    # audit addendum P1: the judgment names no counterparty, so it can't back a claim about lender B's lien
+    c = _case([_stale_lien(), _big_judgment()])
+    assert c["verdict"] != "LIKELY_FRAUD"
+    f = _finding(c, "HIDDEN_DEBT")
+    assert f["confidence"] == "low"
+
+
+def test_an_sec_filed_debt_and_a_large_judgment_against_the_borrower_stay_medium_and_are_not_escalated():
+    # audit addendum P2: the B0014 pattern through a judgment instead of a lien
+    c = _case([_s("S5", "FILED_DEBT_UNDISCLOSED", 0.85, 0.9, ["E_LENDER_A"]), _big_judgment()])
+    f = _finding(c, "HIDDEN_DEBT")
+    assert f["confidence"] == "medium"
+    assert f["sources"] == ["sec_filings"]
+    assert c["priority"] < ESCALATE_PRIORITY
+
+
+def test_the_borrowers_own_company_never_joins_two_lenders_into_one_claim():
+    # both clues also name the borrower's own company; leaving it out, they are about different lenders
+    c = _case([_s("S5", "FILED_DEBT_UNDISCLOSED", 0.85, 0.9, ["E_LENDER_A", OWN]), _stale_lien("E_LENDER_B")])
+    f = _finding(c, "HIDDEN_DEBT")
+    assert f["confidence"] == "medium"
+    assert f["sources"] == ["sec_filings"]
+    assert c["priority"] < ESCALATE_PRIORITY
+
+
+def test_clues_that_name_no_counterparty_form_their_own_claim():
+    # a weak lien about lender B, and two no-counterparty clues from different sources: they corroborate each other,
+    # never the lien
+    c = _case([_s("S5", "UNDISCLOSED_SECURED_PARTY", 0.6, 0.5, ["E_LENDER_B", OWN], text="specific equipment"),
+               _big_judgment(),
+               _s("S5", "UNDISCLOSED_DEBT_SERVICE", 0.5, 0.8)])
+    f = _finding(c, "HIDDEN_DEBT")
+    assert f["confidence"] == "medium"
+    assert f["sources"] == ["courts", "operating_account"]
+
+
+def test_escalation_needs_the_fact_and_its_corroboration_in_the_same_claim():
+    # lender B: three independent non-fact sources (high, no fact). Lender A: a fact on its own (medium)
+    c = _case([_s("S5", "UNDISCLOSED_SECURED_PARTY", 0.8, 0.85, ["E_LENDER_B", OWN], text="specific equipment"),
+               _s("S5", "UNDISCLOSED_DEBT_SERVICE", 0.5, 0.8, ["E_LENDER_B"]),
+               _s("S5", "JUDGMENT", 0.5, 0.9, ["E_LENDER_B"], sid="-JB"),
+               _s("S5", "FILED_DEBT_UNDISCLOSED", 0.85, 0.9, ["E_LENDER_A"])])
+    f = _finding(c, "HIDDEN_DEBT")
+    assert f["confidence"] == "high"
+    assert f["sources"] == ["courts", "operating_account", "ucc"]
+    assert c["priority"] < ESCALATE_PRIORITY
