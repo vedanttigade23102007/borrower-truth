@@ -485,8 +485,8 @@
   "decision_id": "B0028-m23-57a795803fa4",
   "result_digest": "57a795803fa4",
   "inputs_digest": "ec63acb069af",
-  "rule_version": "7c290d875a0c",
-  "code_version": "5f8b7d9",
+  "rule_version": "c147a0a636e6",
+  "code_version": "2ee44bc",
   "as_of": 23
  }
 }

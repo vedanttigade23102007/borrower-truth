@@ -162,11 +162,11 @@
  {
   "borrowerId": "B0116",
   "verdict": "LIKELY_FRAUD",
-  "headline": "Likely: the same collateral is pledged to more than one lender",
+  "headline": "Likely: bad loans are being reported as good ones",
   "priority": 1.0,
   "mechanisms": [
-   "DOUBLE_PLEDGE",
    "TAPE_DRESSUP",
+   "DOUBLE_PLEDGE",
    "FIN_MANIPULATION"
   ],
   "openSteps": 9,
