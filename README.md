@@ -171,7 +171,8 @@ For each: what the product does to help, and what stays outside any tool.
 ## Known limits
 
 - **Synthetic data.** Real accuracy needs real data; the pilot measures it.
-- **Clues that name no counterparty still pool together** within a finding, for example a judgment against the borrower itself (change 30 in the decision log, kept private).
+- **A clue that names no counterparty can't back a claim about one** (change 32 in the decision log, kept private). A judgment records only the defendant, and PledgeCheck names no other lender, so a large judgment won by the same lender, or a PledgeCheck failure about the same pledge, doesn't corroborate a lien claim either. Such clues still corroborate each other, and still pool when no clue in the finding names a counterparty (the tape checks).
+- **Large judgments against honest borrowers aren't in the synthetic books:** the generator gives honest borrowers only small ones ($20k–$200k), so no fresh run tests that false alarm; tests do (`tests/test_combiner_claims.py`).
 - **A nominee company** with no link to the owner in any table is a known limit.
 - **No VIN validity check yet**, against the documented fake-VIN trick.
 - **PledgeCheck is simulated.** Other lenders' pledges need the real service.

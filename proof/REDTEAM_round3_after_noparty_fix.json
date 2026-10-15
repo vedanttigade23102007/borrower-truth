@@ -1,0 +1,1697 @@
+{
+ "label": "after change 32 (no-counterparty clues): these attacks are no longer blind",
+ "models": "round 1: Opus 5; round 2: Sonnet 5.5; round 3: GPT-6 Astra (as shown in Codex), run by a friend on their own machine with no internet (Vedant, 2 Oct 2026)",
+ "frozen": {
+  "tag": "redteam-round3-noparty-fix",
+  "rule_version": "c147a0a636e6",
+  "code_version": "60506d0",
+  "frozen_at": "2026-10-15",
+  "payer_rule": true,
+  "attacks_zip_sha256": "27a3e5e5f95c84e6cf3a45b2a497e82009d7b60b6c0665a3b6685f9c2bd171ae",
+  "seeds": [
+   1301,
+   1302,
+   1303,
+   1304,
+   1305
+  ],
+  "attacker": "GPT-6 Astra (as shown in Codex), run by a friend on their own machine; round 3's attacks re-scored, no longer blind",
+  "note": "after change 32 (audit addendum 15 Oct: a clue that names no counterparty never backs a claim about one); stopping rule applies"
+ },
+ "rule_version": "c147a0a636e6",
+ "code_version": "4ba3293",
+ "seeds": [
+  1301,
+  1302,
+  1303,
+  1304,
+  1305
+ ],
+ "rows": [
+  {
+   "seed": 1301,
+   "borrower_id": "B0009",
+   "attack": "alias_participations",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 3690061.5,
+   "how": "Single advance on double-booked fractional interests; servicer ledger also falsified",
+   "facility_limit": 61500000.0,
+   "gain_share": 0.060001,
+   "small": false,
+   "start_month": 6,
+   "servicer": true,
+   "history": false,
+   "outcome": "caught",
+   "verdict": "LIKELY_FRAUD",
+   "first_flag": 6,
+   "first_review": null,
+   "findings": [
+    "DOUBLE_PLEDGE (medium)"
+   ]
+  },
+  {
+   "seed": 1301,
+   "borrower_id": "B0033",
+   "attack": "alias_participations",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 4566076.1000000015,
+   "how": "Single advance on double-booked fractional interests; servicer ledger also falsified",
+   "facility_limit": 76100000.0,
+   "gain_share": 0.06000100000000002,
+   "small": false,
+   "start_month": 6,
+   "servicer": true,
+   "history": false,
+   "outcome": "caught",
+   "verdict": "LIKELY_FRAUD",
+   "first_flag": 6,
+   "first_review": 0,
+   "findings": [
+    "DOUBLE_PLEDGE (high)",
+    "HIDDEN_DEBT (low)"
+   ]
+  },
+  {
+   "seed": 1301,
+   "borrower_id": "B0099",
+   "attack": "capitalized_fees",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 858014.3000000007,
+   "how": "One-time capped advance on unauthorized fees capitalized into real loan balances",
+   "facility_limit": 14300000.0,
+   "gain_share": 0.060001000000000054,
+   "small": false,
+   "start_month": 6,
+   "servicer": true,
+   "history": false,
+   "outcome": "sent to review",
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "first_flag": null,
+   "first_review": 0,
+   "findings": [
+    "DISGUISED_RECEIPTS (low)",
+    "TAPE_DRESSUP (low)"
+   ]
+  },
+  {
+   "seed": 1301,
+   "borrower_id": "B0088",
+   "attack": "capitalized_fees",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 300005.0,
+   "how": "One-time capped advance on unauthorized fees capitalized into real loan balances",
+   "facility_limit": 5000000.0,
+   "gain_share": 0.060001,
+   "small": false,
+   "start_month": 6,
+   "servicer": true,
+   "history": false,
+   "outcome": "sent to review",
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "first_flag": null,
+   "first_review": 6,
+   "findings": [
+    "TAPE_DRESSUP (low)"
+   ]
+  },
+  {
+   "seed": 1301,
+   "borrower_id": "B0057",
+   "attack": "customer_roundtrip",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 1206000.0020000003,
+   "how": "Capped advance on unpaid fake invoice residual, less all customer-prefunding outflows",
+   "facility_limit": 20100000.0,
+   "gain_share": 0.0600000000995025,
+   "small": false,
+   "start_month": 6,
+   "servicer": false,
+   "history": false,
+   "outcome": "caught",
+   "verdict": "LIKELY_FRAUD",
+   "first_flag": 10,
+   "first_review": 6,
+   "findings": [
+    "FAKE_INVOICES (medium)",
+    "FIN_MANIPULATION (low)"
+   ]
+  },
+  {
+   "seed": 1301,
+   "borrower_id": "B0046",
+   "attack": "customer_roundtrip",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 804000.0070000002,
+   "how": "Capped advance on unpaid fake invoice residual, less all customer-prefunding outflows",
+   "facility_limit": 13400000.0,
+   "gain_share": 0.060000000522388075,
+   "small": false,
+   "start_month": 6,
+   "servicer": false,
+   "history": false,
+   "outcome": "caught",
+   "verdict": "LIKELY_FRAUD",
+   "first_flag": 10,
+   "first_review": 6,
+   "findings": [
+    "FAKE_INVOICES (medium)",
+    "RELATED_SHELLS (low)"
+   ]
+  },
+  {
+   "seed": 1301,
+   "borrower_id": "B0097",
+   "attack": "hidden_affiliate_debt",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 312000.0,
+   "how": "Undisclosed unsecured affiliate-financing proceeds received once; no bank-facility gain claimed",
+   "facility_limit": 3900000.0,
+   "gain_share": 0.08,
+   "small": false,
+   "start_month": 6,
+   "servicer": false,
+   "history": false,
+   "outcome": "sent to review",
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "first_flag": null,
+   "first_review": 0,
+   "findings": [
+    "DISGUISED_RECEIPTS (low)"
+   ]
+  },
+  {
+   "seed": 1301,
+   "borrower_id": "B0054",
+   "attack": "hidden_affiliate_debt",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 2920000.0,
+   "how": "Undisclosed unsecured affiliate-financing proceeds received once; no bank-facility gain claimed",
+   "facility_limit": 36500000.0,
+   "gain_share": 0.08,
+   "small": false,
+   "start_month": 6,
+   "servicer": false,
+   "history": false,
+   "outcome": "sent to review",
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "first_flag": null,
+   "first_review": 0,
+   "findings": [
+    "DISGUISED_RECEIPTS (low)",
+    "HIDDEN_DEBT (low)"
+   ]
+  },
+  {
+   "seed": 1301,
+   "borrower_id": "B0001",
+   "attack": "invoice_uplift",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 2010000.0065000001,
+   "how": "One-time capped extra advance on inflated genuine invoice amounts; no monthly recounting",
+   "facility_limit": 33500000.0,
+   "gain_share": 0.06000000019402985,
+   "small": false,
+   "start_month": 6,
+   "servicer": false,
+   "history": false,
+   "outcome": "sent to review",
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "first_flag": null,
+   "first_review": 10,
+   "findings": [
+    "FAKE_INVOICES (low)"
+   ]
+  },
+  {
+   "seed": 1301,
+   "borrower_id": "B0006",
+   "attack": "invoice_uplift",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 1554000.004999999,
+   "how": "One-time capped extra advance on inflated genuine invoice amounts; no monthly recounting",
+   "facility_limit": 25900000.0,
+   "gain_share": 0.06000000019305015,
+   "small": false,
+   "start_month": 6,
+   "servicer": false,
+   "history": false,
+   "outcome": "sent to review",
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "first_flag": null,
+   "first_review": 0,
+   "findings": [
+    "FAKE_INVOICES (low)"
+   ]
+  },
+  {
+   "seed": 1301,
+   "borrower_id": "B0036",
+   "attack": "shelf_orders",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 1890000.0069999993,
+   "how": "One-time capped advance against nonexistent shelf-company orders",
+   "facility_limit": 31500000.0,
+   "gain_share": 0.0600000002222222,
+   "small": false,
+   "start_month": 6,
+   "servicer": false,
+   "history": true,
+   "outcome": "sent to review",
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "first_flag": null,
+   "first_review": 0,
+   "findings": [
+    "FAKE_INVOICES (low)",
+    "HIDDEN_DEBT (low)",
+    "RELATED_SHELLS (low)"
+   ]
+  },
+  {
+   "seed": 1301,
+   "borrower_id": "B0053",
+   "attack": "shelf_orders",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 1368000.0044999998,
+   "how": "One-time capped advance against nonexistent shelf-company orders",
+   "facility_limit": 22800000.0,
+   "gain_share": 0.06000000019736841,
+   "small": false,
+   "start_month": 6,
+   "servicer": false,
+   "history": true,
+   "outcome": "sent to review",
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "first_flag": null,
+   "first_review": 9,
+   "findings": [
+    "FAKE_INVOICES (low)"
+   ]
+  },
+  {
+   "seed": 1302,
+   "borrower_id": "B0027",
+   "attack": "alias_participations",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 2244037.3999999985,
+   "how": "Single advance on double-booked fractional interests; servicer ledger also falsified",
+   "facility_limit": 37400000.0,
+   "gain_share": 0.06000099999999996,
+   "small": false,
+   "start_month": 6,
+   "servicer": true,
+   "history": false,
+   "outcome": "caught",
+   "verdict": "LIKELY_FRAUD",
+   "first_flag": 6,
+   "first_review": null,
+   "findings": [
+    "DOUBLE_PLEDGE (medium)"
+   ]
+  },
+  {
+   "seed": 1302,
+   "borrower_id": "B0056",
+   "attack": "alias_participations",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 3624060.3999999985,
+   "how": "Single advance on double-booked fractional interests; servicer ledger also falsified",
+   "facility_limit": 60400000.0,
+   "gain_share": 0.06000099999999998,
+   "small": false,
+   "start_month": 6,
+   "servicer": true,
+   "history": false,
+   "outcome": "caught",
+   "verdict": "LIKELY_FRAUD",
+   "first_flag": 6,
+   "first_review": 0,
+   "findings": [
+    "DOUBLE_PLEDGE (medium)"
+   ]
+  },
+  {
+   "seed": 1302,
+   "borrower_id": "B0030",
+   "attack": "capitalized_fees",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 618010.2999999998,
+   "how": "One-time capped advance on unauthorized fees capitalized into real loan balances",
+   "facility_limit": 10300000.0,
+   "gain_share": 0.060000999999999985,
+   "small": false,
+   "start_month": 6,
+   "servicer": true,
+   "history": false,
+   "outcome": "sent to review",
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "first_flag": null,
+   "first_review": 6,
+   "findings": [
+    "TAPE_DRESSUP (low)"
+   ]
+  },
+  {
+   "seed": 1302,
+   "borrower_id": "B0106",
+   "attack": "capitalized_fees",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 588009.7999999998,
+   "how": "One-time capped advance on unauthorized fees capitalized into real loan balances",
+   "facility_limit": 9800000.0,
+   "gain_share": 0.06000099999999998,
+   "small": false,
+   "start_month": 6,
+   "servicer": true,
+   "history": false,
+   "outcome": "sent to review",
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "first_flag": null,
+   "first_review": 5,
+   "findings": [
+    "DOUBLE_PLEDGE (low)",
+    "TAPE_DRESSUP (low)"
+   ]
+  },
+  {
+   "seed": 1302,
+   "borrower_id": "B0086",
+   "attack": "customer_roundtrip",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 1242000.0065000001,
+   "how": "Capped advance on unpaid fake invoice residual, less all customer-prefunding outflows",
+   "facility_limit": 20700000.0,
+   "gain_share": 0.06000000031400967,
+   "small": false,
+   "start_month": 6,
+   "servicer": false,
+   "history": false,
+   "outcome": "caught",
+   "verdict": "LIKELY_FRAUD",
+   "first_flag": 10,
+   "first_review": 6,
+   "findings": [
+    "FAKE_INVOICES (medium)"
+   ]
+  },
+  {
+   "seed": 1302,
+   "borrower_id": "B0016",
+   "attack": "customer_roundtrip",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 1218000.0034999996,
+   "how": "Capped advance on unpaid fake invoice residual, less all customer-prefunding outflows",
+   "facility_limit": 20300000.0,
+   "gain_share": 0.060000000172413775,
+   "small": false,
+   "start_month": 6,
+   "servicer": false,
+   "history": false,
+   "outcome": "caught",
+   "verdict": "LIKELY_FRAUD",
+   "first_flag": 10,
+   "first_review": 2,
+   "findings": [
+    "FAKE_INVOICES (medium)"
+   ]
+  },
+  {
+   "seed": 1302,
+   "borrower_id": "B0116",
+   "attack": "hidden_affiliate_debt",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 2080000.0,
+   "how": "Undisclosed unsecured affiliate-financing proceeds received once; no bank-facility gain claimed",
+   "facility_limit": 26000000.0,
+   "gain_share": 0.08,
+   "small": false,
+   "start_month": 6,
+   "servicer": false,
+   "history": false,
+   "outcome": "sent to review",
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "first_flag": null,
+   "first_review": 0,
+   "findings": [
+    "DISGUISED_RECEIPTS (low)",
+    "HIDDEN_DEBT (low)"
+   ]
+  },
+  {
+   "seed": 1302,
+   "borrower_id": "B0105",
+   "attack": "hidden_affiliate_debt",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 80000.0,
+   "how": "Undisclosed unsecured affiliate-financing proceeds received once; no bank-facility gain claimed",
+   "facility_limit": 1000000.0,
+   "gain_share": 0.08,
+   "small": false,
+   "start_month": 6,
+   "servicer": false,
+   "history": false,
+   "outcome": "sent to review",
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "first_flag": null,
+   "first_review": 6,
+   "findings": [
+    "DISGUISED_RECEIPTS (low)"
+   ]
+  },
+  {
+   "seed": 1302,
+   "borrower_id": "B0114",
+   "attack": "invoice_uplift",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 366000.0039999997,
+   "how": "One-time capped extra advance on inflated genuine invoice amounts; no monthly recounting",
+   "facility_limit": 6100000.0,
+   "gain_share": 0.060000000655737656,
+   "small": false,
+   "start_month": 6,
+   "servicer": false,
+   "history": false,
+   "outcome": "sent to review",
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "first_flag": null,
+   "first_review": 2,
+   "findings": [
+    "FAKE_INVOICES (low)"
+   ]
+  },
+  {
+   "seed": 1302,
+   "borrower_id": "B0087",
+   "attack": "invoice_uplift",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 1014000.0030000005,
+   "how": "One-time capped extra advance on inflated genuine invoice amounts; no monthly recounting",
+   "facility_limit": 16900000.0,
+   "gain_share": 0.06000000017751482,
+   "small": false,
+   "start_month": 6,
+   "servicer": false,
+   "history": false,
+   "outcome": "sent to review",
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "first_flag": null,
+   "first_review": 0,
+   "findings": [
+    "FAKE_INVOICES (low)",
+    "HIDDEN_DEBT (low)"
+   ]
+  },
+  {
+   "seed": 1302,
+   "borrower_id": "B0073",
+   "attack": "shelf_orders",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 1110000.006,
+   "how": "One-time capped advance against nonexistent shelf-company orders",
+   "facility_limit": 18500000.0,
+   "gain_share": 0.06000000032432433,
+   "small": false,
+   "start_month": 6,
+   "servicer": false,
+   "history": true,
+   "outcome": "sent to review",
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "first_flag": null,
+   "first_review": 9,
+   "findings": [
+    "FAKE_INVOICES (low)"
+   ]
+  },
+  {
+   "seed": 1302,
+   "borrower_id": "B0079",
+   "attack": "shelf_orders",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 714000.0,
+   "how": "One-time capped advance against nonexistent shelf-company orders",
+   "facility_limit": 11900000.0,
+   "gain_share": 0.06,
+   "small": false,
+   "start_month": 6,
+   "servicer": false,
+   "history": true,
+   "outcome": "sent to review",
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "first_flag": null,
+   "first_review": 2,
+   "findings": [
+    "FAKE_INVOICES (low)"
+   ]
+  },
+  {
+   "seed": 1303,
+   "borrower_id": "B0041",
+   "attack": "alias_participations",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 150002.5,
+   "how": "Single advance on double-booked fractional interests; servicer ledger also falsified",
+   "facility_limit": 2500000.0,
+   "gain_share": 0.060001,
+   "small": false,
+   "start_month": 6,
+   "servicer": true,
+   "history": false,
+   "outcome": "caught",
+   "verdict": "LIKELY_FRAUD",
+   "first_flag": 6,
+   "first_review": null,
+   "findings": [
+    "DOUBLE_PLEDGE (high)"
+   ]
+  },
+  {
+   "seed": 1303,
+   "borrower_id": "B0059",
+   "attack": "alias_participations",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 114001.8999999999,
+   "how": "Single advance on double-booked fractional interests; servicer ledger also falsified",
+   "facility_limit": 1900000.0,
+   "gain_share": 0.06000099999999995,
+   "small": false,
+   "start_month": 6,
+   "servicer": true,
+   "history": false,
+   "outcome": "caught",
+   "verdict": "LIKELY_FRAUD",
+   "first_flag": 6,
+   "first_review": null,
+   "findings": [
+    "DOUBLE_PLEDGE (medium)"
+   ]
+  },
+  {
+   "seed": 1303,
+   "borrower_id": "B0063",
+   "attack": "capitalized_fees",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 2676044.6000000015,
+   "how": "One-time capped advance on unauthorized fees capitalized into real loan balances",
+   "facility_limit": 44600000.0,
+   "gain_share": 0.060001000000000033,
+   "small": false,
+   "start_month": 6,
+   "servicer": true,
+   "history": false,
+   "outcome": "sent to review",
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "first_flag": null,
+   "first_review": 0,
+   "findings": [
+    "HIDDEN_DEBT (low)",
+    "TAPE_DRESSUP (low)"
+   ]
+  },
+  {
+   "seed": 1303,
+   "borrower_id": "B0095",
+   "attack": "capitalized_fees",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 60001.0,
+   "how": "One-time capped advance on unauthorized fees capitalized into real loan balances",
+   "facility_limit": 1000000.0,
+   "gain_share": 0.060001,
+   "small": false,
+   "start_month": 6,
+   "servicer": true,
+   "history": false,
+   "outcome": "sent to review",
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "first_flag": null,
+   "first_review": 6,
+   "findings": [
+    "TAPE_DRESSUP (low)"
+   ]
+  },
+  {
+   "seed": 1303,
+   "borrower_id": "B0107",
+   "attack": "customer_roundtrip",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 1584000.0024999995,
+   "how": "Capped advance on unpaid fake invoice residual, less all customer-prefunding outflows",
+   "facility_limit": 26400000.0,
+   "gain_share": 0.06000000009469695,
+   "small": false,
+   "start_month": 6,
+   "servicer": false,
+   "history": false,
+   "outcome": "caught",
+   "verdict": "LIKELY_FRAUD",
+   "first_flag": 10,
+   "first_review": 4,
+   "findings": [
+    "FAKE_INVOICES (medium)"
+   ]
+  },
+  {
+   "seed": 1303,
+   "borrower_id": "B0049",
+   "attack": "customer_roundtrip",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 636000.003,
+   "how": "Capped advance on unpaid fake invoice residual, less all customer-prefunding outflows",
+   "facility_limit": 10600000.0,
+   "gain_share": 0.06000000028301887,
+   "small": false,
+   "start_month": 6,
+   "servicer": false,
+   "history": false,
+   "outcome": "caught",
+   "verdict": "LIKELY_FRAUD",
+   "first_flag": 10,
+   "first_review": 6,
+   "findings": [
+    "FAKE_INVOICES (medium)"
+   ]
+  },
+  {
+   "seed": 1303,
+   "borrower_id": "B0086",
+   "attack": "hidden_affiliate_debt",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 80000.0,
+   "how": "Undisclosed unsecured affiliate-financing proceeds received once; no bank-facility gain claimed",
+   "facility_limit": 1000000.0,
+   "gain_share": 0.08,
+   "small": false,
+   "start_month": 6,
+   "servicer": false,
+   "history": false,
+   "outcome": "sent to review",
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "first_flag": null,
+   "first_review": 6,
+   "findings": [
+    "DISGUISED_RECEIPTS (low)"
+   ]
+  },
+  {
+   "seed": 1303,
+   "borrower_id": "B0001",
+   "attack": "hidden_affiliate_debt",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 568000.0,
+   "how": "Undisclosed unsecured affiliate-financing proceeds received once; no bank-facility gain claimed",
+   "facility_limit": 7100000.0,
+   "gain_share": 0.08,
+   "small": false,
+   "start_month": 6,
+   "servicer": false,
+   "history": false,
+   "outcome": "sent to review",
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "first_flag": null,
+   "first_review": 6,
+   "findings": [
+    "DISGUISED_RECEIPTS (low)"
+   ]
+  },
+  {
+   "seed": 1303,
+   "borrower_id": "B0105",
+   "attack": "invoice_uplift",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 1278000.0070000002,
+   "how": "One-time capped extra advance on inflated genuine invoice amounts; no monthly recounting",
+   "facility_limit": 21300000.0,
+   "gain_share": 0.06000000032863851,
+   "small": false,
+   "start_month": 6,
+   "servicer": false,
+   "history": false,
+   "outcome": "sent to review",
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "first_flag": null,
+   "first_review": 10,
+   "findings": [
+    "FAKE_INVOICES (low)"
+   ]
+  },
+  {
+   "seed": 1303,
+   "borrower_id": "B0023",
+   "attack": "invoice_uplift",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 1026000.0055,
+   "how": "One-time capped extra advance on inflated genuine invoice amounts; no monthly recounting",
+   "facility_limit": 17100000.0,
+   "gain_share": 0.06000000032163742,
+   "small": false,
+   "start_month": 6,
+   "servicer": false,
+   "history": false,
+   "outcome": "sent to review",
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "first_flag": null,
+   "first_review": 10,
+   "findings": [
+    "FAKE_INVOICES (low)"
+   ]
+  },
+  {
+   "seed": 1303,
+   "borrower_id": "B0055",
+   "attack": "shelf_orders",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 582000.0065000001,
+   "how": "One-time capped advance against nonexistent shelf-company orders",
+   "facility_limit": 9700000.0,
+   "gain_share": 0.06000000067010311,
+   "small": false,
+   "start_month": 6,
+   "servicer": false,
+   "history": true,
+   "outcome": "sent to review",
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "first_flag": null,
+   "first_review": 9,
+   "findings": [
+    "FAKE_INVOICES (low)"
+   ]
+  },
+  {
+   "seed": 1303,
+   "borrower_id": "B0028",
+   "attack": "shelf_orders",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 1218000.0030000005,
+   "how": "One-time capped advance against nonexistent shelf-company orders",
+   "facility_limit": 20300000.0,
+   "gain_share": 0.060000000147783276,
+   "small": false,
+   "start_month": 6,
+   "servicer": false,
+   "history": true,
+   "outcome": "sent to review",
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "first_flag": null,
+   "first_review": 9,
+   "findings": [
+    "FAKE_INVOICES (low)",
+    "FIN_MANIPULATION (low)"
+   ]
+  },
+  {
+   "seed": 1304,
+   "borrower_id": "B0088",
+   "attack": "alias_participations",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 60001.0,
+   "how": "Single advance on double-booked fractional interests; servicer ledger also falsified",
+   "facility_limit": 1000000.0,
+   "gain_share": 0.060001,
+   "small": false,
+   "start_month": 6,
+   "servicer": true,
+   "history": false,
+   "outcome": "caught",
+   "verdict": "LIKELY_FRAUD",
+   "first_flag": 6,
+   "first_review": null,
+   "findings": [
+    "DOUBLE_PLEDGE (medium)"
+   ]
+  },
+  {
+   "seed": 1304,
+   "borrower_id": "B0031",
+   "attack": "alias_participations",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 3654060.8999999985,
+   "how": "Single advance on double-booked fractional interests; servicer ledger also falsified",
+   "facility_limit": 60900000.0,
+   "gain_share": 0.06000099999999998,
+   "small": false,
+   "start_month": 6,
+   "servicer": true,
+   "history": false,
+   "outcome": "caught",
+   "verdict": "LIKELY_FRAUD",
+   "first_flag": 6,
+   "first_review": null,
+   "findings": [
+    "DOUBLE_PLEDGE (high)"
+   ]
+  },
+  {
+   "seed": 1304,
+   "borrower_id": "B0117",
+   "attack": "capitalized_fees",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 1416023.5999999996,
+   "how": "One-time capped advance on unauthorized fees capitalized into real loan balances",
+   "facility_limit": 23600000.0,
+   "gain_share": 0.060000999999999985,
+   "small": false,
+   "start_month": 6,
+   "servicer": true,
+   "history": false,
+   "outcome": "sent to review",
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "first_flag": null,
+   "first_review": 6,
+   "findings": [
+    "TAPE_DRESSUP (low)"
+   ]
+  },
+  {
+   "seed": 1304,
+   "borrower_id": "B0111",
+   "attack": "capitalized_fees",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 114001.8999999999,
+   "how": "One-time capped advance on unauthorized fees capitalized into real loan balances",
+   "facility_limit": 1900000.0,
+   "gain_share": 0.06000099999999995,
+   "small": false,
+   "start_month": 6,
+   "servicer": true,
+   "history": false,
+   "outcome": "sent to review",
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "first_flag": null,
+   "first_review": 6,
+   "findings": [
+    "TAPE_DRESSUP (low)"
+   ]
+  },
+  {
+   "seed": 1304,
+   "borrower_id": "B0087",
+   "attack": "customer_roundtrip",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 2046000.004999999,
+   "how": "Capped advance on unpaid fake invoice residual, less all customer-prefunding outflows",
+   "facility_limit": 34100000.0,
+   "gain_share": 0.060000000146627534,
+   "small": false,
+   "start_month": 6,
+   "servicer": false,
+   "history": false,
+   "outcome": "caught",
+   "verdict": "LIKELY_FRAUD",
+   "first_flag": 10,
+   "first_review": 6,
+   "findings": [
+    "FAKE_INVOICES (medium)"
+   ]
+  },
+  {
+   "seed": 1304,
+   "borrower_id": "B0086",
+   "attack": "customer_roundtrip",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 1530000.0085000005,
+   "how": "Capped advance on unpaid fake invoice residual, less all customer-prefunding outflows",
+   "facility_limit": 25500000.0,
+   "gain_share": 0.06000000033333335,
+   "small": false,
+   "start_month": 6,
+   "servicer": false,
+   "history": false,
+   "outcome": "caught",
+   "verdict": "LIKELY_FRAUD",
+   "first_flag": 10,
+   "first_review": 6,
+   "findings": [
+    "FAKE_INVOICES (medium)"
+   ]
+  },
+  {
+   "seed": 1304,
+   "borrower_id": "B0005",
+   "attack": "hidden_affiliate_debt",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 80000.0,
+   "how": "Undisclosed unsecured affiliate-financing proceeds received once; no bank-facility gain claimed",
+   "facility_limit": 1000000.0,
+   "gain_share": 0.08,
+   "small": false,
+   "start_month": 6,
+   "servicer": false,
+   "history": false,
+   "outcome": "sent to review",
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "first_flag": null,
+   "first_review": 6,
+   "findings": [
+    "DISGUISED_RECEIPTS (low)"
+   ]
+  },
+  {
+   "seed": 1304,
+   "borrower_id": "B0017",
+   "attack": "hidden_affiliate_debt",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 808000.0,
+   "how": "Undisclosed unsecured affiliate-financing proceeds received once; no bank-facility gain claimed",
+   "facility_limit": 10100000.0,
+   "gain_share": 0.08,
+   "small": false,
+   "start_month": 6,
+   "servicer": false,
+   "history": false,
+   "outcome": "sent to review",
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "first_flag": null,
+   "first_review": 6,
+   "findings": [
+    "DISGUISED_RECEIPTS (low)"
+   ]
+  },
+  {
+   "seed": 1304,
+   "borrower_id": "B0014",
+   "attack": "invoice_uplift",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 1836000.0,
+   "how": "One-time capped extra advance on inflated genuine invoice amounts; no monthly recounting",
+   "facility_limit": 30600000.0,
+   "gain_share": 0.06,
+   "small": false,
+   "start_month": 6,
+   "servicer": false,
+   "history": false,
+   "outcome": "sent to review",
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "first_flag": null,
+   "first_review": 0,
+   "findings": [
+    "FAKE_INVOICES (low)",
+    "HIDDEN_DEBT (low)"
+   ]
+  },
+  {
+   "seed": 1304,
+   "borrower_id": "B0006",
+   "attack": "invoice_uplift",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 960000.0044999998,
+   "how": "One-time capped extra advance on inflated genuine invoice amounts; no monthly recounting",
+   "facility_limit": 16000000.0,
+   "gain_share": 0.060000000281249986,
+   "small": false,
+   "start_month": 6,
+   "servicer": false,
+   "history": false,
+   "outcome": "sent to review",
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "first_flag": null,
+   "first_review": 10,
+   "findings": [
+    "FAKE_INVOICES (low)"
+   ]
+  },
+  {
+   "seed": 1304,
+   "borrower_id": "B0038",
+   "attack": "shelf_orders",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 1458000.0020000003,
+   "how": "One-time capped advance against nonexistent shelf-company orders",
+   "facility_limit": 24300000.0,
+   "gain_share": 0.06000000008230454,
+   "small": false,
+   "start_month": 6,
+   "servicer": false,
+   "history": true,
+   "outcome": "sent to review",
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "first_flag": null,
+   "first_review": 9,
+   "findings": [
+    "FAKE_INVOICES (low)"
+   ]
+  },
+  {
+   "seed": 1304,
+   "borrower_id": "B0094",
+   "attack": "shelf_orders",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 1152000.0020000003,
+   "how": "One-time capped advance against nonexistent shelf-company orders",
+   "facility_limit": 19200000.0,
+   "gain_share": 0.06000000010416669,
+   "small": false,
+   "start_month": 6,
+   "servicer": false,
+   "history": true,
+   "outcome": "sent to review",
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "first_flag": null,
+   "first_review": 9,
+   "findings": [
+    "FAKE_INVOICES (low)"
+   ]
+  },
+  {
+   "seed": 1305,
+   "borrower_id": "B0066",
+   "attack": "alias_participations",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 4392073.200000003,
+   "how": "Single advance on double-booked fractional interests; servicer ledger also falsified",
+   "facility_limit": 73200000.0,
+   "gain_share": 0.06000100000000004,
+   "small": false,
+   "start_month": 6,
+   "servicer": true,
+   "history": false,
+   "outcome": "caught",
+   "verdict": "LIKELY_FRAUD",
+   "first_flag": 6,
+   "first_review": null,
+   "findings": [
+    "DOUBLE_PLEDGE (high)",
+    "RELATED_SHELLS (low)"
+   ]
+  },
+  {
+   "seed": 1305,
+   "borrower_id": "B0096",
+   "attack": "alias_participations",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 84001.40000000002,
+   "how": "Single advance on double-booked fractional interests; servicer ledger also falsified",
+   "facility_limit": 1400000.0,
+   "gain_share": 0.06000100000000002,
+   "small": false,
+   "start_month": 6,
+   "servicer": true,
+   "history": false,
+   "outcome": "caught",
+   "verdict": "LIKELY_FRAUD",
+   "first_flag": 6,
+   "first_review": 0,
+   "findings": [
+    "DOUBLE_PLEDGE (high)",
+    "HIDDEN_DEBT (low)"
+   ]
+  },
+  {
+   "seed": 1305,
+   "borrower_id": "B0072",
+   "attack": "capitalized_fees",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 102001.69999999995,
+   "how": "One-time capped advance on unauthorized fees capitalized into real loan balances",
+   "facility_limit": 1700000.0,
+   "gain_share": 0.06000099999999997,
+   "small": false,
+   "start_month": 6,
+   "servicer": true,
+   "history": false,
+   "outcome": "sent to review",
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "first_flag": null,
+   "first_review": 6,
+   "findings": [
+    "HIDDEN_DEBT (low)",
+    "RELATED_SHELLS (low)",
+    "TAPE_DRESSUP (low)"
+   ]
+  },
+  {
+   "seed": 1305,
+   "borrower_id": "B0075",
+   "attack": "capitalized_fees",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 276004.6000000001,
+   "how": "One-time capped advance on unauthorized fees capitalized into real loan balances",
+   "facility_limit": 4600000.0,
+   "gain_share": 0.06000100000000002,
+   "small": false,
+   "start_month": 6,
+   "servicer": true,
+   "history": false,
+   "outcome": "sent to review",
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "first_flag": null,
+   "first_review": 6,
+   "findings": [
+    "TAPE_DRESSUP (low)"
+   ]
+  },
+  {
+   "seed": 1305,
+   "borrower_id": "B0083",
+   "attack": "customer_roundtrip",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 744000.0079999999,
+   "how": "Capped advance on unpaid fake invoice residual, less all customer-prefunding outflows",
+   "facility_limit": 12400000.0,
+   "gain_share": 0.06000000064516128,
+   "small": false,
+   "start_month": 6,
+   "servicer": false,
+   "history": false,
+   "outcome": "caught",
+   "verdict": "LIKELY_FRAUD",
+   "first_flag": 10,
+   "first_review": 6,
+   "findings": [
+    "FAKE_INVOICES (medium)"
+   ]
+  },
+  {
+   "seed": 1305,
+   "borrower_id": "B0120",
+   "attack": "customer_roundtrip",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 552000.0010000002,
+   "how": "Capped advance on unpaid fake invoice residual, less all customer-prefunding outflows",
+   "facility_limit": 9200000.0,
+   "gain_share": 0.06000000010869567,
+   "small": false,
+   "start_month": 6,
+   "servicer": false,
+   "history": false,
+   "outcome": "caught",
+   "verdict": "LIKELY_FRAUD",
+   "first_flag": 10,
+   "first_review": 6,
+   "findings": [
+    "FAKE_INVOICES (medium)"
+   ]
+  },
+  {
+   "seed": 1305,
+   "borrower_id": "B0074",
+   "attack": "hidden_affiliate_debt",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 1640000.0,
+   "how": "Undisclosed unsecured affiliate-financing proceeds received once; no bank-facility gain claimed",
+   "facility_limit": 20500000.0,
+   "gain_share": 0.08,
+   "small": false,
+   "start_month": 6,
+   "servicer": false,
+   "history": false,
+   "outcome": "sent to review",
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "first_flag": null,
+   "first_review": 0,
+   "findings": [
+    "DISGUISED_RECEIPTS (low)",
+    "HIDDEN_DEBT (low)"
+   ]
+  },
+  {
+   "seed": 1305,
+   "borrower_id": "B0112",
+   "attack": "hidden_affiliate_debt",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 1568000.0,
+   "how": "Undisclosed unsecured affiliate-financing proceeds received once; no bank-facility gain claimed",
+   "facility_limit": 19600000.0,
+   "gain_share": 0.08,
+   "small": false,
+   "start_month": 6,
+   "servicer": false,
+   "history": false,
+   "outcome": "sent to review",
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "first_flag": null,
+   "first_review": 6,
+   "findings": [
+    "DISGUISED_RECEIPTS (low)"
+   ]
+  },
+  {
+   "seed": 1305,
+   "borrower_id": "B0014",
+   "attack": "invoice_uplift",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 864000.0015000002,
+   "how": "One-time capped extra advance on inflated genuine invoice amounts; no monthly recounting",
+   "facility_limit": 14400000.0,
+   "gain_share": 0.06000000010416669,
+   "small": false,
+   "start_month": 6,
+   "servicer": false,
+   "history": false,
+   "outcome": "sent to review",
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "first_flag": null,
+   "first_review": 10,
+   "findings": [
+    "FAKE_INVOICES (low)"
+   ]
+  },
+  {
+   "seed": 1305,
+   "borrower_id": "B0043",
+   "attack": "invoice_uplift",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 534000.0050000004,
+   "how": "One-time capped extra advance on inflated genuine invoice amounts; no monthly recounting",
+   "facility_limit": 8900000.0,
+   "gain_share": 0.060000000561797794,
+   "small": false,
+   "start_month": 6,
+   "servicer": false,
+   "history": false,
+   "outcome": "sent to review",
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "first_flag": null,
+   "first_review": 10,
+   "findings": [
+    "FAKE_INVOICES (low)"
+   ]
+  },
+  {
+   "seed": 1305,
+   "borrower_id": "B0063",
+   "attack": "shelf_orders",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 1662000.0020000003,
+   "how": "One-time capped advance against nonexistent shelf-company orders",
+   "facility_limit": 27700000.0,
+   "gain_share": 0.06000000007220218,
+   "small": false,
+   "start_month": 6,
+   "servicer": false,
+   "history": true,
+   "outcome": "sent to review",
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "first_flag": null,
+   "first_review": 9,
+   "findings": [
+    "FAKE_INVOICES (low)",
+    "RELATED_SHELLS (low)"
+   ]
+  },
+  {
+   "seed": 1305,
+   "borrower_id": "B0064",
+   "attack": "shelf_orders",
+   "valid": true,
+   "problems": [],
+   "gain_usd": 1284000.0040000007,
+   "how": "One-time capped advance against nonexistent shelf-company orders",
+   "facility_limit": 21400000.0,
+   "gain_share": 0.06000000018691592,
+   "small": false,
+   "start_month": 6,
+   "servicer": false,
+   "history": true,
+   "outcome": "sent to review",
+   "verdict": "NEEDS_MORE_EVIDENCE",
+   "first_flag": null,
+   "first_review": 9,
+   "findings": [
+    "FAKE_INVOICES (low)"
+   ]
+  }
+ ],
+ "honest": {
+  "n": 290,
+  "flagged_end": 0,
+  "flagged_ever": 1,
+  "review_per_100": 30.7
+ },
+ "original_frauds": {
+  "n": 250,
+  "caught": 249
+ },
+ "attacks_leak_scan": {
+  "files": 18,
+  "hits": [],
+  "numbers": [
+   {
+    "file": "attacks/alias_participations/README.md",
+    "number": "3",
+    "context": "nt(book_dir, borrower_id, seed)`. Requires Python 3.10+, pyarrow, and the included unmodified bookio."
+   },
+   {
+    "file": "attacks/alias_participations/plant.py",
+    "number": "0.01",
+    "context": "baseline, {f['facility_id']: target}) >= target - 0.01:                 return f, baseline         raise"
+   },
+   {
+    "file": "attacks/alias_participations/plant.py",
+    "number": "0.01",
+    "context": "t math.isfinite(gain) or gain < 0.05*self.limit - 0.01:             raise ValueError('Computed gain fail"
+   },
+   {
+    "file": "attacks/alias_participations/plant.py",
+    "number": "0.05",
+    "context": "ow):         if not math.isfinite(gain) or gain < 0.05*self.limit - 0.01:             raise ValueError('"
+   },
+   {
+    "file": "attacks/alias_participations/plant.py",
+    "number": "2",
+    "context": "inancials'):             month = 3*q['quarter'] + 2             if month < START_MONTH:              "
+   },
+   {
+    "file": "attacks/alias_participations/plant.py",
+    "number": "3",
+    "context": " q in self.own('financials'):             month = 3*q['quarter'] + 2             if month < START_MON"
+   },
+   {
+    "file": "attacks/alias_participations/plant.py",
+    "number": "3",
+    "context": "ebt             if q['quarter'] == START_MONTH // 3:                 q['revenue_reported'] += revenue"
+   },
+   {
+    "file": "attacks/alias_participations/plant.py",
+    "number": "3",
+    "context": "] == 'revenue' and r['quarter'] == START_MONTH // 3 and r['amount'] is not None:                     "
+   },
+   {
+    "file": "attacks/alias_participations/plant.py",
+    "number": "60",
+    "context": "Registry Services',              'formed_month': -60 if shelf else START_MONTH,              'has_oper"
+   },
+   {
+    "file": "attacks/capitalized_fees/README.md",
+    "number": "3",
+    "context": "nt(book_dir, borrower_id, seed)`. Requires Python 3.10+, pyarrow, and the included unmodified bookio."
+   },
+   {
+    "file": "attacks/capitalized_fees/plant.py",
+    "number": "0.01",
+    "context": "baseline, {f['facility_id']: target}) >= target - 0.01:                 return f, baseline         raise"
+   },
+   {
+    "file": "attacks/capitalized_fees/plant.py",
+    "number": "0.01",
+    "context": "t math.isfinite(gain) or gain < 0.05*self.limit - 0.01:             raise ValueError('Computed gain fail"
+   },
+   {
+    "file": "attacks/capitalized_fees/plant.py",
+    "number": "0.05",
+    "context": "ow):         if not math.isfinite(gain) or gain < 0.05*self.limit - 0.01:             raise ValueError('"
+   },
+   {
+    "file": "attacks/capitalized_fees/plant.py",
+    "number": "2",
+    "context": "inancials'):             month = 3*q['quarter'] + 2             if month < START_MONTH:              "
+   },
+   {
+    "file": "attacks/capitalized_fees/plant.py",
+    "number": "3",
+    "context": " q in self.own('financials'):             month = 3*q['quarter'] + 2             if month < START_MON"
+   },
+   {
+    "file": "attacks/capitalized_fees/plant.py",
+    "number": "3",
+    "context": "ebt             if q['quarter'] == START_MONTH // 3:                 q['revenue_reported'] += revenue"
+   },
+   {
+    "file": "attacks/capitalized_fees/plant.py",
+    "number": "3",
+    "context": "] == 'revenue' and r['quarter'] == START_MONTH // 3 and r['amount'] is not None:                     "
+   },
+   {
+    "file": "attacks/capitalized_fees/plant.py",
+    "number": "60",
+    "context": "Registry Services',              'formed_month': -60 if shelf else START_MONTH,              'has_oper"
+   },
+   {
+    "file": "attacks/customer_roundtrip/README.md",
+    "number": "3",
+    "context": "nt(book_dir, borrower_id, seed)`. Requires Python 3.10+, pyarrow, and the included unmodified bookio."
+   },
+   {
+    "file": "attacks/customer_roundtrip/plant.py",
+    "number": "0.01",
+    "context": "baseline, {f['facility_id']: target}) >= target - 0.01:                 return f, baseline         raise"
+   },
+   {
+    "file": "attacks/customer_roundtrip/plant.py",
+    "number": "0.01",
+    "context": "t math.isfinite(gain) or gain < 0.05*self.limit - 0.01:             raise ValueError('Computed gain fail"
+   },
+   {
+    "file": "attacks/customer_roundtrip/plant.py",
+    "number": "0.01",
+    "context": "    coll, oper = c.accounts()     support = round(0.01*c.limit,2)     residual = math.ceil(0.07*c.limit/"
+   },
+   {
+    "file": "attacks/customer_roundtrip/plant.py",
+    "number": "0.05",
+    "context": "ow):         if not math.isfinite(gain) or gain < 0.05*self.limit - 0.01:             raise ValueError('"
+   },
+   {
+    "file": "attacks/customer_roundtrip/plant.py",
+    "number": "2",
+    "context": "inancials'):             month = 3*q['quarter'] + 2             if month < START_MONTH:              "
+   },
+   {
+    "file": "attacks/customer_roundtrip/plant.py",
+    "number": "2",
+    "context": "r = c.accounts()     support = round(0.01*c.limit,2)     residual = math.ceil(0.07*c.limit/f['advance"
+   },
+   {
+    "file": "attacks/customer_roundtrip/plant.py",
+    "number": "3",
+    "context": " q in self.own('financials'):             month = 3*q['quarter'] + 2             if month < START_MON"
+   },
+   {
+    "file": "attacks/customer_roundtrip/plant.py",
+    "number": "3",
+    "context": "ebt             if q['quarter'] == START_MONTH // 3:                 q['revenue_reported'] += revenue"
+   },
+   {
+    "file": "attacks/customer_roundtrip/plant.py",
+    "number": "3",
+    "context": "] == 'revenue' and r['quarter'] == START_MONTH // 3 and r['amount'] is not None:                     "
+   },
+   {
+    "file": "attacks/customer_roundtrip/plant.py",
+    "number": "60",
+    "context": "Registry Services',              'formed_month': -60 if shelf else START_MONTH,              'has_oper"
+   },
+   {
+    "file": "attacks/customer_roundtrip/plant.py",
+    "number": "60",
+    "context": "   issue_month=START_MONTH, issue_day=1, due_days=60, amount=amount)         c.rows('invoices').append"
+   },
+   {
+    "file": "attacks/hidden_affiliate_debt/README.md",
+    "number": "3",
+    "context": "nt(book_dir, borrower_id, seed)`. Requires Python 3.10+, pyarrow, and the included unmodified bookio."
+   },
+   {
+    "file": "attacks/hidden_affiliate_debt/plant.py",
+    "number": "0.01",
+    "context": "baseline, {f['facility_id']: target}) >= target - 0.01:                 return f, baseline         raise"
+   },
+   {
+    "file": "attacks/hidden_affiliate_debt/plant.py",
+    "number": "0.01",
+    "context": "t math.isfinite(gain) or gain < 0.05*self.limit - 0.01:             raise ValueError('Computed gain fail"
+   },
+   {
+    "file": "attacks/hidden_affiliate_debt/plant.py",
+    "number": "0.05",
+    "context": "ow):         if not math.isfinite(gain) or gain < 0.05*self.limit - 0.01:             raise ValueError('"
+   },
+   {
+    "file": "attacks/hidden_affiliate_debt/plant.py",
+    "number": "2",
+    "context": "inancials'):             month = 3*q['quarter'] + 2             if month < START_MONTH:              "
+   },
+   {
+    "file": "attacks/hidden_affiliate_debt/plant.py",
+    "number": "2",
+    "context": "= c.accounts()     principal = round(0.08*c.limit,2)     added = []     for j, amount in enumerate(sp"
+   },
+   {
+    "file": "attacks/hidden_affiliate_debt/plant.py",
+    "number": "3",
+    "context": " q in self.own('financials'):             month = 3*q['quarter'] + 2             if month < START_MON"
+   },
+   {
+    "file": "attacks/hidden_affiliate_debt/plant.py",
+    "number": "3",
+    "context": "ebt             if q['quarter'] == START_MONTH // 3:                 q['revenue_reported'] += revenue"
+   },
+   {
+    "file": "attacks/hidden_affiliate_debt/plant.py",
+    "number": "3",
+    "context": "] == 'revenue' and r['quarter'] == START_MONTH // 3 and r['amount'] is not None:                     "
+   },
+   {
+    "file": "attacks/hidden_affiliate_debt/plant.py",
+    "number": "60",
+    "context": "Registry Services',              'formed_month': -60 if shelf else START_MONTH,              'has_oper"
+   },
+   {
+    "file": "attacks/invoice_uplift/README.md",
+    "number": "3",
+    "context": "nt(book_dir, borrower_id, seed)`. Requires Python 3.10+, pyarrow, and the included unmodified bookio."
+   },
+   {
+    "file": "attacks/invoice_uplift/plant.py",
+    "number": "0.01",
+    "context": "baseline, {f['facility_id']: target}) >= target - 0.01:                 return f, baseline         raise"
+   },
+   {
+    "file": "attacks/invoice_uplift/plant.py",
+    "number": "0.01",
+    "context": "t math.isfinite(gain) or gain < 0.05*self.limit - 0.01:             raise ValueError('Computed gain fail"
+   },
+   {
+    "file": "attacks/invoice_uplift/plant.py",
+    "number": "0.05",
+    "context": "ow):         if not math.isfinite(gain) or gain < 0.05*self.limit - 0.01:             raise ValueError('"
+   },
+   {
+    "file": "attacks/invoice_uplift/plant.py",
+    "number": "2",
+    "context": "inancials'):             month = 3*q['quarter'] + 2             if month < START_MONTH:              "
+   },
+   {
+    "file": "attacks/invoice_uplift/plant.py",
+    "number": "2",
+    "context": "      bump = round(target_face*i['amount']/total, 2) if j < len(cohort)-1 else round(target_face-actu"
+   },
+   {
+    "file": "attacks/invoice_uplift/plant.py",
+    "number": "2",
+    "context": " j < len(cohort)-1 else round(target_face-actual, 2)         i['amount'] += bump         actual += bu"
+   },
+   {
+    "file": "attacks/invoice_uplift/plant.py",
+    "number": "3",
+    "context": " q in self.own('financials'):             month = 3*q['quarter'] + 2             if month < START_MON"
+   },
+   {
+    "file": "attacks/invoice_uplift/plant.py",
+    "number": "3",
+    "context": "ebt             if q['quarter'] == START_MONTH // 3:                 q['revenue_reported'] += revenue"
+   },
+   {
+    "file": "attacks/invoice_uplift/plant.py",
+    "number": "3",
+    "context": "] == 'revenue' and r['quarter'] == START_MONTH // 3 and r['amount'] is not None:                     "
+   },
+   {
+    "file": "attacks/invoice_uplift/plant.py",
+    "number": "60",
+    "context": "Registry Services',              'formed_month': -60 if shelf else START_MONTH,              'has_oper"
+   },
+   {
+    "file": "attacks/shelf_orders/README.md",
+    "number": "3",
+    "context": "nt(book_dir, borrower_id, seed)`. Requires Python 3.10+, pyarrow, and the included unmodified bookio."
+   },
+   {
+    "file": "attacks/shelf_orders/plant.py",
+    "number": "0.01",
+    "context": "baseline, {f['facility_id']: target}) >= target - 0.01:                 return f, baseline         raise"
+   },
+   {
+    "file": "attacks/shelf_orders/plant.py",
+    "number": "0.01",
+    "context": "t math.isfinite(gain) or gain < 0.05*self.limit - 0.01:             raise ValueError('Computed gain fail"
+   },
+   {
+    "file": "attacks/shelf_orders/plant.py",
+    "number": "0.05",
+    "context": "ow):         if not math.isfinite(gain) or gain < 0.05*self.limit - 0.01:             raise ValueError('"
+   },
+   {
+    "file": "attacks/shelf_orders/plant.py",
+    "number": "2",
+    "context": "inancials'):             month = 3*q['quarter'] + 2             if month < START_MONTH:              "
+   },
+   {
+    "file": "attacks/shelf_orders/plant.py",
+    "number": "2",
+    "context": "d(i['amount'] for i in templates)[len(templates)//2]     count = max(4, min(80, math.ceil(face/max(ty"
+   },
+   {
+    "file": "attacks/shelf_orders/plant.py",
+    "number": "3",
+    "context": " q in self.own('financials'):             month = 3*q['quarter'] + 2             if month < START_MON"
+   },
+   {
+    "file": "attacks/shelf_orders/plant.py",
+    "number": "3",
+    "context": "ebt             if q['quarter'] == START_MONTH // 3:                 q['revenue_reported'] += revenue"
+   },
+   {
+    "file": "attacks/shelf_orders/plant.py",
+    "number": "3",
+    "context": "] == 'revenue' and r['quarter'] == START_MONTH // 3 and r['amount'] is not None:                     "
+   },
+   {
+    "file": "attacks/shelf_orders/plant.py",
+    "number": "60",
+    "context": "Registry Services',              'formed_month': -60 if shelf else START_MONTH,              'has_oper"
+   },
+   {
+    "file": "attacks/shelf_orders/plant.py",
+    "number": "60",
+    "context": "       issue_day=c.rng.randrange(1, 20), due_days=60, amount=amount)         c.rows('invoices').append"
+   }
+  ]
+ }
+}
