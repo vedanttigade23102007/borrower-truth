@@ -1,6 +1,6 @@
 {
  "asOf": 23,
- "receivedAt": "2026-10-15T10:06:19.282889Z",
+ "receivedAt": "2026-10-15T10:59:37.401175Z",
  "runMetrics": {
   "data_quality": {
    "quarantined": {},
@@ -9,7 +9,7 @@
   },
   "S6": {
    "status": "ok",
-   "seconds": 0.027,
+   "seconds": 0.024,
    "signals": 93
   },
   "S1": {
@@ -19,17 +19,17 @@
   },
   "S2": {
    "status": "ok",
-   "seconds": 0.276,
+   "seconds": 0.32,
    "signals": 65
   },
   "S3": {
    "status": "ok",
-   "seconds": 0.417,
+   "seconds": 0.436,
    "signals": 26
   },
   "S4": {
    "status": "ok",
-   "seconds": 0.102,
+   "seconds": 0.106,
    "signals": 20
   },
   "S5": {
@@ -67,14 +67,14 @@
    "document_model": false,
    "inputs_digest": "ec63acb069af",
    "rule_version": "c147a0a636e6",
-   "code_version": "2ee44bc"
+   "code_version": "24669a6"
   },
   "combiner": {
    "status": "ok",
-   "seconds": 0.092,
+   "seconds": 0.096,
    "cases": 120
   },
-  "total_seconds": 1.821,
+  "total_seconds": 1.885,
   "as_of": 23,
   "document_model": "off"
  },

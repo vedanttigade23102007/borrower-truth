@@ -71,7 +71,7 @@ The bank's own loss data will replace these inputs. What can be said honestly no
 | r = 5% a month | $14.0M | $4.7M | $2.3M |
 
 **How to read it:** if the tool moves the bank's response forward by three months on **one** exposure of about $8M, the pilot has paid for itself (at r = 3%).
-- On the latest synthetic test (`proof/REPORT_seeds1201-1205.md`) the median was 3 months (90 days) earlier than a quarterly audit. That is a design result, not a measured real-world lead.
+- On the current held-out synthetic evaluation (seeds 1301–1305, `proof/REPORT_seeds1301-1305.md`) the median was 3 months (90 days) earlier than a quarterly audit, over the 95 frauds both flagged. That is a design result, not a measured real-world lead.
 - For scale: at Tricolor's bankruptcy its largest lenders were owed more than $900M in total (DOJ, allegations).
 
 **Benefits outside the formula:**
@@ -83,7 +83,7 @@ The bank's own loss data will replace these inputs. What can be said honestly no
 ## 8. Alternatives considered
 | Option | For | Against | Verdict |
 |---|---|---|---|
-| Do nothing (quarterly field exams, one-off sweeps after a loss) | no new cost | the audit caught 37% of planted frauds in the latest test; sweeps happen after the loss | not recommended |
+| Do nothing (quarterly field exams, one-off sweeps after a loss) | no new cost | the audit flagged 95 of 250 planted frauds (38%) on seeds 1301–1305; sweeps happen after the loss | not recommended |
 | More field exams | proven, understood | sample-based and slow; cost scales with headcount | keep, but aim them with this tool |
 | Extend Setpoint PledgeCheck | Wells Fargo already backs it; it sees other lenders' facilities | covers collateral uniqueness and collections, not shells, hidden debt or who paid | keep: already an input to S1 |
 | Buy an entity-resolution platform (e.g. Quantexa) | strong relationship matching at scale | one of the seven places; a platform project in its own right | a candidate to feed S6 later |

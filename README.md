@@ -51,7 +51,7 @@ From the SEC complaint (SEC v. Chu, Kollar and Seibold, SDNY 26-cv-7041; allegat
 
 The systems feed each other. For example, S6 finds a shell, S5 finds a lien on it, and S3 sees that lender's money arriving as "customer" cash.
 
-A **combiner** turns their clues into a *solved case*: the finding, the evidence, a verdict, a suggested fix (a playbook per trick) and drafted letters. **"Likely fraud" needs one checkable fact, or two independent sources about the same claim** (the same lender or linked company); unrelated clues never back each other up. A person approves every step. Nothing is sent or changed without approval.
+A **combiner** turns their clues into a *solved case*: the finding, the evidence, a verdict, a suggested fix (a playbook per trick) and drafted letters. **"Likely fraud" needs one checkable fact, or two independent sources about the same claim** (the same lender or linked company); unrelated clues never back each other up. Since change 32, a clue that names no lender (a judgment against the borrower itself, a PledgeCheck result, leaving PledgeCheck) can't be the second source for a claim about a lender. A person approves every step. Nothing is sent or changed without approval.
 
 Around the decision:
 - **Decision record.** Every verdict carries fingerprints of its inputs, the rule code and the git commit. `bt.pipeline.replay` recomputes a run and either shows every decision is identical (120 of 120 on the demo run) or names the input or rule that changed.
@@ -63,7 +63,8 @@ Around the decision:
   - The demo's memos were written on 16 Sep 2026 (Qwen3-8B), 58 in all. On 14 Oct, 11 were hidden because they cite a clue that no longer exists or were written for a different verdict. On 14–15 Oct every line of the other 47 was read and compared with today's clues and records:
     - 33 had at least one false line: the borrower named as its own related company (20 memos), a wrong source (4), wrong or recombined numbers (3), a wrong "no liens" or "no debts" claim (3), money going the wrong way (2), another company's lien or collateral put on the borrower (2). One memo had two kinds. The first false line was enough to hide a memo, so these counts are a floor.
     - 2 more were hidden as misleading or unclear.
-    - 12 are shown. The rules decide; a memo only drafts.
+    - On 15 Oct one more (B0116) was hidden: change 32 lowered its double-pledge finding after the memo was written, and the memo's recorded lookup still shows the old confidence.
+    - 11 are shown. The rules decide; a memo only drafts.
 - **Feedback loop, kept human.** Officers' approvals and rejections are counted per finding type (`/api/feedback`, Operations page). A type whose fixes keep getting rejected goes to the person who owns the rules; the rules never change themselves.
 - **Public console** (`web/`): the review queue, each case with its fix, memo and decision record, a data section (dictionary, sample rows, one fraud step by step, invoice documents), and "Test it yourself", the answer key including misses.
 
@@ -71,23 +72,28 @@ Around the decision:
 
 **A warning first:** the frauds are ones we planted, so these numbers prove the checks cover the documented tricks. They don't predict a real-world catch rate. Rules were tuned only on development books (seeds 7 and 101–105). Each fresh set was generated for the first time and scored once.
 
-### The latest fresh run: seeds 1201–1205, scored once after the last change (`proof/REPORT_seeds1201-1205.md`)
+### The current evaluation: seeds 1301–1305, on today's rules (`proof/REPORT_seeds1301-1305.md`)
 
-600 borrowers: 250 with planted fraud, 350 honest with realistic look-alikes. Rules frozen first (tag `redteam-round3-claims-fix`).
+**Held-out synthetic evaluation, seeds 1301–1305: 249 of 250 planted fraud cases were flagged by month 24 (99.6% on this synthetic test set). This is not a measurement of real-world fraud detection accuracy.** Scored once on 15 Oct 2026 under rule version `c147a0a636e6` (change 32), frozen first (tag `redteam-round3-noparty-fix`). 600 synthetic borrowers: 250 with planted fraud, 350 honest with realistic look-alikes. The report rounds that rate to a whole number; the exact figure is 99.6% (`proof/CORRECTIONS.md`).
 
 | Measure | Borrower Truth | Quarterly sample audit |
 |---|---|---|
-| Frauds caught by month 24 | **99%** (248/250) | 37% (92/250) |
-| Honest borrowers flagged "likely fraud" | 0 of 350, in any month | 2.0 per 100 |
-| Honest borrowers sent to "worth a look" | 28.9 per 100 (the real review workload) | – |
-| Highest-priority 10% of the queue that are real frauds | 60 of 60 | – |
-| Suggested fixes that target a planted trick | 427 of 429 | – |
-| Detection vs the audit (median) | **90 days earlier** | – |
-| Frauds PledgeCheck's four checks never flagged | 210 | – |
-| Lost when every SEC-based check is switched off | 39 frauds | – |
-| One monthly run, 120 borrowers | 0.72 s | – |
+| Planted fraud cases flagged by month 24 | **249 of 250** (99.6%) | 95 of 250 (38%) |
+| Honest synthetic borrowers flagged "likely fraud" at month 24 | 0 of 350 | – |
+| Honest synthetic borrowers flagged at least once, any month | 1 of 350 (B0054, months 21–22; also flagged under the previous rules) | 6 of 350 |
+| Honest synthetic borrowers sent to "worth a look" | 107 of 350 (30.6 per 100: the real review workload) | – |
+| Highest-priority 10% of the queue that are planted frauds | 60 of 60 | – |
+| Suggested fixes that target a planted trick | 434 of 434 | – |
+| Detection vs the audit (median, the 95 frauds both caught) | **90 days earlier** | – |
+| Flagged frauds PledgeCheck's four checks never flagged | 213 of 249 | – |
+| Lost when every SEC-based check is switched off | 40 of 249 | – |
+| One monthly run, 120 borrowers | 1.19 s | – |
 
-**The two not caught** (both on seed 1204): one borrower manipulating its financials was sent to review with only the covenant pattern, and one paying its own bad loans to look current was missed.
+**The one not flagged:** B0042 on seed 1304, a borrower paying its own bad loans to look current, was sent to "worth a look", under the previous rules too.
+
+**The honest borrower flagged at least once:** B0054 on seed 1305, in months 21–22 only. A few of its pledged loans match loans in its own public securitization, and those loans' payments went elsewhere for three months. The previous rules give the same result, so change 32 didn't cause it. Under the stopping rule decided before these runs, it is published as it came out and recorded as a known limit (below), not fixed.
+
+**The previous rules' evaluation:** seeds 1201–1205 (`proof/REPORT_seeds1201-1205.md`, rule version `bfe7200495c4`, before change 32): 248 of 250 planted fraud cases flagged by month 24, 0 of 350 honest synthetic borrowers flagged at month 24 or in any month, 28.9 per 100 sent to review. `proof/REPORT.md` is a copy of that report, kept as published.
 
 ### Every fresh run so far
 
@@ -105,11 +111,12 @@ Around the decision:
 | 901–905 | after the timing rule | 248/250 | 0 of 350 | 0 | 30.0 |
 | 1001–1005 | round 3's books | 248/250 | 0 of 350 | 0 | 28.6 |
 | 1101–1105 | after the round-3 fixes | 250/250 | 0 of 350 | 0 | 29.1 |
-| 1201–1205 | after the claims fix | 248/250 | 0 of 350 | 0 | 28.9 |
+| 1201–1205 | after the claims fix (change 30) | 248/250 | 0 of 350 | 0 | 28.9 |
+| **1301–1305** | **after change 32 (current rules): one honest borrower flagged in months 21–22** | 249/250 | 0 of 350 | **1** | 30.6 |
 
-Each set was scored once under the rules of its day (`proof/REPORT_seeds*.md`). 201–205 was re-scored on 12 Sep after new checks were added (`REPORT_seeds201-205_new_checks.md`, 146/150); a re-score isn't a fresh run, so the table keeps the first one. The "any month" bar came later: 306–310 and 401–405 each had 2 honest borrowers flagged in some month, cleared by month 24.
+Each set was scored once under the rules of its day (`proof/REPORT_seeds*.md`). 201–205 was re-scored on 12 Sep after new checks were added (`REPORT_seeds201-205_new_checks.md`, 146/150); a re-score isn't a fresh run, so the table keeps the first one. The "any month" bar came later: 306–310 and 401–405 each had 2 honest borrowers flagged in some month, cleared by month 24. 1301–1305 had 1 (B0054, above), cleared by month 24.
 
-**Pooled honest false alarms across all 13 sets:** 2 of 4,771 honest borrowers flagged at month 24 (0.04 per 100), and 6 in any month (0.13 per 100). The rate measured is low, not zero; it is summed from the 13 reports in `proof/`.
+**Pooled honest false alarms across all 14 sets:** 2 of 5,121 honest synthetic borrowers flagged at month 24 (0.04 per 100), and 7 of 5,121 flagged at least once (0.14 per 100). The rate measured is low, not zero; it is summed from the 14 reports in `proof/`.
 
 ### The blind red team: three rounds
 
@@ -121,7 +128,7 @@ An AI attacker that hadn't seen the rules planted its own frauds into fresh book
 |---|---|---|---|
 | 1 (seeds 501–505) | Claude Opus 5 | 19 / 21 / 40 of 80 (`proof/REDTEAM.md`) | 18 / 53 / 8 of 79 on 601–605 |
 | 2 (seeds 701–705) | Claude Sonnet 5.5 | 42 / 17 / 11 of 70 (`proof/REDTEAM_round2.md`) | 39 / 31 / 0 on 801–805; 43 / 27 / 0 on 901–905 |
-| 3 (seeds 1001–1005) | GPT-6 Astra (as shown in Codex), run by a friend with no internet | **0 / 28 / 32 of 60** (`proof/REDTEAM_round3.md`) | 18 / 42 / 0 on 1101–1105, and again on 1201–1205 |
+| 3 (seeds 1001–1005) | GPT-6 Astra (as shown in Codex), run by a friend with no internet | **0 / 28 / 32 of 60** (`proof/REDTEAM_round3.md`) | 18 / 42 / 0 on 1101–1105 and on 1201–1205; 20 / 40 / 0 on 1301–1305 |
 
 **Caveats:**
 - Rounds 1 and 2 used different Claude models (Opus 5, then Sonnet 5.5). Which is stronger wasn't measured, so the rounds aren't a clean comparison of the fixes.
@@ -172,6 +179,8 @@ For each: what the product does to help, and what stays outside any tool.
 
 - **Synthetic data.** Real accuracy needs real data; the pilot measures it.
 - **A clue that names no counterparty can't back a claim about one** (change 32 in the decision log, kept private). A judgment records only the defendant, and PledgeCheck names no other lender, so a large judgment won by the same lender, or a PledgeCheck failure about the same pledge, doesn't corroborate a lien claim either. Such clues still corroborate each other, and still pool when no clue in the finding names a counterparty (the tape checks).
+- **Leaving PledgeCheck while starting to pay a new lender is weaker evidence than before change 32.** The payments name the new lender; leaving PledgeCheck names no one, so it no longer counts as their second source. On the development books, 4 of round 1's double-pledge attacks went from "likely fraud" to "worth a look" (round 1: 16 / 67 / 12 caught / review / missed of 95, now 12 / 71 / 12), and 9 planted double pledges went from high to medium confidence without changing verdict. Letting registry results about the collateral corroborate claims about that collateral is on the after-outreach list.
+- **An honest lender's own public securitization can look like a double pledge for a while:** if a few of its pledged loans also sit in its public trust and their payments go elsewhere, it is marked likely fraud until the pattern ends (B0054 on seed 1305, months 21–22).
 - **Large judgments against honest borrowers aren't in the synthetic books:** the generator gives honest borrowers only small ones ($20k–$200k), so no fresh run tests that false alarm; tests do (`tests/test_combiner_claims.py`).
 - **A nominee company** with no link to the owner in any table is a known limit.
 - **No VIN validity check yet**, against the documented fake-VIN trick.
@@ -234,7 +243,7 @@ uv sync --python 3.12
 uv run python -m bt.datagen.generate --out data/out/demo      # synthetic book
 uv run python -m bt.pipeline.run --data data/out/demo          # all seven checks + combiner
 uv run python -m bt.pipeline.replay --data data/out/demo       # recompute every decision
-uv run pytest -q                                               # 142 Python tests
+uv run pytest -q                                               # 147 Python tests
 ```
 
 **Java tests:** `cd case-service && JAVA_HOME=<jdk21> ./gradlew test --rerun` (35 tests).

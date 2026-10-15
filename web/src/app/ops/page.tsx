@@ -8,6 +8,7 @@ import {
   fetchFeedback,
   fetchLatest,
   fetchSecondChecks,
+  isDemo,
   reviewSecondCheck,
   type FeedbackRow,
   type SecondCheck,
@@ -152,6 +153,12 @@ export default function OpsPage() {
         <h2 className="border-b border-zinc-200 px-4 py-3 text-sm font-medium text-zinc-900">
           What officers decided about each finding type
         </h2>
+        {isDemo && (
+          <p className="border-b border-zinc-100 bg-amber-50 px-4 py-2 text-xs text-amber-900">
+            Simulated demo activity: the decisions counted here were made by fictional demo officers on synthetic data,
+            or by you in this browser. None of them is a real bank&apos;s decision.
+          </p>
+        )}
         {!feedback ? (
           <div className="p-4">
             <Skeleton className="h-24 w-full" />

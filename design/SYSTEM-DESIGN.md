@@ -221,7 +221,7 @@ The honest consequence: the demo proves the *design and detection logic*. Real p
 3. **Beyond PledgeCheck:** simulate PledgeCheck's four published checks [S3] as a baseline and count the frauds that pass it but that we catch.
 4. Days to detection vs. a quarterly sample-audit baseline.
 5. False alarms per 100 clean borrowers; precision in the top decile of the queue.
-6. AI faithfulness: every memo sentence cites an existing signal or tool call, or code drops it (done in code, not with promptfoo). That catches missing citations and numbers, not misreadings: read by hand on 14–15 Oct, 35 of 47 memos had a false or misleading line and are hidden.
+6. AI faithfulness: every memo sentence cites an existing signal or tool call, or code drops it (done in code, not with promptfoo). That catches missing citations and numbers, not misreadings: read by hand on 14–15 Oct, 35 of 47 memos had a false or misleading line and are hidden; one more was hidden when the rules changed on 15 Oct, and 11 are shown.
 7. **Fine-tuned vs. base model:** field-extraction accuracy on held-out receipts and invoices, plus the altered-invoice detection rate.
 8. **Fix quality:** for each planted case, does the suggested playbook address the planted mechanism? (Checked against the scenario's ground truth.) Also: time from alert to a ready-to-approve case file.
 
@@ -289,7 +289,7 @@ A great tool can still fail to fit a bank. This design plans for that from day o
 
 ## 14. Built and measured (11–14 Sep 2026, kept as history)
 
-*These numbers are superseded. The current headline is the latest fresh run (`proof/REPORT_seeds1201-1205.md`: 248 of 250 caught, 0 of 350 honest flagged, 28.9 per 100 to review), with every fresh run, the pooled false-alarm rate and the three blind red-team rounds in the README. Tests today: 142 Python, 35 Java.*
+*These numbers are superseded. The current evaluation is held-out synthetic seeds 1301–1305 (`proof/REPORT_seeds1301-1305.md`, rule version `c147a0a636e6`): 249 of 250 planted fraud cases flagged by month 24, 99.6% on this synthetic test set and not a measurement of real-world fraud detection accuracy (the report rounds it: `proof/CORRECTIONS.md`); honest synthetic borrowers 0 of 350 at month 24 and 1 of 350 at least once (B0054, months 21–22, also under the previous rules); 30.6 per 100 to review. Every fresh run, the pooled false-alarm rate (2 of 5,121 at month 24, 7 of 5,121 at least once) and the three blind red-team rounds are in the README. Tests today: 147 Python, 35 Java.*
 
 **Not everything in §1–§13 is built.** `proof/AUDIT.md` checks every claim line by line: built, partial, not built, or corrected. An earlier version of this section said "everything is implemented"; that was wrong, and the audit exists because of it. Measured on synthetic data:
 

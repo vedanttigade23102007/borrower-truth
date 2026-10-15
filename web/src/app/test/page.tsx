@@ -151,9 +151,12 @@ export default function TestPage() {
       <section className="space-y-3">
         <h2 className="text-lg font-semibold tracking-tight text-zinc-900">The honest test: {h.length} books it never saw</h2>
         <p className="max-w-4xl text-sm text-zinc-600">
-          {h.length} fresh books generated after the rules were frozen: {tot.fraud + tot.honest} borrowers and{" "}
-          {tot.fraud} planted frauds, including the two harder variants (a front-person shell and a round trip through a
-          middleman).
+          {h.length} fresh synthetic books (seeds {h[0]?.seed}–{h[h.length - 1]?.seed}), generated after today&apos;s rules
+          were frozen and scored once: {tot.fraud + tot.honest} borrowers and {tot.fraud} planted frauds, including the two
+          harder variants (a front-person shell and a round trip through a middleman). On this synthetic test set,{" "}
+          {tot.caught} of {tot.fraud} planted fraud cases were flagged by month 24 (
+          {((100 * tot.caught) / tot.fraud).toFixed(1)}%). This is not a measurement of real-world fraud detection
+          accuracy.
         </p>
         <Card className="overflow-x-auto">
           <table className="w-full text-right text-sm tabular-nums">
@@ -164,7 +167,7 @@ export default function TestPage() {
                 <th scope="col" className="px-4 py-2 font-medium">caught</th>
                 <th scope="col" className="px-4 py-2 font-medium">sent to review</th>
                 <th scope="col" className="px-4 py-2 font-medium">missed</th>
-                <th scope="col" className="px-4 py-2 font-medium">false alarms</th>
+                <th scope="col" className="px-4 py-2 font-medium">honest flagged at month 24</th>
                 <th scope="col" className="px-4 py-2 font-medium">honest worth a look</th>
               </tr>
             </thead>
@@ -186,11 +189,13 @@ export default function TestPage() {
                 <td className="px-4 py-2 text-left">total</td>
                 <td className="px-4 py-2">{tot.fraud}</td>
                 <td className="px-4 py-2">
-                  {tot.caught} ({Math.round((100 * tot.caught) / tot.fraud)}%)
+                  {tot.caught} ({((100 * tot.caught) / tot.fraud).toFixed(1)}%)
                 </td>
                 <td className="px-4 py-2">{tot.review}</td>
                 <td className="px-4 py-2">{tot.missed}</td>
-                <td className="px-4 py-2">{tot.fa}</td>
+                <td className="px-4 py-2">
+                  {tot.fa} of {tot.honest}
+                </td>
                 <td className="px-4 py-2">
                   {tot.look} of {tot.honest}
                 </td>
@@ -198,6 +203,11 @@ export default function TestPage() {
             </tbody>
           </table>
         </Card>
+        <p className="max-w-4xl text-sm text-zinc-600">
+          Honest synthetic borrowers flagged at least once, in any month: 1 of 350 (B0054 on seed 1305, months 21–22,
+          also flagged under the previous rules). Across all 14 fresh sets: 2 of 5,121 flagged at month 24, 7 of 5,121
+          at least once.
+        </p>
         <Card className="divide-y divide-zinc-100 text-sm">
           {Object.entries(mech).map(([m, [hit, n]]) => (
             <div key={m} className="flex items-center gap-3 px-4 py-2">

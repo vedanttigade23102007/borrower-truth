@@ -11,9 +11,9 @@
  {
   "mechanism": "DISGUISED_RECEIPTS",
   "proposed": 51,
-  "approved": 1,
+  "approved": 0,
   "rejected": 0,
-  "done": 0,
+  "done": 1,
   "cleared": 0,
   "escalated": 0
  },

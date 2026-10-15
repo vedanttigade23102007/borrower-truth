@@ -27,7 +27,7 @@
   <div class="hdr">
     <b>To</b><span>Executive sponsor, NDFI lending (head of the business or its senior credit officer)</span>
     <b>From</b><span>Vedant Tigade (prototype author; written from public information as a mock proposal)</span>
-    <b>Date</b><span>14 October 2026</span>
+    <b>Date</b><span>15 October 2026</span>
     <b>Subject</b><span>Approve a 90-day shadow pilot of Borrower Truth on one NDFI sub-portfolio</span>
   </div>
 
@@ -43,15 +43,15 @@
   </ul>
 
   <h2>What it is</h2>
-  <p>Seven checks, one per documented trick, joined into one case per borrower: what's wrong, the evidence chain, a suggested fix and a drafted letter. <b>An officer approves every step.</b> Verdicts come from written rules, not a model; every decision can be replayed. It uses Setpoint PledgeCheck results (simulated here). Its models are open-weight and run inside the bank.</p>
+  <p>Seven checks, one per documented trick, joined into one case per borrower with the evidence, a suggested fix and a drafted letter. <b>An officer approves every step.</b> Written rules decide, not a model, and every decision replays. It uses Setpoint PledgeCheck results (simulated here); its open-weight models run inside the bank.</p>
 
   <h2>Evidence so far (synthetic: it proves coverage, not a real-world rate)</h2>
   <table>
-    <tr><th>Test</th><th>Result</th></tr>
-    <tr><td>Fresh synthetic books, scored once (latest of 13 sets: 600 borrowers, 250 planted frauds)</td><td><b>248 of 250 caught</b> vs 37% for a quarterly sample audit; <b>0 of 350</b> honest flagged; a median 90 days earlier. All 13 sets: 2 of 4,771 honest flagged; the two failed sets are published</td></tr>
+    <tr><th style="width:30%">Test</th><th>Result</th></tr>
+    <tr><td>Synthetic seeds 1301–1305, held out, scored once, 15 Oct 2026 (rules c147a0a636e6)</td><td><b>249 of 250 planted fraud cases flagged by month 24</b> (99.6% on this synthetic test set, not a measure of real-world fraud detection accuracy; proof/CORRECTIONS.md); audit: 95. Honest: <b>0 of 350</b> at month 24, 1 of 350 at least once (B0054, months 21–22, previous rules too); 14 sets: 2 and 7 of 5,121</td></tr>
     <tr><td>Blind red team, three rounds</td><td>Round 3, an attacker controlling the borrower's records: <b>0 of 60 caught</b>, 28 to review. Lesson: anchor on the bank's cash</td></tr>
     <tr><td>Real public data: 2.23M SEC loan records, 28 pools, 22 lenders</td><td>The six loan-tape checks tested on every pool: <b>0 of 28 honest pools flagged</b>. The other checks can't be tested on public data yet</td></tr>
-    <tr><td>Workload</td><td>About 29 of every 100 honest borrowers sent to "worth a look"; the top tenth of the queue was 60 of 60 real frauds</td></tr>
+    <tr><td>Workload</td><td>107 of 350 honest borrowers (30.6 per 100) sent to "worth a look"; the top tenth of the queue was 60 of 60 planted frauds</td></tr>
   </table>
 
   <h2>Money</h2>
@@ -67,7 +67,7 @@
   <h2>Next steps if approved</h2>
   <p>Weeks 0–4: data access, model-risk tiering, InfoSec review. Weeks 5–16: shadow pilot, weekly officer review, measuring the real rate. Week 17: go / no-go against criteria set up front.</p>
 
-  <p class="fine">For any bank lending to non-bank lenders; Wells Fargo is the worked example, from public sources, not affiliated. Synthetic data. Fraud facts are SEC and DOJ allegations. Details: proposal pack; demo at borrower-truth.vercel.app.</p>
+  <p class="fine">For any bank lending to non-bank lenders; Wells Fargo is the worked example, from public sources, not affiliated. Synthetic data. Fraud facts are SEC and DOJ allegations. Details: proposal pack; demo at borrower-truth.vercel.app (11 of 47 agent memos shown).</p>
 </div>
 </body>
 </html>

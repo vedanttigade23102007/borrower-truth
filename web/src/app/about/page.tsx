@@ -12,6 +12,7 @@ type Proof = {
   caught: number;
   catch_rate: number;
   false_alarms_per_100_end: number;
+  false_alarms_per_100_ever: number;
   honest_needing_review_per_100: number;
   baseline_caught: number;
   baseline_catch_rate: number;
@@ -80,41 +81,52 @@ export default function AboutPage() {
       </Card>
 
       <div>
-        <h2 className="text-lg font-semibold tracking-tight text-zinc-900">The proof, on data it never saw</h2>
+        <h2 className="text-lg font-semibold tracking-tight text-zinc-900">The proof, on synthetic data it never saw</h2>
         <p className="mt-1 text-sm text-zinc-600">
-          Rules were tuned on six development books; these numbers come from the latest fresh run (five books never
-          used before, scored once). Every fresh run, including the two that failed, the pooled false-alarm rate and
-          the three blind red-team rounds are in the plan deck. All synthetic: they prove coverage of the documented
-          fraud mechanisms, not real-world catch rates.
+          Held-out synthetic evaluation, seeds 1301–1305, scored once on 15 Oct 2026 under today&apos;s rules (rule
+          version c147a0a636e6): <b className="font-medium text-zinc-900">249 of 250 planted fraud cases were flagged by
+          month 24 (99.6% on this synthetic test set). This is not a measurement of real-world fraud detection
+          accuracy.</b> Rules were tuned on six development books; these five books were never used before. The
+          report file rounds that rate to a whole number; the exact figure is 99.6% (proof/CORRECTIONS.md).
+        </p>
+        <p className="mt-2 text-sm text-zinc-600">
+          Honest synthetic borrowers: 0 of 350 flagged at month 24; 1 of 350 flagged at least once (B0054, months 21–22,
+          also flagged under the previous rules). Across all 14 fresh sets: 2 of 5,121 flagged at month 24 and 7 of
+          5,121 at least once. The previous rules&apos; evaluation (seeds 1201–1205): 248 of 250 flagged, 0 of 350 honest.
+          Every fresh run, including the ones that failed, and the three blind red-team rounds are in the plan deck.
         </p>
         {!p ? (
           <Skeleton className="mt-3 h-40 w-full" />
         ) : (
           <div className="mt-3 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-            <Metric label="Frauds caught" value={`${Math.round(p.catch_rate * 100)}%`} sub={`${p.caught} of ${p.fraud}`} />
+            <Metric
+              label="Planted fraud cases flagged"
+              value={`${p.caught} of ${p.fraud}`}
+              sub={`${((100 * p.caught) / p.fraud).toFixed(1)}% by month 24, on synthetic books`}
+            />
             <Metric
               label="Quarterly sample audit"
-              value={`${Math.round(p.baseline_catch_rate * 100)}%`}
-              sub={`${p.baseline_caught} of ${p.fraud}`}
+              value={`${p.baseline_caught} of ${p.fraud}`}
+              sub={`${((100 * p.baseline_caught) / p.fraud).toFixed(1)}% on the same books`}
             />
             <Metric
               label="Earlier than the audit"
               value={p.median_days_earlier_than_audit != null ? `${p.median_days_earlier_than_audit} days` : "—"}
-              sub="median, frauds both caught"
+              sub="median, frauds both flagged"
             />
-            <Metric label="Beyond PledgeCheck" value={`${p.beyond_pledgecheck}`} sub="frauds its four checks never flagged" />
+            <Metric label="Beyond PledgeCheck" value={`${p.beyond_pledgecheck} of ${p.caught}`} sub="flagged frauds its four checks never flagged" />
             <Metric
-              label="Honest borrowers flagged"
-              value={`${p.false_alarms_per_100_end} / 100`}
-              sub={`audit: ${p.baseline_false_alarms_per_100} / 100`}
+              label="Honest flagged at month 24"
+              value={`${Math.round((p.false_alarms_per_100_end * p.honest) / 100)} of ${p.honest}`}
+              sub={`at least once: ${Math.round((p.false_alarms_per_100_ever * p.honest) / 100)} of ${p.honest}`}
             />
             <Metric
               label="Honest borrowers to review"
-              value={`${p.honest_needing_review_per_100} / 100`}
-              sub="'worth a look': the real workload"
+              value={`${Math.round((p.honest_needing_review_per_100 * p.honest) / 100)} of ${p.honest}`}
+              sub={`${p.honest_needing_review_per_100} per 100, 'worth a look': the real workload`}
             />
             <Metric label="One monthly run" value={`${p.seconds_per_monthly_run} s`} sub={`${p.borrowers / p.seeds.length} borrowers`} />
-            <Metric label="Held-out books" value={`${p.seeds.length}`} sub={`${p.borrowers} borrowers in total`} />
+            <Metric label="Held-out books" value={`${p.seeds.length}`} sub={`seeds ${p.seeds[0]}–${p.seeds[p.seeds.length - 1]}, ${p.borrowers} borrowers`} />
           </div>
         )}
         {p && (

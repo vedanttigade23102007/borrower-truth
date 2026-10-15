@@ -297,7 +297,7 @@ h1{font-size:30px}h2{font-size:24px}.big{font-size:54px}.timeline{flex-direction
     <tr><td>Reading documents (optional, off by default)</td><td>Fine-tuned small open model</td><td>Reads invoices inside the bank</td><td>The rules alone</td></tr>
     <tr><td>Investigator agent</td><td>Open-weights model, local by default</td><td>Drafts a memo; never decides</td><td>The findings' own sentences</td></tr>
   </table>
-  <p class="fine mt">Kafka, Airflow, Grafana and the full stack last ran on 11 Sep 2026, on earlier rules (proof/STACK-DEMO.md). Tests today: 142 Python, 35 Java.</p>
+  <p class="fine mt">Kafka, Airflow, Grafana and the full stack last ran on 11 Sep 2026, on earlier rules (proof/STACK-DEMO.md). Tests today: 147 Python, 35 Java.</p>
 </div></section>
 
 <!-- 16 Proof -->
@@ -329,7 +329,7 @@ h1{font-size:30px}h2{font-size:24px}.big{font-size:54px}.timeline{flex-direction
   <div class="kicker">Status · built, tested, and dated where it isn't current</div>
   <h2>Every part in this deck exists. The full stack last ran on 11 Sep 2026, on earlier rules.</h2>
   <div class="grid3">
-    <div class="card"><h3>Seven checks + combiner</h3>Python and DuckDB. 142 Python and 35 Java tests. One monthly run of 120 borrowers takes 0.72 s on the latest fresh run.</div>
+    <div class="card"><h3>Seven checks + combiner</h3>Python and DuckDB. 147 Python and 35 Java tests. One monthly run of 120 borrowers takes 1.19 s on the current evaluation (seeds 1301–1305).</div>
     <div class="card"><h3>Case, verdict and fix service</h3>Java 21 and Spring Boot. Playbooks, drafted letters, one-click approval, audit log. It refuses "done" before "approved".</div>
     <div class="card"><h3>Review console</h3>Next.js on Vercel, shareable by link. It shows the data, the answer key and every case, but no code, full dataset or model weights.</div>
     <div class="card"><h3>Streaming (optional)</h3>Kafka API and a streaming worker. A suspicious payer was flagged 24 ms after the payment landed (11 Sep 2026).</div>
@@ -340,25 +340,25 @@ h1{font-size:30px}h2{font-size:24px}.big{font-size:54px}.timeline{flex-direction
 
 <!-- B2 Proof -->
 <section class="slide"><div class="frame">
-  <div class="kicker">The proof · the latest of 13 fresh synthetic sets, scored once after the last change (seeds 1201–1205: 600 borrowers, 250 frauds)</div>
-  <h2>It caught 248 of 250 planted frauds, 2.7 times the quarterly audit's rate, a median 90 days sooner, with no honest borrower flagged.</h2>
+  <div class="kicker">The current evaluation · held-out synthetic seeds 1301–1305, scored once on 15 Oct 2026 under today's rules (rule version c147a0a636e6): 600 synthetic borrowers, 250 planted frauds</div>
+  <h2>249 of 250 planted fraud cases flagged by month 24: 99.6% on this synthetic test set. This is not a measurement of real-world fraud detection accuracy.</h2>
   <div class="grid4">
-    <div class="card metric"><div class="v">99%</div><div class="l">frauds caught (248/250). The audit caught 37%.</div></div>
-    <div class="card metric"><div class="v">90 days</div><div class="l">earlier than the audit, median</div></div>
-    <div class="card metric"><div class="v">0 / 350</div><div class="l">honest borrowers marked "likely fraud", in any month</div></div>
-    <div class="card metric"><div class="v">29 / 100</div><div class="l">honest borrowers sent to "worth a look" (28.9): the real workload</div></div>
+    <div class="card metric"><div class="v">249 / 250</div><div class="l">planted fraud cases flagged by month 24 (99.6%). The quarterly audit: 95 (38%).</div></div>
+    <div class="card metric"><div class="v">90 days</div><div class="l">earlier than the audit, median (95 frauds both flagged)</div></div>
+    <div class="card metric"><div class="v">0 / 350</div><div class="l">honest synthetic borrowers flagged at month 24; 1 / 350 at least once (B0054, months 21–22, also under the previous rules)</div></div>
+    <div class="card metric"><div class="v">107 / 350</div><div class="l">honest borrowers sent to "worth a look" (30.6 per 100): the real workload</div></div>
   </div>
   <div class="grid2 mt">
-    <div class="card"><h3>Beyond what already exists</h3>210 caught frauds were never flagged by PledgeCheck's four checks (simulated). Switching off every check built on SEC data loses 39 of the caught frauds. The highest-priority tenth of the queue: 60 of 60 real frauds.</div>
-    <div class="card"><h3>Not caught, said plainly</h3>2 of 250, both on seed 1204: one borrower manipulating its financials was sent to review; one paying its own bad loans to look current was missed. All synthetic: near-perfect scores prove coverage of planted tricks, not real-world rates.</div>
+    <div class="card"><h3>Beyond what already exists</h3>213 of the 249 flagged frauds were never flagged by PledgeCheck's four checks (simulated). Switching off every check built on SEC data loses 40 of them. The highest-priority tenth of the queue: 60 of 60 planted frauds.</div>
+    <div class="card"><h3>Not flagged, said plainly</h3>1 of 250: B0042 on seed 1304, paying its own bad loans to look current, was sent to review. Across all 14 fresh sets: 2 of 5,121 honest synthetic borrowers flagged at month 24, 7 of 5,121 at least once. All synthetic: these prove coverage of planted tricks, not real-world rates.</div>
   </div>
-  <p class="fine">proof/REPORT_seeds1201-1205.md. Rules frozen first (tag redteam-round3-claims-fix).</p>
+  <p class="fine">proof/REPORT_seeds1301-1305.md, which rounds 249/250 to a whole-number percentage; the exact figure is 99.6% (proof/CORRECTIONS.md). Rules frozen first (tag redteam-round3-noparty-fix). The previous rules' evaluation, seeds 1201–1205: 248 of 250 flagged, 0 of 350 honest (proof/REPORT_seeds1201-1205.md).</p>
 </div></section>
 
 <!-- B2x Every run -->
 <section class="slide"><div class="frame">
   <div class="kicker">Every fresh run, never only the best one · each set generated for the first time and scored once</div>
-  <h2>13 fresh sets. Two failed, and both are shown.</h2>
+  <h2>14 fresh sets. Three failed a bar, and all are shown.</h2>
   <table class="tight" style="font-size:13px">
     <tr><th>Seeds</th><th>What it tested</th><th>Frauds caught</th><th>Honest flagged, month 24</th><th>Honest flagged, any month</th><th>Review / 100 honest</th></tr>
     <tr><td>201–205</td><td>first rules</td><td>143/150</td><td>0 of 450</td><td>0</td><td>31.3</td></tr>
@@ -373,9 +373,10 @@ h1{font-size:30px}h2{font-size:24px}.big{font-size:54px}.timeline{flex-direction
     <tr><td>901–905</td><td>after the timing rule</td><td>248/250</td><td>0 of 350</td><td>0</td><td>30.0</td></tr>
     <tr><td>1001–1005</td><td>red team round 3's books</td><td>248/250</td><td>0 of 350</td><td>0</td><td>28.6</td></tr>
     <tr><td>1101–1105</td><td>after the round-3 fixes</td><td>250/250</td><td>0 of 350</td><td>0</td><td>29.1</td></tr>
-    <tr><td>1201–1205</td><td>after the claims fix</td><td>248/250</td><td>0 of 350</td><td>0</td><td>28.9</td></tr>
+    <tr><td>1201–1205</td><td>after the claims fix (previous rules)</td><td>248/250</td><td>0 of 350</td><td>0</td><td>28.9</td></tr>
+    <tr class="win"><td><b>1301–1305</b></td><td><b>current rules:</b> 1 honest, months 21–22</td><td>249/250</td><td>0 of 350</td><td><b>1</b></td><td>30.6</td></tr>
   </table>
-  <p class="fine mt"><b>Pooled: 2 of 4,771 honest borrowers flagged at month 24 (0.04 per 100), 6 in any month (0.13 per 100): low, not zero.</b> The "any month" bar came later: 306–310 and 401–405 each had 2 flagged in some month, cleared by month 24. proof/REPORT_seeds*.md.</p>
+  <p class="fine mt"><b>Pooled over 14 sets: 2 of 5,121 honest synthetic borrowers flagged at month 24 (0.04 per 100), 7 of 5,121 at least once (0.14 per 100): low, not zero.</b> The "any month" bar came later: 306–310 and 401–405 each had 2 flagged in some month and 1301–1305 had 1, all cleared by month 24. proof/REPORT_seeds*.md.</p>
 </div></section>
 
 <!-- B2y Red team -->
@@ -386,7 +387,7 @@ h1{font-size:30px}h2{font-size:24px}.big{font-size:54px}.timeline{flex-direction
     <tr><th>Round</th><th>Attacker</th><th>Blind: caught / review / missed</th><th>After fixes (no longer blind)</th></tr>
     <tr><td>1 · seeds 501–505</td><td>Claude Opus 5</td><td>19 / 21 / 40 of 80</td><td>18 / 53 / 8 of 79 (601–605)</td></tr>
     <tr><td>2 · seeds 701–705</td><td>Claude Sonnet 5.5</td><td>42 / 17 / 11 of 70</td><td>39 / 31 / 0 (801–805); 43 / 27 / 0 (901–905)</td></tr>
-    <tr class="win"><td>3 · seeds 1001–1005</td><td>GPT-6 Astra (as shown in Codex), a friend's machine, no internet</td><td><b>0 / 28 / 32 of 60</b></td><td>18 / 42 / 0 of 60 (1101–1105 and 1201–1205)</td></tr>
+    <tr class="win"><td>3 · seeds 1001–1005</td><td>GPT-6 Astra (as shown in Codex), a friend's machine, no internet</td><td><b>0 / 28 / 32 of 60</b></td><td>18 / 42 / 0 of 60 (1101–1105, 1201–1205); 20 / 40 / 0 (1301–1305)</td></tr>
   </table>
   <ul class="fine mt" style="font-size:13px">
     <li>Rounds 1 and 2 used different Claude models (Opus 5, then Sonnet 5.5); which is stronger wasn't measured, so the rounds aren't a clean comparison of the fixes. The rules changed in between, in both directions.</li>
@@ -423,7 +424,7 @@ h1{font-size:30px}h2{font-size:24px}.big{font-size:54px}.timeline{flex-direction
     <tr><td><b>3 · Cross-check filings</b></td><td>A lender named in the borrower's own 10-K or 8-K but never disclosed to the bank; revenue that differs from the SEC filing</td><td>Credit officer and committee: hidden debt with no lien filed</td></tr>
     <tr><td><b>4 · Same loans, two reports</b></td><td>Loans on the bank's tape that also sit in the borrower's own public trust, and whose payments no longer reach the bank</td><td>Portfolio manager: collateral pledged twice</td></tr>
   </table>
-  <p class="fine mt">Three harder fraud types were added to the test books, each caught only through one of these uses. On the latest fresh run, switching all SEC checks off loses 39 of the 248 caught frauds.</p>
+  <p class="fine mt">Three harder fraud types were added to the test books, each caught only through one of these uses. On the current evaluation (seeds 1301–1305), switching all SEC checks off loses 40 of the 249 flagged frauds.</p>
 </div></section>
 
 <!-- B2d Papers -->
@@ -457,7 +458,7 @@ h1{font-size:30px}h2{font-size:24px}.big{font-size:54px}.timeline{flex-direction
   <h2>Every decision can be replayed, an open-model agent does the legwork, and anyone can check the answer key.</h2>
   <div class="grid3">
     <div class="card"><h3>Decision record</h3>Each verdict carries fingerprints of its inputs, rules and code. Replaying the demo run gave 120 of 120 identical decisions; change one input and the replay names it.</div>
-    <div class="card"><h3>Investigator agent</h3>After the rules decide, an open-weights model (local by default: nothing leaves the bank) checks the registry, liens, courts, payments and GLEIF with read-only tools and drafts a memo. Code drops any line that cites nothing or states a number or company its sources don't contain. It doesn't catch misreadings, such as money going the wrong way or the borrower called its own related company, so the 47 current memos (16 Sep 2026, Qwen3-8B) were read by hand on 14–15 Oct: 35 had a false or misleading line and are hidden; 12 are shown. The rules decide; the memo only drafts.</div>
+    <div class="card"><h3>Investigator agent</h3>After the rules decide, an open-weights model (local by default: nothing leaves the bank) checks the registry, liens, courts, payments and GLEIF with read-only tools and drafts a memo. Code drops any line that cites nothing or states a number or company its sources don't contain. It doesn't catch misreadings, such as money going the wrong way or the borrower called its own related company, so the 47 current memos (16 Sep 2026, Qwen3-8B) were read by hand on 14–15 Oct: 35 had a false or misleading line and are hidden, and one more was hidden when the rules changed on 15 Oct; 11 are shown. The rules decide; the memo only drafts.</div>
     <div class="card"><h3>Test it yourself</h3>The public console shows the data, one fraud step by step, the invoice documents, and the answer key next to every verdict, misses included.</div>
   </div>
   <p class="fine mt">Shared: samples, results, the reasoning on every case. Not shared: the code, the full dataset, the rules and the model weights.</p>
@@ -528,7 +529,7 @@ h1{font-size:30px}h2{font-size:24px}.big{font-size:54px}.timeline{flex-direction
   <h2>Every control partner's first question, the evidence we have, and the gap we'll close. Gaps are stated, not hidden.</h2>
   <table>
     <tr><th style="width:18%">Partner</th><th style="width:30%">First question</th><th>Evidence today</th><th style="width:26%">Gap → plan</th></tr>
-    <tr><td><b>Model risk</b><br><span class="fine">SR 26-2 / OCC 2026-13 (17 Apr 2026)</span></td><td>Is it a model? Development and use, validation and monitoring, governance?</td><td>Rules decide; six loan-tape thresholds checked on 28 real pools; 13 fresh sets; three blind red-team rounds; replay 120/120</td><td>Register, tier and validate it under SR 26-2; the AI agent goes under the bank's AI policy</td></tr>
+    <tr><td><b>Model risk</b><br><span class="fine">SR 26-2 / OCC 2026-13 (17 Apr 2026)</span></td><td>Is it a model? Development and use, validation and monitoring, governance?</td><td>Rules decide; six loan-tape thresholds checked on 28 real pools; 14 fresh synthetic sets; three blind red-team rounds; replay 120/120</td><td>Register, tier and validate it under SR 26-2; the AI agent goes under the bank's AI policy</td></tr>
     <tr><td><b>BSA/AML compliance</b><br><span class="fine">SAR 12 CFR 21.11; beneficial ownership</span></td><td>Does "likely fraud" trigger a SAR decision? Can letters tip off?</td><td>Evidence chain for every clue; shells linked by owner, address, phone, agent; audit log</td><td>Route cases to the financial-crimes unit; Compliance and Legal approve letter templates</td></tr>
     <tr><td><b>InfoSec</b><br><span class="fine">GLBA security guidelines</span></td><td>Obligor data, access, encryption, hosting?</td><td>No secrets in code; localhost binding and write key; open-weight models that can run in-bank</td><td>Bank SSO, encryption at rest, in-bank hosting, pen test</td></tr>
     <tr><td><b>Legal · third-party · op risk · audit</b></td><td>Data rights? Vendors? Failure modes? Auditable?</td><td>Letters ask, never accuse; open-source stack; isolated checks and quarantine; decision record</td><td>Confirm audit rights per facility; vendor reviews; run-book; audit walk-through</td></tr>

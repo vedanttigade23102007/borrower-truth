@@ -43,34 +43,35 @@
       <li><b>Decision replay</b>: every verdict carries fingerprints of its inputs, rules and code; replaying the run gave 120 of 120 identical decisions.</li>
     </ul>
     <ul>
-      <li><b>Streaming</b> (Kafka, optional): a suspicious payer flagged 24 ms after the payment lands, then bridged into the case (last run 11 Sep 2026, on earlier rules).</li>
+      <li><b>Streaming</b> (Kafka, optional): a suspicious payer flagged 24 ms after the payment lands (last run 11 Sep 2026, on earlier rules; not in the static demo).</li>
       <li><b>Document model</b> (optional, off by default): Donut, fine-tuned on a free Kaggle GPU, reads invoices so S4 can compare the document with the data.</li>
       <li><b>Operations</b>: isolated checks, file quarantine, stale-cache fallback; Airflow, Prometheus and Grafana fit the platform a bank already runs (last run 11 Sep 2026).</li>
-      <li><b>Investigator agent</b> (Qwen3-8B, open model): read-only tools, drafts a memo; code drops lines that cite nothing or invent numbers, but not misreadings: read by hand on 14–15 Oct, 35 of 47 memos had a false or misleading line and are hidden. It never decides.</li>
+      <li><b>Investigator agent</b> (Qwen3-8B): drafts a memo with read-only tools and never decides. Code drops uncited lines and invented numbers, not misreadings: after a hand read (14–15 Oct), 11 of 47 memos are shown.</li>
     </ul>
   </div>
 
-  <h2>Proof: the latest of 13 fresh synthetic sets, each scored once (seeds 1201–1205)</h2>
+  <h2>Proof: held-out synthetic seeds 1301–1305, scored once, 15 Oct 2026 (rules c147a0a636e6)</h2>
+  <p>249 of 250 planted fraud cases were flagged by month 24 (99.6% on this synthetic test set; the report rounds it: <code>proof/CORRECTIONS.md</code>). Honest synthetic borrowers: 0 of 350 flagged at month 24, 1 of 350 at least once (B0054, months 21–22, also flagged under the previous rules). This is not a measurement of real-world fraud detection accuracy.</p>
   <div class="grid">
-    <div class="m"><b>99%</b><span>frauds caught (248/250). A quarterly audit caught 37%.</span></div>
+    <div class="m"><b>249 / 250</b><span>flagged by month 24; a quarterly audit: 95</span></div>
     <div class="m"><b>90 days</b><span>earlier than the audit (median)</span></div>
-    <div class="m"><b>0 / 350</b><span>honest borrowers marked "likely fraud", in any month</span></div>
-    <div class="m"><b>2 of 4,771</b><span>honest borrowers flagged at month 24, across all 13 fresh sets (two sets failed; both published)</span></div>
+    <div class="m"><b>0 / 350</b><span>honest flagged at month 24; 1 / 350 at least once</span></div>
+    <div class="m"><b>2 of 5,121</b><span>honest at month 24 over 14 sets; 7 of 5,121 at least once</span></div>
     <div class="m"><b>24 / 24</b><span>tampered invoices caught by the document model (2.9% false flags)</span></div>
-    <div class="m"><b>0 of 60</b><span>caught at month 24 in the blind red team's round 3 (28 to review): the open problem</span></div>
+    <div class="m"><b>0 of 60</b><span>caught at month 24, blind red team round 3 (28 to review): the open problem</span></div>
     <div class="m"><b>0 of 28</b><span>real public loan pools (2.23M SEC loan records) trip the six loan-tape checks</span></div>
     <div class="m"><b>13.2M rows</b><span>in 4.4 s, one 8 GB laptop</span></div>
   </div>
 
   <h2>What a credit officer gets</h2>
-  <p>Not a score but a solved case: <b>what's wrong</b>, <b>the evidence chain</b>, a <b>verdict with confidence</b>, a <b>playbook fix</b> and a <b>drafted letter that asks and doesn't accuse</b>, sent only after a person approves. The top tenth of the queue was 60 of 60 real frauds; 427 of 429 suggested fixes target a planted trick.</p>
+  <p>Not a score but a solved case: <b>what's wrong</b>, <b>the evidence chain</b>, a <b>verdict with confidence</b>, a <b>playbook fix</b> and a <b>drafted letter that asks and doesn't accuse</b>, sent only after a person approves. On seeds 1301–1305 the top tenth of the queue was 60 of 60 planted frauds; 434 of 434 suggested fixes target a planted trick.</p>
 
-  <p><b>Real data:</b> 2.23M SEC ABS-EE loan records (28 pools, 22 lenders) set how honest auto loans behave; a benchmark that flagged 3 honest pools was dropped. Switching off the SEC-based checks loses 39 of the 248 caught frauds.</p>
+  <p><b>Real data:</b> 2.23M SEC ABS-EE loan records (28 pools, 22 lenders) set how honest auto loans behave; a benchmark that flagged 3 honest pools was dropped. Switching off the SEC-based checks loses 40 of the 249 flagged frauds.</p>
 
   <h2>Honest limits</h2>
   <table>
     <tr><td>Data</td><td>Frauds are planted. Honest auto-loan behaviour and the loan-tape thresholds come from real SEC data; the other checks are still set on synthetic books. It proves coverage of the documented tricks, not real-world rates. Tricolor's own deals were reportedly private (Rule 144A) and never filed ABS-EE.</td></tr>
-    <tr><td>Workload</td><td>About 29 in every 100 honest borrowers land in "worth a look": the real review cost.</td></tr>
+    <tr><td>Workload</td><td>107 of 350 honest borrowers (30.6 per 100) land in "worth a look": the real review cost.</td></tr>
     <tr><td>Red team</td><td>Three blind rounds. In round 3, an attacker controlling the borrower's own records: 0 of 60 caught, 28 to review, 32 missed. The next step anchors on the bank's own cash records.</td></tr>
     <tr><td>Model</td><td>Compared only with its untrained base; no large-model benchmark yet.</td></tr>
     <tr><td>Market</td><td>Vendors each cover one place (Setpoint, Quantexa, Wolters Kluwer); none publicly joins all seven.</td></tr>

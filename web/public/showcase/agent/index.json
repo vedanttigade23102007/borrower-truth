@@ -86,13 +86,5 @@
   "lines": 6,
   "dropped": 1,
   "tool_calls": 5
- },
- {
-  "borrower_id": "B0116",
-  "status": "ok",
-  "model": "Qwen/Qwen3-8B",
-  "lines": 6,
-  "dropped": 1,
-  "tool_calls": 5
  }
 ]

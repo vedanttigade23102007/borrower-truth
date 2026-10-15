@@ -1908,54 +1908,14 @@
  ],
  "heldout": [
   {
-   "seed": 1201,
+   "seed": 1301,
    "borrowers": 120,
    "fraud": 50,
    "caught": 50,
    "sent_to_review": 0,
    "missed": 0,
    "false_alarms": 0,
-   "honest_worth_a_look": 20,
-   "per_mechanism": {
-    "DOUBLE_PLEDGE": [
-     13,
-     13
-    ],
-    "TAPE_DRESSUP": [
-     13,
-     13
-    ],
-    "DISGUISED_RECEIPTS": [
-     16,
-     16
-    ],
-    "FAKE_INVOICES": [
-     7,
-     7
-    ],
-    "HIDDEN_DEBT": [
-     12,
-     12
-    ],
-    "RELATED_SHELLS": [
-     14,
-     14
-    ],
-    "FIN_MANIPULATION": [
-     12,
-     13
-    ]
-   }
-  },
-  {
-   "seed": 1202,
-   "borrowers": 120,
-   "fraud": 50,
-   "caught": 50,
-   "sent_to_review": 0,
-   "missed": 0,
-   "false_alarms": 0,
-   "honest_worth_a_look": 21,
+   "honest_worth_a_look": 25,
    "per_mechanism": {
     "DOUBLE_PLEDGE": [
      13,
@@ -1978,8 +1938,8 @@
      12
     ],
     "RELATED_SHELLS": [
-     12,
-     12
+     13,
+     13
     ],
     "FIN_MANIPULATION": [
      13,
@@ -1988,14 +1948,14 @@
    }
   },
   {
-   "seed": 1203,
+   "seed": 1302,
    "borrowers": 120,
    "fraud": 50,
    "caught": 50,
    "sent_to_review": 0,
    "missed": 0,
    "false_alarms": 0,
-   "honest_worth_a_look": 18,
+   "honest_worth_a_look": 24,
    "per_mechanism": {
     "DOUBLE_PLEDGE": [
      13,
@@ -2010,16 +1970,16 @@
      16
     ],
     "FAKE_INVOICES": [
-     8,
-     8
+     7,
+     7
     ],
     "HIDDEN_DEBT": [
      12,
      12
     ],
     "RELATED_SHELLS": [
-     11,
-     11
+     13,
+     13
     ],
     "FIN_MANIPULATION": [
      13,
@@ -2028,47 +1988,7 @@
    }
   },
   {
-   "seed": 1204,
-   "borrowers": 120,
-   "fraud": 50,
-   "caught": 48,
-   "sent_to_review": 1,
-   "missed": 1,
-   "false_alarms": 0,
-   "honest_worth_a_look": 25,
-   "per_mechanism": {
-    "DOUBLE_PLEDGE": [
-     13,
-     13
-    ],
-    "TAPE_DRESSUP": [
-     12,
-     13
-    ],
-    "DISGUISED_RECEIPTS": [
-     16,
-     16
-    ],
-    "FAKE_INVOICES": [
-     8,
-     8
-    ],
-    "HIDDEN_DEBT": [
-     12,
-     12
-    ],
-    "RELATED_SHELLS": [
-     11,
-     11
-    ],
-    "FIN_MANIPULATION": [
-     12,
-     13
-    ]
-   }
-  },
-  {
-   "seed": 1205,
+   "seed": 1303,
    "borrowers": 120,
    "fraud": 50,
    "caught": 50,
@@ -2098,8 +2018,88 @@
      12
     ],
     "RELATED_SHELLS": [
-     11,
-     11
+     14,
+     14
+    ],
+    "FIN_MANIPULATION": [
+     13,
+     13
+    ]
+   }
+  },
+  {
+   "seed": 1304,
+   "borrowers": 120,
+   "fraud": 50,
+   "caught": 49,
+   "sent_to_review": 1,
+   "missed": 0,
+   "false_alarms": 0,
+   "honest_worth_a_look": 12,
+   "per_mechanism": {
+    "DOUBLE_PLEDGE": [
+     13,
+     13
+    ],
+    "TAPE_DRESSUP": [
+     12,
+     13
+    ],
+    "DISGUISED_RECEIPTS": [
+     16,
+     16
+    ],
+    "FAKE_INVOICES": [
+     7,
+     7
+    ],
+    "HIDDEN_DEBT": [
+     12,
+     12
+    ],
+    "RELATED_SHELLS": [
+     13,
+     13
+    ],
+    "FIN_MANIPULATION": [
+     13,
+     13
+    ]
+   }
+  },
+  {
+   "seed": 1305,
+   "borrowers": 120,
+   "fraud": 50,
+   "caught": 50,
+   "sent_to_review": 0,
+   "missed": 0,
+   "false_alarms": 0,
+   "honest_worth_a_look": 29,
+   "per_mechanism": {
+    "DOUBLE_PLEDGE": [
+     13,
+     13
+    ],
+    "TAPE_DRESSUP": [
+     13,
+     13
+    ],
+    "DISGUISED_RECEIPTS": [
+     16,
+     16
+    ],
+    "FAKE_INVOICES": [
+     8,
+     8
+    ],
+    "HIDDEN_DEBT": [
+     12,
+     12
+    ],
+    "RELATED_SHELLS": [
+     12,
+     12
     ],
     "FIN_MANIPULATION": [
      13,

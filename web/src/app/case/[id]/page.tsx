@@ -180,12 +180,19 @@ export default function CasePage({ params }: { params: Promise<{ id: string }> }
 
       <Card className="overflow-hidden">
         <h2 className="border-b border-zinc-200 px-4 py-3 text-sm font-medium text-zinc-900">Audit log</h2>
+        {isDemo && data.audit.length > 0 && (
+          <p className="border-b border-zinc-100 bg-amber-50 px-4 py-2 text-xs text-amber-900">
+            Simulated demo activity: every decision here was made by fictional demo officers on synthetic data, or by you
+            in this browser. None of it is a real bank&apos;s approval.
+          </p>
+        )}
         {data.audit.length === 0 ? (
           <p className="px-4 py-6 text-sm text-zinc-500">No decisions yet.</p>
         ) : (
           <ul className="divide-y divide-zinc-100 text-sm">
             {data.audit.map((a) => (
               <li key={a.id} className="flex flex-wrap gap-x-3 px-4 py-2">
+                {isDemo && <Badge tone="amber">simulated</Badge>}
                 <span className="text-zinc-500">{fmtDate(a.at)}</span>
                 <span className="font-medium text-zinc-900">{a.actor}</span>
                 <span className="text-zinc-700">{a.action.replace("STEP_", "").toLowerCase()}</span>
@@ -227,7 +234,8 @@ function AgentMemo({ id, byId }: { id: string; byId: Map<string, Signal> }) {
         the credit officer. Every statement cites its source. A code check dropped {a.dropped.length} line
         {a.dropped.length === 1 ? "" : "s"} that cited nothing, used a number or a company not in its sources, or contradicted the records
         in a way the check recognises. The check doesn&apos;t catch misreadings, so every memo on this site was also read line by
-        line on 14–15 Oct 2026: 35 of 47 had a false or misleading line and are hidden, and this is one of the 12 kept. Run on{" "}
+        line on 14–15 Oct 2026: 35 of 47 had a false or misleading line and are hidden, one more was hidden when the rules
+        changed on 15 Oct, and this is one of the 11 kept. Run on{" "}
         {a.generated_at} and saved for this public page.
       </p>
       <ul className="space-y-2 px-4 py-3 text-sm">
@@ -518,6 +526,11 @@ function FixSteps({
                 </div>
                 {s.decidedBy && (
                   <p className="mt-1 text-xs text-zinc-500">
+                    {isDemo && (
+                      <span className="mr-1.5 font-medium text-amber-900">
+                        Simulated demo activity, not a real bank approval:
+                      </span>
+                    )}
                     {approverOf(s) && s.status !== "APPROVED" ? `approved by ${approverOf(s)} · ` : ""}
                     {s.status.toLowerCase()} by {s.decidedBy} · {fmtDate(s.decidedAt)}
                     {s.note ? ` · “${s.note}”` : ""}
