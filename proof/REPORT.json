@@ -7,32 +7,32 @@
   ],
   "right_fix_rate": 1.0,
   "fix_on_target": [
-   427,
-   429
+   434,
+   434
   ],
-  "fix_on_target_rate": 0.995,
-  "honest_needing_review_per_100": 28.9,
+  "fix_on_target_rate": 1.0,
+  "honest_needing_review_per_100": 30.6,
   "fraud_left_at_review": 1,
   "detection_timing": {
-   "before the effects start": 27,
-   "same month": 131,
-   "1-3 months later": 81,
-   "over 3 months later": 9
+   "1-3 months later": 84,
+   "before the effects start": 28,
+   "same month": 129,
+   "over 3 months later": 8
   },
   "seeds": [
-   1201,
-   1202,
-   1203,
-   1204,
-   1205
+   1301,
+   1302,
+   1303,
+   1304,
+   1305
   ],
   "borrowers": 600,
   "fraud": 250,
   "honest": 350,
-  "caught": 248,
-  "catch_rate": 0.992,
+  "caught": 249,
+  "catch_rate": 0.996,
   "false_alarms_per_100_end": 0.0,
-  "false_alarms_per_100_ever": 0.0,
+  "false_alarms_per_100_ever": 0.29,
   "per_mechanism": {
    "DOUBLE_PLEDGE": [
     65,
@@ -47,19 +47,19 @@
     80
    ],
    "FAKE_INVOICES": [
-    36,
-    36
+    35,
+    35
    ],
    "HIDDEN_DEBT": [
     60,
     60
    ],
    "RELATED_SHELLS": [
-    59,
-    59
+    65,
+    65
    ],
    "FIN_MANIPULATION": [
-    63,
+    65,
     65
    ]
   },
@@ -89,7 +89,7 @@
     20
    ],
    "single": [
-    99,
+    100,
     100
    ],
    "tricolor_like": [
@@ -99,55 +99,251 @@
   },
   "ablation": {
    "S1": {
-    "borrowers_lost": 24,
-    "mechanism_detections_lost": 39
+    "borrowers_lost": 27,
+    "mechanism_detections_lost": 35
    },
    "S2": {
     "borrowers_lost": 39,
     "mechanism_detections_lost": 64
    },
    "S3": {
-    "borrowers_lost": 67,
-    "mechanism_detections_lost": 161
+    "borrowers_lost": 68,
+    "mechanism_detections_lost": 165
    },
    "S4": {
-    "borrowers_lost": 12,
-    "mechanism_detections_lost": 29
+    "borrowers_lost": 13,
+    "mechanism_detections_lost": 26
    },
    "S5": {
-    "borrowers_lost": 42,
-    "mechanism_detections_lost": 82
+    "borrowers_lost": 43,
+    "mechanism_detections_lost": 86
    },
    "S6": {
-    "borrowers_lost": 30,
-    "mechanism_detections_lost": 121
+    "borrowers_lost": 34,
+    "mechanism_detections_lost": 135
    },
    "S7": {
-    "borrowers_lost": 14,
-    "mechanism_detections_lost": 63
+    "borrowers_lost": 15,
+    "mechanism_detections_lost": 65
    },
    "SEC": {
-    "borrowers_lost": 39,
-    "mechanism_detections_lost": 41
+    "borrowers_lost": 40,
+    "mechanism_detections_lost": 40
    }
   },
-  "baseline_caught": 92,
-  "baseline_catch_rate": 0.368,
-  "baseline_false_alarms_per_100": 2.0,
-  "pledgecheck_caught": 38,
-  "beyond_pledgecheck": 210,
-  "caught_never_by_baseline": 157,
-  "median_days_earlier_than_audit": 90.0,
-  "n_lead": 92,
-  "median_days_from_fraud_start_to_detection": 0.0,
-  "seconds_per_monthly_run": 0.723
+  "baseline_caught": 95,
+  "baseline_catch_rate": 0.38,
+  "baseline_false_alarms_per_100": 1.71,
+  "pledgecheck_caught": 36,
+  "beyond_pledgecheck": 213,
+  "caught_never_by_baseline": 154,
+  "median_days_earlier_than_audit": 90,
+  "n_lead": 95,
+  "median_days_from_fraud_start_to_detection": 0,
+  "seconds_per_monthly_run": 1.185
  },
  "per_seed": {
-  "1201": {
+  "1301": {
    "borrowers": 120,
    "fraud": 50,
    "honest": 70,
-   "honest_needing_review": 20,
+   "honest_needing_review": 25,
+   "fraud_needing_review": 0,
+   "top_decile": [
+    12,
+    12
+   ],
+   "right_fix": 50,
+   "fix_on_target": [
+    86,
+    86
+   ],
+   "caught": 50,
+   "false_alarms_end": 0,
+   "false_alarms_ever": 0,
+   "per_mechanism": {
+    "DOUBLE_PLEDGE": [
+     13,
+     13
+    ],
+    "TAPE_DRESSUP": [
+     13,
+     13
+    ],
+    "DISGUISED_RECEIPTS": [
+     16,
+     16
+    ],
+    "FAKE_INVOICES": [
+     6,
+     6
+    ],
+    "HIDDEN_DEBT": [
+     12,
+     12
+    ],
+    "RELATED_SHELLS": [
+     13,
+     13
+    ],
+    "FIN_MANIPULATION": [
+     13,
+     13
+    ]
+   },
+   "per_pattern": {
+    "filer_hidden_debt": [
+     4,
+     4
+    ],
+    "first_brands_like": [
+     5,
+     5
+    ],
+    "nominee_shell": [
+     4,
+     4
+    ],
+    "paid_to_look_current": [
+     4,
+     4
+    ],
+    "public_pool_double_pledge": [
+     4,
+     4
+    ],
+    "round_trip": [
+     4,
+     4
+    ],
+    "single": [
+     20,
+     20
+    ],
+    "tricolor_like": [
+     5,
+     5
+    ]
+   },
+   "ablation": {
+    "S1": {
+     "borrowers_lost": 6,
+     "mechanism_detections_lost": 7
+    },
+    "S2": {
+     "borrowers_lost": 8,
+     "mechanism_detections_lost": 13
+    },
+    "S3": {
+     "borrowers_lost": 14,
+     "mechanism_detections_lost": 34
+    },
+    "S4": {
+     "borrowers_lost": 2,
+     "mechanism_detections_lost": 4
+    },
+    "S5": {
+     "borrowers_lost": 8,
+     "mechanism_detections_lost": 17
+    },
+    "S6": {
+     "borrowers_lost": 6,
+     "mechanism_detections_lost": 27
+    },
+    "S7": {
+     "borrowers_lost": 3,
+     "mechanism_detections_lost": 13
+    },
+    "SEC": {
+     "borrowers_lost": 8,
+     "mechanism_detections_lost": 8
+    }
+   },
+   "baseline_caught": 19,
+   "baseline_false_alarms": 2,
+   "pledgecheck_caught": 9,
+   "beyond_pledgecheck": 41,
+   "caught_never_by_baseline": 31,
+   "lead_days": [
+    60,
+    0,
+    60,
+    0,
+    180,
+    270,
+    210,
+    60,
+    -210,
+    30,
+    30,
+    90,
+    30,
+    60,
+    150,
+    90,
+    330,
+    90,
+    30
+   ],
+   "detect_after_start_days": [
+    60,
+    -30,
+    0,
+    60,
+    0,
+    0,
+    0,
+    120,
+    0,
+    0,
+    0,
+    0,
+    -30,
+    60,
+    30,
+    0,
+    0,
+    30,
+    30,
+    30,
+    0,
+    0,
+    0,
+    60,
+    60,
+    0,
+    60,
+    0,
+    60,
+    0,
+    60,
+    0,
+    0,
+    0,
+    60,
+    -30,
+    -60,
+    0,
+    60,
+    0,
+    -60,
+    150,
+    0,
+    -30,
+    0,
+    30,
+    60,
+    -30,
+    90,
+    0
+   ],
+   "seconds_per_month": 1.174
+  },
+  "1302": {
+   "borrowers": 120,
+   "fraud": 50,
+   "honest": 70,
+   "honest_needing_review": 24,
    "fraud_needing_review": 0,
    "top_decile": [
     12,
@@ -183,11 +379,208 @@
      12
     ],
     "RELATED_SHELLS": [
+     13,
+     13
+    ],
+    "FIN_MANIPULATION": [
+     13,
+     13
+    ]
+   },
+   "per_pattern": {
+    "filer_hidden_debt": [
+     4,
+     4
+    ],
+    "first_brands_like": [
+     5,
+     5
+    ],
+    "nominee_shell": [
+     4,
+     4
+    ],
+    "paid_to_look_current": [
+     4,
+     4
+    ],
+    "public_pool_double_pledge": [
+     4,
+     4
+    ],
+    "round_trip": [
+     4,
+     4
+    ],
+    "single": [
+     20,
+     20
+    ],
+    "tricolor_like": [
+     5,
+     5
+    ]
+   },
+   "ablation": {
+    "S1": {
+     "borrowers_lost": 6,
+     "mechanism_detections_lost": 7
+    },
+    "S2": {
+     "borrowers_lost": 8,
+     "mechanism_detections_lost": 13
+    },
+    "S3": {
+     "borrowers_lost": 14,
+     "mechanism_detections_lost": 35
+    },
+    "S4": {
+     "borrowers_lost": 3,
+     "mechanism_detections_lost": 6
+    },
+    "S5": {
+     "borrowers_lost": 9,
+     "mechanism_detections_lost": 16
+    },
+    "S6": {
+     "borrowers_lost": 7,
+     "mechanism_detections_lost": 25
+    },
+    "S7": {
+     "borrowers_lost": 3,
+     "mechanism_detections_lost": 13
+    },
+    "SEC": {
+     "borrowers_lost": 8,
+     "mechanism_detections_lost": 8
+    }
+   },
+   "baseline_caught": 20,
+   "baseline_false_alarms": 2,
+   "pledgecheck_caught": 6,
+   "beyond_pledgecheck": 44,
+   "caught_never_by_baseline": 30,
+   "lead_days": [
+    300,
+    330,
+    30,
+    30,
+    60,
+    0,
+    0,
+    30,
+    150,
+    180,
+    120,
+    360,
+    0,
+    510,
+    0,
+    120,
+    150,
+    300,
+    240,
+    30
+   ],
+   "detect_after_start_days": [
+    0,
+    30,
+    60,
+    60,
+    0,
+    -60,
+    120,
+    0,
+    0,
+    0,
+    30,
+    60,
+    0,
+    0,
+    0,
+    -30,
+    0,
+    0,
+    -60,
+    30,
+    60,
+    0,
+    30,
+    60,
+    0,
+    0,
+    0,
+    -60,
+    -30,
+    0,
+    0,
+    90,
+    0,
+    30,
+    30,
+    0,
+    0,
+    0,
+    60,
+    0,
+    60,
+    150,
+    0,
+    30,
+    0,
+    0,
+    0,
+    60,
+    0,
+    0
+   ],
+   "seconds_per_month": 1.182
+  },
+  "1303": {
+   "borrowers": 120,
+   "fraud": 50,
+   "honest": 70,
+   "honest_needing_review": 17,
+   "fraud_needing_review": 0,
+   "top_decile": [
+    12,
+    12
+   ],
+   "right_fix": 50,
+   "fix_on_target": [
+    88,
+    88
+   ],
+   "caught": 50,
+   "false_alarms_end": 0,
+   "false_alarms_ever": 0,
+   "per_mechanism": {
+    "DOUBLE_PLEDGE": [
+     13,
+     13
+    ],
+    "TAPE_DRESSUP": [
+     13,
+     13
+    ],
+    "DISGUISED_RECEIPTS": [
+     16,
+     16
+    ],
+    "FAKE_INVOICES": [
+     7,
+     7
+    ],
+    "HIDDEN_DEBT": [
+     12,
+     12
+    ],
+    "RELATED_SHELLS": [
      14,
      14
     ],
     "FIN_MANIPULATION": [
-     12,
+     13,
      13
     ]
    },
@@ -228,7 +621,7 @@
    "ablation": {
     "S1": {
      "borrowers_lost": 5,
-     "mechanism_detections_lost": 10
+     "mechanism_detections_lost": 7
     },
     "S2": {
      "borrowers_lost": 8,
@@ -236,518 +629,122 @@
     },
     "S3": {
      "borrowers_lost": 14,
-     "mechanism_detections_lost": 32
+     "mechanism_detections_lost": 30
     },
     "S4": {
-     "borrowers_lost": 2,
-     "mechanism_detections_lost": 5
+     "borrowers_lost": 3,
+     "mechanism_detections_lost": 6
     },
     "S5": {
-     "borrowers_lost": 9,
+     "borrowers_lost": 7,
      "mechanism_detections_lost": 17
     },
     "S6": {
      "borrowers_lost": 7,
-     "mechanism_detections_lost": 29
+     "mechanism_detections_lost": 28
     },
     "S7": {
      "borrowers_lost": 3,
-     "mechanism_detections_lost": 12
+     "mechanism_detections_lost": 13
     },
     "SEC": {
      "borrowers_lost": 8,
      "mechanism_detections_lost": 8
     }
    },
-   "baseline_caught": 20,
-   "baseline_false_alarms": 0,
-   "pledgecheck_caught": 7,
-   "beyond_pledgecheck": 43,
-   "caught_never_by_baseline": 30,
+   "baseline_caught": 16,
+   "baseline_false_alarms": 2,
+   "pledgecheck_caught": 8,
+   "beyond_pledgecheck": 42,
+   "caught_never_by_baseline": 34,
    "lead_days": [
-    570,
-    270,
+    240,
+    60,
     180,
-    60,
-    210,
-    30,
-    120,
-    270,
-    60,
-    90,
-    90,
     150,
-    120,
-    -390,
-    60,
     0,
-    30,
-    -390,
-    30,
+    120,
+    120,
+    240,
+    210,
+    120,
+    240,
+    150,
+    390,
+    210,
+    330,
     60
    ],
    "detect_after_start_days": [
-    -60,
-    0,
     60,
     -30,
     0,
+    60,
+    0,
+    0,
     0,
     60,
-    -60,
+    0,
+    0,
+    0,
+    30,
     60,
+    0,
+    60,
+    0,
+    0,
+    -60,
+    -30,
+    0,
+    0,
+    0,
+    60,
+    0,
+    0,
+    0,
+    0,
+    0,
+    -60,
+    -30,
+    60,
+    0,
+    30,
+    150,
+    60,
+    30,
+    0,
+    150,
+    60,
+    0,
+    30,
     90,
     0,
+    60,
     0,
-    0,
-    0,
-    30,
-    30,
-    -30,
-    30,
-    0,
-    0,
-    0,
-    30,
     0,
     -60,
-    0,
-    30,
-    0,
-    0,
-    0,
-    0,
-    0,
     60,
     0,
-    60,
-    0,
-    60,
-    0,
-    0,
-    60,
-    0,
-    0,
-    -30,
-    60,
-    120,
-    0,
-    30,
-    0,
-    60,
-    0,
-    240
+    30
    ],
-   "seconds_per_month": 0.717
+   "seconds_per_month": 1.167
   },
-  "1202": {
+  "1304": {
    "borrowers": 120,
    "fraud": 50,
    "honest": 70,
-   "honest_needing_review": 21,
-   "fraud_needing_review": 0,
-   "top_decile": [
-    12,
-    12
-   ],
-   "right_fix": 50,
-   "fix_on_target": [
-    85,
-    86
-   ],
-   "caught": 50,
-   "false_alarms_end": 0,
-   "false_alarms_ever": 0,
-   "per_mechanism": {
-    "DOUBLE_PLEDGE": [
-     13,
-     13
-    ],
-    "TAPE_DRESSUP": [
-     13,
-     13
-    ],
-    "DISGUISED_RECEIPTS": [
-     16,
-     16
-    ],
-    "FAKE_INVOICES": [
-     6,
-     6
-    ],
-    "HIDDEN_DEBT": [
-     12,
-     12
-    ],
-    "RELATED_SHELLS": [
-     12,
-     12
-    ],
-    "FIN_MANIPULATION": [
-     13,
-     13
-    ]
-   },
-   "per_pattern": {
-    "filer_hidden_debt": [
-     4,
-     4
-    ],
-    "first_brands_like": [
-     5,
-     5
-    ],
-    "nominee_shell": [
-     4,
-     4
-    ],
-    "paid_to_look_current": [
-     4,
-     4
-    ],
-    "public_pool_double_pledge": [
-     4,
-     4
-    ],
-    "round_trip": [
-     4,
-     4
-    ],
-    "single": [
-     20,
-     20
-    ],
-    "tricolor_like": [
-     5,
-     5
-    ]
-   },
-   "ablation": {
-    "S1": {
-     "borrowers_lost": 3,
-     "mechanism_detections_lost": 6
-    },
-    "S2": {
-     "borrowers_lost": 8,
-     "mechanism_detections_lost": 13
-    },
-    "S3": {
-     "borrowers_lost": 14,
-     "mechanism_detections_lost": 35
-    },
-    "S4": {
-     "borrowers_lost": 2,
-     "mechanism_detections_lost": 4
-    },
-    "S5": {
-     "borrowers_lost": 10,
-     "mechanism_detections_lost": 19
-    },
-    "S6": {
-     "borrowers_lost": 7,
-     "mechanism_detections_lost": 24
-    },
-    "S7": {
-     "borrowers_lost": 3,
-     "mechanism_detections_lost": 13
-    },
-    "SEC": {
-     "borrowers_lost": 7,
-     "mechanism_detections_lost": 8
-    }
-   },
-   "baseline_caught": 17,
-   "baseline_false_alarms": 1,
-   "pledgecheck_caught": 6,
-   "beyond_pledgecheck": 44,
-   "caught_never_by_baseline": 33,
-   "lead_days": [
-    300,
-    0,
-    -210,
-    30,
-    150,
-    240,
-    270,
-    60,
-    120,
-    210,
-    0,
-    210,
-    120,
-    120,
-    90,
-    60,
-    90
-   ],
-   "detect_after_start_days": [
-    0,
-    60,
-    0,
-    150,
-    60,
-    -30,
-    0,
-    0,
-    30,
-    0,
-    -60,
-    60,
-    60,
-    0,
-    30,
-    0,
-    0,
-    60,
-    0,
-    0,
-    0,
-    0,
-    30,
-    0,
-    0,
-    0,
-    -60,
-    30,
-    0,
-    0,
-    60,
-    0,
-    0,
-    0,
-    60,
-    0,
-    30,
-    0,
-    150,
-    -30,
-    -30,
-    -60,
-    90,
-    0,
-    60,
-    30,
-    0,
-    0,
-    60,
-    60
-   ],
-   "seconds_per_month": 0.708
-  },
-  "1203": {
-   "borrowers": 120,
-   "fraud": 50,
-   "honest": 70,
-   "honest_needing_review": 18,
-   "fraud_needing_review": 0,
-   "top_decile": [
-    12,
-    12
-   ],
-   "right_fix": 50,
-   "fix_on_target": [
-    86,
-    87
-   ],
-   "caught": 50,
-   "false_alarms_end": 0,
-   "false_alarms_ever": 0,
-   "per_mechanism": {
-    "DOUBLE_PLEDGE": [
-     13,
-     13
-    ],
-    "TAPE_DRESSUP": [
-     13,
-     13
-    ],
-    "DISGUISED_RECEIPTS": [
-     16,
-     16
-    ],
-    "FAKE_INVOICES": [
-     8,
-     8
-    ],
-    "HIDDEN_DEBT": [
-     12,
-     12
-    ],
-    "RELATED_SHELLS": [
-     11,
-     11
-    ],
-    "FIN_MANIPULATION": [
-     13,
-     13
-    ]
-   },
-   "per_pattern": {
-    "filer_hidden_debt": [
-     4,
-     4
-    ],
-    "first_brands_like": [
-     5,
-     5
-    ],
-    "nominee_shell": [
-     4,
-     4
-    ],
-    "paid_to_look_current": [
-     4,
-     4
-    ],
-    "public_pool_double_pledge": [
-     4,
-     4
-    ],
-    "round_trip": [
-     4,
-     4
-    ],
-    "single": [
-     20,
-     20
-    ],
-    "tricolor_like": [
-     5,
-     5
-    ]
-   },
-   "ablation": {
-    "S1": {
-     "borrowers_lost": 4,
-     "mechanism_detections_lost": 7
-    },
-    "S2": {
-     "borrowers_lost": 8,
-     "mechanism_detections_lost": 13
-    },
-    "S3": {
-     "borrowers_lost": 13,
-     "mechanism_detections_lost": 31
-    },
-    "S4": {
-     "borrowers_lost": 3,
-     "mechanism_detections_lost": 7
-    },
-    "S5": {
-     "borrowers_lost": 8,
-     "mechanism_detections_lost": 15
-    },
-    "S6": {
-     "borrowers_lost": 6,
-     "mechanism_detections_lost": 24
-    },
-    "S7": {
-     "borrowers_lost": 3,
-     "mechanism_detections_lost": 13
-    },
-    "SEC": {
-     "borrowers_lost": 8,
-     "mechanism_detections_lost": 9
-    }
-   },
-   "baseline_caught": 21,
-   "baseline_false_alarms": 3,
-   "pledgecheck_caught": 10,
-   "beyond_pledgecheck": 40,
-   "caught_never_by_baseline": 29,
-   "lead_days": [
-    0,
-    60,
-    270,
-    90,
-    90,
-    150,
-    240,
-    210,
-    0,
-    0,
-    240,
-    0,
-    420,
-    60,
-    30,
-    360,
-    0,
-    120,
-    120,
-    210,
-    -120
-   ],
-   "detect_after_start_days": [
-    0,
-    30,
-    0,
-    30,
-    30,
-    -60,
-    0,
-    60,
-    30,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    30,
-    0,
-    60,
-    0,
-    150,
-    0,
-    60,
-    0,
-    60,
-    60,
-    30,
-    0,
-    0,
-    0,
-    60,
-    30,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    -60,
-    0,
-    -60,
-    60,
-    0,
-    -60,
-    -30,
-    60,
-    -30,
-    0,
-    60,
-    150,
-    0
-   ],
-   "seconds_per_month": 0.723
-  },
-  "1204": {
-   "borrowers": 120,
-   "fraud": 50,
-   "honest": 70,
-   "honest_needing_review": 25,
+   "honest_needing_review": 12,
    "fraud_needing_review": 1,
    "top_decile": [
     12,
     12
    ],
-   "right_fix": 48,
+   "right_fix": 49,
    "fix_on_target": [
-    84,
-    84
+    86,
+    86
    ],
-   "caught": 48,
+   "caught": 49,
    "false_alarms_end": 0,
    "false_alarms_ever": 0,
    "per_mechanism": {
@@ -764,19 +761,19 @@
      16
     ],
     "FAKE_INVOICES": [
-     8,
-     8
+     7,
+     7
     ],
     "HIDDEN_DEBT": [
      12,
      12
     ],
     "RELATED_SHELLS": [
-     11,
-     11
+     13,
+     13
     ],
     "FIN_MANIPULATION": [
-     12,
+     13,
      13
     ]
    },
@@ -806,7 +803,7 @@
      4
     ],
     "single": [
-     19,
+     20,
      20
     ],
     "tricolor_like": [
@@ -816,7 +813,7 @@
    },
    "ablation": {
     "S1": {
-     "borrowers_lost": 6,
+     "borrowers_lost": 5,
      "mechanism_detections_lost": 7
     },
     "S2": {
@@ -829,105 +826,108 @@
     },
     "S4": {
      "borrowers_lost": 3,
-     "mechanism_detections_lost": 8
+     "mechanism_detections_lost": 6
     },
     "S5": {
-     "borrowers_lost": 8,
-     "mechanism_detections_lost": 16
+     "borrowers_lost": 9,
+     "mechanism_detections_lost": 18
     },
     "S6": {
-     "borrowers_lost": 5,
-     "mechanism_detections_lost": 22
+     "borrowers_lost": 7,
+     "mechanism_detections_lost": 28
     },
     "S7": {
-     "borrowers_lost": 2,
-     "mechanism_detections_lost": 12
+     "borrowers_lost": 3,
+     "mechanism_detections_lost": 13
     },
     "SEC": {
      "borrowers_lost": 8,
      "mechanism_detections_lost": 8
     }
    },
-   "baseline_caught": 16,
-   "baseline_false_alarms": 2,
-   "pledgecheck_caught": 6,
-   "beyond_pledgecheck": 42,
-   "caught_never_by_baseline": 33,
+   "baseline_caught": 18,
+   "baseline_false_alarms": 0,
+   "pledgecheck_caught": 5,
+   "beyond_pledgecheck": 44,
+   "caught_never_by_baseline": 31,
    "lead_days": [
-    90,
     60,
-    30,
+    150,
     210,
     60,
     150,
-    330,
-    30,
     0,
+    30,
     180,
     0,
-    270,
-    0,
-    240,
+    120,
+    330,
+    30,
+    30,
     90,
-    90
+    180,
+    60,
+    60,
+    180
    ],
    "detect_after_start_days": [
     0,
-    30,
     60,
     0,
     0,
     0,
+    60,
     0,
+    120,
     0,
     0,
     60,
-    30,
-    30,
-    0,
-    0,
-    0,
-    0,
-    0,
-    30,
-    30,
-    0,
-    0,
-    -30,
-    30,
-    0,
-    150,
-    0,
-    0,
-    0,
     -30,
     0,
-    60,
+    -60,
+    30,
     0,
     0,
-    60,
-    90,
-    0,
-    60,
-    60,
     0,
     30,
     0,
     60,
     0,
+    -30,
+    60,
+    30,
+    -30,
+    0,
+    -30,
+    0,
+    0,
+    0,
+    0,
+    0,
+    30,
+    -60,
+    30,
+    0,
+    30,
+    0,
     0,
     60,
+    60,
+    60,
     0,
+    30,
     0,
-    -30
+    30,
+    0,
+    90
    ],
-   "seconds_per_month": 0.744
+   "seconds_per_month": 1.217
   },
-  "1205": {
+  "1305": {
    "borrowers": 120,
    "fraud": 50,
    "honest": 70,
-   "honest_needing_review": 17,
+   "honest_needing_review": 29,
    "fraud_needing_review": 0,
    "top_decile": [
     12,
@@ -935,12 +935,12 @@
    ],
    "right_fix": 50,
    "fix_on_target": [
-    85,
-    85
+    87,
+    87
    ],
    "caught": 50,
    "false_alarms_end": 0,
-   "false_alarms_ever": 0,
+   "false_alarms_ever": 1,
    "per_mechanism": {
     "DOUBLE_PLEDGE": [
      13,
@@ -955,16 +955,16 @@
      16
     ],
     "FAKE_INVOICES": [
-     7,
-     7
+     8,
+     8
     ],
     "HIDDEN_DEBT": [
      12,
      12
     ],
     "RELATED_SHELLS": [
-     11,
-     11
+     12,
+     12
     ],
     "FIN_MANIPULATION": [
      13,
@@ -1007,8 +1007,8 @@
    },
    "ablation": {
     "S1": {
-     "borrowers_lost": 6,
-     "mechanism_detections_lost": 9
+     "borrowers_lost": 5,
+     "mechanism_detections_lost": 7
     },
     "S2": {
      "borrowers_lost": 8,
@@ -1016,19 +1016,19 @@
     },
     "S3": {
      "borrowers_lost": 13,
-     "mechanism_detections_lost": 31
+     "mechanism_detections_lost": 34
     },
     "S4": {
      "borrowers_lost": 2,
-     "mechanism_detections_lost": 5
+     "mechanism_detections_lost": 4
     },
     "S5": {
-     "borrowers_lost": 7,
-     "mechanism_detections_lost": 15
+     "borrowers_lost": 10,
+     "mechanism_detections_lost": 18
     },
     "S6": {
-     "borrowers_lost": 5,
-     "mechanism_detections_lost": 22
+     "borrowers_lost": 7,
+     "mechanism_detections_lost": 27
     },
     "S7": {
      "borrowers_lost": 3,
@@ -1039,84 +1039,88 @@
      "mechanism_detections_lost": 8
     }
    },
-   "baseline_caught": 18,
-   "baseline_false_alarms": 1,
-   "pledgecheck_caught": 9,
-   "beyond_pledgecheck": 41,
-   "caught_never_by_baseline": 32,
+   "baseline_caught": 22,
+   "baseline_false_alarms": 0,
+   "pledgecheck_caught": 8,
+   "beyond_pledgecheck": 42,
+   "caught_never_by_baseline": 28,
    "lead_days": [
-    150,
+    330,
     60,
-    120,
+    90,
+    60,
+    0,
+    90,
     150,
-    30,
+    210,
+    60,
+    150,
+    120,
     60,
     90,
     0,
-    60,
+    90,
     120,
+    150,
     0,
+    120,
     30,
-    390,
-    30,
-    270,
-    0,
-    360,
-    240
+    330,
+    120
    ],
    "detect_after_start_days": [
+    0,
+    30,
+    0,
+    0,
+    0,
+    0,
+    0,
+    90,
+    0,
+    30,
     60,
-    120,
-    30,
-    30,
+    -30,
+    0,
+    0,
+    0,
+    0,
+    60,
+    60,
+    150,
     60,
     0,
+    0,
+    30,
     0,
     0,
     -30,
     60,
     0,
     0,
+    60,
+    0,
+    60,
+    0,
+    0,
     0,
     30,
     0,
     0,
-    0,
+    30,
     -30,
-    30,
-    0,
-    30,
     60,
-    -30,
-    0,
-    30,
-    0,
-    30,
     60,
     0,
     0,
-    0,
-    0,
-    0,
-    0,
-    60,
-    0,
-    0,
-    0,
+    30,
+    30,
     0,
     -60,
-    0,
-    -60,
-    60,
-    -30,
-    120,
-    60,
-    30,
-    0,
     0,
     0
    ],
-   "seconds_per_month": 0.721
+   "seconds_per_month": 1.185
   }
  }
 }
