@@ -221,7 +221,7 @@ The honest consequence: the demo proves the *design and detection logic*. Real p
 3. **Beyond PledgeCheck:** simulate PledgeCheck's four published checks [S3] as a baseline and count the frauds that pass it but that we catch.
 4. Days to detection vs. a quarterly sample-audit baseline.
 5. False alarms per 100 clean borrowers; precision in the top decile of the queue.
-6. AI faithfulness: every memo sentence cites an existing signal or tool call, or code drops it (done in code, not with promptfoo).
+6. AI faithfulness: every memo sentence cites an existing signal or tool call, or code drops it (done in code, not with promptfoo). That catches missing citations and numbers, not misreadings: read by hand on 14–15 Oct, 35 of 47 memos had a false or misleading line and are hidden.
 7. **Fine-tuned vs. base model:** field-extraction accuracy on held-out receipts and invoices, plus the altered-invoice detection rate.
 8. **Fix quality:** for each planted case, does the suggested playbook address the planted mechanism? (Checked against the scenario's ground truth.) Also: time from alert to a ready-to-approve case file.
 

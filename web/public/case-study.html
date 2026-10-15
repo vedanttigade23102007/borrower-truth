@@ -46,7 +46,7 @@
       <li><b>Streaming</b> (Kafka, optional): a suspicious payer flagged 24 ms after the payment lands, then bridged into the case (last run 11 Sep 2026, on earlier rules).</li>
       <li><b>Document model</b> (optional, off by default): Donut, fine-tuned on a free Kaggle GPU, reads invoices so S4 can compare the document with the data.</li>
       <li><b>Operations</b>: isolated checks, file quarantine, stale-cache fallback; Airflow, Prometheus and Grafana fit the platform a bank already runs (last run 11 Sep 2026).</li>
-      <li><b>Investigator agent</b> (Qwen3-8B, open model): read-only tools, drafts a memo; code drops lines that cite nothing, invent numbers or contradict the records. It never decides.</li>
+      <li><b>Investigator agent</b> (Qwen3-8B, open model): read-only tools, drafts a memo; code drops lines that cite nothing or invent numbers, but not misreadings: read by hand on 14–15 Oct, 35 of 47 memos had a false or misleading line and are hidden. It never decides.</li>
     </ul>
   </div>
 

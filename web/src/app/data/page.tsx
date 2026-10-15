@@ -332,7 +332,7 @@ function StoryView({ s }: { s: Story }) {
           </p>
           <div className="flex flex-wrap items-center gap-4">
             <Link href={`/case/${s.borrower_id}`} className="rounded font-medium text-blue-700 hover:underline focus-visible:outline-2 focus-visible:outline-blue-600">
-              Open the full case, with the suggested fix and the agent&apos;s memo →
+              Open the full case, with the suggested fix and the decision record →
             </Link>
             {s.decision && <span className="font-mono text-xs text-zinc-500">decision {s.decision.decision_id}</span>}
           </div>

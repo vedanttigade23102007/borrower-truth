@@ -54,7 +54,7 @@ Numbers come from `proof/`. The latest fresh run is `proof/REPORT_seeds1201-1205
 | Officers drown in alerts | "Likely fraud" needs one checkable fact or two independent sources about the same claim; a single weak clue is "worth a look" only. A review-load ceiling is a kill criterion. |
 | A feed arrives late or broken | Quarantine and last-good copy; each case says which checks didn't run. |
 | A borrower learns the rules | It can get past them. In the blind red team round 3, an attacker who controlled the borrower's own records had 0 of 60 attacks caught and 32 missed. The next step anchors on the bank's own cash records, and the rules stay private, but that is a limit, not a defence. |
-| The LLM makes something up | It never decides. Code drops any memo line that cites nothing, invents a number, or contradicts the records. |
+| The LLM makes something up | It never decides. Code drops any memo line that cites nothing or invents a number. It can still misread a record: read by hand on 14–15 Oct, 33 of 47 demo memos had a false line, so a memo is a draft a person reads, and the rules decide. |
 | A letter damages a relationship or tips off a borrower | Letters ask and never accuse. Compliance and Legal approve the templates. An officer approves each one. |
 | A regulator challenges a decision | Every verdict replays from fingerprinted inputs, rules and code. |
 | Key-person risk | Documented design, tests, a run-book, and a hand-over as part of phase 2. |

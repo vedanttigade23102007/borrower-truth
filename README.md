@@ -57,9 +57,13 @@ Around the decision:
 - **Decision record.** Every verdict carries fingerprints of its inputs, the rule code and the git commit. `bt.pipeline.replay` recomputes a run and either shows every decision is identical (120 of 120 on the demo run) or names the input or rule that changed.
 - **Investigator agent** (`bt/agent/`). After the rules decide, an open-weights model investigates with read-only tools (registry, liens, courts, payments, disclosures, GLEIF) and drafts a memo for the credit officer.
   - **Nothing leaves the bank by default** (`BT_OFFLINE`): it can only use a model already on the bank's own machines.
-  - Code enforces the guardrails. Every statement must cite a clue or a tool call, and every number must appear in what it cites. Claims about what was disclosed, or whether liens and judgments exist, are checked against the records. Lines that fail are dropped and counted.
+  - Code checks every line before it's shown. It must cite a clue or a tool call, and every number and company name in it must appear in what it cites. A claim that a named company was or wasn't disclosed, or that the borrower has no liens or judgments, is also compared with the records, but only when it's worded the way the check expects. Lines that fail are dropped and counted.
+  - The check doesn't catch misreadings: money going the wrong way, numbers combined across sources, the borrower called its own related company, or a "no debts" or "no liens" claim worded another way. So every memo shown was also read line by line.
   - The agent never decides.
-  - The memos on the demo site were written on 16 Sep 2026 (Qwen3-8B). Memos that cite a clue that no longer exists, or that were written for a different verdict, are hidden.
+  - The demo's memos were written on 16 Sep 2026 (Qwen3-8B), 58 in all. On 14 Oct, 11 were hidden because they cite a clue that no longer exists or were written for a different verdict. On 14–15 Oct every line of the other 47 was read and compared with today's clues and records:
+    - 33 had at least one false line: the borrower named as its own related company (20 memos), a wrong source (4), wrong or recombined numbers (3), a wrong "no liens" or "no debts" claim (3), money going the wrong way (2), another company's lien or collateral put on the borrower (2). One memo had two kinds. The first false line was enough to hide a memo, so these counts are a floor.
+    - 2 more were hidden as misleading or unclear.
+    - 12 are shown. The rules decide; a memo only drafts.
 - **Feedback loop, kept human.** Officers' approvals and rejections are counted per finding type (`/api/feedback`, Operations page). A type whose fixes keep getting rejected goes to the person who owns the rules; the rules never change themselves.
 - **Public console** (`web/`): the review queue, each case with its fix, memo and decision record, a data section (dictionary, sample rows, one fraud step by step, invoice documents), and "Test it yourself", the answer key including misses.
 
